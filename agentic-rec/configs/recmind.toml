@@ -1,0 +1,17 @@
+name = "RecMind-style"
+# Wang et al. 2023: planning (self-inspiring), memory (personalised + world
+# knowledge), tools (database, search, text summarisation).  Plan-then-execute.
+
+[recommender]
+profile = "history"
+memory = { type = "vector", alpha = 1.0, beta = 0.5, gamma = 0.5 }
+planner = { type = "plan_execute", replan = true }
+tools = ["history", "search", "retrieve", "rank"]
+reflector = "self_critique"
+
+[user]
+policy = "preference"
+
+[environment]
+max_turns = 5
+k = 10

@@ -1,0 +1,29 @@
+name = "MACRec-style"
+# Wang et al. 2024: manager + user analyst + item analyst (+ reflector,
+# searcher).  The manager is a ReAct agent whose tools are the other agents.
+
+[recommender]
+orchestrator = "manager"
+
+[recommender.manager]
+profile = "history"
+memory = { type = "window", size = 10 }
+reflector = "self_critique"
+
+[recommender.roles.user_analyst]
+task = "Analyse the target user's history and summarise their preferences."
+profile = "history"
+planner = { type = "chain", steps = ["history"] }
+tools = ["history"]
+
+[recommender.roles.item_analyst]
+task = "Retrieve and rank candidate items that fit the user's preferences."
+planner = { type = "chain", steps = ["retrieve", "rank"] }
+tools = ["retrieve", "rank"]
+
+[user]
+policy = "preference"
+
+[environment]
+max_turns = 5
+k = 10

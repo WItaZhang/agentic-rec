@@ -1,0 +1,15 @@
+name = "Chat-REC-style"
+# Gao et al. 2023: prompt-only LLM re-ranking over candidates from a
+# conventional recommender.  No memory, no reflection, one call per turn.
+
+[recommender]
+profile = "history"
+planner = "direct"
+tools = ["retrieve"]
+
+[user]
+policy = "preference"
+
+[environment]
+max_turns = 5
+k = 10

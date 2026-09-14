@@ -1,0 +1,19 @@
+name = "BiLLP-style"
+# Shi et al. 2024: bi-level planning for long-term engagement.  A macro
+# planner picks a strategy (exploit / explore), a micro planner executes it,
+# and a reflector updates memory from user feedback.
+
+[recommender]
+profile = "history"
+memory = { type = "vector" }
+planner = { type = "hierarchical", max_steps = 5, strategies = ["exploit the user's dominant preference", "explore an adjacent interest to reduce boredom"] }
+tools = ["history", "retrieve", "popular", "rank"]
+reflector = "feedback"
+
+[user]
+profile = "traits"
+policy = { type = "preference", patience = 3 }
+
+[environment]
+max_turns = 8
+k = 8

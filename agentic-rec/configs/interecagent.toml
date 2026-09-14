@@ -1,0 +1,19 @@
+name = "InteRecAgent-style"
+# Huang et al. 2023: LLM as brain, recommender models as tools, candidate bus,
+# dynamic demonstrations, reflection.  Single agent, ReAct planning.
+
+[recommender]
+profile = "history"
+memory = { type = "window", size = 20 }
+planner = { type = "react", max_steps = 6 }
+tools = ["history", "filter", "retrieve", "rank"]
+reflector = "self_critique"
+
+[user]
+profile = "traits"
+memory = "buffer"
+policy = "preference"
+
+[environment]
+max_turns = 5
+k = 10

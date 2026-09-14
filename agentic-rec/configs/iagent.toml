@@ -1,0 +1,26 @@
+name = "iAgent-style"
+# Bao et al. 2025: a user-side agent re-ranks platform output under the user's
+# instruction with individual memory and self-reflection.  Modelled as a
+# pipeline: platform recommender -> personal re-ranking agent.
+
+[recommender]
+orchestrator = "pipeline"
+
+[recommender.roles.platform]
+planner = { type = "chain", steps = ["popular"] }
+tools = ["popular"]
+
+[recommender.roles.personal_agent]
+task = "Re-rank the platform's candidates strictly according to the user's own interests and instructions, ignoring popularity."
+profile = "history"
+memory = { type = "vector" }
+planner = { type = "react", max_steps = 4 }
+tools = ["history", "rank"]
+reflector = "self_critique"
+
+[user]
+policy = "preference"
+
+[environment]
+max_turns = 5
+k = 10

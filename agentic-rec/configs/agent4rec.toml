@@ -1,0 +1,18 @@
+name = "Agent4Rec-style"
+# Zhang et al. 2024: LLM user agents with taste / activity / conformity
+# personas, factual + emotional memory, and click / rate / exit actions,
+# interacting with a conventional recommender.  Here the recommender is a
+# plain tool chain (no LLM) and the users are LLM-driven personas.
+
+[recommender]
+planner = { type = "chain", steps = ["retrieve", "rank"] }
+tools = ["retrieve", "rank"]
+
+[user]
+profile = "traits"
+memory = { type = "hierarchical", short_size = 6 }
+policy = { type = "llm", max_clicks = 3 }
+
+[environment]
+max_turns = 6
+k = 10

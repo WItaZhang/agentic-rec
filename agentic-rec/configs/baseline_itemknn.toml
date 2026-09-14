@@ -1,0 +1,13 @@
+name = "ItemKNN baseline"
+# No LLM anywhere: the same tools wired as a deterministic chain.
+
+[recommender]
+planner = { type = "chain", steps = ["retrieve", "rank"] }
+tools = ["retrieve", "rank"]
+
+[user]
+policy = "preference"
+
+[environment]
+max_turns = 5
+k = 10

@@ -1,0 +1,16 @@
+name = "RecAgent-style"
+# Wang et al. 2023: user simulator with sensory / short-term / long-term
+# memory, profile, and action modules; the recommender is a conventional model.
+
+[recommender]
+planner = { type = "chain", steps = ["retrieve", "rank"] }
+tools = ["retrieve", "rank"]
+
+[user]
+profile = "traits"
+memory = { type = "hierarchical", short_size = 5, sensory_threshold = 0.3 }
+policy = "llm"
+
+[environment]
+max_turns = 6
+k = 10

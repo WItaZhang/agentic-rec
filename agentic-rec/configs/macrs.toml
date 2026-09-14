@@ -1,0 +1,29 @@
+name = "MACRS-style"
+# Fang et al. 2024: several act-specific agents propose responses, a selector
+# picks one, and a feedback-aware reflector adjusts planning.  Modelled here as
+# a vote over three proposers with different retrieval strategies.
+
+[recommender]
+orchestrator = "vote"
+
+[recommender.roles.exploit]
+planner = { type = "chain", steps = ["retrieve", "rank"] }
+tools = ["retrieve", "rank"]
+reflector = "feedback"
+
+[recommender.roles.popular]
+planner = { type = "chain", steps = ["popular", "rank"] }
+tools = ["popular", "rank"]
+
+[recommender.roles.react]
+profile = "history"
+planner = { type = "react", max_steps = 4 }
+tools = ["history", "retrieve", "rank"]
+reflector = "feedback"
+
+[user]
+policy = "preference"
+
+[environment]
+max_turns = 5
+k = 10

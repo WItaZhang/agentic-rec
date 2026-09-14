@@ -1,0 +1,19 @@
+name = "RecoWorld-style"
+# Liu et al. 2025: simulated users with a boredom/retention signal give
+# instructional feedback; the recommender adapts its strategy turn by turn.
+
+[recommender]
+profile = "history"
+memory = { type = "window", size = 30 }
+planner = { type = "hierarchical", max_steps = 5 }
+tools = ["history", "retrieve", "popular", "rank"]
+reflector = "feedback"
+
+[user]
+profile = "traits"
+memory = "buffer"
+policy = { type = "preference", patience = 2 }
+
+[environment]
+max_turns = 10
+k = 6
