@@ -2,13 +2,13 @@
 
 **A survey of agentic recommender systems, and the composable framework it implies.**
 
-[中文说明](README.zh-CN.md) · [Survey](docs/survey.md) · [Paper × component matrix](docs/component-matrix.md) · [Design notes](docs/design.md)
+[中文说明](README.zh-CN.md) · [中文学习路线](docs/zh/00-学习路线.md) · [Survey](docs/survey.md) · [Paper × component matrix](docs/component-matrix.md) · [Design notes](docs/design.md)
 
 Between 2023 and 2026, several dozen papers put an LLM *agent* at the centre of a recommender: as the recommender itself (RecMind, InteRecAgent, MACRec, BiLLP), as a simulated user (RecAgent, Agent4Rec, SimUSER, RecoWorld), as an item (AgentCF), or as an assistant on the user's side (RAH, iAgent). Read side by side, they share nine components and differ mainly in which ones they attach and how they are optimised.
 
 This repository contains:
 
-- **`docs/`** – a survey of the field, a paper-by-component matrix over 21 systems, and the design rationale.
+- **`docs/`** – a survey of the field, a paper-by-component matrix over 21 systems, and the design rationale. `docs/zh/` is a Chinese learning path that builds the same material up from recommender-system basics for readers new to the area.
 - **`agentic_rec/`** – a zero-dependency Python package where every component (profile, memory, planner, tools, reflector, coordination, environment) is an optional, registry-addressable module.
 - **`configs/`** – eleven published architectures written as configurations over those modules.
 - **`examples/`, `tests/`** – runnable examples and a test suite that exercise everything offline with a deterministic mock LLM.
@@ -145,7 +145,7 @@ Shared objects (`llm`, `catalog`, `k`) are injected into any constructor that de
 
 ```
 agentic-rec/
-├── docs/               survey.md · component-matrix.md · design.md · references.bib
+├── docs/               survey.md · component-matrix.md · design.md · references.bib · zh/ (中文学习路线)
 ├── agentic_rec/
 │   ├── core/           types, registry, config loader, prompt helpers
 │   ├── llm/            LLM interface; mock, OpenAI-compatible and Anthropic backends (stdlib only)

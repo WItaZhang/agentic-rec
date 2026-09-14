@@ -2,11 +2,13 @@
 
 **Agentic 推荐系统综述，以及由此归纳出的可组合框架。**
 
-[English](README.md) · [综述](docs/survey.md) · [论文 × 组件矩阵](docs/component-matrix.md) · [设计说明](docs/design.md)
+[English](README.md) · **[中文学习路线（从零开始）](docs/zh/00-学习路线.md)** · [英文综述](docs/survey.md) · [论文 × 组件矩阵](docs/component-matrix.md) · [设计说明](docs/design.md)
 
 2023 到 2026 年间，几十篇工作把 LLM *agent* 放到推荐系统的中心：作为推荐器本身（RecMind、InteRecAgent、MACRec、BiLLP），作为模拟用户（RecAgent、Agent4Rec、SimUSER、RecoWorld），作为物品（AgentCF），或作为站在用户一侧的助理（RAH、iAgent）。把它们并排读，会发现共享九个组件，差异主要在于挂载了哪些组件、以及如何优化。
 
 仓库包含：
+
+- **`docs/zh/`** —— 面向没有推荐系统背景的读者的中文学习路线：推荐系统基础 → LLM 与 Agent 基础 → 什么是 Agentic 推荐 → 逐篇代表性工作 → 九个共享组件 → 论文组件矩阵 → 框架设计 → 代码导读 → 开放问题 → 术语表。
 
 - **`docs/`** —— 领域综述、覆盖 21 个系统的论文 × 组件矩阵、框架设计说明。
 - **`agentic_rec/`** —— 零依赖的 Python 包，每个组件（画像、记忆、规划器、工具、反思、协作、环境）都是可选的、可通过注册表按名字引用的模块。
