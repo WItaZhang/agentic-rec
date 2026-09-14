@@ -1,0 +1,26 @@
+name: ci
+
+on:
+  push:
+    paths: ["agentic-rec/**"]
+  pull_request:
+    paths: ["agentic-rec/**"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: agentic-rec
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -e ".[dev]"
+      - run: ruff check .
+      - run: pytest
+      - run: python -m agentic_rec compare configs/*.toml --users 5 --items 60
