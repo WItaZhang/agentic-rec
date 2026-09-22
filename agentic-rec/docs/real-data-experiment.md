@@ -70,3 +70,6 @@ CI retains both supported test versions (3.11/3.12) and the original synthetic d
 
 Next bounded step: add one item-kNN baseline under this identical protocol, then
 compare it with popularity before wiring agent components into the real dataset.
+
+The first two reproducibility runs and their aggregate results are recorded in
+[reports/README.md](../reports/README.md). Raw data and full generated models stay local.

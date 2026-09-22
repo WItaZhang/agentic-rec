@@ -13,4 +13,5 @@ data/staging/
 logs/
 runs/
 *.log
+!reports/*/run.log
 .env
