@@ -8,6 +8,9 @@ dist/
 .ruff_cache/
 .venv/
 data/raw/
+data/processed/
+data/staging/
+logs/
 runs/
 *.log
 .env
