@@ -15,6 +15,14 @@ This repository contains:
 - **`configs/`** – eleven published architectures written as configurations over those modules.
 - **`examples/`, `tests/`** – runnable examples and a test suite that exercise everything offline with a deterministic mock LLM.
 
+## First real-data experiment
+
+An isolated [MovieLens 100K popularity baseline](docs/real-data-experiment.md)
+adds a checksummed input, global temporal split, YAML config and timestamped
+artifacts. It does not change the synthetic agents or claim reproduction of a
+paper's numerical results. Run it with `uv run --locked --extra yaml python main.py
+--config configs/ml100k_popularity.yaml` after the documented dataset setup.
+
 ## The component model
 
 ```
