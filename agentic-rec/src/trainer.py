@@ -49,6 +49,10 @@ def evaluate(model, seen, rows, positive_rating, k):
 
 
 def run_experiment(config, splits, run_dir):
+    if config["model"]["name"] == "baseline_suite":
+        from .baselines import run_baselines
+
+        return run_baselines(config, splits, run_dir)
     threshold = config["model"]["positive_rating"]
     model, seen = fit(splits["train"], threshold)
     write_json(run_dir / "model.json", {"ranked_items": model.ranked_items})

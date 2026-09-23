@@ -1,0 +1,37 @@
+{
+  "config_sha256": "f1606ed9bf58d5ee65fa0b997b3d3a702c9ae62a9eedd65eb72f45cfab8bd6af",
+  "data_source": "https://files.grouplens.org/datasets/movielens/ml-100k/u.data",
+  "git_commit": "8bf0dc106277d147438b706878f4c7c7c34f4139",
+  "git_dirty": false,
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python": "3.11.15 (main, Mar 24 2026, 22:57:51) [MSC v.1944 64 bit (AMD64)]",
+  "raw_sha256": "06416e597f82b7342361e41163890c81036900f418ad91315590814211dca490",
+  "source_sha256": {
+    "main.py": "6e58781a2d30aa01138cf59a3fa66a151225abfc514bdf42312f3e998bc445b6",
+    "src/__init__.py": "58cea931b945361325ecd190618610c7884afe2c47f471662bd8298b55e3875f",
+    "src/data.py": "b640013fbc47e3220b20f1a4c45d25aa907815ce8d37054f3cfa1d0467e9c4b1",
+    "src/feature.py": "158e458d4f601534d6fca7ee89a4743029a70351c82a2bda34fd2ee5edf9cff7",
+    "src/model.py": "82f5c766b8ff60489d1a0c88806756f214c325b71638968013306733a3e643cb",
+    "src/trainer.py": "48127b1f55739647355cf012d8ce57bd6f62b2522ee89373eb5e464a51af233f",
+    "src/utils.py": "92add425c725754384cbf0d28c637602c74555cb87c4552f5ba6a3d4996c90bc"
+  },
+  "splits": {
+    "test": {
+      "count": 22015,
+      "max_timestamp": 893286638,
+      "min_timestamp": 888715390
+    },
+    "train": {
+      "count": 52899,
+      "max_timestamp": 883612726,
+      "min_timestamp": 874724710
+    },
+    "validation": {
+      "count": 25086,
+      "max_timestamp": 888706075,
+      "min_timestamp": 883613005
+    }
+  },
+  "status": "completed",
+  "uv_lock_sha256": "4cf12931283fe6b894b291ed98a29fed4d4d21f6e93b3a07b31bfc1e211a4714"
+}

@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - uses: astral-sh/setup-uv@v6
-      - run: uv sync --locked --extra yaml --python ${{ matrix.python-version }}
-      - run: uv run --locked --extra yaml --python ${{ matrix.python-version }} ruff check .
-      - run: uv run --locked --extra yaml --python ${{ matrix.python-version }} python -m pytest
+      - run: uv sync --locked --extra yaml --extra experiments --python ${{ matrix.python-version }}
+      - run: uv run --locked --extra yaml --extra experiments --python ${{ matrix.python-version }} ruff check .
+      - run: uv run --locked --extra yaml --extra experiments --python ${{ matrix.python-version }} python -m pytest
       - run: uv run --locked --extra yaml --python ${{ matrix.python-version }} python -m agentic_rec compare configs/*.toml --users 5 --items 60

@@ -1,0 +1,37 @@
+experiment_name: ml100k_baselines
+protocol_id: ml100k_fixed_history_multipositive_v0
+seed: 42
+data:
+  source: https://files.grouplens.org/datasets/movielens/ml-100k/u.data
+  raw_path: data/raw/ml-100k/u.data
+  sha256: 06416e597f82b7342361e41163890c81036900f418ad91315590814211dca490
+  processed_path: data/processed
+  staging_path: data/staging
+  train_end: "1998-01-01T00:00:00Z"
+  validation_end: "1998-03-01T00:00:00Z"
+model:
+  name: baseline_suite
+  positive_rating: 4
+  similarity: binary_positive_cosine
+  shrinkage_formula: dot_over_norm_product_plus_shrinkage
+  neighbors_grid: [20, 50, 100]
+  shrinkage_grid: [0, 10, 100]
+  neighbor_direction: source_row
+  history_weight: binary_positive
+  score_normalization: none
+  fallback_and_ties: training_popularity_then_item_id
+train:
+  k: 10
+evaluation:
+  primary_comparison: itemknn_minus_popularity_ndcg
+  secondary_comparisons: descriptive_groups_and_recall
+  history_quantile: 0.5
+  bootstrap_repetitions: 5000
+  confidence_level: 0.95
+budget:
+  total_paid_usd: 0
+  per_run_paid_usd: 0
+  cloud_rental_allowed: false
+  stop_before_paid_call: true
+logging:
+  path: logs

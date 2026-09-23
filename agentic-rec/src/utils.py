@@ -32,8 +32,18 @@ def load_config(path):
     config = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
     if not re.fullmatch(r"[a-z0-9_]+", config["experiment_name"]):
         raise ValueError("Unsafe experiment name")
-    if config["model"]["name"] != "popularity":
-        raise ValueError("Only the popularity model is implemented")
+    if config["model"]["name"] not in ("popularity", "baseline_suite"):
+        raise ValueError("Unknown conventional model")
+    if config["model"]["name"] == "baseline_suite":
+        supported = {"similarity": "binary_positive_cosine",
+                     "shrinkage_formula": "dot_over_norm_product_plus_shrinkage",
+                     "neighbor_direction": "source_row", "history_weight": "binary_positive",
+                     "score_normalization": "none",
+                     "fallback_and_ties": "training_popularity_then_item_id"}
+        if any(config["model"].get(key) != value for key, value in supported.items()):
+            raise ValueError("Unsupported ItemKNN protocol setting")
+        if not config["model"]["neighbors_grid"] or not config["model"]["shrinkage_grid"]:
+            raise ValueError("Validation grid cannot be empty")
     if not 1 <= config["model"]["positive_rating"] <= 5 or config["train"]["k"] < 1:
         raise ValueError("Invalid threshold or k")
     utc_seconds(config["data"]["train_end"])

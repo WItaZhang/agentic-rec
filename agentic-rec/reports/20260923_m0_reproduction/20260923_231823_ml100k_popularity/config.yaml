@@ -1,0 +1,17 @@
+experiment_name: ml100k_popularity
+seed: 42
+data:
+  source: https://files.grouplens.org/datasets/movielens/ml-100k/u.data
+  raw_path: data/raw/ml-100k/u.data
+  sha256: 06416e597f82b7342361e41163890c81036900f418ad91315590814211dca490
+  processed_path: data/processed
+  staging_path: data/staging
+  train_end: "1998-01-01T00:00:00Z"
+  validation_end: "1998-03-01T00:00:00Z"
+model:
+  name: popularity
+  positive_rating: 4
+train:
+  k: 10
+logging:
+  path: logs
