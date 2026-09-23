@@ -109,6 +109,10 @@ def run_llm(config, config_path, root):
 
             previous = root / config["resume_from"]
             old_config = yaml.safe_load((previous / "config.yaml").read_text())
+            if config.get("allow_rate_limit_adjustment", False):
+                # A rate-only amendment never changes prompts, labels or predictions already obtained.
+                old_config["llm"]["rate_limits"] = config["llm"]["rate_limits"]
+                manifest["rate_limit_amendment"] = True
             for key in ("protocol", "data", "retriever", "sampling", "evaluation", "evidence", "llm", "runtime", "seed"):
                 if config[key] != old_config[key]:
                     raise ValueError("Resuming must preserve every inference and sampling setting")

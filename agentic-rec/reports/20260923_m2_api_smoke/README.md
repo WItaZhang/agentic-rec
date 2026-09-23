@@ -24,5 +24,5 @@ request per user. Recent evidence is one event, full history is up to 20; this
 pre-test adjustment follows the training profile's sparse histories (three recent
 events would make almost all long-history additions empty). Four calls/request,
 fixed ItemKNN top-200, max input 12,000, 256 max output tokens, concurrency 4.
-Conservative round upper USD 5.386240, cap USD 6; observed smoke suggests much less.
+Conservative round upper USD 5.387059, cap USD 6; observed smoke suggests much less.
 Measure paired variance and history groups before fixing larger sample sizes.
