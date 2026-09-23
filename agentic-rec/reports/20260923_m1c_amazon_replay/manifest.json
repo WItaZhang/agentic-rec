@@ -1,0 +1,43 @@
+{
+  "artifact_hashes": {
+    "candidates.jsonl": "780cd40027d596988520f43d3bf4ea7ee0ec61713926fc98a89e062175595461",
+    "evaluator_targets.jsonl": "e9335fec7bf113ee55d97eaaaa026d3c0f3e60f3d86a3bf0fe34261dda0ac517",
+    "requests.jsonl": "5099b27a256c8f6664a29a17afd19aa6bb36a7dcea468e369fd3987314d3613a"
+  },
+  "config_sha256": "dc053f5ab8b94e73de6225871981c916cd5985d621d75eb1ea431773fb848213",
+  "cpu_seconds": 144.921875,
+  "git_commit": "a20628ec7773a072fc163533a06e820c66fd672c",
+  "git_dirty": false,
+  "input_audit": {
+    "exact_duplicates_removed": 575,
+    "raw_rows": 71497,
+    "valid_events": 70922
+  },
+  "model_hashes": {
+    "itemknn": "8f35c8afe52cf6cc1669ba9e9cea3b7eda364043e00d16cb7456e939781da6b8",
+    "popularity": "9af3900b3654761dceeefc2d46be812d77488828402d4ff4a7a13fd568f9d746"
+  },
+  "platform": "Windows-10-10.0.26200-SP0",
+  "processed_path": "data/processed/20260923_232911_amazon_magazine_replay",
+  "protocol_id": "amazon_next_positive_unseen_v1",
+  "python": "3.11.15 (main, Mar 24 2026, 22:57:51) [MSC v.1944 64 bit (AMD64)]",
+  "raw_sha256": "c77a5c092039158c3f19f77f44e49c3a94fa28591eb159f4348c3d8af53bdf53",
+  "source_sha256": {
+    "main.py": "44173d1ed9396f2fef85a1a30c15d5e728b03ecb3a3143c2302f0e6c780a97fd",
+    "src/__init__.py": "58cea931b945361325ecd190618610c7884afe2c47f471662bd8298b55e3875f",
+    "src/baselines.py": "0ef7757ca0e530423e601196216dbc1d4828629dddd5a4d8ec7348b5a9dba1d4",
+    "src/data.py": "8ab57d94f242dc1f16f274bbf42c5ce3f2897243a89a5fc5a448c9b4965446b5",
+    "src/feature.py": "a36160694a4f9c5bf1e223c98f5a0950d28a19470a7dcac5317515b593844a6f",
+    "src/metrics.py": "8fb5ff5e6befd36b35008ab85ee62d8d3bd4e9a6d9612882a919778856de42d9",
+    "src/model.py": "145fa6c4b5a6ff18258c5345aaed6b2f5368724a9ce4a71c645dfc1d7589e587",
+    "src/profiling.py": "7d137da9ef4c5657981d29ce9533f3023479c1a0f59c7c5bfee91a9746e6c86d",
+    "src/protocol.py": "8bbc5c43afc5f83f929c59096dd5a0c1891938418fdd6b196ae290400c61843c",
+    "src/replay.py": "b5af4b8b378144fc6948ebf7a76caf491ab90d2bf0e4f94154459e661d206dbc",
+    "src/trainer.py": "52c3fc78f930ae92e279d1cec458e5283dfe715b15ea7d8e50f98933772bb6ef",
+    "src/utils.py": "df69e1786b6738c42dc0d5d1379df71495774c2c88b3beb8f66a4469aeda4f71"
+  },
+  "status": "completed",
+  "test_scored": false,
+  "uv_lock_sha256": "3a6df1a4b7f6517f9573a8050a9316efc1400922ba2a73bbe7bc6891b357b94a",
+  "wall_seconds": 148.2348818999999
+}

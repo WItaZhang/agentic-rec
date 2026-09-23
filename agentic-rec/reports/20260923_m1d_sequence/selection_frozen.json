@@ -1,0 +1,26 @@
+{
+  "sample": {
+    "eligible_requests": 9680,
+    "eligible_users": 8401,
+    "per_user_cap": 1,
+    "seed": 42,
+    "selected_users": 2000,
+    "selection_uses_labels": false,
+    "user_inclusion_probability": 0.23806689679800025,
+    "within_user_request_probability": "1 / eligible requests for that user"
+  },
+  "scope": "base_train_internal_only",
+  "selected": {
+    "architecture": {
+      "dimension": 64,
+      "dropout": 0.2,
+      "embedding_std": 0.02,
+      "feedforward_multiplier": 4,
+      "heads": 2,
+      "layers": 1,
+      "max_length": 20
+    },
+    "epochs": 20
+  },
+  "test_scored": false
+}

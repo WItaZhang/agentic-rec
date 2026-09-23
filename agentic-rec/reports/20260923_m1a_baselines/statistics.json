@@ -1,0 +1,166 @@
+{
+  "test": {
+    "cold": {
+      "ndcg_at_k": {
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 235
+      },
+      "recall_at_k": {
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 235
+      }
+    },
+    "long_history": {
+      "ndcg_at_k": {
+        "ci_high": 0.037799747151307336,
+        "ci_low": -0.046717693963306044,
+        "confidence": 0.95,
+        "difference": 0.0001564526000535877,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 58
+      },
+      "recall_at_k": {
+        "ci_high": 0.002110174047586728,
+        "ci_low": -0.07625147021235297,
+        "confidence": 0.95,
+        "difference": -0.03138162921760648,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 58
+      }
+    },
+    "overall": {
+      "ndcg_at_k": {
+        "ci_high": 0.008046578634581634,
+        "ci_low": -0.008999062927307776,
+        "confidence": 0.95,
+        "difference": 0.00014548446487469056,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 315
+      },
+      "recall_at_k": {
+        "ci_high": 0.0020291362645711085,
+        "ci_low": -0.013477982287650193,
+        "confidence": 0.95,
+        "difference": -0.004639495832165783,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 315
+      }
+    },
+    "short_history": {
+      "ndcg_at_k": {
+        "ci_high": 0.051925553565937345,
+        "ci_low": -0.04843253775102675,
+        "confidence": 0.95,
+        "difference": 0.0016706070742008798,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 22
+      },
+      "recall_at_k": {
+        "ci_high": 0.054915634491886,
+        "ci_low": -0.013012067631030386,
+        "confidence": 0.95,
+        "difference": 0.01630424124949793,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 22
+      }
+    }
+  },
+  "validation": {
+    "cold": {
+      "ndcg_at_k": {
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 206
+      },
+      "recall_at_k": {
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 206
+      }
+    },
+    "long_history": {
+      "ndcg_at_k": {
+        "ci_high": 0.03661097729269145,
+        "ci_low": -0.019879072893095113,
+        "confidence": 0.95,
+        "difference": 0.009044216085956475,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 81
+      },
+      "recall_at_k": {
+        "ci_high": 0.028721883999828942,
+        "ci_low": -0.036090800290692525,
+        "confidence": 0.95,
+        "difference": -0.0002493717969256146,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 81
+      }
+    },
+    "overall": {
+      "ndcg_at_k": {
+        "ci_high": 0.013435898389532448,
+        "ci_low": -0.006712020144460861,
+        "confidence": 0.95,
+        "difference": 0.0032985072882447584,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 324
+      },
+      "recall_at_k": {
+        "ci_high": 0.014161110277546705,
+        "ci_low": -0.006818710543406767,
+        "confidence": 0.95,
+        "difference": 0.0038158581746944938,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 324
+      }
+    },
+    "short_history": {
+      "ndcg_at_k": {
+        "ci_high": 0.0728231210008244,
+        "ci_low": -0.05141664076628963,
+        "confidence": 0.95,
+        "difference": 0.009084725903481819,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 37
+      },
+      "recall_at_k": {
+        "ci_high": 0.10167032292032292,
+        "ci_low": -0.010589542221794439,
+        "confidence": 0.95,
+        "difference": 0.03396046389599976,
+        "repetitions": 5000,
+        "unit": "user",
+        "users": 37
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "config_sha256": "201fb46b98ebee4301949dfa01216760f2827fd14d4d4ebbc284de98a9514529",
+  "cpu_seconds": 7.421875,
+  "git_commit": "34cdb4efed1498d688bc5dd971d1b3526986f33c",
+  "git_dirty": false,
+  "inputs": {
+    "data/raw/amazon/Digital_Music.jsonl.gz": {
+      "sha256": "a598c5448cd55e9c1044aa8e1cb198642d5339190ae12b950397fc7b666c3f23",
+      "source": "https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/review_categories/Digital_Music.jsonl.gz"
+    },
+    "data/raw/amazon/Magazine_Subscriptions.jsonl.gz": {
+      "sha256": "c77a5c092039158c3f19f77f44e49c3a94fa28591eb159f4348c3d8af53bdf53",
+      "source": "https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/review_categories/Magazine_Subscriptions.jsonl.gz"
+    },
+    "data/raw/amazon/meta_Digital_Music.jsonl.gz": {
+      "sha256": "78ee3b1dc5e80dc0a20ac3221987e85b80977b17d6b61a84932f811c7ced921d",
+      "source": "https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/meta_categories/meta_Digital_Music.jsonl.gz"
+    },
+    "data/raw/amazon/meta_Magazine_Subscriptions.jsonl.gz": {
+      "sha256": "f46912359f8c29a7966e9db0dc474d91388b1a0b7232808611752da1f0bf3cf4",
+      "source": "https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/meta_categories/meta_Magazine_Subscriptions.jsonl.gz"
+    }
+  },
+  "llm_calls": 0,
+  "paid_api_usd": 0,
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python": "3.11.15 (main, Mar 24 2026, 22:57:51) [MSC v.1944 64 bit (AMD64)]",
+  "source_sha256": {
+    "main.py": "5b8d798cf443302be980a6bf98f834a79dcb0e7bb43f2f4d926c904b82bc06f3",
+    "src/__init__.py": "58cea931b945361325ecd190618610c7884afe2c47f471662bd8298b55e3875f",
+    "src/baselines.py": "0ef7757ca0e530423e601196216dbc1d4828629dddd5a4d8ec7348b5a9dba1d4",
+    "src/data.py": "8ab57d94f242dc1f16f274bbf42c5ce3f2897243a89a5fc5a448c9b4965446b5",
+    "src/feature.py": "a36160694a4f9c5bf1e223c98f5a0950d28a19470a7dcac5317515b593844a6f",
+    "src/metrics.py": "aed869ee8d1671f536a0a87eec7190facc1fae7a32f9ca8d76fa10de4f4d1cfd",
+    "src/model.py": "0ada749d511ab5f391e16a782424b5a4f4d83ec1b7c23facfb55a9b97e684122",
+    "src/profiling.py": "7d137da9ef4c5657981d29ce9533f3023479c1a0f59c7c5bfee91a9746e6c86d",
+    "src/trainer.py": "52c3fc78f930ae92e279d1cec458e5283dfe715b15ea7d8e50f98933772bb6ef",
+    "src/utils.py": "476c56dd8394769b9f00799ec408625ef4f6bb993ab8f968bc97dcdb5f6244ec"
+  },
+  "status": "completed",
+  "uv_lock_sha256": "9c6cd3efe2bbb1c1d1d1aef42f8de97dec60e9a6726d6773b80b89f355b43f2a",
+  "wall_seconds": 7.957330099998217
+}

@@ -1,0 +1,52 @@
+experiment_name: amazon_magazine_replay
+stage: replay_development
+seed: 42
+protocol:
+  id: amazon_next_positive_unseen_v1
+  positive_rating: 4
+  timestamp_unit: milliseconds
+  history_update: after_timestamp_batch
+  aggregation: user_macro
+  metadata_visibility: snapshot_assumed_static
+data:
+  category: Magazine_Subscriptions
+  source: https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/review_categories/Magazine_Subscriptions.jsonl.gz
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  sha256: c77a5c092039158c3f19f77f44e49c3a94fa28591eb159f4348c3d8af53bdf53
+  processed_path: data/processed
+  staging_path: data/staging
+  inner_train_end: "2016-01-01T00:00:00Z"
+  base_train_end: "2018-01-01T00:00:00Z"
+  policy_train_end: "2020-01-01T00:00:00Z"
+  validation_end: "2021-01-01T00:00:00Z"
+  test_end: "2023-09-10T00:00:00Z"
+model:
+  candidate_count: 50
+  neighbors_grid: [20, 50, 100]
+  shrinkage_grid: [0, 10, 100]
+  similarity: binary_positive_cosine
+  shrinkage_formula: dot_over_norm_product_plus_shrinkage
+  neighbor_direction: source_row
+  history_weight: binary_positive
+  score_normalization: none
+  fallback_and_ties: training_popularity_then_item_id
+train:
+  selection_max_users: 2000
+sampling:
+  per_user_cap: 1
+  max_users:
+    policy_train: 512
+    validation: 512
+    test: 1024
+evaluation:
+  partitions: [policy_train, validation]
+  k: 10
+  test_access: materialize_labels_only_no_scoring
+  primary_metric: user_macro_ndcg
+budget:
+  total_paid_usd: 0
+  per_run_paid_usd: 0
+  cloud_rental_allowed: false
+  stop_before_paid_call: true
+logging:
+  path: logs

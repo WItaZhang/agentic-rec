@@ -2,9 +2,9 @@ name: ci
 
 on:
   push:
-    paths: ["agentic-rec/**"]
+    paths: ["agentic-rec/**", ".github/workflows/agentic-rec-ci.yml"]
   pull_request:
-    paths: ["agentic-rec/**"]
+    paths: ["agentic-rec/**", ".github/workflows/agentic-rec-ci.yml"]
 
 jobs:
   test:
@@ -20,7 +20,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install -e ".[dev]"
-      - run: ruff check .
-      - run: pytest
-      - run: python -m agentic_rec compare configs/*.toml --users 5 --items 60
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked --extra yaml --extra experiments --extra api --python ${{ matrix.python-version }}
+      - run: uv run --locked --extra yaml --extra experiments --extra api --python ${{ matrix.python-version }} ruff check .
+      - run: uv run --locked --extra yaml --extra experiments --extra api --python ${{ matrix.python-version }} python -m pytest
+      - run: uv run --locked --extra yaml --python ${{ matrix.python-version }} python -m agentic_rec compare configs/*.toml --users 5 --items 60

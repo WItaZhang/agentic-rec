@@ -1,0 +1,22 @@
+{
+  "test": {
+    "cold_item_positives_counted_as_misses": 454,
+    "cold_users_included": 235,
+    "evaluated_users": 315,
+    "k": 10,
+    "ndcg_at_k": 0.25981395087250847,
+    "positive_targets": 12275,
+    "recall_at_k": 0.07377170290648945,
+    "users_without_eligible_positives": 12
+  },
+  "validation": {
+    "cold_item_positives_counted_as_misses": 185,
+    "cold_users_included": 206,
+    "evaluated_users": 324,
+    "k": 10,
+    "ndcg_at_k": 0.28636673136072577,
+    "positive_targets": 13006,
+    "recall_at_k": 0.07954516849965931,
+    "users_without_eligible_positives": 4
+  }
+}

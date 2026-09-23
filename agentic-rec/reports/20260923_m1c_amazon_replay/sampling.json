@@ -1,0 +1,32 @@
+{
+  "policy_train": {
+    "eligible_requests": 9568,
+    "eligible_users": 8272,
+    "per_user_cap": 1,
+    "seed": 42,
+    "selected_users": 512,
+    "selection_uses_labels": false,
+    "user_inclusion_probability": 0.061895551257253385,
+    "within_user_request_probability": "1 / eligible requests for that user"
+  },
+  "test": {
+    "eligible_requests": 4012,
+    "eligible_users": 3572,
+    "per_user_cap": 1,
+    "seed": 42,
+    "selected_users": 1024,
+    "selection_uses_labels": false,
+    "user_inclusion_probability": 0.2866741321388578,
+    "within_user_request_probability": "1 / eligible requests for that user"
+  },
+  "validation": {
+    "eligible_requests": 3624,
+    "eligible_users": 3318,
+    "per_user_cap": 1,
+    "seed": 42,
+    "selected_users": 512,
+    "selection_uses_labels": false,
+    "user_inclusion_probability": 0.15430982519590114,
+    "within_user_request_probability": "1 / eligible requests for that user"
+  }
+}

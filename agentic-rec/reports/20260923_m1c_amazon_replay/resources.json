@@ -1,0 +1,9 @@
+{
+  "llm_calls": 0,
+  "model_grid_runs": 9,
+  "paid_api_usd": 0,
+  "policy_train_itemknn_wall_seconds": 33.32590419999906,
+  "policy_train_popularity_wall_seconds": 4.0206966000005195,
+  "validation_itemknn_wall_seconds": 23.953531799998018,
+  "validation_popularity_wall_seconds": 1.7691128000005847
+}

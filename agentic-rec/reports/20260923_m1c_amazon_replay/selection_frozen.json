@@ -1,0 +1,18 @@
+{
+  "inner_sample": {
+    "eligible_requests": 9680,
+    "eligible_users": 8401,
+    "per_user_cap": 1,
+    "seed": 42,
+    "selected_users": 2000,
+    "selection_uses_labels": false,
+    "user_inclusion_probability": 0.23806689679800025,
+    "within_user_request_probability": "1 / eligible requests for that user"
+  },
+  "scope": "base_train_internal_temporal_validation_only",
+  "selected": {
+    "neighbors": 20,
+    "shrinkage": 100
+  },
+  "test_scored": false
+}

@@ -1,0 +1,191 @@
+[
+  {
+    "neighbors": 20,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.301,
+        "hr": 0.113,
+        "ndcg": 0.06535065537797673
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.301,
+        "hr": 0.113,
+        "ndcg": 0.06535065537797673
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    },
+    "shrinkage": 0,
+    "wall_seconds": 6.05225259999861
+  },
+  {
+    "neighbors": 20,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.301,
+        "hr": 0.1135,
+        "ndcg": 0.06645044624451518
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.301,
+        "hr": 0.1135,
+        "ndcg": 0.06645044624451518
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    },
+    "shrinkage": 10,
+    "wall_seconds": 7.873037299999851
+  },
+  {
+    "neighbors": 20,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.304,
+        "hr": 0.1175,
+        "ndcg": 0.06884422384831645
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.304,
+        "hr": 0.1175,
+        "ndcg": 0.06884422384831645
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    },
+    "shrinkage": 100,
+    "wall_seconds": 6.0044553000007
+  },
+  {
+    "neighbors": 50,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.297,
+        "hr": 0.113,
+        "ndcg": 0.06535065537797673
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.297,
+        "hr": 0.113,
+        "ndcg": 0.06535065537797673
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    },
+    "shrinkage": 0,
+    "wall_seconds": 4.959710099999938
+  },
+  {
+    "neighbors": 50,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.2975,
+        "hr": 0.1135,
+        "ndcg": 0.06643724621928127
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.2975,
+        "hr": 0.1135,
+        "ndcg": 0.06643724621928127
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    },
+    "shrinkage": 10,
+    "wall_seconds": 8.269150700001774
+  },
+  {
+    "neighbors": 50,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.2985,
+        "hr": 0.1175,
+        "ndcg": 0.06883824126364342
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.2985,
+        "hr": 0.1175,
+        "ndcg": 0.06883824126364342
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    },
+    "shrinkage": 100,
+    "wall_seconds": 7.893222799997602
+  },
+  {
+    "neighbors": 100,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.297,
+        "hr": 0.113,
+        "ndcg": 0.06535065537797673
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.297,
+        "hr": 0.113,
+        "ndcg": 0.06535065537797673
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    },
+    "shrinkage": 0,
+    "wall_seconds": 9.594007299998339
+  },
+  {
+    "neighbors": 100,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.298,
+        "hr": 0.113,
+        "ndcg": 0.06629271380612232
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.298,
+        "hr": 0.113,
+        "ndcg": 0.06629271380612232
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    },
+    "shrinkage": 10,
+    "wall_seconds": 5.121009399998002
+  },
+  {
+    "neighbors": 100,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.2985,
+        "hr": 0.1175,
+        "ndcg": 0.06883824126364342
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.2985,
+        "hr": 0.1175,
+        "ndcg": 0.06883824126364342
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    },
+    "shrinkage": 100,
+    "wall_seconds": 4.511441599999671
+  }
+]

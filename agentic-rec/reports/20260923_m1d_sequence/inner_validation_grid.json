@@ -1,0 +1,176 @@
+[
+  {
+    "architecture": {
+      "dimension": 32,
+      "dropout": 0.2,
+      "embedding_std": 0.02,
+      "feedforward_multiplier": 4,
+      "heads": 2,
+      "layers": 1,
+      "max_length": 20
+    },
+    "epoch": 5,
+    "loss": 6.164898974912386,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.2985,
+        "hr": 0.111,
+        "ndcg": 0.06472884347170718
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.2985,
+        "hr": 0.111,
+        "ndcg": 0.06472884347170718
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    }
+  },
+  {
+    "architecture": {
+      "dimension": 32,
+      "dropout": 0.2,
+      "embedding_std": 0.02,
+      "feedforward_multiplier": 4,
+      "heads": 2,
+      "layers": 1,
+      "max_length": 20
+    },
+    "epoch": 10,
+    "loss": 5.790262164257943,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.3005,
+        "hr": 0.112,
+        "ndcg": 0.06485797607128133
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.3005,
+        "hr": 0.112,
+        "ndcg": 0.06485797607128133
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    }
+  },
+  {
+    "architecture": {
+      "dimension": 32,
+      "dropout": 0.2,
+      "embedding_std": 0.02,
+      "feedforward_multiplier": 4,
+      "heads": 2,
+      "layers": 1,
+      "max_length": 20
+    },
+    "epoch": 20,
+    "loss": 4.976835240979566,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.302,
+        "hr": 0.1145,
+        "ndcg": 0.0660472214622481
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.302,
+        "hr": 0.1145,
+        "ndcg": 0.0660472214622481
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    }
+  },
+  {
+    "architecture": {
+      "dimension": 64,
+      "dropout": 0.2,
+      "embedding_std": 0.02,
+      "feedforward_multiplier": 4,
+      "heads": 2,
+      "layers": 1,
+      "max_length": 20
+    },
+    "epoch": 5,
+    "loss": 5.878677642362337,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.299,
+        "hr": 0.11,
+        "ndcg": 0.06366235289674561
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.299,
+        "hr": 0.11,
+        "ndcg": 0.06366235289674561
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    }
+  },
+  {
+    "architecture": {
+      "dimension": 64,
+      "dropout": 0.2,
+      "embedding_std": 0.02,
+      "feedforward_multiplier": 4,
+      "heads": 2,
+      "layers": 1,
+      "max_length": 20
+    },
+    "epoch": 10,
+    "loss": 5.107529322712134,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.3005,
+        "hr": 0.115,
+        "ndcg": 0.06555370132718258
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.3005,
+        "hr": 0.115,
+        "ndcg": 0.06555370132718258
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    }
+  },
+  {
+    "architecture": {
+      "dimension": 64,
+      "dropout": 0.2,
+      "embedding_std": 0.02,
+      "feedforward_multiplier": 4,
+      "heads": 2,
+      "layers": 1,
+      "max_length": 20
+    },
+    "epoch": 20,
+    "loss": 3.968594347230086,
+    "quality": {
+      "cold_item_misses": 291,
+      "request_micro": {
+        "candidate_recall": 0.299,
+        "hr": 0.1145,
+        "ndcg": 0.06678012680765678
+      },
+      "requests": 2000,
+      "user_macro": {
+        "candidate_recall": 0.299,
+        "hr": 0.1145,
+        "ndcg": 0.06678012680765678
+      },
+      "users": 2000,
+      "zero_history_requests": 1786
+    }
+  }
+]

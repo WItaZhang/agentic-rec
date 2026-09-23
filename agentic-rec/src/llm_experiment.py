@@ -1,0 +1,170 @@
+"""Configured real-API development experiments; label lookup occurs after inference."""
+
+import hashlib
+import json
+import random
+import time
+from collections import Counter
+from dataclasses import asdict
+
+import numpy as np
+from scipy import sparse
+
+from .data import load_amazon_metadata, load_amazon_reviews
+from .evidence import build_prompt
+from .metrics import aggregate_requests, single_target_metrics
+from .model import ItemKNNModel
+from .openai_adapter import OpenAIBackend
+from .paid_budget import PaidBudget, usage_cost
+from .protocol import hash_sample, replay_requests, validate_ranking
+from .replay import make_candidates, model_fingerprint
+from .utils import digest, managed_run, utc_seconds, write_json
+
+
+def validate_llm_config(config):
+    if config["evaluation"]["partition"] not in ("policy_train", "validation"):
+        raise ValueError("Development API stage cannot score or call on test")
+    if config["runtime"]["concurrency"] != 1 or config["runtime"]["cache"] != "disabled":
+        raise ValueError("Initial protocol requires sequential uncached calls")
+    if config["llm"]["temperature"] != 0 or config["llm"]["model"] != config["llm"]["pricing"]["model"]:
+        raise ValueError("Frozen greedy decoding and model-specific prices required")
+    if config["budget"]["total_paid_usd"] > 50 or config["budget"]["cloud_rental_allowed"]:
+        raise ValueError("Configuration exceeds current authorization")
+    if not 0 < config["evidence"]["recent_events"] <= config["evidence"]["max_history_events"]:
+        raise ValueError("Invalid history limits")
+
+
+def load_frozen_knn(root, config):
+    directory = root / config["artifact_path"]
+    model = json.loads((directory / "model.json").read_text())
+    result = ItemKNNModel(tuple(model["catalog"]), sparse.load_npz(directory / "itemknn.npz"),
+                          tuple(model["popularity"]))
+    if model_fingerprint(result) != config["model_hash"]:
+        raise ValueError("Frozen model fingerprint mismatch")
+    return result
+
+
+def choose_views(events, config):
+    ends = [(name, utc_seconds(config["data"][key]) * 1000) for name, key in (
+        ("base_train", "base_train_end"), ("policy_train", "policy_train_end"),
+        ("validation", "validation_end"), ("test", "test_end"))]
+    partition = config["evaluation"]["partition"]
+    views = [view for view, _ in replay_requests(events, ends, config["protocol"]["positive_rating"])
+             if view.partition == partition]
+    sampling = config["sampling"]
+    if sampling["mode"] == "smoke_history_strata":
+        # Label-blind convenience sample for protocol checks only; not population estimates.
+        chosen, audit = [], {}
+        for name, present in (("zero", False), ("nonzero", True)):
+            part, part_audit = hash_sample([v for v in views if bool(v.history) == present],
+                                          sampling["users_by_history"][name], config["seed"])
+            chosen.extend(part)
+            audit[name] = part_audit
+        return chosen, audit, ends
+    if sampling["mode"] != "uniform_users":
+        raise ValueError("Unknown sampling mode")
+    chosen, audit = hash_sample(views, sampling["max_users"], config["seed"])
+    return chosen, audit, ends
+
+
+def run_llm(config, config_path, root):
+    import tiktoken
+
+    validate_llm_config(config)
+    with managed_run(config, config_path, root) as (run_dir, manifest):
+        for path_key, hash_key in (("raw_path", "sha256"), ("metadata_path", "metadata_sha256")):
+            if digest(root / config["data"][path_key]) != config["data"][hash_key]:
+                raise ValueError("Dataset checksum mismatch")
+        events, audit = load_amazon_reviews(root / config["data"]["raw_path"])
+        metadata = load_amazon_metadata(root / config["data"]["metadata_path"], ["title", "categories"])
+        views, sampling, ends = choose_views(events, config)
+        write_json(run_dir / "sampling.json", sampling)
+        model = load_frozen_knn(root, config["retriever"])
+        snapshots = {v.request_id: make_candidates(v, model, config["retriever"]["candidate_count"],
+            config["protocol"]["positive_rating"], config["retriever"]["model_hash"]) for v in views}
+        write_json(run_dir / "candidates.json", {key: {**asdict(value), "content_hash": value.content_hash}
+                                                for key, value in snapshots.items()})
+        tokenizer = tiktoken.get_encoding(config["evidence"]["tokenizer"])
+
+        def truncate(text, limit):
+            tokens = tokenizer.encode(text, disallowed_special=())
+            return tokenizer.decode(tokens[:limit]), len(tokens) > limit
+
+        budget_config = config["budget"]
+        budget = PaidBudget(root / budget_config["ledger_path"], run_dir.name,
+            budget_config["total_paid_usd"], budget_config["per_run_paid_usd"], budget_config["stop_at_usd"])
+        backend = OpenAIBackend(config["llm"], root, budget)
+        instructions = (root / config["evidence"]["prompt_path"]).read_text(encoding="utf-8")
+        jobs = [(v, plan) for v in views for plan in config["evidence"]["plans"]]
+        random.Random(config["seed"]).shuffle(jobs)
+        upper = len(jobs) * usage_cost({"input_tokens": config["llm"]["max_input_tokens"]
+                                       + config["llm"]["input_reservation_margin_tokens"],
+                                       "output_tokens": config["llm"]["max_output_tokens"]}, config["llm"]["pricing"])
+        estimate = {"maximum_generation_calls": len(jobs), "upper_bound_usd": upper,
+                    "accounting_before": budget.snapshot(), "price_source": config["llm"]["pricing"]["source"]}
+        write_json(run_dir / "preflight_budget.json", estimate)
+        print(f"Preflight: {len(views)} requests, {len(jobs)} calls, conservative upper ${upper:.6f}", flush=True)
+        if upper > budget_config["per_run_paid_usd"] or upper + budget.snapshot()["campaign_accounted_usd"] > budget_config["stop_at_usd"]:
+            raise ValueError("Full round estimate exceeds configured budget; revise round before calling")
+        predictions, records = [], []
+        with (run_dir / "calls.jsonl").open("w", encoding="utf-8") as calls_file, \
+                (run_dir / "predictions.jsonl").open("w", encoding="utf-8") as predictions_file:
+            for index, (view, plan) in enumerate(jobs, 1):
+                start = time.perf_counter()
+                snapshot = snapshots[view.request_id]
+                messages, schema, aliases, evidence = build_prompt(view, snapshot, metadata, plan,
+                    config["evidence"], truncate, instructions)
+                evidence_ms = (time.perf_counter() - start) * 1000
+                record = backend.complete(messages, schema, {"request_id": view.request_id, "plan": plan})
+                record.update(evidence=evidence, evidence_latency_ms=evidence_ms)
+                records.append(record)
+                calls_file.write(json.dumps(record) + "\n")
+                calls_file.flush()
+                ranked, parse_error = [], None
+                if record["status"] == "completed":
+                    try:
+                        ranked = [aliases.get(alias, "OUTSIDE") for alias in json.loads(record["text"])["item_ids"]]
+                    except (ValueError, KeyError, TypeError):
+                        parse_error = "malformed_ranking"
+                ranking, errors = validate_ranking(ranked, snapshot, config["evidence"]["k"])
+                prediction = {"request_id": view.request_id, "user_id": view.user_id, "plan": plan,
+                              "ranking": ranking, "repair_errors": errors, "parse_error": parse_error,
+                              "status": record["status"], "candidate_hash": snapshot.content_hash,
+                              "service_latency_ms": evidence_ms + record["total_latency_ms"]}
+                predictions.append(prediction)
+                predictions_file.write(json.dumps(prediction) + "\n")
+                predictions_file.flush()
+                write_json(run_dir / "budget_checkpoint.json", budget.snapshot())
+                print(f"Call {index}/{len(jobs)} {plan}: {record['status']}; accounted ${budget.snapshot()['round_accounted_usd']:.6f}", flush=True)
+                if record["status"] in ("count_error", "generation_error") or record.get("actual_known_usd") is None:
+                    raise RuntimeError("API error or unavailable usage: stopping; conservative ledger retained")
+        # Evaluation is downstream of all inference; never passed into evidence or backend.
+        targets = {target.request_id: target.item_id for _, target in replay_requests(
+            events, ends, config["protocol"]["positive_rating"])}
+        outcomes = []
+        for view in views:
+            predictions.append({"request_id": view.request_id, "user_id": view.user_id, "plan": "R0",
+                                "ranking": snapshots[view.request_id].item_ids[:config["evidence"]["k"]]})
+        by_id = {v.request_id: v for v in views}
+        for prediction in predictions:
+            request_id = prediction["request_id"]
+            outcomes.append({**prediction, "history_count": len(by_id[request_id].history),
+                "cold_item": targets[request_id] not in model.catalog,
+                **single_target_metrics(prediction["ranking"], targets[request_id], snapshots[request_id].item_ids,
+                                        config["evidence"]["k"])})
+        write_json(run_dir / "outcomes.json", outcomes)
+        metrics = {plan: aggregate_requests([r for r in outcomes if r["plan"] == plan])
+                   for plan in ["R0", *config["evidence"]["plans"]]}
+        write_json(run_dir / "metrics.json", metrics)
+        resources = {"budget": budget.snapshot(), "calls": len(records),
+                     "input_tokens": sum((r["usage"] or {}).get("input_tokens", 0) for r in records),
+                     "output_tokens": sum((r["usage"] or {}).get("output_tokens", 0) for r in records),
+                     "statuses": dict(Counter(r["status"] for r in records)),
+                     "count_endpoint_calls": sum(r["count_endpoint_calls"] for r in records),
+                     "other_model_calls": {"planning": 0, "summary": 0, "reflection": 0, "embedding": 0},
+                     "mean_service_latency_ms": float(np.mean([r["total_latency_ms"] + r["evidence_latency_ms"] for r in records])),
+                     "p95_service_latency_ms": float(np.percentile([r["total_latency_ms"] + r["evidence_latency_ms"] for r in records], 95))}
+        write_json(run_dir / "resources.json", resources)
+        manifest.update(test_scored=False, input_audit=audit, raw_sha256=digest(root / config["data"]["raw_path"]),
+                        prompt_sha256=hashlib.sha256(instructions.encode()).hexdigest(),
+                        candidates_sha256=digest(run_dir / "candidates.json"), tokenizer=config["evidence"]["tokenizer"])
