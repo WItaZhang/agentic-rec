@@ -4,7 +4,7 @@ Last updated: 2026-09-23 UTC. The full research goal remains active.
 
 ## Authorization and resources
 
-- Branch: `codex/adaptive-evidence-research`; repository default:
+- Branch: `codex/evidence-policy-study`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
 - Paid API authorization updated by user: **USD 50 total**, estimate each round.
   First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
@@ -48,7 +48,14 @@ smoke, then a development sample sized using variance and measured costs.
 `configs/amazon_llm_smoke.yaml` fixes all settings and prices; prompts are versioned.
 The local float32 adapter remains implemented but unexecuted (only about 1.9 GB
 RAM free at inspection). No cloud resource, quantized model, or runtime was rented.
-No external input is pending. Paid spending before first smoke: USD 0.
+No external input is pending. Paid spending after first smoke: USD 0.069304; remaining USD 49.930696.
+Actual run `logs/20260923_234647_amazon_llm_smoke`, source `2791754`: 32/32
+completed, one deterministic ranking repair, all provider counts matched usage.
+[Smoke report](../../reports/20260923_m2_api_smoke/README.md). Next: 256-user
+uniform development pilot (USD 6 cap). This is not a final effectiveness result.
+PR [#2](https://github.com/WItaZhang/agentic-rec/pull/2) passed Python 3.11/3.12
+CI and was merged as `12d00bf`, preserving the original PR #1 commits.
+The MovieLens foundation is now included in the repository default branch.
 
 ## Decisions and limitations
 

@@ -1,0 +1,34 @@
+Preflight: 8 requests, 32 calls, conservative upper $0.424346
+Call 1/32 R3: completed; accounted $0.003087
+Call 2/32 R2: completed; accounted $0.004511
+Call 3/32 R3: completed; accounted $0.007604
+Call 4/32 R4: completed; accounted $0.010691
+Call 5/32 R2: completed; accounted $0.012132
+Call 6/32 R4: completed; accounted $0.015225
+Call 7/32 R3: completed; accounted $0.018325
+Call 8/32 R3: completed; accounted $0.021401
+Call 9/32 R4: completed; accounted $0.024528
+Call 10/32 R1: completed; accounted $0.025962
+Call 11/32 R1: completed; accounted $0.027414
+Call 12/32 R2: completed; accounted $0.028858
+Call 13/32 R1: completed; accounted $0.030300
+Call 14/32 R3: completed; accounted $0.031159
+Call 15/32 R1: completed; accounted $0.032600
+Call 16/32 R1: completed; accounted $0.034037
+Call 17/32 R3: completed; accounted $0.037139
+Call 18/32 R2: completed; accounted $0.038563
+Call 19/32 R2: completed; accounted $0.039996
+Call 20/32 R3: completed; accounted $0.043123
+Call 21/32 R3: completed; accounted $0.046199
+Call 22/32 R2: completed; accounted $0.047652
+Call 23/32 R2: completed; accounted $0.049089
+Call 24/32 R4: completed; accounted $0.052165
+Call 25/32 R2: completed; accounted $0.053607
+Call 26/32 R1: completed; accounted $0.055031
+Call 27/32 R4: completed; accounted $0.058118
+Call 28/32 R4: completed; accounted $0.061220
+Call 29/32 R1: completed; accounted $0.062664
+Call 30/32 R4: completed; accounted $0.065764
+Call 31/32 R1: completed; accounted $0.066228
+Call 32/32 R4: completed; accounted $0.069304
+Artifacts: logs\20260923_234647_amazon_llm_smoke
