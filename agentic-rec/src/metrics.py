@@ -30,3 +30,31 @@ def paired_bootstrap(left, right, repetitions, seed, confidence):
             "ci_low": float(np.quantile(means, tail)),
             "ci_high": float(np.quantile(means, 1 - tail)),
             "confidence": confidence, "repetitions": repetitions, "unit": "user"}
+
+
+def single_target_metrics(ranking, target, candidates, k):
+    if len(ranking) != len(set(ranking)) or set(ranking) - set(candidates):
+        raise ValueError("Ranking must be unique and inside frozen candidates")
+    rank = ranking.index(target) + 1 if target in ranking else None
+    hit = rank is not None and rank <= k
+    return {"ndcg": 1 / math.log2(rank + 1) if hit else 0.0,
+            "hr": float(hit), "candidate_recall": float(target in candidates)}
+
+
+def aggregate_requests(outcomes):
+    from collections import defaultdict
+
+    by_user = defaultdict(list)
+    for row in outcomes:
+        by_user[row["user_id"]].append(row)
+    if not outcomes:
+        return {"requests": 0, "users": 0}
+    metrics = ("ndcg", "hr", "candidate_recall")
+    user_values = {user: {key: float(np.mean([row[key] for row in rows])) for key in metrics}
+                   for user, rows in by_user.items()}
+    return {"requests": len(outcomes), "users": len(by_user),
+            "user_macro": {key: float(np.mean([row[key] for row in user_values.values()]))
+                           for key in metrics},
+            "request_micro": {key: float(np.mean([row[key] for row in outcomes])) for key in metrics},
+            "cold_item_misses": sum(row.get("cold_item", False) for row in outcomes),
+            "zero_history_requests": sum(row.get("history_count", 0) == 0 for row in outcomes)}

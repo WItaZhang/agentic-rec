@@ -24,11 +24,14 @@ class ItemKNNModel:
         return self.catalog
 
     def recommend(self, seen, k, positive_history=()):
+        scores = self.score_items(positive_history)
+        order = sorted(range(len(self.catalog)),
+                       key=lambda i: (-scores[i], -self.popularity[i], self.catalog[i]))
+        return [self.catalog[i] for i in order if self.catalog[i] not in seen][:k]
+
+    def score_items(self, positive_history):
         import numpy as np
 
         indices = {item: index for index, item in enumerate(self.catalog)}
         known = [indices[item] for item in set(positive_history) if item in indices]
-        scores = np.asarray(self.similarity[known].sum(axis=0)).ravel()
-        order = sorted(range(len(self.catalog)),
-                       key=lambda i: (-scores[i], -self.popularity[i], self.catalog[i]))
-        return [self.catalog[i] for i in order if self.catalog[i] not in seen][:k]
+        return np.asarray(self.similarity[known].sum(axis=0)).ravel()

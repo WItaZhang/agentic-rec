@@ -1,0 +1,41 @@
+experiment_name: amazon_training_profile
+stage: profile_amazon
+seed: 42
+protocol:
+  positive_rating: 4
+  timestamp_unit: milliseconds
+  history_update: after_timestamp_batch
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+  base_train_end: "2018-01-01T00:00:00Z"
+  allowed_metadata_fields: [title, categories, features]
+  categories:
+    - name: Magazine_Subscriptions
+      reviews:
+        path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+        sha256: c77a5c092039158c3f19f77f44e49c3a94fa28591eb159f4348c3d8af53bdf53
+        source: https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/review_categories/Magazine_Subscriptions.jsonl.gz
+      metadata:
+        path: data/raw/amazon/meta_Magazine_Subscriptions.jsonl.gz
+        sha256: f46912359f8c29a7966e9db0dc474d91388b1a0b7232808611752da1f0bf3cf4
+        source: https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/meta_categories/meta_Magazine_Subscriptions.jsonl.gz
+    - name: Digital_Music
+      reviews:
+        path: data/raw/amazon/Digital_Music.jsonl.gz
+        sha256: a598c5448cd55e9c1044aa8e1cb198642d5339190ae12b950397fc7b666c3f23
+        source: https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/review_categories/Digital_Music.jsonl.gz
+      metadata:
+        path: data/raw/amazon/meta_Digital_Music.jsonl.gz
+        sha256: 78ee3b1dc5e80dc0a20ac3221987e85b80977b17d6b61a84932f811c7ced921d
+        source: https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/meta_categories/meta_Digital_Music.jsonl.gz
+profile:
+  history_thresholds: [0, 1, 2, 5, 10, 20]
+budget:
+  total_paid_usd: 0
+  per_run_paid_usd: 0
+  cloud_rental_allowed: false
+  stop_before_paid_call: true
+logging:
+  path: logs
