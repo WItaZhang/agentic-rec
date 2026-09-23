@@ -37,6 +37,11 @@ def main():
 
         run_replay(config, args.config, root)
         return
+    if config.get("stage") == "sequence_development":
+        from src.sequence_trainer import run_sequence
+
+        run_sequence(config, args.config, root)
+        return
     raw, (processed, _staging, logs) = prepare_paths(config, root)
     run_dir = create_run_dir(logs, config["experiment_name"])
     (run_dir / "config.yaml").write_bytes(args.config.read_bytes())

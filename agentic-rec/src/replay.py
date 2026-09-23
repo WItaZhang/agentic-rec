@@ -18,6 +18,8 @@ from .utils import digest, managed_run, utc_seconds, write_json
 
 
 def model_fingerprint(model):
+    if hasattr(model, "checkpoint_hash"):
+        return model.checkpoint_hash
     value = hashlib.sha256()
     if isinstance(model, ItemKNNModel):
         value.update(json.dumps([model.catalog, model.popularity]).encode())
@@ -32,8 +34,9 @@ def make_candidates(request, model, candidate_count, positive_rating, model_hash
     """Inference only: no evaluation target parameter or global label lookup."""
     seen = {event.item for event in request.history}
     positive = {event.item for event in request.history if event.rating >= positive_rating}
-    if isinstance(model, ItemKNNModel):
-        values = model.score_items(positive)
+    if isinstance(model, ItemKNNModel) or hasattr(model, "score_history"):
+        values = (model.score_items(positive) if isinstance(model, ItemKNNModel)
+                  else model.score_history(request.history, positive_rating))
         indices = sorted(range(len(model.catalog)),
                          key=lambda i: (-values[i], -model.popularity[i], model.catalog[i]))
         indices = [i for i in indices if model.catalog[i] not in seen][:candidate_count]

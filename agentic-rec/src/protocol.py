@@ -51,7 +51,7 @@ class CandidateSnapshot:
 
 def replay_requests(events, boundaries, positive_rating):
     """Yield views and separate labels; reveal a timestamp's events only after all predictions."""
-    if not boundaries or any(left[1] >= right[1] for left, right in zip(boundaries, boundaries[1:])):
+    if not boundaries or any(left[1] >= right[1] for left, right in zip(boundaries, boundaries[1:], strict=False)):
         raise ValueError("Strictly increasing global partition ends required")
     histories = defaultdict(list)
     seen = defaultdict(set)
