@@ -39,6 +39,11 @@ def load_config(path):
     config = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
     if not re.fullmatch(r"[a-z0-9_]+", config["experiment_name"]):
         raise ValueError("Unsafe experiment name")
+    if config.get("stage") == "llm_development":
+        from .llm_experiment import validate_llm_config
+
+        validate_llm_config(config)
+        return config
     if config.get("stage") in ("profile_amazon", "replay_development", "sequence_development"):
         return config
     if config["model"]["name"] not in ("popularity", "baseline_suite"):

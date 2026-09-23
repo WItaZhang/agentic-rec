@@ -38,6 +38,11 @@ local-llm = [
     "torch>=2.4,<3",
     "transformers>=4.45,<5",
 ]
+api = [
+    "filelock>=4.0.2",
+    "openai>=3.19.1",
+    "tiktoken>=0.14.0",
+]
 
 [project.scripts]
 agentic-rec = "agentic_rec.cli:main"

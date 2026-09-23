@@ -27,6 +27,11 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") == "llm_development":
+        from src.llm_experiment import run_llm
+
+        run_llm(config, args.config, root)
+        return
     if config.get("stage") == "profile_amazon":
         from src.profiling import run_profile
 

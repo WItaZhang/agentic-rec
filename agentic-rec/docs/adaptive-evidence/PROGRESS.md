@@ -6,15 +6,18 @@ Last updated: 2026-09-23 UTC. The full research goal remains active.
 
 - Branch: `codex/adaptive-evidence-research`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
-- Paid API authorization: **USD 0 total / USD 0 per run**. No cloud rental.
-  No paid calls have been made. Stop before any positive-priced request.
+- Paid API authorization updated by user: **USD 50 total**, estimate each round.
+  First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
+  Persistent ledger: `logs/budget/openai_ledger.jsonl`; uncertain calls retain
+  maximum reservations. Request a popup before exceeding the total authorization.
 - Available local hardware: Ryzen 7 5800H (8 cores / 16 threads), 14.89 GB RAM,
   AMD integrated graphics; no CUDA GPU detected. CPU experiments are the default.
 - Cached real model: `Qwen/Qwen2.5-1.5B-Instruct`, revision
   `989aa7980e4cf806f80c7fef2b1adb7bc71aa306`, including 3.09 GB weights.
   Availability is verified; inference feasibility and quality are not yet verified.
-- No environment API credentials were detected by variable name. Secret values
-  were not inspected. Additional budget/permission requests use the task popup.
+- User supplied a local OpenAI credential file, excluded via `.git/info/exclude`.
+  Credential authentication verified through the unbilled model-list endpoint.
+  Never copy credentials into configs, reports, tool output or Git.
 
 ## Initial audit
 
@@ -34,22 +37,18 @@ Last updated: 2026-09-23 UTC. The full research goal remains active.
 | M1a conventional models | validated | `ccd702a`; `logs/20260923_232152_ml100k_baselines`; [report](../../reports/20260923_m1a_baselines/README.md) | NDCG difference +0.000145, 95% CI [-0.008999, +0.008047]; no established gain, Recall lower. No test-based retuning. |
 | M1b Amazon coverage | validated | `34cdb4e`; `logs/20260923_232442_amazon_training_profile`; `configs/amazon_profile.yaml` | Magazine selected using training-only coverage and memory. Digital Music retained as rejected candidate. |
 | M1c event replay | validated | `a20628e`; `logs/20260923_232911_amazon_magazine_replay`; [report](../../reports/20260923_m1c_amazon_replay/README.md) | Validation CandidateRecall@50=0.373081; improve/expand retrieval before LLM scale-up. Test unscored. |
-| M2 real LLM | planned | Zero-paid local feasibility path | Measure actual tokenizer counts and all computation; no mock performance claims. |
+| M1d sequence baseline | validated | `45be0c3`; `logs/20260923_233625_amazon_magazine_sequence`; [report](../../reports/20260923_m1d_sequence/README.md) | Sequence validation NDCG 0.067832; retrieval no better. Freeze ItemKNN top-200 for main evidence comparisons. |
+| M2 real LLM | implementing | `configs/amazon_llm_smoke.yaml`, OpenAI GPT-4.1 mini snapshot | First real round: 8 development requests, 32 calls, upper USD 0.425; no effectiveness claim from smoke. |
 | M3–M4 evidence and routing | planned | Conditional on usable evidence variation | Keep fixed, rule and random controls; no obligation to retain a failed complex method. |
 | M5 sequential evidence | conditional | No implementation claimed | Only pursue if observations after fetching evidence can improve a decision. |
 | M6 report and career materials | planned | Claim ledger tied to completed results | Strong baseline, statistics, ablations, limitations and honest LaTeX. |
 
-Current independent work: `configs/amazon_magazine_sequence.yaml` trains a
-SASRec-style causal Transformer with a full-softmax objective. Architecture and
-epoch selection use only base_train's internal time split. Candidate coverage
-will be compared at 50/100/200 on policy_train and validation. Final test remains
-unscored. This is an adapted sequential baseline, not a paper reproduction.
-
-External input pending: user confirmed an authorized API/server exists and will
-provide endpoint/model/credential location plus total and per-run budget. Until
-those arrive, paid authorization remains zero. A local float32 LLM backend is
-implemented but not executed: only about 1.9 GB system memory was free when checked.
-No quantized model or additional inference runtime has been downloaded.
+Current work: durable paid-call accounting, target-free R1–R4 evidence, real API
+smoke, then a development sample sized using variance and measured costs.
+`configs/amazon_llm_smoke.yaml` fixes all settings and prices; prompts are versioned.
+The local float32 adapter remains implemented but unexecuted (only about 1.9 GB
+RAM free at inspection). No cloud resource, quantized model, or runtime was rented.
+No external input is pending. Paid spending before first smoke: USD 0.
 
 ## Decisions and limitations
 
