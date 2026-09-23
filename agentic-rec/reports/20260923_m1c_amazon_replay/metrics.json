@@ -1,0 +1,70 @@
+{
+  "policy_train": {
+    "itemknn": {
+      "cold_item_misses": 737,
+      "request_micro": {
+        "candidate_recall": 0.3907817725752508,
+        "hr": 0.16147575250836121,
+        "ndcg": 0.08573178823458863
+      },
+      "requests": 9568,
+      "user_macro": {
+        "candidate_recall": 0.3850325538822879,
+        "hr": 0.1541584634337294,
+        "ndcg": 0.07976122149935437
+      },
+      "users": 8272,
+      "zero_history_requests": 7787
+    },
+    "popularity": {
+      "cold_item_misses": 737,
+      "request_micro": {
+        "candidate_recall": 0.37886705685618727,
+        "hr": 0.1470526755852843,
+        "ndcg": 0.07357681876382478
+      },
+      "requests": 9568,
+      "user_macro": {
+        "candidate_recall": 0.37923315602836877,
+        "hr": 0.14905130330662242,
+        "ndcg": 0.07493314765175212
+      },
+      "users": 8272,
+      "zero_history_requests": 7787
+    }
+  },
+  "validation": {
+    "itemknn": {
+      "cold_item_misses": 448,
+      "request_micro": {
+        "candidate_recall": 0.3705849889624724,
+        "hr": 0.1423841059602649,
+        "ndcg": 0.06578202227742215
+      },
+      "requests": 3624,
+      "user_macro": {
+        "candidate_recall": 0.37308117339762914,
+        "hr": 0.14283035295693522,
+        "ndcg": 0.065455732386442
+      },
+      "users": 3318,
+      "zero_history_requests": 3072
+    },
+    "popularity": {
+      "cold_item_misses": 448,
+      "request_micro": {
+        "candidate_recall": 0.36423841059602646,
+        "hr": 0.1371412803532009,
+        "ndcg": 0.06221738889653855
+      },
+      "requests": 3624,
+      "user_macro": {
+        "candidate_recall": 0.36856829293538157,
+        "hr": 0.13986900347659842,
+        "ndcg": 0.06302875959835656
+      },
+      "users": 3318,
+      "zero_history_requests": 3072
+    }
+  }
+}

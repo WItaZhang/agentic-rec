@@ -1,0 +1,22 @@
+{
+  "base_train": {
+    "eligible_requests": 35194,
+    "end_exclusive": 1514764800000,
+    "zero_history_requests": 29516
+  },
+  "policy_train": {
+    "eligible_requests": 9568,
+    "end_exclusive": 1577836800000,
+    "zero_history_requests": 7787
+  },
+  "test": {
+    "eligible_requests": 4012,
+    "end_exclusive": 1694304000000,
+    "zero_history_requests": 3267
+  },
+  "validation": {
+    "eligible_requests": 3624,
+    "end_exclusive": 1609459200000,
+    "zero_history_requests": 3072
+  }
+}

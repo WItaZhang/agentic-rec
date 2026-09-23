@@ -1,5 +1,15 @@
 # MovieLens 100K baseline evidence — 2026-09-21 (America/Los_Angeles)
 
+## Ongoing adaptive-evidence research
+
+- [Current status and recovery](../docs/adaptive-evidence/PROGRESS.md)
+- [M0 independently reproduced runs](20260923_m0_reproduction/)
+- [M1a ItemKNN comparison, including the null result](20260923_m1a_baselines/README.md)
+- [M1b training-only Amazon profiles](20260923_m1b_amazon_profile/)
+- [M1c Amazon event replay and candidate coverage](20260923_m1c_amazon_replay/README.md)
+
+The evidence below is retained from the original PR; new protocols have separate reports.
+
 Two local executions on clean source commit
 [`965081d2645a`](https://github.com/WItaZhang/agentic-rec/commit/965081d2645a85a5f879c979aa0b8476c9d86222)
 produced byte-identical `metrics.json` files. UTC run IDs were

@@ -33,11 +33,23 @@ Last updated: 2026-09-23 UTC. The full research goal remains active.
 | M0 audit and reproduction | validated | Original `ad35806`; local runs `logs/20260923_231823_ml100k_popularity` and `logs/20260923_231847_ml100k_popularity` | Both reproduce original metrics; 42 tests and Ruff pass. Preserve fixed-history, multi-positive protocol as `ml100k_fixed_history_multipositive_v0`. |
 | M1a conventional models | validated | `ccd702a`; `logs/20260923_232152_ml100k_baselines`; [report](../../reports/20260923_m1a_baselines/README.md) | NDCG difference +0.000145, 95% CI [-0.008999, +0.008047]; no established gain, Recall lower. No test-based retuning. |
 | M1b Amazon coverage | validated | `34cdb4e`; `logs/20260923_232442_amazon_training_profile`; `configs/amazon_profile.yaml` | Magazine selected using training-only coverage and memory. Digital Music retained as rejected candidate. |
-| M1c event replay | implemented, running next | `configs/amazon_magazine_replay.yaml` | Four global blocks, separate target labels, immutable candidates and timestamp-batch histories. Development runner refuses test scoring. |
+| M1c event replay | validated | `a20628e`; `logs/20260923_232911_amazon_magazine_replay`; [report](../../reports/20260923_m1c_amazon_replay/README.md) | Validation CandidateRecall@50=0.373081; improve/expand retrieval before LLM scale-up. Test unscored. |
 | M2 real LLM | planned | Zero-paid local feasibility path | Measure actual tokenizer counts and all computation; no mock performance claims. |
 | M3–M4 evidence and routing | planned | Conditional on usable evidence variation | Keep fixed, rule and random controls; no obligation to retain a failed complex method. |
 | M5 sequential evidence | conditional | No implementation claimed | Only pursue if observations after fetching evidence can improve a decision. |
 | M6 report and career materials | planned | Claim ledger tied to completed results | Strong baseline, statistics, ablations, limitations and honest LaTeX. |
+
+Current independent work: `configs/amazon_magazine_sequence.yaml` trains a
+SASRec-style causal Transformer with a full-softmax objective. Architecture and
+epoch selection use only base_train's internal time split. Candidate coverage
+will be compared at 50/100/200 on policy_train and validation. Final test remains
+unscored. This is an adapted sequential baseline, not a paper reproduction.
+
+External input pending: user confirmed an authorized API/server exists and will
+provide endpoint/model/credential location plus total and per-run budget. Until
+those arrive, paid authorization remains zero. A local float32 LLM backend is
+implemented but not executed: only about 1.9 GB system memory was free when checked.
+No quantized model or additional inference runtime has been downloaded.
 
 ## Decisions and limitations
 
