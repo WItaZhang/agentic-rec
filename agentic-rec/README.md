@@ -4,6 +4,8 @@
 
 [中文说明](README.zh-CN.md) · [中文学习路线](docs/zh/00-学习路线.md) · [Survey](docs/survey.md) · [Paper × component matrix](docs/component-matrix.md) · [Design notes](docs/design.md)
 
+**Next research project:** [Adaptive Evidence Acquisition for Agentic Recommendation](docs/adaptive-evidence/README.md) — a detailed plan for temporal real-data evaluation, evidence-routing policies, quality–cost experiments, implementation milestones, and resume claims supported by measured results. The design is in Chinese; its methods and results are explicitly marked as planned. It also explains how the existing [MovieLens experiment PR](https://github.com/WItaZhang/agentic-rec/pull/1) fits into the roadmap.
+
 Between 2023 and 2026, several dozen papers put an LLM *agent* at the centre of a recommender: as the recommender itself (RecMind, InteRecAgent, MACRec, BiLLP), as a simulated user (RecAgent, Agent4Rec, SimUSER, RecoWorld), as an item (AgentCF), or as an assistant on the user's side (RAH, iAgent). Read side by side, they share nine components and differ mainly in which ones they attach and how they are optimised.
 
 This repository contains:

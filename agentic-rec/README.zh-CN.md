@@ -4,6 +4,8 @@
 
 [English](README.md) · **[中文学习路线（从零开始）](docs/zh/00-学习路线.md)** · [英文综述](docs/survey.md) · [论文 × 组件矩阵](docs/component-matrix.md) · [设计说明](docs/design.md)
 
+**下一步研究项目：[自适应证据检索的 Agentic Recommendation](docs/adaptive-evidence/README.md)**。详细设计包含研究假设、真实数据与时间协议、工具及控制器接口、实验和消融矩阵、成本统计、分阶段验收、相关工作与英文简历模板。方案区分已存在的 MovieLens 基础、待实现的方法和待验证的结果，可按里程碑逐步完成。
+
 2023 到 2026 年间，几十篇工作把 LLM *agent* 放到推荐系统的中心：作为推荐器本身（RecMind、InteRecAgent、MACRec、BiLLP），作为模拟用户（RecAgent、Agent4Rec、SimUSER、RecoWorld），作为物品（AgentCF），或作为站在用户一侧的助理（RAH、iAgent）。把它们并排读，会发现共享九个组件，差异主要在于挂载了哪些组件、以及如何优化。
 
 仓库包含：
