@@ -1,0 +1,48 @@
+{
+  "group_boundary_source": "training_only",
+  "partitions": {
+    "test": {
+      "items": 1467,
+      "rating_counts": {
+        "1": 1197,
+        "2": 2565,
+        "3": 5978,
+        "4": 7265,
+        "5": 5010
+      },
+      "ratings": 22015,
+      "users": 327
+    },
+    "train": {
+      "items": 1493,
+      "rating_counts": {
+        "1": 2894,
+        "2": 5698,
+        "3": 14213,
+        "4": 18649,
+        "5": 11445
+      },
+      "ratings": 52899,
+      "users": 530
+    },
+    "validation": {
+      "items": 1498,
+      "rating_counts": {
+        "1": 2019,
+        "2": 3107,
+        "3": 6954,
+        "4": 8260,
+        "5": 4746
+      },
+      "ratings": 25086,
+      "users": 328
+    }
+  },
+  "training_history_quantiles": {
+    "0": 1.0,
+    "0.25": 35.0,
+    "0.5": 66.0,
+    "0.75": 140.0,
+    "1": 523.0
+  }
+}

@@ -1,5 +1,6 @@
 """Configuration, paths, provenance and artifact helpers."""
 
+import contextlib
 import hashlib
 import json
 import platform
@@ -7,6 +8,8 @@ import random
 import re
 import subprocess
 import sys
+import time
+import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -14,7 +17,11 @@ import yaml
 
 
 def digest(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    value = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            value.update(chunk)
+    return value.hexdigest()
 
 
 def write_json(path, value):
@@ -32,6 +39,8 @@ def load_config(path):
     config = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
     if not re.fullmatch(r"[a-z0-9_]+", config["experiment_name"]):
         raise ValueError("Unsafe experiment name")
+    if config.get("stage") in ("profile_amazon",):
+        return config
     if config["model"]["name"] not in ("popularity", "baseline_suite"):
         raise ValueError("Unknown conventional model")
     if config["model"]["name"] == "baseline_suite":
@@ -116,3 +125,30 @@ class Tee:
     def flush(self):
         for stream in self.streams:
             stream.flush()
+
+
+@contextlib.contextmanager
+def managed_run(config, config_path, root):
+    """Shared run envelope for new stages; captures failures and immutable source provenance."""
+    _, (_, _, log_root) = prepare_paths(config, root)
+    run_dir = create_run_dir(log_root, config["experiment_name"])
+    (run_dir / "config.yaml").write_bytes(Path(config_path).read_bytes())
+    started, cpu_started = time.perf_counter(), time.process_time()
+    manifest = {"status": "running", **provenance(root), "config_sha256": digest(config_path)}
+    write_json(run_dir / "manifest.json", manifest)
+    with (run_dir / "run.log").open("w", encoding="utf-8") as log:
+        with contextlib.redirect_stdout(Tee(sys.stdout, log)), contextlib.redirect_stderr(Tee(sys.stderr, log)):
+            try:
+                seed_everything(config["seed"])
+                yield run_dir, manifest
+                manifest["status"] = "completed"
+                print(f"Artifacts: {run_dir.relative_to(root)}")
+            except Exception as error:
+                traceback.print_exc()
+                manifest["status"] = "failed"
+                write_json(run_dir / "failure.json", {"error": str(error), "status": "failed"})
+                raise
+            finally:
+                manifest["wall_seconds"] = time.perf_counter() - started
+                manifest["cpu_seconds"] = time.process_time() - cpu_started
+                write_json(run_dir / "manifest.json", manifest)

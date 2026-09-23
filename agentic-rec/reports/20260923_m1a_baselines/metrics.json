@@ -1,0 +1,182 @@
+{
+  "test": {
+    "itemknn": {
+      "groups": {
+        "cold": {
+          "cold_item_positives_counted_as_misses": 370,
+          "cold_users_included": 235,
+          "latency_mean_ms": 1.266273617078154,
+          "latency_p95_ms": 1.5813699974387412,
+          "ndcg_at_k": 0.2956955181019457,
+          "positive_targets": 10835,
+          "recall_at_k": 0.07464284898516559,
+          "users": 235
+        },
+        "long_history": {
+          "cold_item_positives_counted_as_misses": 69,
+          "cold_users_included": 0,
+          "latency_mean_ms": 1.4639620688379589,
+          "latency_p95_ms": 2.0408750000569853,
+          "ndcg_at_k": 0.1257337316862755,
+          "positive_targets": 784,
+          "recall_at_k": 0.04545351169193451,
+          "users": 58
+        },
+        "short_history": {
+          "cold_item_positives_counted_as_misses": 15,
+          "cold_users_included": 0,
+          "latency_mean_ms": 1.4799454534526872,
+          "latency_p95_ms": 1.4697399972646963,
+          "ndcg_at_k": 0.23210086088702225,
+          "positive_targets": 656,
+          "recall_at_k": 0.07269418358026658,
+          "users": 22
+        }
+      },
+      "overall": {
+        "cold_item_positives_counted_as_misses": 454,
+        "cold_users_included": 235,
+        "latency_mean_ms": 1.317596507879133,
+        "latency_p95_ms": 1.681459998508217,
+        "ndcg_at_k": 0.2599594353373832,
+        "positive_targets": 12275,
+        "recall_at_k": 0.06913220707432376,
+        "users": 315
+      }
+    },
+    "popularity": {
+      "groups": {
+        "cold": {
+          "cold_item_positives_counted_as_misses": 370,
+          "cold_users_included": 235,
+          "latency_mean_ms": 0.05582297880925793,
+          "latency_p95_ms": 0.07203000168374274,
+          "ndcg_at_k": 0.2956955181019457,
+          "positive_targets": 10835,
+          "recall_at_k": 0.07464284898516559,
+          "users": 235
+        },
+        "long_history": {
+          "cold_item_positives_counted_as_misses": 69,
+          "cold_users_included": 0,
+          "latency_mean_ms": 0.09211896557926907,
+          "latency_p95_ms": 0.1365100020848331,
+          "ndcg_at_k": 0.1255772790862219,
+          "positive_targets": 784,
+          "recall_at_k": 0.07683514090954101,
+          "users": 58
+        },
+        "short_history": {
+          "cold_item_positives_counted_as_misses": 15,
+          "cold_users_included": 0,
+          "latency_mean_ms": 0.06798636323682414,
+          "latency_p95_ms": 0.09112000243476359,
+          "ndcg_at_k": 0.23043025381282137,
+          "positive_targets": 656,
+          "recall_at_k": 0.05638994233076866,
+          "users": 22
+        }
+      },
+      "overall": {
+        "cold_item_positives_counted_as_misses": 454,
+        "cold_users_included": 235,
+        "latency_mean_ms": 0.06335555560312174,
+        "latency_p95_ms": 0.09944999983417803,
+        "ndcg_at_k": 0.25981395087250847,
+        "positive_targets": 12275,
+        "recall_at_k": 0.07377170290648953,
+        "users": 315
+      }
+    }
+  },
+  "validation": {
+    "itemknn": {
+      "groups": {
+        "cold": {
+          "cold_item_positives_counted_as_misses": 116,
+          "cold_users_included": 206,
+          "latency_mean_ms": 1.394219902897586,
+          "latency_p95_ms": 1.947624999047548,
+          "ndcg_at_k": 0.3775768365280704,
+          "positive_targets": 11095,
+          "recall_at_k": 0.08352959575623686,
+          "users": 206
+        },
+        "long_history": {
+          "cold_item_positives_counted_as_misses": 58,
+          "cold_users_included": 0,
+          "latency_mean_ms": 1.7794197531062017,
+          "latency_p95_ms": 3.067899997404311,
+          "ndcg_at_k": 0.11263778939658574,
+          "positive_targets": 1175,
+          "recall_at_k": 0.07638528785780542,
+          "users": 81
+        },
+        "short_history": {
+          "cold_item_positives_counted_as_misses": 11,
+          "cold_users_included": 0,
+          "latency_mean_ms": 1.2542567570022043,
+          "latency_p95_ms": 1.7571599993971172,
+          "ndcg_at_k": 0.1877580555773094,
+          "positive_targets": 736,
+          "recall_at_k": 0.09769371892496224,
+          "users": 37
+        }
+      },
+      "overall": {
+        "cold_item_positives_counted_as_misses": 185,
+        "cold_users_included": 206,
+        "latency_mean_ms": 1.4745364197765018,
+        "latency_p95_ms": 2.056660001653653,
+        "ndcg_at_k": 0.2896652386489703,
+        "positive_targets": 13006,
+        "recall_at_k": 0.08336102667435383,
+        "users": 324
+      }
+    },
+    "popularity": {
+      "groups": {
+        "cold": {
+          "cold_item_positives_counted_as_misses": 116,
+          "cold_users_included": 206,
+          "latency_mean_ms": 0.05330339807240537,
+          "latency_p95_ms": 0.06482500066340435,
+          "ndcg_at_k": 0.3775768365280704,
+          "positive_targets": 11095,
+          "recall_at_k": 0.08352959575623686,
+          "users": 206
+        },
+        "long_history": {
+          "cold_item_positives_counted_as_misses": 58,
+          "cold_users_included": 0,
+          "latency_mean_ms": 0.08550493801544409,
+          "latency_p95_ms": 0.12409999908413738,
+          "ndcg_at_k": 0.10359357331062927,
+          "positive_targets": 1175,
+          "recall_at_k": 0.07663465965473103,
+          "users": 81
+        },
+        "short_history": {
+          "cold_item_positives_counted_as_misses": 11,
+          "cold_users_included": 0,
+          "latency_mean_ms": 0.06788918924300831,
+          "latency_p95_ms": 0.07786000060150393,
+          "ndcg_at_k": 0.17867332967382757,
+          "positive_targets": 736,
+          "recall_at_k": 0.0637332550289625,
+          "users": 37
+        }
+      },
+      "overall": {
+        "cold_item_positives_counted_as_misses": 185,
+        "cold_users_included": 206,
+        "latency_mean_ms": 0.06301944439554871,
+        "latency_p95_ms": 0.09874500101432199,
+        "ndcg_at_k": 0.28636673136072555,
+        "positive_targets": 13006,
+        "recall_at_k": 0.07954516849965933,
+        "users": 324
+      }
+    }
+  }
+}

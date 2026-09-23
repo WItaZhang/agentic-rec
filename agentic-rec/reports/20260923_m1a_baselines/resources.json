@@ -1,0 +1,14 @@
+{
+  "cache": "none",
+  "concurrency": 1,
+  "cpu_seconds": 8.25,
+  "device": "cpu",
+  "fit_seconds_total": 1.8470817999914289,
+  "input_tokens": 0,
+  "llm_calls": 0,
+  "output_tokens": 0,
+  "paid_api_usd": 0,
+  "selection_sha256": "c0c11641e41e68338ada7b508f89ac19390988f148cc8d2d9e2b65549d25735c",
+  "training_grid_fits": 9,
+  "wall_seconds": 8.306410999997752
+}

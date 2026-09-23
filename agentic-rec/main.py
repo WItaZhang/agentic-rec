@@ -27,6 +27,11 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") == "profile_amazon":
+        from src.profiling import run_profile
+
+        run_profile(config, args.config, root)
+        return
     raw, (processed, _staging, logs) = prepare_paths(config, root)
     run_dir = create_run_dir(logs, config["experiment_name"])
     (run_dir / "config.yaml").write_bytes(args.config.read_bytes())
