@@ -7,7 +7,7 @@ import time
 import joblib
 import numpy as np
 
-from .routing_data import load_routing_data
+from .routing_data import load_routing_data, load_routing_matrix, save_routing_matrix
 from .routing_model import UtilityRouter, build_quality_estimator, random_actions, rule_actions
 from .utils import digest, managed_run, write_json
 
@@ -43,11 +43,20 @@ def run_routing(config, config_path, root):
     with managed_run(config, config_path, root) as (run_dir, manifest):
         settings = config["routing"]
         plans = tuple(settings["plans"])
-        train = load_routing_data(root, settings["policy_run"], "policy_train", plans)
-        validation = load_routing_data(root, settings["validation_run"], "validation", plans)
+        if settings.get("matrix_archives"):
+            train = load_routing_matrix(root, settings["matrix_archives"]["policy_train"], "policy_train", plans)
+            validation = load_routing_matrix(root, settings["matrix_archives"]["validation"], "validation", plans)
+        else:
+            train = load_routing_data(root, settings["policy_run"], "policy_train", plans)
+            validation = load_routing_data(root, settings["validation_run"], "validation", plans)
         for key in ("protocol", "data", "retriever", "evidence", "llm"):
             if train["source_config"][key] != validation["source_config"][key]:
                 raise ValueError(f"Training/validation inference settings differ: {key}")
+        for partition, data in (("policy_train", train), ("validation", validation)):
+            save_routing_matrix(run_dir / f"{partition}_matrix.json.gz", data)
+        write_json(run_dir / "routing_matrix_manifest.json", {
+            "files": {path.name: digest(path) for path in sorted(run_dir.glob("*_matrix.json.gz"))},
+            "scope": "Derived features, measured action outcomes/costs and inclusion weights for offline controller refitting; no raw reviews, user IDs or API access required"})
         names = tuple(settings["features"])
         x = np.array([[row[name] for name in names] for row in train["features"]])
         y = train["quality"][:, 1:] - train["quality"][:, [0]]
