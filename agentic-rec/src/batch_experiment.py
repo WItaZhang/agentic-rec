@@ -6,6 +6,7 @@ from pathlib import Path
 
 from .data import load_amazon_metadata, load_amazon_reviews
 from .evidence import build_prompt
+from .frozen_protocol import verify_final_config
 from .llm_experiment import choose_views
 from .model_artifacts import load_frozen_retriever
 from .openai_adapter import load_key
@@ -32,9 +33,11 @@ def run_batch_submit(config, config_path, root):
     with managed_run(config, config_path, root) as (run_dir, manifest):
         source = root / config["batch"]["source_run"]
         original = yaml.safe_load((source / "config.yaml").read_text())
-        if original["evaluation"]["partition"] == "test":
-            raise ValueError("Batch smoke cannot access test")
         source_mode = config["batch"].get("source_mode", "replicate_run")
+        if original["evaluation"]["partition"] == "test":
+            if source_mode != "prepared_bundle" or original["stage"] != "frozen_matrix_prepare":
+                raise ValueError("Only a frozen prepared bundle may access test")
+            verify_final_config(original, root)
         if source_mode not in ("replicate_run", "prepared_bundle"):
             raise ValueError("Unknown batch source mode")
         call_file = "calls.jsonl" if source_mode == "replicate_run" else (

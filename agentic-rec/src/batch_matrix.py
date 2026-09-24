@@ -12,9 +12,12 @@ from .batch_experiment import client_for
 from .data import load_amazon_metadata, load_amazon_reviews
 from .evidence import build_prompt
 from .execution import RatePacer
+from .feature import routing_features
+from .frozen_protocol import verify_final_config
 from .llm_experiment import choose_views, validate_llm_config
 from .metrics import aggregate_requests, single_target_metrics
 from .model_artifacts import load_frozen_retriever
+from .policy_inference import decide_frozen_policies
 from .protocol import CandidateSnapshot, replay_requests, validate_ranking
 from .replay import make_candidates
 from .utils import digest, managed_run, write_json
@@ -37,7 +40,8 @@ def canonicalize_plans(planned, share_within_request):
 def run_matrix_prepare(config, config_path, root):
     import tiktoken
 
-    validate_llm_config(config)  # This stage cannot prepare final test inputs.
+    frozen = verify_final_config(config, root) if config["stage"] == "frozen_matrix_prepare" else None
+    validate_llm_config(config, verified_final_test=frozen is not None)
     with managed_run(config, config_path, root) as (run_dir, manifest):
         for path, checksum in (("raw_path", "sha256"), ("metadata_path", "metadata_sha256")):
             if digest(root / config["data"][path]) != config["data"][checksum]:
@@ -58,6 +62,16 @@ def run_matrix_prepare(config, config_path, root):
         write_json(run_dir / "request_views.json", [{"request_id": v.request_id, "user_id": v.user_id,
             "history_count": len(v.history), "prediction_time": v.prediction_time,
             "history_event_ids": [e.event_id for e in v.history]} for v in views])
+        if frozen is not None:
+            # Decisions are materialized before any generation or target lookup.
+            catalog = set(model.catalog)
+            features = [routing_features(v, snapshots[v.request_id], catalog, config["protocol"]["positive_rating"])
+                        for v in views]
+            decisions = decide_frozen_policies(root, frozen["routing_run"], [v.request_id for v in views], features,
+                frozen["selection_artifact_hashes"], frozen["routing_cpu_threads"])
+            write_json(run_dir / "routing_decisions.json", decisions)
+            manifest.update(final_test_freeze=config["final_test_freeze"],
+                            routing_decisions_sha256=digest(run_dir / "routing_decisions.json"))
         tokenizer = tiktoken.get_encoding(config["evidence"]["tokenizer"])
 
         def truncate(text, limit):
@@ -116,7 +130,13 @@ def run_matrix_evaluate(config, config_path, root):
             if prepared_manifest["status"] != "completed" or digest(source / name) != prepared_manifest[key]:
                 raise ValueError("Prepared matrix artifacts changed or preparation was incomplete")
         original = yaml.safe_load((source / "config.yaml").read_text())
-        validate_llm_config(original)
+        frozen = verify_final_config(original, root) if original["stage"] == "frozen_matrix_prepare" else None
+        validate_llm_config(original, verified_final_test=frozen is not None)
+        if frozen is not None:
+            decision_hash = digest(source / "routing_decisions.json")
+            if decision_hash != prepared_manifest["routing_decisions_sha256"]:
+                raise ValueError("Test routing decisions changed after preparation")
+            manifest.update(final_test_freeze=original["final_test_freeze"], routing_decisions_sha256=decision_hash)
         planned = [json.loads(line) for line in (source / "planned_calls.jsonl").read_text().splitlines()]
         plan_table = {f"{r['request_id']}_{r['plan']}": r for r in planned}
         expected_ids = {r.get("canonical_id", identity) for identity, r in plan_table.items()}
@@ -193,6 +213,6 @@ def run_matrix_evaluate(config, config_path, root):
             "unknown_usage_requests": sum(r["usage"] is None for r in physical),
             "service_latency_ms": None,
             "cost_scope": "offline label construction; each physical call counted once, including shared outcomes"})
-        manifest.update(test_scored=False, prepared_run=config["prepared_run"],
+        manifest.update(test_scored=frozen is not None, prepared_run=config["prepared_run"],
                         source_plan_sha256=digest(source / "planned_calls.jsonl"), stage_status="evaluated",
                         physical_generations=len(results), logical_outcomes=len(plan_table))

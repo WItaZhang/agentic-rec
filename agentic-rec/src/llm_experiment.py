@@ -21,7 +21,7 @@ from .replay import make_candidates
 from .utils import digest, managed_run, utc_seconds, write_json
 
 
-def validate_llm_config(config):
+def validate_llm_config(config, *, verified_final_test=False):
     if config["llm"]["provider"] != "openai":
         raise ValueError("Unsupported provider in paid API experiment")
     price = config["llm"]["pricing"]
@@ -29,7 +29,8 @@ def validate_llm_config(config):
         raise ValueError("Invalid versioned price table")
     if not config["budget"]["stop_on_unknown_usage"] or not config["budget"]["stop_on_api_error"]:
         raise ValueError("Current API protocol requires stopping and checkpointing on errors")
-    if config["evaluation"]["partition"] not in ("policy_train", "validation"):
+    if config["evaluation"]["partition"] not in ("policy_train", "validation") and not (
+            verified_final_test and config["evaluation"]["partition"] == "test"):
         raise ValueError("Development API stage cannot score or call on test")
     if not 1 <= config["runtime"]["concurrency"] <= 4 or config["runtime"]["cache"] != "disabled":
         raise ValueError("Protocol supports concurrency 1–4 with application caching disabled")
