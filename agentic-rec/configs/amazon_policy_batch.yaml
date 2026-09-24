@@ -17,7 +17,7 @@ scheduler:
     source: https://developers.openai.com/api/docs/guides/batch
     checked_date: '2026-09-23'
   max_requests_per_batch: 192
-  max_batch_input_tokens: 800000
+  max_batch_input_tokens: 300000
   max_inflight_input_tokens: 1800000
   poll_seconds: 30
   max_consecutive_poll_errors: 3

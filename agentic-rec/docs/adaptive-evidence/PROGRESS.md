@@ -290,3 +290,12 @@ compute is reported separately. This keeps the practical method choice separate
 from the scientific learned-vs-rule comparison on fixed KNN candidates. The
 tolerance is a selection rule, not evidence of noninferiority. Final test does
 not trigger reselection or retuning.
+
+Queue amendment for **unsubmitted** policy, sequence and content phases: maximum
+shard input decreases from 800,000 to 300,000 tokens; total enqueue allowance
+remains 1,800,000. The current validation batch at offset 4786 had 148/149
+provider-completed requests for over ten minutes, occupying almost half the
+queue while one request waited. Smaller future shards reduce the capacity tied
+up by stragglers. Inference payloads, sample, prices, phase caps and completed
+data do not change. Batch turnaround is not compared as serving latency. The
+active validation schedule is unchanged and no slow request is dropped.
