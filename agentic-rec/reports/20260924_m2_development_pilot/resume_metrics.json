@@ -1,0 +1,82 @@
+{
+  "R0": {
+    "cold_item_misses": 17,
+    "request_micro": {
+      "candidate_recall": 0.5546875,
+      "hr": 0.1171875,
+      "ndcg": 0.060998515478230694
+    },
+    "requests": 256,
+    "user_macro": {
+      "candidate_recall": 0.5546875,
+      "hr": 0.1171875,
+      "ndcg": 0.060998515478230694
+    },
+    "users": 256,
+    "zero_history_requests": 224
+  },
+  "R1": {
+    "cold_item_misses": 17,
+    "request_micro": {
+      "candidate_recall": 0.5546875,
+      "hr": 0.125,
+      "ndcg": 0.06296331555342313
+    },
+    "requests": 256,
+    "user_macro": {
+      "candidate_recall": 0.5546875,
+      "hr": 0.125,
+      "ndcg": 0.06296331555342313
+    },
+    "users": 256,
+    "zero_history_requests": 224
+  },
+  "R2": {
+    "cold_item_misses": 17,
+    "request_micro": {
+      "candidate_recall": 0.5546875,
+      "hr": 0.125,
+      "ndcg": 0.06040176093530567
+    },
+    "requests": 256,
+    "user_macro": {
+      "candidate_recall": 0.5546875,
+      "hr": 0.125,
+      "ndcg": 0.06040176093530567
+    },
+    "users": 256,
+    "zero_history_requests": 224
+  },
+  "R3": {
+    "cold_item_misses": 17,
+    "request_micro": {
+      "candidate_recall": 0.5546875,
+      "hr": 0.08203125,
+      "ndcg": 0.04183844488467239
+    },
+    "requests": 256,
+    "user_macro": {
+      "candidate_recall": 0.5546875,
+      "hr": 0.08203125,
+      "ndcg": 0.04183844488467239
+    },
+    "users": 256,
+    "zero_history_requests": 224
+  },
+  "R4": {
+    "cold_item_misses": 17,
+    "request_micro": {
+      "candidate_recall": 0.5546875,
+      "hr": 0.08984375,
+      "ndcg": 0.04937208578135672
+    },
+    "requests": 256,
+    "user_macro": {
+      "candidate_recall": 0.5546875,
+      "hr": 0.08984375,
+      "ndcg": 0.04937208578135672
+    },
+    "users": 256,
+    "zero_history_requests": 224
+  }
+}

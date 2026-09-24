@@ -141,3 +141,22 @@ evaluation remains population sampled. Implemented routing controls have not yet
 been fit to a completed train/validation pair, and no routing efficacy is claimed.
 Exact-input outcome reuse is limited to the same request/candidate snapshot; both
 physical label-generation cost and logical action cost are preserved separately.
+
+## Pilot completion and next checkpoint: 2026-09-24 00:40 UTC
+
+- The resumed 256-user pilot is complete, with 1024 attempts and one retained
+  HTTP 429 fallback. Known pilot USD 1.0458048; accounted USD 1.0493064.
+  Campaign known USD 1.1513544; accounted USD 1.154856; no pending generation.
+- Paired analysis source `d6b41bf`, run `logs/20260924_004054_amazon_pilot_analysis`.
+  R1 minus R0 NDCG +0.001965, 95% CI [-0.006972, +0.010661]; no established gain.
+  Full evidence has lower mean quality, with wide uncertainty. Same-input
+  repetitions reveal output noise that can inflate a label-aware oracle.
+- Curated report: `reports/20260924_m2_development_pilot/README.md`.
+- Next prepared bundles: `configs/amazon_policy_matrix_prepare.yaml` (all 917
+  warm states plus 128 cold states, inverse inclusion fitting weights) and
+  `configs/amazon_validation_matrix_prepare.yaml` (all 3318 validation users).
+  Exact input counts precede paid submission; same-request identical inputs
+  share one physical generation. Phase caps USD 6 and USD 12 respectively.
+- Final Amazon test remains unscored. Routing remains implemented but unfitted.
+  74 tests and Python 3.11/3.12 CI passed at `d6b41bf`. Follow this checkpoint
+  rather than the superseded running-pilot note above.
