@@ -8,6 +8,7 @@ import yaml
 from .evidence_analysis import validate_table
 from .frozen_protocol import verify_final_config
 from .metrics import paired_bootstrap
+from .routing_model import random_actions
 from .utils import digest, managed_run, write_json
 
 
@@ -82,7 +83,30 @@ def evaluate_decisions(outcomes, calls, decisions, plans, analysis):
             "means": {method: {f"mean_{metric}": float(np.mean([rows[i][metric] for i in chosen])) if chosen else None
                       for metric in ("ndcg", "hr", "accounted_usd")} for method, rows in per_policy.items()},
             "comparisons": {f"{a}_minus_{b}": compare(a, b, chosen) for a, b in analysis["comparisons"]}}
+    random_diagnostics = {}
+    for name, parameters in decisions.get("random_parameters", {}).items():
+        probabilities = np.asarray(parameters["probabilities"])
+        if len(probabilities) != len(plans) or np.any(probabilities < 0) or not np.isclose(probabilities.sum(), 1):
+            raise ValueError("Invalid frozen random probabilities")
+        expected_quality = np.array([sum(p * table[q][plan]["ndcg"] for plan, p in zip(plans, probabilities, strict=True)) for q in ids])
+        expected_cost = np.array([sum(p * (attempts[q, plan]["actual_known_usd"] if attempts[q, plan]["actual_known_usd"] is not None
+            else attempts[q, plan]["reserved_usd"]) for plan, p in zip(plans[1:], probabilities[1:], strict=True)) for q in ids])
+        learner = name.replace("random_", "learned_", 1)
+        repetitions = []
+        for allocation_seed in analysis.get("random_sensitivity_seeds", []):
+            actions = random_actions(ids, probabilities, plans, allocation_seed)
+            repetitions.append({"seed": allocation_seed,
+                "mean_ndcg": float(np.mean([table[q][action]["ndcg"] for q, action in zip(ids, actions, strict=True)])),
+                "mean_accounted_usd": float(np.mean([0 if action == "R0" else
+                    (attempts[q, action]["actual_known_usd"] if attempts[q, action]["actual_known_usd"] is not None
+                     else attempts[q, action]["reserved_usd"]) for q, action in zip(ids, actions, strict=True)]))})
+        random_diagnostics[name] = {"expected_ndcg": float(expected_quality.mean()),
+            "expected_accounted_usd": float(expected_cost.mean()), "allocation_seed_sensitivity": repetitions,
+            "learned_minus_expected_random_ndcg": paired_bootstrap([r["ndcg"] for r in per_policy[learner]],
+                expected_quality, draws, seed, confidence),
+            "scope": "Exact policy expectation over the real outcome matrix, plus frozen seed variation; no additional calls or independent users"}
     return {"methods": methods, "comparisons": comparisons, "history_groups": groups,
+        "random_control_diagnostics": random_diagnostics,
         "primary_comparison": analysis["primary_comparison"], "primary_metric": "ndcg",
         "inference": "One prespecified primary comparison; secondary/group intervals are exploratory",
         "cost_scope": "counterfactual single-action spend measured in the batch label matrix; controller/local CPU separate",

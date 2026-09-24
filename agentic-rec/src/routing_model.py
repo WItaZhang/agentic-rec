@@ -1,5 +1,6 @@
 """Small full-information utility router architecture; fitting belongs to the trainer."""
 
+import hashlib
 from dataclasses import dataclass
 
 import numpy as np
@@ -42,3 +43,32 @@ class UtilityRouter:
         utilities = gain - self.cost_weight * 1000 * np.asarray(self.expected_usd)
         # Deterministic tie preference uses configured action order, starting with R0.
         return [self.plans[int(index)] for index in np.argmax(utilities, axis=1)]
+
+
+def rule_actions(features, name):
+    if name not in ("base", "recent_if_history", "full_if_history", "full_if_older", "full_if_negative"):
+        raise ValueError("Unknown rule")
+    actions = []
+    for row in features:
+        if not row["has_history"] or name == "base":
+            actions.append("R0")
+        elif name == "recent_if_history":
+            actions.append("R1")
+        elif name == "full_if_history":
+            actions.append("R4")
+        elif name == "full_if_older":
+            actions.append("R4" if row["has_older_history"] else "R1")
+        elif name == "full_if_negative":
+            actions.append("R4" if row["positive_fraction"] < 1 else "R1")
+        else:
+            raise ValueError("Unknown rule")
+    return actions
+
+
+def random_actions(request_ids, probabilities, plans, seed):
+    cumulative = np.cumsum(probabilities)
+    return [plans[min(int(np.searchsorted(cumulative,
+        int(hashlib.sha256(f"{seed}:{request}".encode()).hexdigest(), 16) / 2**256, side="right")), len(plans) - 1)]
+        for request in request_ids]
+
+

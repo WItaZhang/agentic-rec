@@ -187,3 +187,47 @@ physical label-generation cost and logical action cost are preserved separately.
 - Frozen-test gates and policy analysis are implemented and tested, but no final
   freeze, test generation or test score exists yet. Selection grid was committed
   before expanded validation outputs at `d672712`. Latest checks: 81 tests pass.
+
+## Checkpoint: 2026-09-24 01:20 UTC
+
+- Active validation scheduler: `logs/20260924_005558_amazon_validation_batch_resume`.
+  It resumes the first provider batch; shard 2's pre-submit failure is documented
+  without duplicate reservations. At 01:19, 18/48 shards were collected, two
+  submitted, and 28 pending. Known campaign USD 3.958511; accounted USD 4.3468392
+  includes pending reservations and the pilot's USD 0.0035016 unknown attempt.
+  Never interpret pending reservations as already invoiced spending.
+- Completed input bundles: policy at `logs/20260924_004459_amazon_policy_matrix_prepare`
+  (2612 physical requests, estimate USD 2.9788, upper 3.5054); sequence validation
+  at `logs/20260924_005821_amazon_sequence_validation_prepare` (6842, estimate
+  7.7100, upper 9.0894); category control at `logs/20260924_010156_amazon_content_control_prepare`
+  (956, estimate 1.4860, upper 1.6787). These three generation phases have **not**
+  started. Configs `amazon_policy_batch.yaml`, `amazon_sequence_validation_batch.yaml`
+  and `amazon_content_control_batch.yaml` are ready. Do not concurrently launch
+  independent batch schedulers against the shared provider enqueue allowance.
+- The category control selects all 350 warm validation user states plus 128
+  cold states, with one request/user before grouping. Analyze the groups, not an
+  unweighted population estimate. R4/S4 input tokens match exactly on all 478
+  requests. S4 permutes candidate/category alignment only and retains history.
+- Same-sample conventional comparison: `logs/20260924_010938_amazon_validation_baselines`,
+  source `7e1fbf5`; sequence minus KNN NDCG +0.002167 [0.000173, 0.004190], 3318
+  users including 418 cold targets. This supersedes a prior zero cold-count
+  metadata omission; quality numbers did not change. See the M3 baseline report.
+- Public pilot outcomes and real usage are in `artifacts/published/pilot_v1`.
+  `logs/20260924_011719_pilot_archive_reanalysis` reproduced every analysis value
+  exactly without raw data, credentials, models or API access. Small frozen
+  base weights are also checked in. Ten archived/model file hashes were checked
+  against Git blobs; artifact newline conversion is disabled for portability.
+- Long-lived scheduler runtime source is parent commit `453746d`. Its child
+  manifests can show later filesystem commits while their Python functions
+  remain imported from the parent. `run_family_provenance.json` records this
+  distinction without changing old manifests. New schedulers explicitly carry
+  parent runtime provenance into child manifests.
+- Routing, final freeze, final test and synchronous serving audit remain
+  unexecuted. The serving audit plan fixes 128 validation users, concurrency one,
+  no output reuse, automatic prefix caching recorded, and a USD 2.5 cap. Main
+  random seed is 1729; secondary seeds and exact randomized-policy expectations
+  are declared before expanded LLM validation quality is inspected.
+- Next: collect the complete validation matrix, then analyze all users. Run the
+  policy label phase to assess/fit routing if supported, execute the content and
+  sequence controls, freeze all choices, and only then prepare final test inputs.
+  No external input or new authorization is currently required.

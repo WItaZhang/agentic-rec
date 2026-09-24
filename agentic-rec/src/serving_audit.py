@@ -20,8 +20,7 @@ from .openai_adapter import OpenAIBackend
 from .paid_budget import PaidBudget, usage_cost
 from .protocol import validate_ranking
 from .replay import make_candidates
-from .routing_model import UtilityRouter
-from .routing_trainer import random_actions, rule_actions
+from .routing_model import UtilityRouter, random_actions, rule_actions
 from .utils import digest, managed_run, write_json
 
 

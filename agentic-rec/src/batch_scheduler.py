@@ -86,6 +86,7 @@ def run_batch_schedule(config, config_path, root):
                     continue
                 child = {"experiment_name": f"{config['experiment_name']}_s{index:03d}", "stage": "batch_submit",
                     "seed": config["seed"], "data": config["data"], "logging": config["logging"],
+                    "runtime_source_run": str(run_dir.relative_to(root)),
                     "budget": budget_config,
                     "batch": {"source_run": settings["prepared_run"], "source_mode": "prepared_bundle",
                               "request_offset": chunk["offset"], "request_count": chunk["count"],
@@ -120,6 +121,7 @@ def run_batch_schedule(config, config_path, root):
                 if batch.status not in ("completed", "failed", "expired", "cancelled"):
                     continue
                 child = {"experiment_name": f"{config['experiment_name']}_c{index:03d}", "stage": "batch_collect",
+                    "runtime_source_run": str(run_dir.relative_to(root)),
                     "seed": config["seed"], "batch_run": chunk["submit_run"], "data": config["data"], "logging": config["logging"]}
                 child_path = run_dir / f"collect_{index:03d}.yaml"
                 child_path.write_text(yaml.safe_dump(child, sort_keys=False), encoding="utf-8")

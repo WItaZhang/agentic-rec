@@ -5,8 +5,7 @@ import time
 
 import joblib
 
-from .routing_model import UtilityRouter
-from .routing_trainer import random_actions, rule_actions
+from .routing_model import UtilityRouter, random_actions, rule_actions
 from .utils import digest
 
 
@@ -21,7 +20,7 @@ def decide_frozen_policies(root, selection_run, request_ids, features, expected_
     plans = tuple(selected["plans"])
     if len(request_ids) != len(features) or len(set(request_ids)) != len(request_ids):
         raise ValueError("One feature row per unique request required")
-    models, decisions, timing = {}, {}, {}
+    models, decisions, timing, random_parameters = {}, {}, {}, {}
     for identity, row in selected["chosen"].items():
         start = time.perf_counter()
         spec = row["policy"]
@@ -39,6 +38,7 @@ def decide_frozen_policies(root, selection_run, request_ids, features, expected_
             control = row["random_control"]
             random_id = identity.replace("learned_", "random_", 1)
             decisions[random_id] = random_actions(request_ids, control["probabilities"], plans, control["seed"])
+            random_parameters[random_id] = {"probabilities": control["probabilities"], "seed": control["seed"]}
         elif spec["kind"] == "rule":
             actions = rule_actions(features, spec["rule"])
         elif spec["kind"] == "fixed":
@@ -52,5 +52,6 @@ def decide_frozen_policies(root, selection_run, request_ids, features, expected_
     if any(len(actions) != len(request_ids) or set(actions) - set(plans) for actions in decisions.values()):
         raise ValueError("Invalid action output")
     return {"request_ids": request_ids, "actions": decisions, "label_access": False,
+            "random_parameters": random_parameters,
             "policy_batch_wall_ms_including_first_load": timing,
             "timing_scope": "offline decision preparation; not per-request serving latency"}

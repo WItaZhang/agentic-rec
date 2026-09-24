@@ -1,6 +1,5 @@
 """Fit full-information utility estimates; select all routing parameters on validation."""
 
-import hashlib
 import itertools
 import json
 import time
@@ -9,28 +8,8 @@ import joblib
 import numpy as np
 
 from .routing_data import load_routing_data
-from .routing_model import UtilityRouter, build_quality_estimator
+from .routing_model import UtilityRouter, build_quality_estimator, random_actions, rule_actions
 from .utils import digest, managed_run, write_json
-
-
-def rule_actions(features, name):
-    if name not in ("base", "recent_if_history", "full_if_history", "full_if_older", "full_if_negative"):
-        raise ValueError("Unknown rule")
-    actions = []
-    for row in features:
-        if not row["has_history"] or name == "base":
-            actions.append("R0")
-        elif name == "recent_if_history":
-            actions.append("R1")
-        elif name == "full_if_history":
-            actions.append("R4")
-        elif name == "full_if_older":
-            actions.append("R4" if row["has_older_history"] else "R1")
-        elif name == "full_if_negative":
-            actions.append("R4" if row["positive_fraction"] < 1 else "R1")
-        else:
-            raise ValueError("Unknown rule")
-    return actions
 
 
 def replay_actions(data, actions, plans):
@@ -56,13 +35,6 @@ def random_probabilities(actions, validation_costs, plans):
     return {"probabilities": probabilities.tolist(), "target_validation_usd": float(target),
             "expected_validation_usd": float(np.dot(probabilities, validation_costs.mean(axis=0))),
             "definition": "frozen marginal allocation; actual test cost can differ"}
-
-
-def random_actions(request_ids, probabilities, plans, seed):
-    cumulative = np.cumsum(probabilities)
-    return [plans[min(int(np.searchsorted(cumulative,
-        int(hashlib.sha256(f"{seed}:{request}".encode()).hexdigest(), 16) / 2**256, side="right")), len(plans) - 1)]
-        for request in request_ids]
 
 
 def run_routing(config, config_path, root):

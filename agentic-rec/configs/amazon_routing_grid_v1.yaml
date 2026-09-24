@@ -31,3 +31,5 @@ analysis:
   secondary_inference: exploratory_nominal_intervals
   group_boundaries: [[zero, 0, 1], [one, 1, 2], [at_least_two, 2, 1000000]]
   minimum_group_users_for_interval: 30
+  random_sensitivity_seeds: [11, 97, 2027, 4099, 9001]
+  random_sensitivity_interpretation: secondary_full_information_expectation_and_seed_variation

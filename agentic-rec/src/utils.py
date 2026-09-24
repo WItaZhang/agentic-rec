@@ -146,6 +146,11 @@ def managed_run(config, config_path, root):
     (run_dir / "config.yaml").write_bytes(Path(config_path).read_bytes())
     started, cpu_started = time.perf_counter(), time.process_time()
     manifest = {"status": "running", **provenance(root), "config_sha256": digest(config_path)}
+    if config.get("runtime_source_run"):
+        parent = json.loads((root / config["runtime_source_run"] / "manifest.json").read_text(encoding="utf-8"))
+        manifest["runtime_source_run"] = config["runtime_source_run"]
+        manifest["runtime_source_provenance"] = {key: parent[key] for key in ("git_commit", "source_sha256", "uv_lock_sha256")}
+        manifest["source_scope"] = "Nested stage executes the parent process's imported code; top-level provenance records the current filesystem"
     write_json(run_dir / "manifest.json", manifest)
     with (run_dir / "run.log").open("w", encoding="utf-8") as log:
         with contextlib.redirect_stdout(Tee(sys.stdout, log)), contextlib.redirect_stderr(Tee(sys.stderr, log)):
