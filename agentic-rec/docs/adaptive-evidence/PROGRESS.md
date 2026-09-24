@@ -5,7 +5,7 @@ checkpoint is at the bottom; historical spending/status entries are not current 
 
 ## Authorization and resources
 
-- Branch: `codex/evidence-policy-study`; repository default:
+- Branch: `codex/validation-study-results`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
 - Paid API authorization updated by user: **USD 50 total**, estimate each round.
   First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
@@ -239,3 +239,22 @@ declares a 1e-14 absolute floating tolerance; it rejects looser tolerances above
 1e-12. The earlier exact-match run remains valid historical evidence, but is not
 claimed as a cross-process guarantee. Predictions, paired intervals and conclusions
 are unchanged. The isolated rerun passes after this correction.
+
+## Checkpoint: 2026-09-24 01:45 UTC
+
+- PR [#3](https://github.com/WItaZhang/agentic-rec/pull/3) passed both CI jobs and
+  merged as `958b145`. New branch `codex/validation-study-results` starts there;
+  `d64d6f9` adds prespecified final conventional baselines on their own candidate
+  pools. Neither final input preparation nor final scoring has occurred.
+- The main validation scheduler remains active: 34/48 shards collected at the
+  latest inspection. It still uses parent runtime commit `453746d`; no active
+  input, candidate, inference setting, or reservation was changed.
+- Subsequent batches will reserve/settle a complete shard with one locked ledger
+  scan and durable append, avoiding a full growing-ledger scan per request.
+  Denial writes no reservations; wrong-owner/duplicate settlements fail closed;
+  all measured overages are recorded before stopping. Existing ledger format,
+  campaign caps and interrupted-call reservations are preserved. 93 tests and
+  Ruff pass. This does not change model inputs or paid-call selection.
+- Next remains complete-matrix analysis, necessary policy/content/strong-base
+  controls, validation-only selection, then a frozen final test and resource
+  audit. No current external blocker or request for additional budget exists.

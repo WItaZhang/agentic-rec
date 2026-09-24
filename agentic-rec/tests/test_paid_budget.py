@@ -47,3 +47,41 @@ def test_settlement_records_overage_and_cached_tokens(tmp_path):
                        "input_tokens_details": {"cached_tokens": 400}},
                       {"input_per_million_usd": 0.4, "cached_input_per_million_usd": 0.1,
                        "output_per_million_usd": 1.6}) == pytest.approx(0.00044)
+
+
+def test_shard_reservation_denial_writes_nothing_and_preserves_unknown(tmp_path):
+    budget = PaidBudget(tmp_path / "ledger", "a", 1, 1, 1)
+    calls = budget.reserve_many([(0.3, {"custom_id": "x"}), (0.3, {"custom_id": "y"})])
+    before = budget.path.read_bytes()
+    with pytest.raises(BudgetExceeded):
+        budget.reserve_many([(0.2, {}), (0.3, {})])
+    assert budget.path.read_bytes() == before
+    budget.settle_many([(calls[0], 0.1, "completed"), (calls[1], None, "unknown")])
+    restarted = PaidBudget(budget.path, "a", 1, 1, 1)
+    assert restarted.snapshot()["campaign_accounted_usd"] == pytest.approx(0.4)
+    assert restarted.snapshot()["unknown_settled_calls"] == 1
+    assert restarted.entries()[calls[0]]["metadata"]["custom_id"] == "x"
+
+
+def test_shard_settlement_validates_all_owners_and_records_all_overages(tmp_path):
+    budget = PaidBudget(tmp_path / "ledger", "a", 1, 1, 1)
+    calls = budget.reserve_many([(0.1, {}), (0.1, {})])
+    other = PaidBudget(budget.path, "b", 1, 1, 1).reserve(0.1, {})
+    with pytest.raises(ValueError):
+        budget.settle_many([(calls[0], 0.1, "completed"), (other, 0.1, "completed")])
+    assert budget.snapshot()["pending_reservations"] == 3
+    with pytest.raises(BudgetExceeded):
+        budget.settle_many([(calls[0], 0.2, "completed"), (calls[1], 0.05, "completed")])
+    assert budget.snapshot()["campaign_actual_known_usd"] == pytest.approx(0.25)
+    assert budget.snapshot()["pending_reservations"] == 1
+
+
+def test_concurrent_shards_share_the_same_budget_lock(tmp_path):
+    def attempt(index):
+        budget = PaidBudget(tmp_path / "ledger", str(index), 1, 1, 1)
+        try:
+            return len(budget.reserve_many([(0.1, {}), (0.2, {})]))
+        except BudgetExceeded:
+            return 0
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        assert sum(pool.map(attempt, range(6))) == 6
