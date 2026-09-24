@@ -86,6 +86,11 @@ retrievers must not be described as evidence-routing improvements.
 | R4 | R2 plus item categories | 1 |
 
 Each historical event includes its title, rating, age and truncated review text.
+R2 uses the latest available 20 events in chronological order; it does not
+implement semantic retrieval over an external long-term memory. Given the sparse
+observed histories, this first experiment tests additional available history
+without introducing an embedding or summary model. Findings must be stated at
+that scope, especially for the group with only two or more events.
 All text limits use tokenizer counts: title 40, category 48, review 128 tokens.
 GPT-4.1 mini is pinned to `gpt-4.1-mini-2025-04-14`, temperature zero, maximum
 256 output tokens, strict JSON output and top-10 candidate aliases. The prompt
@@ -99,6 +104,31 @@ share a generation only within that same request, candidate snapshot and exact
 payload; they do not reuse a later or earlier user's output. Per-action costs
 describe executing that action once. Offline construction counts each physical
 generation once, rather than charging shared labels repeatedly.
+
+```mermaid
+flowchart LR
+    D[Read-only timestamped reviews] --> V[Strictly earlier request history]
+    D --> Y[Evaluator-only current target]
+    B[Pre-2018 frozen recommender] --> C[Immutable top-200 candidates]
+    V --> C
+    C --> X[Observable routing features]
+    V --> X
+    X --> A[Frozen request-level policy]
+    A -->|R0| P[Final candidate-only prediction]
+    A -->|R1-R4| E[Local evidence assembly]
+    V --> E
+    C --> E
+    E --> L[One real LLM call and deterministic repair]
+    L --> P
+    P --> Q[Offline metrics and paired analysis]
+    Y --> Q
+```
+
+There is no path from the current target to the router, evidence assembler or
+model call. Earlier feedback becomes visible only to later requests, as in a
+causal event replay. The design's separate B3/P2 multi-step comparison is outside
+the currently implemented request-level stage; deterministic evidence loading
+is not counted as multiple rounds of model reasoning.
 
 ## Routing, content controls and selection
 
