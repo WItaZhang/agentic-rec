@@ -23,3 +23,31 @@ def test_training_examples_keep_current_and_tied_targets_out_of_prefix():
     x, y = training_examples(events, ("a", "b", "c", "d"), 4, 3, 4)
     assert x.tolist() == [[1, 0, 0], [1, 0, 0]]
     assert y.tolist() == [2, 3]
+
+
+def test_restored_sequence_checkpoint_keeps_scores_and_rejects_changed_weights(tmp_path):
+    import json
+
+    import numpy as np
+
+    from src.model_artifacts import load_frozen_retriever
+    from src.sequence_model import SequenceRecommender
+
+    architecture = dict(max_length=4, dimension=8, heads=2, layers=1, dropout=0,
+                        feedforward_multiplier=4, embedding_std=.02)
+    network = CausalSequenceModel(3, **architecture).eval()
+    original = SequenceRecommender(network, ('a', 'b', 'c'), (3, 2, 1))
+    (tmp_path / 'model.json').write_text(json.dumps({'catalog': original.catalog,
+        'popularity': original.popularity, 'selected': {'architecture': architecture}}))
+    torch.save(network.state_dict(), tmp_path / 'sequence.pt')
+    config = {'name': 'causal_sequence', 'artifact_path': '.', 'cpu_threads': 1,
+              'model_hash': original.checkpoint_hash}
+    restored = load_frozen_retriever(tmp_path, config)
+    history = [ReviewEvent(1, 'u', 'a', 5, 'e')]
+    assert np.allclose(original.score_history(history, 4), restored.score_history(history, 4))
+    assert restored.score_history([], 4).tolist() == [3, 2, 1]
+    with torch.no_grad():
+        network.items.weight[1, 0] += 1
+    torch.save(network.state_dict(), tmp_path / 'sequence.pt')
+    with pytest.raises(ValueError, match='fingerprint'):
+        load_frozen_retriever(tmp_path, config)

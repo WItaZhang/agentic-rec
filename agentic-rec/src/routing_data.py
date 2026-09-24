@@ -9,7 +9,8 @@ import yaml
 from .data import load_amazon_reviews
 from .evidence_analysis import validate_table
 from .feature import routing_features
-from .llm_experiment import choose_views, load_frozen_knn
+from .llm_experiment import choose_views
+from .model_artifacts import load_frozen_retriever
 from .protocol import CandidateSnapshot
 from .utils import digest
 
@@ -33,7 +34,7 @@ def load_routing_data(root, run_path, expected_partition, plans):
     views = {view.request_id: view for view in views}
     if set(views) != set(table):
         raise ValueError("Outcome matrix differs from the frozen user sample")
-    model = load_frozen_knn(root, source_config["retriever"])
+    model = load_frozen_retriever(root, source_config["retriever"])
     catalog = set(model.catalog)
     candidates = json.loads((inference / "candidates.json").read_text())
     features, feature_ms = {}, {}

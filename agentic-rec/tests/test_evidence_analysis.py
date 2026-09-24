@@ -9,6 +9,13 @@ def test_missing_method_cannot_be_silently_dropped():
         validate_table([row], [], ["R0", "R1"])
 
 
+def test_base_candidate_snapshot_must_match_when_recorded():
+    outcomes = [{"request_id": "q", "user_id": "u", "plan": plan, "candidate_hash": plan}
+                for plan in ("R0", "R1")]
+    with pytest.raises(ValueError, match="Unpaired"):
+        validate_table(outcomes, [{"request_id": "q", "plan": "R1"}], ["R0", "R1"])
+
+
 def test_failure_keeps_denominator_and_conservative_cost():
     outcomes = [{"request_id": "q", "user_id": "u", "plan": plan, "ndcg": 0.0, "hr": 0.0,
                  "candidate_recall": 0.0, "candidate_hash": "frozen", "history_count": 0,

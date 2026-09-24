@@ -8,17 +8,16 @@ from collections import Counter
 from dataclasses import asdict
 
 import numpy as np
-from scipy import sparse
 
 from .data import load_amazon_metadata, load_amazon_reviews
 from .evidence import build_prompt
 from .execution import execute_bounded
 from .metrics import aggregate_requests, single_target_metrics
-from .model import ItemKNNModel
+from .model_artifacts import load_frozen_retriever
 from .openai_adapter import OpenAIBackend
 from .paid_budget import PaidBudget, usage_cost
 from .protocol import hash_sample, replay_requests, validate_ranking
-from .replay import make_candidates, model_fingerprint
+from .replay import make_candidates
 from .utils import digest, managed_run, utc_seconds, write_json
 
 
@@ -40,25 +39,6 @@ def validate_llm_config(config):
         raise ValueError("Configuration exceeds current authorization")
     if not 0 < config["evidence"]["recent_events"] <= config["evidence"]["max_history_events"]:
         raise ValueError("Invalid history limits")
-
-
-def load_frozen_knn(root, config):
-    directory = root / config["artifact_path"]
-    if not directory.exists() and config.get("artifact_search_root"):
-        # Reproduced runs have new timestamps. Resolve identical weights by fingerprint,
-        # never by latest-run heuristics or by a validation/test performance score.
-        for candidate in sorted((root / config["artifact_search_root"]).glob("*/manifest.json")):
-            record = json.loads(candidate.read_text())
-            if record.get("status") == "completed" and record.get("model_hashes", {}).get("itemknn") == config["model_hash"]:
-                if (candidate.parent / "itemknn.npz").exists():
-                    directory = candidate.parent
-                    break
-    model = json.loads((directory / "model.json").read_text())
-    result = ItemKNNModel(tuple(model["catalog"]), sparse.load_npz(directory / "itemknn.npz"),
-                          tuple(model["popularity"]))
-    if model_fingerprint(result) != config["model_hash"]:
-        raise ValueError("Frozen model fingerprint mismatch")
-    return result
 
 
 def choose_views(events, config):
@@ -117,7 +97,7 @@ def run_llm(config, config_path, root):
         metadata = load_amazon_metadata(root / config["data"]["metadata_path"], ["title", "categories"])
         views, sampling, ends = choose_views(events, config)
         write_json(run_dir / "sampling.json", sampling)
-        model = load_frozen_knn(root, config["retriever"])
+        model = load_frozen_retriever(root, config["retriever"])
         snapshots, retrieval_ms = {}, {}
         for view in views:
             start = time.perf_counter()

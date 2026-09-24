@@ -24,6 +24,8 @@ def validate_table(outcomes, calls, plans):
         if set(methods) != set(plans):
             raise ValueError("Incomplete method matrix; do not drop failed or missing requests")
         fingerprints = {methods[plan]["candidate_hash"] for plan in plans if plan != "R0"}
+        if methods["R0"].get("candidate_hash"):
+            fingerprints.add(methods["R0"]["candidate_hash"])
         if len(fingerprints) != 1 or len({r["user_id"] for r in methods.values()}) != 1:
             raise ValueError("Unpaired candidates or users")
         for plan in plans:

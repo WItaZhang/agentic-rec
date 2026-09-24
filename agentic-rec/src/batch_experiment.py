@@ -6,7 +6,8 @@ from pathlib import Path
 
 from .data import load_amazon_metadata, load_amazon_reviews
 from .evidence import build_prompt
-from .llm_experiment import choose_views, load_frozen_knn
+from .llm_experiment import choose_views
+from .model_artifacts import load_frozen_retriever
 from .openai_adapter import load_key
 from .paid_budget import PaidBudget, usage_cost
 from .replay import make_candidates
@@ -58,7 +59,7 @@ def run_batch_submit(config, config_path, root):
         views, _, _ = choose_views(events, original)
         views = {view.request_id: view for view in views}
         metadata = load_amazon_metadata(root / original["data"]["metadata_path"], ["title", "categories"])
-        model = load_frozen_knn(root, original["retriever"])
+        model = load_frozen_retriever(root, original["retriever"])
         tokenizer = tiktoken.get_encoding(original["evidence"]["tokenizer"])
 
         def truncate(text, limit):

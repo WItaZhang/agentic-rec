@@ -12,8 +12,9 @@ from .batch_experiment import client_for
 from .data import load_amazon_metadata, load_amazon_reviews
 from .evidence import build_prompt
 from .execution import RatePacer
-from .llm_experiment import choose_views, load_frozen_knn, validate_llm_config
+from .llm_experiment import choose_views, validate_llm_config
 from .metrics import aggregate_requests, single_target_metrics
+from .model_artifacts import load_frozen_retriever
 from .protocol import CandidateSnapshot, replay_requests, validate_ranking
 from .replay import make_candidates
 from .utils import digest, managed_run, write_json
@@ -45,7 +46,7 @@ def run_matrix_prepare(config, config_path, root):
         views, audit, _ = choose_views(events, config)
         write_json(run_dir / "sampling.json", audit)
         metadata = load_amazon_metadata(root / config["data"]["metadata_path"], ["title", "categories"])
-        model = load_frozen_knn(root, config["retriever"])
+        model = load_frozen_retriever(root, config["retriever"])
         snapshots, retrieval = {}, {}
         for view in views:
             start = time.perf_counter()
@@ -136,7 +137,7 @@ def run_matrix_evaluate(config, config_path, root):
         views = {row["request_id"]: row for row in json.loads((source / "request_views.json").read_text())}
         snapshots = {q: CandidateSnapshot(item_ids=tuple(row.pop("item_ids")), scores=tuple(row.pop("scores")), **row)
                      for q, row in json.loads((source / "candidates.json").read_text()).items()}
-        model = load_frozen_knn(root, original["retriever"])
+        model = load_frozen_retriever(root, original["retriever"])
         predictions, calls = [], []
         for custom_id, plan in plan_table.items():
             canonical_id = plan.get("canonical_id", custom_id)
