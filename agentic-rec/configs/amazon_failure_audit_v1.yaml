@@ -1,0 +1,7 @@
+# Bind matrix_run only after the frozen test has been completely evaluated.
+# These classes explain observable errors, not private model reasoning.
+seed: 42
+failure_analysis:
+  policies: [fixed_R1, fixed_R4, rule_0.25, learned_0.25]
+  cases_per_class: 3
+  history_items_per_case: 3

@@ -48,7 +48,7 @@ def load_config(path):
                               "batch_submit", "batch_collect", "matrix_prepare", "matrix_evaluate", "routing_development",
                               "sampling_profile", "batch_schedule", "freeze_final_protocol", "frozen_matrix_prepare",
                               "final_policy_analysis", "serving_resource_audit", "validation_baseline_comparison",
-                              "publish_results", "archive_analysis"):
+                              "publish_results", "archive_analysis", "final_failure_analysis"):
         return config
     if config.get("stage"):
         raise ValueError("Unknown experiment stage")

@@ -240,7 +240,7 @@ declares a 1e-14 absolute floating tolerance; it rejects looser tolerances above
 claimed as a cross-process guarantee. Predictions, paired intervals and conclusions
 are unchanged. The isolated rerun passes after this correction.
 
-## Checkpoint: 2026-09-24 01:45 UTC
+## Checkpoint: 2026-09-24 01:43 UTC
 
 - PR [#3](https://github.com/WItaZhang/agentic-rec/pull/3) passed both CI jobs and
   merged as `958b145`. New branch `codex/validation-study-results` starts there;
@@ -258,3 +258,17 @@ are unchanged. The isolated rerun passes after this correction.
 - Next remains complete-matrix analysis, necessary policy/content/strong-base
   controls, validation-only selection, then a frozen final test and resource
   audit. No current external blocker or request for additional budget exists.
+
+The token-matched content control is queued in local execution session `67329`.
+It waits for the validation scheduler's completed manifest and starts
+`configs/amazon_content_control_batch.yaml`; a failed parent prevents launch.
+Estimated USD 1.486, upper USD 1.679, round cap USD 2. Do not independently start
+another scheduler while this queued process owns the next queue slot.
+
+The post-test failure audit now separates cold/retrieval misses, lost/rescued
+baseline hits, API failure and ranking repair. Case selection is deterministic
+within each class and does not prefer the largest loss. It exports public product
+metadata and historical ratings, no user IDs or review text, and makes no model
+call. It has not run: the final test is still untouched. The serving audit also
+includes the frozen causal-sequence model at zero additional API cost, under the
+same request sampling, CPU and concurrency conditions as the other methods.

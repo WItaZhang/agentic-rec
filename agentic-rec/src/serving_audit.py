@@ -53,6 +53,8 @@ def run_serving_audit(config, config_path, root):
         views = sorted(views, key=lambda v: hashlib.sha256(f"{config['seed']}:{v.request_id}".encode()).hexdigest())[:settings["users"]]
         metadata = load_amazon_metadata(root / original["data"]["metadata_path"], ["title", "categories"])
         recommender = load_frozen_retriever(root, original["retriever"])
+        additional_specs = frozen["test_config"]["evaluation"].get("additional_baselines", {})
+        additional_models = {name: load_frozen_retriever(root, spec) for name, spec in additional_specs.items()}
         catalog = set(recommender.catalog)
         directory = root / frozen["routing_run"]
         selected = json.loads((directory / "selection_frozen.json").read_text())
@@ -76,10 +78,13 @@ def run_serving_audit(config, config_path, root):
                           (json.loads(line) for line in (source / "planned_calls.jsonl").read_text().splitlines())}
         saved_candidates = json.loads((source / "candidates.json").read_text())
         methods = settings["methods"]
-        if set(methods) - {"base", "recent", "full", "rule", "random", "learned"}:
+        ordinary_methods = {"base", "recent", "full", "rule", "random", "learned"}
+        if set(additional_specs) & ordinary_methods or set(methods) - ordinary_methods - set(additional_specs):
             raise ValueError("Unsupported serving audit method")
 
         def route(method, view, snapshot):
+            if method in additional_models:
+                return "R0"
             if method in ("base", "recent", "full"):
                 return {"base": "R0", "recent": "R1", "full": "R4"}[method]
             if method == "random":
@@ -118,14 +123,17 @@ def run_serving_audit(config, config_path, root):
         def work(job):
             view, method, expected_action = job
             started = time.perf_counter()
-            snapshot = make_candidates(view, recommender, original["retriever"]["candidate_count"],
-                original["protocol"]["positive_rating"], original["retriever"]["model_hash"])
+            model = additional_models.get(method, recommender)
+            model_config = additional_specs.get(method, original["retriever"])
+            snapshot = make_candidates(view, model, model_config["candidate_count"],
+                original["protocol"]["positive_rating"], model_config["model_hash"])
             retrieved = time.perf_counter()
             action = route(method, view, snapshot)
             decided = time.perf_counter()
             if action != expected_action:
                 raise ValueError("Frozen policy action changed within the resource audit")
             record = {"request_id": view.request_id, "method": method, "action": action,
+                      "retriever": model_config["name"],
                       "history_count": len(view.history), "retrieval_ms": (retrieved - started) * 1000,
                       "feature_and_policy_ms": (decided - retrieved) * 1000}
             if action == "R0":
@@ -180,6 +188,7 @@ def run_serving_audit(config, config_path, root):
         write_json(run_dir / "resources.json", {"methods": summary, "budget": budget.snapshot(),
             "application_output_cache": "disabled, independent call for each method/request",
             "provider_prefix_cache": "automatic, actual cached tokens recorded",
+            "additional_conventional_methods": list(additional_models),
             "quality_scored": False, "latency_scope": "warm resident models; includes retrieval, routing, prompt construction, token preflight, queue, network and validation"})
         manifest.update(test_scored=False, quality_scored=False, stage_status="resource_audit_complete",
                         final_protocol_sha256=digest(root / settings["freeze_path"]))
