@@ -326,3 +326,19 @@ The original waiting launcher (session `67329`, PowerShell PID 25896) has not
 started paid work at this checkpoint. Replace that task-owned waiting process
 with the guarded launcher; never run both. Once content starts, do not launch a
 third scheduler until its phase is complete. Budget estimate/cap remain unchanged.
+
+Execution follow-up: the verified waiting process was stopped with no child
+generation process or content run present. Its old session `67329` exited.
+The replacement guarded launcher is session **`22026`**. Validation's delayed
+shard completed all 149 requests at 02:09:53; nothing was cancelled, omitted or
+retried. At 02:13, 45/48 validation shards were collected, two submitted and one
+pending. The main session remains `10259`.
+
+At `00ddcd8`, batch execution, matrix evaluation and router-data loading also
+verify saved run configuration hashes, including temperature/output settings
+that do not affect a token-count prompt hash. All four prepared source configs
+passed this check. At `3928a95`, controller fitting saves compact derived
+feature/quality/cost/inclusion-weight matrices and can refit from their verified
+archives without raw reviews, models or API access. That refit pathway is tested
+but has not yet run on completed expanded labels. Latest full local suite:
+**98 tests and Ruff pass**. Repository Markdown relative-link check also passes.
