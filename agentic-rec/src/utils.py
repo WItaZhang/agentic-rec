@@ -46,8 +46,11 @@ def load_config(path):
         return config
     if config.get("stage") in ("profile_amazon", "replay_development", "sequence_development", "evidence_analysis",
                               "batch_submit", "batch_collect", "matrix_prepare", "matrix_evaluate", "routing_development",
-                              "sampling_profile", "batch_schedule"):
+                              "sampling_profile", "batch_schedule", "freeze_final_protocol", "frozen_matrix_prepare",
+                              "final_policy_analysis", "serving_resource_audit", "validation_baseline_comparison"):
         return config
+    if config.get("stage"):
+        raise ValueError("Unknown experiment stage")
     if config["model"]["name"] not in ("popularity", "baseline_suite"):
         raise ValueError("Unknown conventional model")
     if config["model"]["name"] == "baseline_suite":
