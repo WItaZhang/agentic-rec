@@ -1,0 +1,35 @@
+experiment_name: amazon_campaign_resources
+stage: campaign_resource_audit
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+budget:
+  total_paid_usd: 50
+  per_run_paid_usd: 1
+  stop_at_usd: 45
+  ledger_path: logs/budget/openai_ledger.jsonl
+resource_audit:
+  require_no_pending: true
+  phase_rules:
+    - name: synchronous_feasibility
+      experiment_prefixes: [amazon_llm_smoke]
+    - name: batch_feasibility
+      experiment_prefixes: [amazon_batch_smoke]
+    - name: development_pilot
+      experiment_prefixes: [amazon_llm_development_pilot]
+    - name: main_validation_labels
+      experiment_prefixes: [amazon_validation_batch]
+    - name: policy_training_labels
+      experiment_prefixes: [amazon_policy_batch]
+    - name: stronger_retriever_validation_labels
+      experiment_prefixes: [amazon_sequence_validation_batch]
+    - name: token_matched_content_control
+      experiment_prefixes: [amazon_content_control_batch]
+    - name: frozen_final_test_labels
+      experiment_prefixes: [amazon_final_test_batch]
+    - name: synchronous_serving_audit
+      experiment_prefixes: [amazon_serving_audit]
