@@ -5,7 +5,7 @@ checkpoint is at the bottom; historical spending/status entries are not current 
 
 ## Authorization and resources
 
-- Branch: `codex/validation-study-results`; repository default:
+- Branch: `codex/evidence-results`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
 - Paid API authorization updated by user: **USD 50 total**, estimate each round.
   First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
@@ -299,3 +299,12 @@ queue while one request waited. Smaller future shards reduce the capacity tied
 up by stragglers. Inference payloads, sample, prices, phase caps and completed
 data do not change. Batch turnaround is not compared as serving latency. The
 active validation schedule is unchanged and no slow request is dropped.
+
+PR [#4](https://github.com/WItaZhang/agentic-rec/pull/4) passed all Python 3.11/3.12
+CI jobs at head `2d81448` and merged as `9e5a604` at 01:54:57 UTC. The new
+`codex/evidence-results` branch starts from that merge. Full local validation is
+96 tests plus Ruff; `logs/20260924_015002_pilot_archive_reanalysis` again matches
+all archived numbers exactly without API access. Main validation and the queued
+content phase still own execution sessions `10259` and `67329`, respectively.
+The working methods/report manuscript is now under
+`reports/adaptive_evidence_study/STUDY.md`; it explicitly marks unfinished results.
