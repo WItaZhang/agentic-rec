@@ -1,0 +1,35 @@
+# Selection settings committed before expanded validation outcomes.
+# The executable routing config will copy these values and bind completed run paths.
+seed: 42
+runtime:
+  cpu_threads: 2
+routing:
+  plans: [R0, R1, R2, R3, R4]
+  features: [has_history, has_older_history, log_history_count, positive_fraction,
+    known_item_fraction, mean_rating, log_days_since_last, log_history_span_days,
+    base_score_entropy_proxy, base_relative_top_gap]
+  estimators:
+    - {kind: ridge, alpha: 1.0}
+    - {kind: ridge, alpha: 10.0}
+    - {kind: histogram_boosting, max_iter: 80, max_leaf_nodes: 7,
+       min_samples_leaf: 30, l2_regularization: 10.0, learning_rate: 0.05}
+    - {kind: histogram_boosting, max_iter: 80, max_leaf_nodes: 15,
+       min_samples_leaf: 50, l2_regularization: 10.0, learning_rate: 0.05}
+  cost_weights: [0.0, 0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1.0]
+  rules: [base, recent_if_history, full_if_history, full_if_older, full_if_negative]
+  budget_usd_per_1000: [0.0, 0.1, 0.25, 0.5, 1.5]
+  validation_quality_tolerance: 0.002
+  random_seed: 1729
+analysis:
+  primary_budget_usd_per_1000: 0.25
+  primary_comparison: [learned, rule]
+  primary_metric: ndcg
+  confidence: 0.95
+  bootstrap_repetitions: 10000
+  noninferiority_tolerance: 0.002
+  secondary_comparisons: [[learned, random], [learned, fixed_R4], [fixed_R1, fixed_R0], [fixed_R4, fixed_R0]]
+  secondary_inference: exploratory_nominal_intervals
+  group_boundaries: [[zero, 0, 1], [one, 1, 2], [at_least_two, 2, 1000000]]
+  minimum_group_users_for_interval: 30
+  random_sensitivity_seeds: [11, 97, 2027, 4099, 9001]
+  random_sensitivity_interpretation: secondary_full_information_expectation_and_seed_variation

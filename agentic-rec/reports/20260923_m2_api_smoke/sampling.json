@@ -1,0 +1,22 @@
+{
+  "nonzero": {
+    "eligible_requests": 1781,
+    "eligible_users": 1269,
+    "per_user_cap": 1,
+    "seed": 42,
+    "selected_users": 6,
+    "selection_uses_labels": false,
+    "user_inclusion_probability": 0.004728132387706856,
+    "within_user_request_probability": "1 / eligible requests for that user"
+  },
+  "zero": {
+    "eligible_requests": 7787,
+    "eligible_users": 7787,
+    "per_user_cap": 1,
+    "seed": 42,
+    "selected_users": 2,
+    "selection_uses_labels": false,
+    "user_inclusion_probability": 0.0002568383202773854,
+    "within_user_request_probability": "1 / eligible requests for that user"
+  }
+}

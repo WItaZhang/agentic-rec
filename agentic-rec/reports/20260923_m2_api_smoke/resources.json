@@ -1,0 +1,27 @@
+{
+  "budget": {
+    "campaign_accounted_usd": 0.069304,
+    "campaign_actual_known_usd": 0.069304,
+    "campaign_attempts": 32,
+    "planning_stop_usd": 45,
+    "round_accounted_usd": 0.069304,
+    "round_cap_usd": 1,
+    "total_authorized_usd": 50,
+    "unknown_or_pending_calls": 0
+  },
+  "calls": 32,
+  "count_endpoint_calls": 32,
+  "input_tokens": 176620,
+  "mean_service_latency_ms": 1652.720656249926,
+  "other_model_calls": {
+    "embedding": 0,
+    "planning": 0,
+    "reflection": 0,
+    "summary": 0
+  },
+  "output_tokens": 1152,
+  "p95_service_latency_ms": 3361.541184997804,
+  "statuses": {
+    "completed": 32
+  }
+}

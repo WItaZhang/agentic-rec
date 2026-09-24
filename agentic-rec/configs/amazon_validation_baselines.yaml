@@ -1,0 +1,17 @@
+experiment_name: amazon_validation_baselines
+stage: validation_baseline_comparison
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+comparison:
+  prepared_runs:
+    itemknn: logs/20260924_004459_amazon_validation_matrix_prepare
+    causal_sequence: logs/20260924_005821_amazon_sequence_validation_prepare
+  k: 10
+  pairs: [[causal_sequence, itemknn]]
+  bootstrap_repetitions: 10000
+  confidence: 0.95

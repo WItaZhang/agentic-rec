@@ -1,0 +1,69 @@
+{
+  "models": {
+    "causal_sequence": {
+      "cold_item_misses": 418,
+      "request_micro": {
+        "candidate_recall": 0.5500301386377335,
+        "hr": 0.14647377938517178,
+        "ndcg": 0.06872288451120573
+      },
+      "requests": 3318,
+      "user_macro": {
+        "candidate_recall": 0.5500301386377335,
+        "hr": 0.14647377938517178,
+        "ndcg": 0.06872288451120573
+      },
+      "users": 3318,
+      "zero_history_requests": 2968
+    },
+    "itemknn": {
+      "cold_item_misses": 418,
+      "request_micro": {
+        "candidate_recall": 0.5539481615430982,
+        "hr": 0.14466546112115733,
+        "ndcg": 0.06655572819112526
+      },
+      "requests": 3318,
+      "user_macro": {
+        "candidate_recall": 0.5539481615430982,
+        "hr": 0.14466546112115733,
+        "ndcg": 0.06655572819112526
+      },
+      "users": 3318,
+      "zero_history_requests": 2968
+    }
+  },
+  "paired_comparisons": {
+    "causal_sequence_minus_itemknn": {
+      "candidate_recall": {
+        "ci_high": 0.0003013863773357444,
+        "ci_low": -0.0081374321880651,
+        "confidence": 0.95,
+        "difference": -0.0039180229053646775,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "ci_high": 0.0054249547920434,
+        "ci_low": -0.0018083182640144665,
+        "confidence": 0.95,
+        "difference": 0.0018083182640144665,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "ci_high": 0.004190496610486623,
+        "ci_low": 0.00017274427944168318,
+        "confidence": 0.95,
+        "difference": 0.002167156320080466,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      }
+    }
+  },
+  "scope": "same sampled validation users; each base model has its own retrieval candidates",
+  "within_retriever_llm_comparison": "Use that model's immutable candidate pool in its separate evidence matrix"
+}

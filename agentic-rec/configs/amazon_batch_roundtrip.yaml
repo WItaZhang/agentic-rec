@@ -1,0 +1,12 @@
+experiment_name: amazon_batch_roundtrip
+stage: matrix_evaluate
+seed: 42
+prepared_run: logs/20260924_000621_amazon_batch_bundle_validation
+collection_runs:
+- logs/20260924_000757_amazon_batch_smoke_collect
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs

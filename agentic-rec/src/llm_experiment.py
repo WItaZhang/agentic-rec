@@ -8,40 +8,38 @@ from collections import Counter
 from dataclasses import asdict
 
 import numpy as np
-from scipy import sparse
 
 from .data import load_amazon_metadata, load_amazon_reviews
 from .evidence import build_prompt
+from .execution import execute_bounded
 from .metrics import aggregate_requests, single_target_metrics
-from .model import ItemKNNModel
+from .model_artifacts import load_frozen_retriever
 from .openai_adapter import OpenAIBackend
 from .paid_budget import PaidBudget, usage_cost
 from .protocol import hash_sample, replay_requests, validate_ranking
-from .replay import make_candidates, model_fingerprint
+from .replay import make_candidates
 from .utils import digest, managed_run, utc_seconds, write_json
 
 
-def validate_llm_config(config):
-    if config["evaluation"]["partition"] not in ("policy_train", "validation"):
+def validate_llm_config(config, *, verified_final_test=False):
+    if config["llm"]["provider"] != "openai":
+        raise ValueError("Unsupported provider in paid API experiment")
+    price = config["llm"]["pricing"]
+    if not 0 <= price["cached_input_per_million_usd"] <= price["input_per_million_usd"] or price["output_per_million_usd"] < 0:
+        raise ValueError("Invalid versioned price table")
+    if not config["budget"]["stop_on_unknown_usage"] or not config["budget"]["stop_on_api_error"]:
+        raise ValueError("Current API protocol requires stopping and checkpointing on errors")
+    if config["evaluation"]["partition"] not in ("policy_train", "validation") and not (
+            verified_final_test and config["evaluation"]["partition"] == "test"):
         raise ValueError("Development API stage cannot score or call on test")
-    if config["runtime"]["concurrency"] != 1 or config["runtime"]["cache"] != "disabled":
-        raise ValueError("Initial protocol requires sequential uncached calls")
+    if not 1 <= config["runtime"]["concurrency"] <= 4 or config["runtime"]["cache"] != "disabled":
+        raise ValueError("Protocol supports concurrency 1–4 with application caching disabled")
     if config["llm"]["temperature"] != 0 or config["llm"]["model"] != config["llm"]["pricing"]["model"]:
         raise ValueError("Frozen greedy decoding and model-specific prices required")
     if config["budget"]["total_paid_usd"] > 50 or config["budget"]["cloud_rental_allowed"]:
         raise ValueError("Configuration exceeds current authorization")
     if not 0 < config["evidence"]["recent_events"] <= config["evidence"]["max_history_events"]:
         raise ValueError("Invalid history limits")
-
-
-def load_frozen_knn(root, config):
-    directory = root / config["artifact_path"]
-    model = json.loads((directory / "model.json").read_text())
-    result = ItemKNNModel(tuple(model["catalog"]), sparse.load_npz(directory / "itemknn.npz"),
-                          tuple(model["popularity"]))
-    if model_fingerprint(result) != config["model_hash"]:
-        raise ValueError("Frozen model fingerprint mismatch")
-    return result
 
 
 def choose_views(events, config):
@@ -52,6 +50,30 @@ def choose_views(events, config):
     views = [view for view, _ in replay_requests(events, ends, config["protocol"]["positive_rating"])
              if view.partition == partition]
     sampling = config["sampling"]
+    if sampling["mode"] in ("policy_history_strata", "diagnostic_history_strata"):
+        if sampling["mode"] == "policy_history_strata" and partition != "policy_train":
+            raise ValueError("Training-only history oversampling cannot replace population evaluation")
+        if sampling["mode"] == "diagnostic_history_strata" and partition != "validation":
+            raise ValueError("Diagnostic strata are development-only, never the final test population")
+        per_user, first_audit = hash_sample(views, len(views), config["seed"])
+        chosen, audit, probabilities = [], {"one_request_per_user": first_audit, "strata": {}}, {}
+        assigned = set()
+        for name, low, high, maximum in sampling["strata"]:
+            group = [view for view in per_user if low <= len(view.history) < high]
+            if assigned.intersection(view.request_id for view in group):
+                raise ValueError("Overlapping sampling strata")
+            assigned.update(view.request_id for view in group)
+            selected, group_audit = hash_sample(group, len(group) if maximum is None else maximum, config["seed"])
+            chosen.extend(selected)
+            audit["strata"][name] = group_audit
+            for view in selected:
+                probabilities[view.request_id] = len(selected) / len(group)
+        if assigned != {view.request_id for view in per_user}:
+            raise ValueError("Sampling strata must cover the user-state population")
+        audit["user_inclusion_probability_by_request"] = probabilities
+        audit["definition"] = "Select one request/user before history stratification; use inverse inclusion weights for fitting"
+        audit["population_quality_claim_allowed"] = False
+        return sorted(chosen, key=lambda view: (view.prediction_time, view.request_id)), audit, ends
     if sampling["mode"] == "smoke_history_strata":
         # Label-blind convenience sample for protocol checks only; not population estimates.
         chosen, audit = [], {}
@@ -79,9 +101,14 @@ def run_llm(config, config_path, root):
         metadata = load_amazon_metadata(root / config["data"]["metadata_path"], ["title", "categories"])
         views, sampling, ends = choose_views(events, config)
         write_json(run_dir / "sampling.json", sampling)
-        model = load_frozen_knn(root, config["retriever"])
-        snapshots = {v.request_id: make_candidates(v, model, config["retriever"]["candidate_count"],
-            config["protocol"]["positive_rating"], config["retriever"]["model_hash"]) for v in views}
+        model = load_frozen_retriever(root, config["retriever"])
+        snapshots, retrieval_ms = {}, {}
+        for view in views:
+            start = time.perf_counter()
+            snapshots[view.request_id] = make_candidates(view, model, config["retriever"]["candidate_count"],
+                config["protocol"]["positive_rating"], config["retriever"]["model_hash"])
+            retrieval_ms[view.request_id] = (time.perf_counter() - start) * 1000
+        write_json(run_dir / "retrieval_latency_ms.json", retrieval_ms)
         write_json(run_dir / "candidates.json", {key: {**asdict(value), "content_hash": value.content_hash}
                                                 for key, value in snapshots.items()})
         tokenizer = tiktoken.get_encoding(config["evidence"]["tokenizer"])
@@ -97,6 +124,34 @@ def run_llm(config, config_path, root):
         instructions = (root / config["evidence"]["prompt_path"]).read_text(encoding="utf-8")
         jobs = [(v, plan) for v in views for plan in config["evidence"]["plans"]]
         random.Random(config["seed"]).shuffle(jobs)
+        predictions, records = [], []
+        if config.get("resume_from"):
+            import yaml
+
+            previous = root / config["resume_from"]
+            old_config = yaml.safe_load((previous / "config.yaml").read_text())
+            if config.get("allow_rate_limit_adjustment", False):
+                # A rate-only amendment never changes prompts, labels or predictions already obtained.
+                old_config["llm"]["rate_limits"] = config["llm"]["rate_limits"]
+                manifest["rate_limit_amendment"] = True
+            for key in ("protocol", "data", "retriever", "sampling", "evaluation", "evidence", "llm", "runtime", "seed"):
+                current, old = config[key], old_config[key]
+                if key == "retriever":
+                    locations = {"artifact_path", "artifact_search_root", "artifact_fallback_path"}
+                    current = {k: v for k, v in current.items() if k not in locations}
+                    old = {k: v for k, v in old.items() if k not in locations}
+                if current != old:
+                    raise ValueError("Resuming must preserve every inference and sampling setting")
+            records = [json.loads(line) for line in (previous / "calls.jsonl").read_text().splitlines()]
+            predictions = [json.loads(line) for line in (previous / "predictions.jsonl").read_text().splitlines()]
+            done = {(p["request_id"], p["plan"]) for p in predictions}
+            if len(done) != len(predictions) or done != {(r["request_id"], r["plan"]) for r in records}:
+                raise ValueError("Resume call/prediction journals are incomplete or duplicate")
+            if any(p["candidate_hash"] != snapshots[p["request_id"]].content_hash for p in predictions):
+                raise ValueError("Resume candidates changed")
+            jobs = [(v, p) for v, p in jobs if (v.request_id, p) not in done]
+            manifest["resume_from"] = config["resume_from"]
+            manifest["reused_attempts"] = len(records)
         upper = len(jobs) * usage_cost({"input_tokens": config["llm"]["max_input_tokens"]
                                        + config["llm"]["input_reservation_margin_tokens"],
                                        "output_tokens": config["llm"]["max_output_tokens"]}, config["llm"]["pricing"])
@@ -106,17 +161,25 @@ def run_llm(config, config_path, root):
         print(f"Preflight: {len(views)} requests, {len(jobs)} calls, conservative upper ${upper:.6f}", flush=True)
         if upper > budget_config["per_run_paid_usd"] or upper + budget.snapshot()["campaign_accounted_usd"] > budget_config["stop_at_usd"]:
             raise ValueError("Full round estimate exceeds configured budget; revise round before calling")
-        predictions, records = [], []
+        def work(job):
+            view, plan = job
+            start = time.perf_counter()
+            messages, schema, _, evidence = build_prompt(view, snapshots[view.request_id], metadata, plan,
+                config["evidence"], truncate, instructions)
+            evidence_ms = (time.perf_counter() - start) * 1000
+            result = backend.complete(messages, schema, {"request_id": view.request_id, "plan": plan})
+            result.update(evidence=evidence, evidence_latency_ms=evidence_ms)
+            return result
+
         with (run_dir / "calls.jsonl").open("w", encoding="utf-8") as calls_file, \
                 (run_dir / "predictions.jsonl").open("w", encoding="utf-8") as predictions_file:
-            for index, (view, plan) in enumerate(jobs, 1):
-                start = time.perf_counter()
+            for record in records:
+                calls_file.write(json.dumps(record) + "\n")
+            for prediction in predictions:
+                predictions_file.write(json.dumps(prediction) + "\n")
+            for index, ((view, plan), record) in enumerate(execute_bounded(jobs, work, config["runtime"]["concurrency"]), 1):
                 snapshot = snapshots[view.request_id]
-                messages, schema, aliases, evidence = build_prompt(view, snapshot, metadata, plan,
-                    config["evidence"], truncate, instructions)
-                evidence_ms = (time.perf_counter() - start) * 1000
-                record = backend.complete(messages, schema, {"request_id": view.request_id, "plan": plan})
-                record.update(evidence=evidence, evidence_latency_ms=evidence_ms)
+                aliases = {f"C{i:03d}": item for i, item in enumerate(snapshot.item_ids, 1)}
                 records.append(record)
                 calls_file.write(json.dumps(record) + "\n")
                 calls_file.flush()
@@ -130,20 +193,25 @@ def run_llm(config, config_path, root):
                 prediction = {"request_id": view.request_id, "user_id": view.user_id, "plan": plan,
                               "ranking": ranking, "repair_errors": errors, "parse_error": parse_error,
                               "status": record["status"], "candidate_hash": snapshot.content_hash,
-                              "service_latency_ms": evidence_ms + record["total_latency_ms"]}
+                              "retrieval_latency_ms": retrieval_ms[view.request_id],
+                              "service_latency_ms": (retrieval_ms[view.request_id]
+                                  + record["evidence_latency_ms"] + record["total_latency_ms"])}
                 predictions.append(prediction)
                 predictions_file.write(json.dumps(prediction) + "\n")
                 predictions_file.flush()
                 write_json(run_dir / "budget_checkpoint.json", budget.snapshot())
-                print(f"Call {index}/{len(jobs)} {plan}: {record['status']}; accounted ${budget.snapshot()['round_accounted_usd']:.6f}", flush=True)
-                if record["status"] in ("count_error", "generation_error") or record.get("actual_known_usd") is None:
-                    raise RuntimeError("API error or unavailable usage: stopping; conservative ledger retained")
+                if index % config["runtime"].get("progress_every", 1) == 0 or record["status"] != "completed":
+                    print(f"Call {index}/{len(jobs)} {plan}: {record['status']}; accounted ${budget.snapshot()['round_accounted_usd']:.6f}", flush=True)
+        if len(records) != len(views) * len(config["evidence"]["plans"]):
+            raise RuntimeError("Partial API round: in-flight calls drained; resume from journals without retrying completed attempts")
         # Evaluation is downstream of all inference; never passed into evidence or backend.
         targets = {target.request_id: target.item_id for _, target in replay_requests(
             events, ends, config["protocol"]["positive_rating"])}
         outcomes = []
         for view in views:
             predictions.append({"request_id": view.request_id, "user_id": view.user_id, "plan": "R0",
+                                "candidate_hash": snapshots[view.request_id].content_hash,
+                                "service_latency_ms": retrieval_ms[view.request_id],
                                 "ranking": snapshots[view.request_id].item_ids[:config["evidence"]["k"]]})
         by_id = {v.request_id: v for v in views}
         for prediction in predictions:
@@ -159,6 +227,11 @@ def run_llm(config, config_path, root):
         resources = {"budget": budget.snapshot(), "calls": len(records),
                      "input_tokens": sum((r["usage"] or {}).get("input_tokens", 0) for r in records),
                      "output_tokens": sum((r["usage"] or {}).get("output_tokens", 0) for r in records),
+                     "cached_input_tokens": sum(((r["usage"] or {}).get("input_tokens_details") or {}).get("cached_tokens", 0)
+                                                for r in records),
+                     "provider_caching": "automatic; actual cached tokens recorded; application cache disabled",
+                     "usage_priced_usd": sum(r.get("actual_known_usd") or 0 for r in records),
+                     "retrieval_total_cpu_wall_ms": sum(retrieval_ms.values()),
                      "statuses": dict(Counter(r["status"] for r in records)),
                      "count_endpoint_calls": sum(r["count_endpoint_calls"] for r in records),
                      "other_model_calls": {"planning": 0, "summary": 0, "reflection": 0, "embedding": 0},

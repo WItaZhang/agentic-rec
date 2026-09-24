@@ -1,0 +1,15 @@
+{
+  "accounting_before": {
+    "campaign_accounted_usd": 0,
+    "campaign_actual_known_usd": 0,
+    "campaign_attempts": 0,
+    "planning_stop_usd": 45,
+    "round_accounted_usd": 0,
+    "round_cap_usd": 1,
+    "total_authorized_usd": 50,
+    "unknown_or_pending_calls": 0
+  },
+  "maximum_generation_calls": 32,
+  "price_source": "https://developers.openai.com/api/docs/models/gpt-4.1-mini",
+  "upper_bound_usd": 0.42434560000000004
+}

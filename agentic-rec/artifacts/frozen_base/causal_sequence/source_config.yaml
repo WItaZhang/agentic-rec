@@ -1,0 +1,63 @@
+experiment_name: amazon_magazine_sequence
+stage: sequence_development
+seed: 42
+protocol:
+  id: amazon_next_positive_unseen_v1
+  positive_rating: 4
+  timestamp_unit: milliseconds
+  history_update: after_timestamp_batch
+  aggregation: user_macro
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  sha256: c77a5c092039158c3f19f77f44e49c3a94fa28591eb159f4348c3d8af53bdf53
+  processed_path: data/processed
+  staging_path: data/staging
+  inner_train_end: "2016-01-01T00:00:00Z"
+  base_train_end: "2018-01-01T00:00:00Z"
+  policy_train_end: "2020-01-01T00:00:00Z"
+  validation_end: "2021-01-01T00:00:00Z"
+  test_end: "2023-09-10T00:00:00Z"
+model:
+  architecture: sasrec_style_causal_transformer
+  objective: full_softmax_cross_entropy
+  candidate_count: 50
+  dimensions: [32, 64]
+  layers: [1]
+  heads: 2
+  dropout: 0.2
+  feedforward_multiplier: 4
+  embedding_std: 0.02
+  max_length: 20
+  epochs: [5, 10, 20]
+train:
+  seed: 42
+  selection_max_users: 2000
+  learning_rate: 0.001
+  batch_size: 128
+  weight_decay: 0.0001
+  betas: [0.9, 0.999]
+  gradient_clip: 1.0
+  label_smoothing: 0.0
+comparison:
+  itemknn:
+    neighbors: 20
+    shrinkage: 100
+  itemknn_selection_source: logs/20260923_232911_amazon_magazine_replay/selection_frozen.json
+evaluation:
+  k: 10
+  partitions: [policy_train, validation]
+  candidate_counts: [50, 100, 200]
+  test_access: no_scoring
+runtime:
+  cpu_threads: 2
+  interop_threads: 1
+  concurrency: 1
+  device: cpu
+  deterministic_algorithms: true
+budget:
+  total_paid_usd: 0
+  per_run_paid_usd: 0
+  cloud_rental_allowed: false
+  stop_before_paid_call: true
+logging:
+  path: logs

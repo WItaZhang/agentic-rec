@@ -4,7 +4,12 @@
 
 [中文说明](README.zh-CN.md) · [中文学习路线](docs/zh/00-学习路线.md) · [Survey](docs/survey.md) · [Paper × component matrix](docs/component-matrix.md) · [Design notes](docs/design.md)
 
-**Next research project:** [Adaptive Evidence Acquisition for Agentic Recommendation](docs/adaptive-evidence/README.md) — a detailed plan for temporal real-data evaluation, evidence-routing policies, quality–cost experiments, implementation milestones, and resume claims supported by measured results. The design is in Chinese; its methods and results are explicitly marked as planned. It also explains how the existing [MovieLens experiment PR](https://github.com/WItaZhang/agentic-rec/pull/1) fits into the roadmap.
+**Active research:** [Adaptive Evidence Acquisition for Agentic Recommendation](docs/adaptive-evidence/README.md).
+The [execution record](docs/adaptive-evidence/PROGRESS.md) distinguishes implemented,
+validated and planned capabilities. MovieLens reproduction, Amazon temporal replay,
+ItemKNN and a causal sequence baseline are complete. Real OpenAI synchronous and
+batch calls have passed protocol checks; evidence and routing research is ongoing.
+Final Amazon test quality and learned-routing gains are not yet reported.
 
 Between 2023 and 2026, several dozen papers put an LLM *agent* at the centre of a recommender: as the recommender itself (RecMind, InteRecAgent, MACRec, BiLLP), as a simulated user (RecAgent, Agent4Rec, SimUSER, RecoWorld), as an item (AgentCF), or as an assistant on the user's side (RAH, iAgent). Read side by side, they share nine components and differ mainly in which ones they attach and how they are optimised.
 
@@ -22,6 +27,15 @@ adds a checksummed input, global temporal split, YAML config and timestamped
 artifacts. It does not change the synthetic agents or claim reproduction of a
 paper's numerical results. Run it with `uv run --locked --extra yaml python main.py
 --config configs/ml100k_popularity.yaml` after the documented dataset setup.
+
+For the complete real-data workflow and resource controls, see
+[research reproduction](docs/adaptive-evidence/REPRODUCE.md). Actual results include
+[the MovieLens null comparison](reports/20260923_m1a_baselines/README.md),
+[Amazon candidate coverage](reports/20260923_m1d_sequence/README.md), and
+[real-API output variability](reports/20260924_m2_batch_feasibility/README.md), and
+[the 256-user evidence pilot](reports/20260924_m2_development_pilot/README.md).
+The TOML examples below demonstrate component structure with synthetic data;
+research quality/cost measurements use the separate `src/` and YAML pipeline.
 
 ## The component model
 
@@ -49,11 +63,11 @@ A multi-agent system is a single agent whose tools are other agents (`AgentTool`
 ## Quick start
 
 ```bash
-pip install -e ".[dev]"          # no runtime dependencies; dev adds pytest + ruff
-agentic-rec list                 # registered components
-agentic-rec run configs/interecagent.toml
-agentic-rec compare configs/*.toml --users 30
-pytest
+uv sync --locked --extra yaml --extra experiments --extra api
+uv run agentic-rec list
+uv run agentic-rec run configs/interecagent.toml
+uv run agentic-rec compare configs/*.toml --users 30
+uv run --locked --extra yaml --extra experiments --extra api python -m pytest
 ```
 
 Build an agent by hand:

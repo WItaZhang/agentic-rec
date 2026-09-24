@@ -27,6 +27,64 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") in ("publish_results", "archive_analysis"):
+        from src.result_archive import run_archive_analysis, run_publish_results
+
+        runner = run_publish_results if config["stage"] == "publish_results" else run_archive_analysis
+        runner(config, args.config, root)
+        return
+    if config.get("stage") == "validation_baseline_comparison":
+        from src.baseline_comparison import run_baseline_comparison
+
+        run_baseline_comparison(config, args.config, root)
+        return
+    if config.get("stage") == "serving_resource_audit":
+        from src.serving_audit import run_serving_audit
+
+        run_serving_audit(config, args.config, root)
+        return
+    if config.get("stage") == "final_policy_analysis":
+        from src.policy_analysis import run_final_analysis
+
+        run_final_analysis(config, args.config, root)
+        return
+    if config.get("stage") == "freeze_final_protocol":
+        from src.frozen_protocol import run_freeze
+
+        run_freeze(config, args.config, root)
+        return
+    if config.get("stage") == "batch_schedule":
+        from src.batch_scheduler import run_batch_schedule
+
+        run_batch_schedule(config, args.config, root)
+        return
+    if config.get("stage") == "sampling_profile":
+        from src.profiling import run_sampling_profile
+
+        run_sampling_profile(config, args.config, root)
+        return
+    if config.get("stage") == "routing_development":
+        from src.routing_trainer import run_routing
+
+        run_routing(config, args.config, root)
+        return
+    if config.get("stage") in ("matrix_prepare", "frozen_matrix_prepare", "matrix_evaluate"):
+        from src.batch_matrix import run_matrix_evaluate, run_matrix_prepare
+
+        runner = run_matrix_evaluate if config["stage"] == "matrix_evaluate" else run_matrix_prepare
+        runner(config, args.config, root)
+        return
+    if config.get("stage") in ("batch_submit", "batch_collect"):
+        from src.batch_experiment import run_batch_collect, run_batch_submit
+
+        runner = run_batch_submit if config["stage"] == "batch_submit" else run_batch_collect
+        runner(config, args.config, root)
+        return
+    if config.get("stage") == "evidence_analysis":
+        from src.evidence_analysis import run_analysis
+
+        run_analysis(config, args.config, root)
+        return
     if config.get("stage") == "llm_development":
         from src.llm_experiment import run_llm
 

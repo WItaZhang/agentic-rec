@@ -1,0 +1,14 @@
+{
+  "accounting_before": {
+    "campaign_accounted_usd": 0.3449548000000002,
+    "campaign_actual_known_usd": 0.3341444000000003,
+    "campaign_attempts": 229,
+    "planning_stop_usd": 45,
+    "round_accounted_usd": 0,
+    "round_cap_usd": 0.25,
+    "total_authorized_usd": 50,
+    "unknown_or_pending_calls": 5
+  },
+  "calls": 32,
+  "upper_bound_usd": 0.0426968
+}

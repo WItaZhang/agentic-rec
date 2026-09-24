@@ -1,0 +1,29 @@
+experiment_name: amazon_policy_batch
+stage: batch_schedule
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+scheduler:
+  prepared_run: logs/20260924_004459_amazon_policy_matrix_prepare
+  pricing:
+    model: gpt-4.1-mini-2025-04-14
+    input_per_million_usd: 0.2
+    cached_input_per_million_usd: 0.05
+    output_per_million_usd: 0.8
+    source: https://developers.openai.com/api/docs/guides/batch
+    checked_date: '2026-09-23'
+  max_requests_per_batch: 192
+  max_batch_input_tokens: 800000
+  max_inflight_input_tokens: 1800000
+  poll_seconds: 30
+  max_consecutive_poll_errors: 3
+budget:
+  total_paid_usd: 50
+  per_run_paid_usd: 6
+  stop_at_usd: 45
+  ledger_path: logs/budget/openai_ledger.jsonl
+  cloud_rental_allowed: false

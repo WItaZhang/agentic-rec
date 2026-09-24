@@ -1,0 +1,19 @@
+# Copy into the executable config after binding a completed final freeze and
+# its validation input bundle. This stage measures resources, never quality.
+seed: 314159
+audit:
+  users: 128
+  methods: [base, recent, full, rule, random, learned]
+  concurrency: 1
+  cpu_threads: 2
+  rate_limits:
+    tokens_per_minute: 120000
+    requests_per_minute: 60
+budget:
+  total_paid_usd: 50
+  per_run_paid_usd: 2.5
+  stop_at_usd: 45
+  ledger_path: logs/budget/openai_ledger.jsonl
+  cloud_rental_allowed: false
+  stop_on_unknown_usage: true
+  stop_on_api_error: true

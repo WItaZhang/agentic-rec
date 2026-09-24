@@ -1,0 +1,82 @@
+{
+  "R0": {
+    "cold_item_misses": 0,
+    "request_micro": {
+      "candidate_recall": 0.625,
+      "hr": 0.125,
+      "ndcg": 0.039433109598216096
+    },
+    "requests": 8,
+    "user_macro": {
+      "candidate_recall": 0.6428571428571429,
+      "hr": 0.14285714285714285,
+      "ndcg": 0.04506641096938983
+    },
+    "users": 7,
+    "zero_history_requests": 2
+  },
+  "R1": {
+    "cold_item_misses": 0,
+    "request_micro": {
+      "candidate_recall": 0.625,
+      "hr": 0.25,
+      "ndcg": 0.08109977626488277
+    },
+    "requests": 8,
+    "user_macro": {
+      "candidate_recall": 0.6428571428571429,
+      "hr": 0.2857142857142857,
+      "ndcg": 0.09268545858843745
+    },
+    "users": 7,
+    "zero_history_requests": 2
+  },
+  "R2": {
+    "cold_item_misses": 0,
+    "request_micro": {
+      "candidate_recall": 0.625,
+      "hr": 0.25,
+      "ndcg": 0.08395900798671888
+    },
+    "requests": 8,
+    "user_macro": {
+      "candidate_recall": 0.6428571428571429,
+      "hr": 0.2857142857142857,
+      "ndcg": 0.09595315198482157
+    },
+    "users": 7,
+    "zero_history_requests": 2
+  },
+  "R3": {
+    "cold_item_misses": 0,
+    "request_micro": {
+      "candidate_recall": 0.625,
+      "hr": 0.25,
+      "ndcg": 0.16952589838850277
+    },
+    "requests": 8,
+    "user_macro": {
+      "candidate_recall": 0.6428571428571429,
+      "hr": 0.21428571428571427,
+      "ndcg": 0.12231531244400316
+    },
+    "users": 7,
+    "zero_history_requests": 2
+  },
+  "R4": {
+    "cold_item_misses": 0,
+    "request_micro": {
+      "candidate_recall": 0.625,
+      "hr": 0.25,
+      "ndcg": 0.16952589838850277
+    },
+    "requests": 8,
+    "user_macro": {
+      "candidate_recall": 0.6428571428571429,
+      "hr": 0.21428571428571427,
+      "ndcg": 0.12231531244400316
+    },
+    "users": 7,
+    "zero_history_requests": 2
+  }
+}

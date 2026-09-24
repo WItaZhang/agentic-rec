@@ -5,6 +5,35 @@ from .feature import training_profile
 from .utils import digest, managed_run, utc_seconds, write_json
 
 
+def run_sampling_profile(config, config_path, root):
+    from collections import Counter
+
+    from .protocol import hash_sample, replay_requests
+
+    with managed_run(config, config_path, root) as (run_dir, manifest):
+        raw = root / config["data"]["raw_path"]
+        if digest(raw) != config["data"]["sha256"]:
+            raise ValueError("Raw data checksum mismatch")
+        events, _ = load_amazon_reviews(raw)
+        ends = [(name, utc_seconds(config["data"][key]) * 1000) for name, key in (
+            ("base_train", "base_train_end"), ("policy_train", "policy_train_end"), ("validation", "validation_end"))]
+        views = [v for v, _ in replay_requests(events, ends, config["protocol"]["positive_rating"])]
+        profiles = {}
+        for name in config["profile"]["partitions"]:
+            if name not in ("policy_train", "validation"):
+                raise ValueError("Sampling profile excludes final test")
+            eligible = [v for v in views if v.partition == name]
+            sample, audit = hash_sample(eligible, len(eligible), config["seed"])
+            profiles[name] = {"sampling": audit,
+                "history_counts": dict(sorted(Counter(len(v.history) for v in sample).items())),
+                "groups": {label: sum(low <= len(v.history) < high for v in sample)
+                           for label, low, high in config["profile"]["history_groups"]}}
+        write_json(run_dir / "sampling_profile.json", profiles)
+        write_json(run_dir / "metrics.json", {"ranking_evaluated": False, "test_scored": False})
+        manifest.update(raw_sha256=digest(raw), paid_api_usd=0, llm_calls=0, test_scored=False)
+        print({name: record["groups"] for name, record in profiles.items()}, flush=True)
+
+
 def run_profile(config, config_path, root):
     with managed_run(config, config_path, root) as (run_dir, manifest):
         profiles, inputs = {}, {}

@@ -4,7 +4,13 @@
 
 [English](README.md) · **[中文学习路线（从零开始）](docs/zh/00-学习路线.md)** · [英文综述](docs/survey.md) · [论文 × 组件矩阵](docs/component-matrix.md) · [设计说明](docs/design.md)
 
-**下一步研究项目：[自适应证据检索的 Agentic Recommendation](docs/adaptive-evidence/README.md)**。详细设计包含研究假设、真实数据与时间协议、工具及控制器接口、实验和消融矩阵、成本统计、分阶段验收、相关工作与英文简历模板。方案区分已存在的 MovieLens 基础、待实现的方法和待验证的结果，可按里程碑逐步完成。
+**进行中的研究：[自适应证据检索的 Agentic Recommendation](docs/adaptive-evidence/README.md)**。
+MovieLens 基线已复现，Amazon 时间回放、ItemKNN 与因果序列模型已有真实结果；
+同步和批量 LLM 调用已通过协议验证，正式证据对照仍在运行。
+[进度记录](docs/adaptive-evidence/PROGRESS.md) 区分已实现、已验证与待完成能力，
+[复现说明](docs/adaptive-evidence/REPRODUCE.md) 给出数据、配置、费用与恢复入口。
+最终 Amazon 测试和学习路由的收益尚未报告。下面的 TOML 框架示例使用合成数据；
+真实研究结果来自独立的 `src/`、YAML 配置和原始运行记录。
 
 2023 到 2026 年间，几十篇工作把 LLM *agent* 放到推荐系统的中心：作为推荐器本身（RecMind、InteRecAgent、MACRec、BiLLP），作为模拟用户（RecAgent、Agent4Rec、SimUSER、RecoWorld），作为物品（AgentCF），或作为站在用户一侧的助理（RAH、iAgent）。把它们并排读，会发现共享九个组件，差异主要在于挂载了哪些组件、以及如何优化。
 
@@ -43,11 +49,11 @@ Observation ──► profile.render ─┐
 ## 快速开始
 
 ```bash
-pip install -e ".[dev]"
-agentic-rec list
-agentic-rec run configs/interecagent.toml
-agentic-rec compare configs/*.toml --users 30
-pytest
+uv sync --locked --extra yaml --extra experiments --extra api
+uv run agentic-rec list
+uv run agentic-rec run configs/interecagent.toml
+uv run agentic-rec compare configs/*.toml --users 30
+uv run --locked --extra yaml --extra experiments --extra api python -m pytest
 ```
 
 配置驱动：

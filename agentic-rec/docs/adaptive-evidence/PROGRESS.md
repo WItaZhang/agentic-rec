@@ -1,10 +1,11 @@
 # Research execution checkpoint
 
-Last updated: 2026-09-23 UTC. The full research goal remains active.
+Last updated: 2026-09-24 UTC. The full research goal remains active. The newest
+checkpoint is at the bottom; historical spending/status entries are not current balances.
 
 ## Authorization and resources
 
-- Branch: `codex/adaptive-evidence-research`; repository default:
+- Branch: `codex/evidence-policy-study`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
 - Paid API authorization updated by user: **USD 50 total**, estimate each round.
   First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
@@ -38,17 +39,25 @@ Last updated: 2026-09-23 UTC. The full research goal remains active.
 | M1b Amazon coverage | validated | `34cdb4e`; `logs/20260923_232442_amazon_training_profile`; `configs/amazon_profile.yaml` | Magazine selected using training-only coverage and memory. Digital Music retained as rejected candidate. |
 | M1c event replay | validated | `a20628e`; `logs/20260923_232911_amazon_magazine_replay`; [report](../../reports/20260923_m1c_amazon_replay/README.md) | Validation CandidateRecall@50=0.373081; improve/expand retrieval before LLM scale-up. Test unscored. |
 | M1d sequence baseline | validated | `45be0c3`; `logs/20260923_233625_amazon_magazine_sequence`; [report](../../reports/20260923_m1d_sequence/README.md) | Sequence validation NDCG 0.067832; retrieval no better. Freeze ItemKNN top-200 for main evidence comparisons. |
-| M2 real LLM | implementing | `configs/amazon_llm_smoke.yaml`, OpenAI GPT-4.1 mini snapshot | First real round: 8 development requests, 32 calls, upper USD 0.425; no effectiveness claim from smoke. |
-| M3–M4 evidence and routing | planned | Conditional on usable evidence variation | Keep fixed, rule and random controls; no obligation to retain a failed complex method. |
+| M2 real LLM | pilot completed and analyzed | `7c26d47`, `d6b41bf`; [pilot report](../../reports/20260924_m2_development_pilot/README.md) | 1024 attempts, one retained 429 fallback. Recent evidence has no established aggregate gain; full evidence is directionally worse. Same-input output noise can inflate oracle headroom. |
+| M3 fixed evidence | expanded validation running | `59ff478`, `453746d`; 1045-user policy bundle and 3318-user validation bundle | Exact input sharing within requests; immutable candidates; real batch cost accounting. Strong-base and content controls are being prepared. |
+| M4 routing | implemented, not yet fitted | `d672712` precommits the selection grid; `59460f5` adds final-test gates | Rules, cost-calibrated random control, weighted Ridge/boosting policies; wait for complete matrices before fitting/selection. |
 | M5 sequential evidence | conditional | No implementation claimed | Only pursue if observations after fetching evidence can improve a decision. |
 | M6 report and career materials | planned | Claim ledger tied to completed results | Strong baseline, statistics, ablations, limitations and honest LaTeX. |
 
-Current work: durable paid-call accounting, target-free R1–R4 evidence, real API
-smoke, then a development sample sized using variance and measured costs.
+Initial M2 checkpoint (superseded by the live checkpoints below): durable paid-call
+accounting, target-free R1–R4 evidence, real API smoke, then a variance-sized pilot.
 `configs/amazon_llm_smoke.yaml` fixes all settings and prices; prompts are versioned.
 The local float32 adapter remains implemented but unexecuted (only about 1.9 GB
 RAM free at inspection). No cloud resource, quantized model, or runtime was rented.
-No external input is pending. Paid spending before first smoke: USD 0.
+No external input is pending. Paid spending after first smoke: USD 0.069304; remaining USD 49.930696.
+Actual run `logs/20260923_234647_amazon_llm_smoke`, source `2791754`: 32/32
+completed, one deterministic ranking repair, all provider counts matched usage.
+[Smoke report](../../reports/20260923_m2_api_smoke/README.md). Next: 256-user
+uniform development pilot (USD 6 cap). This is not a final effectiveness result.
+PR [#2](https://github.com/WItaZhang/agentic-rec/pull/2) passed Python 3.11/3.12
+CI and was merged as `12d00bf`, preserving the original PR #1 commits.
+The MovieLens foundation is now included in the repository default branch.
 
 ## Decisions and limitations
 
@@ -88,3 +97,145 @@ uv run --locked --extra yaml --extra experiments ruff check .
 
 Local raw data, full predictions, models and logs remain git-ignored. Publish
 only aggregate evidence and reproducible configurations, with dataset attribution.
+
+
+## Live checkpoint: 2026-09-24 UTC
+
+- Branch `codex/evidence-policy-study`; foundation merged via PR #2. GitHub also
+  marks PR #1 merged because its original commits are now in the default branch.
+- Real development pilot source `6c244dc`, 256 users, four plans, started at
+  `logs/20260923_235144_amazon_llm_development_pilot`. It stopped after 48 recorded
+  attempts when one call received HTTP 429. Its unknown usage remains reserved
+  at USD 0.0035016; the fallback is retained in the outcome denominator.
+- Resume source `7c26d47`, running in
+  `logs/20260923_235347_amazon_llm_development_pilot_resume`. Explicit pacing:
+  120,000 tokens/minute, 60 generation requests/minute, concurrency 4. No repeat
+  of the 48 recorded attempts. Latency regimes are recorded; include queue time
+  separately and do not pool the initial unpaced pilot as a controlled latency
+  benchmark. Current budget is always read from the append-only campaign ledger.
+- While this runs, paired analysis and batch replication feasibility were added.
+  Analysis config `configs/amazon_pilot_analysis.yaml` refuses incomplete runs.
+  The batch smoke reuses hash-identical inputs from the complete 32-call smoke,
+  with a USD 0.25 cap. Batch cost is offline construction; no per-request service
+  latency is inferred from batch turnaround.
+- After pilot completion: run its paired analysis, inspect evidence heterogeneity
+  and output noise, size the next label/validation runs, then freeze routing and
+  the final test protocol. Final Amazon test quality remains unscored.
+
+
+Batch smoke completed: `logs/20260924_000032_amazon_batch_smoke`, provider ID
+`batch_6ab46827b00c8190b3e8f841c897c1b1`; collected results at
+`logs/20260924_000757_amazon_batch_smoke_collect` (32 completed, USD 0.0362456,
+139 s turnaround, service latency unknown). Roundtrip evaluator output:
+`logs/20260924_000851_amazon_batch_roundtrip`. All new generation rounds remain
+subject to a preflight estimate and shared USD 50 campaign cap. No new paid
+round is started merely by preparing a batch bundle or recollecting its results.
+Routing feature/model definitions exist but have not been fitted or evaluated;
+this is not a completed learned-routing result. 68 local tests are available.
+
+
+`logs/20260924_002548_amazon_user_history_profile` (`7f59558`) formalizes the
+label-blind user-state coverage audit: policy training has 7,355 zero-history,
+656 one-history and 261 older-history user states; validation has 2,968/247/103.
+The stratified training sampler selects one request/user before grouping and
+records inclusion probabilities. Routing fitting applies inverse inclusion weights;
+evaluation remains population sampled. Implemented routing controls have not yet
+been fit to a completed train/validation pair, and no routing efficacy is claimed.
+Exact-input outcome reuse is limited to the same request/candidate snapshot; both
+physical label-generation cost and logical action cost are preserved separately.
+
+## Pilot completion and next checkpoint: 2026-09-24 00:40 UTC
+
+- The resumed 256-user pilot is complete, with 1024 attempts and one retained
+  HTTP 429 fallback. Known pilot USD 1.0458048; accounted USD 1.0493064.
+  Campaign known USD 1.1513544; accounted USD 1.154856; no pending generation.
+- Paired analysis source `d6b41bf`, run `logs/20260924_004054_amazon_pilot_analysis`.
+  R1 minus R0 NDCG +0.001965, 95% CI [-0.006972, +0.010661]; no established gain.
+  Full evidence has lower mean quality, with wide uncertainty. Same-input
+  repetitions reveal output noise that can inflate a label-aware oracle.
+- Curated report: `reports/20260924_m2_development_pilot/README.md`.
+- Next prepared bundles: `configs/amazon_policy_matrix_prepare.yaml` (all 917
+  warm states plus 128 cold states, inverse inclusion fitting weights) and
+  `configs/amazon_validation_matrix_prepare.yaml` (all 3318 validation users).
+  Exact input counts precede paid submission; same-request identical inputs
+  share one physical generation. Phase caps USD 6 and USD 12 respectively.
+- Final Amazon test remains unscored. Routing remains implemented but unfitted.
+  74 tests and Python 3.11/3.12 CI passed at `d6b41bf`. Follow this checkpoint
+  rather than the superseded running-pilot note above.
+
+## Expanded validation and reproducibility correction
+
+- Validation input bundle `logs/20260924_004459_amazon_validation_matrix_prepare`
+  is complete: 3318 users, 13272 logical actions, 6842 physical requests, 908
+  exact token-count queries. Preflight 37,580,364 input tokens; estimated USD
+  7.7131 at 36 output tokens without cache; maximum reserved USD 9.0925.
+  Config `configs/amazon_validation_batch.yaml` caps this phase at USD 12.
+- Scheduler `logs/20260924_005144_amazon_validation_batch` submitted its first
+  146 calls (`batch_6ab4742b02588190bdf3e76b72748346`). The second shard failed
+  payload comparison before reservations/upload; it made no paid request.
+- Root cause: summing ItemKNN rows selected from a string set permits floating
+  point reduction order to vary across processes. Auditing all 3318 validation
+  users found six changed score vectors, maximum absolute difference 1.39e-17,
+  zero changed candidate orders and zero changed top-10 rankings.
+- Fix: canonical sorted row reduction for future retrieval; batch submission
+  consumes the immutable saved candidate snapshot and verifies its file and
+  prompt hashes. Existing completed/prepared observations are preserved. This
+  is an execution/provenance fix, with no result-driven candidate replacement.
+- A recovery checkpoint records proof that shard 2 was never reserved/submitted,
+  marks that shard pending, and retains shard 1's provider ID. Resume config:
+  `configs/amazon_validation_batch_resume.yaml`; no generation is repeated.
+- Frozen-test gates and policy analysis are implemented and tested, but no final
+  freeze, test generation or test score exists yet. Selection grid was committed
+  before expanded validation outputs at `d672712`. Latest checks: 81 tests pass.
+
+## Checkpoint: 2026-09-24 01:20 UTC
+
+- Active validation scheduler: `logs/20260924_005558_amazon_validation_batch_resume`.
+  It resumes the first provider batch; shard 2's pre-submit failure is documented
+  without duplicate reservations. At 01:19, 18/48 shards were collected, two
+  submitted, and 28 pending. Known campaign USD 3.958511; accounted USD 4.3468392
+  includes pending reservations and the pilot's USD 0.0035016 unknown attempt.
+  Never interpret pending reservations as already invoiced spending.
+- Completed input bundles: policy at `logs/20260924_004459_amazon_policy_matrix_prepare`
+  (2612 physical requests, estimate USD 2.9788, upper 3.5054); sequence validation
+  at `logs/20260924_005821_amazon_sequence_validation_prepare` (6842, estimate
+  7.7100, upper 9.0894); category control at `logs/20260924_010156_amazon_content_control_prepare`
+  (956, estimate 1.4860, upper 1.6787). These three generation phases have **not**
+  started. Configs `amazon_policy_batch.yaml`, `amazon_sequence_validation_batch.yaml`
+  and `amazon_content_control_batch.yaml` are ready. Do not concurrently launch
+  independent batch schedulers against the shared provider enqueue allowance.
+- The category control selects all 350 warm validation user states plus 128
+  cold states, with one request/user before grouping. Analyze the groups, not an
+  unweighted population estimate. R4/S4 input tokens match exactly on all 478
+  requests. S4 permutes candidate/category alignment only and retains history.
+- Same-sample conventional comparison: `logs/20260924_010938_amazon_validation_baselines`,
+  source `7e1fbf5`; sequence minus KNN NDCG +0.002167 [0.000173, 0.004190], 3318
+  users including 418 cold targets. This supersedes a prior zero cold-count
+  metadata omission; quality numbers did not change. See the M3 baseline report.
+- Public pilot outcomes and real usage are in `artifacts/published/pilot_v1`.
+  `logs/20260924_011719_pilot_archive_reanalysis` reproduced every analysis value
+  exactly without raw data, credentials, models or API access. Small frozen
+  base weights are also checked in. Ten archived/model file hashes were checked
+  against Git blobs; artifact newline conversion is disabled for portability.
+- Long-lived scheduler runtime source is parent commit `453746d`. Its child
+  manifests can show later filesystem commits while their Python functions
+  remain imported from the parent. `run_family_provenance.json` records this
+  distinction without changing old manifests. New schedulers explicitly carry
+  parent runtime provenance into child manifests.
+- Routing, final freeze, final test and synchronous serving audit remain
+  unexecuted. The serving audit plan fixes 128 validation users, concurrency one,
+  no output reuse, automatic prefix caching recorded, and a USD 2.5 cap. Main
+  random seed is 1729; secondary seeds and exact randomized-policy expectations
+  are declared before expanded LLM validation quality is inspected.
+- Next: collect the complete validation matrix, then analyze all users. Run the
+  policy label phase to assess/fit routing if supported, execute the content and
+  sequence controls, freeze all choices, and only then prepare final test inputs.
+  No external input or new authorization is currently required.
+
+Reproduction follow-up: an isolated environment without the OpenAI package found
+a 1.39e-17 discrepancy in two zero-history mean fields. Group aggregation now
+sorts request IDs. Archive verification keeps all counts/structure exact and
+declares a 1e-14 absolute floating tolerance; it rejects looser tolerances above
+1e-12. The earlier exact-match run remains valid historical evidence, but is not
+claimed as a cross-process guarantee. Predictions, paired intervals and conclusions
+are unchanged. The isolated rerun passes after this correction.

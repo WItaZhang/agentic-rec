@@ -1,0 +1,14 @@
+experiment_name: publish_pilot_results
+stage: publish_results
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+publication:
+  kind: evidence
+  matrix_run: logs/20260923_235347_amazon_llm_development_pilot_resume
+  analysis_run: logs/20260924_004054_amazon_pilot_analysis
+  output_path: artifacts/published/pilot_v1

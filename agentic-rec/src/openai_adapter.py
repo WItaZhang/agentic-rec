@@ -5,6 +5,7 @@ import json
 import re
 import time
 
+from .execution import RatePacer
 from .paid_budget import usage_cost
 
 
@@ -20,6 +21,7 @@ class OpenAIBackend:
         if config["base_url"] != "https://api.openai.com/v1" or config["max_retries"] != 0:
             raise ValueError("Only authorized OpenAI endpoint and explicit zero retries supported")
         self.config, self.budget = config, budget
+        self.pacer = (RatePacer(**config["rate_limits"]) if config.get("rate_limits") else None)
         if client is None:
             from openai import OpenAI
 
@@ -32,7 +34,7 @@ class OpenAIBackend:
         common = {"model": self.config["model"], "input": messages,
                   "text": {"format": {"type": "json_schema", "name": "ranking",
                                       "strict": True, "schema": schema}}}
-        start, cpu_start = time.perf_counter(), time.process_time()
+        start, cpu_start = time.perf_counter(), time.thread_time()
         record = {**metadata, "model": self.config["model"], "status": "not_called",
                   "prompt_sha256": hashlib.sha256(json.dumps(common, sort_keys=True).encode()).hexdigest(),
                   "count_endpoint_calls": 1, "generation_attempts": 0, "usage": None,
@@ -55,6 +57,9 @@ class OpenAIBackend:
         worst = usage_cost({"input_tokens": reserve_input, "output_tokens": self.config["max_output_tokens"]}, price)
         call_id = self.budget.reserve(worst, metadata)
         record.update(call_id=call_id, reserved_usd=worst, generation_attempts=1)
+        record["rate_queue_ms"] = (self.pacer.wait(counted, self.config["max_output_tokens"])
+                                   if self.pacer else 0)
+        record["rate_limits"] = self.config.get("rate_limits")
         generation_start = time.perf_counter()
         try:
             response = self.client.responses.create(**common, store=False,
@@ -68,8 +73,13 @@ class OpenAIBackend:
         except Exception as error:
             record.update(status="generation_error", error=type(error).__name__,
                           http_status=getattr(error, "status_code", None), actual_known_usd=None)
+            code = getattr(error, "code", None)
+            record["error_code"] = code if isinstance(code, str) and re.fullmatch(r"[a-z_]+", code) else None
+            headers = getattr(getattr(error, "response", None), "headers", {})
+            record["rate_headers"] = {key: value for key, value in headers.items()
+                                      if key.startswith("x-ratelimit-") or key == "retry-after"}
         record.update(generation_latency_ms=(time.perf_counter() - generation_start) * 1000,
                       total_latency_ms=(time.perf_counter() - start) * 1000,
-                      client_cpu_seconds=time.process_time() - cpu_start)
+                      client_thread_cpu_seconds=time.thread_time() - cpu_start)
         self.budget.settle(call_id, record["actual_known_usd"], record["status"])
         return record

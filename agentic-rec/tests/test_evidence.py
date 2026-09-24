@@ -23,3 +23,21 @@ def test_evidence_sources_change_without_candidate_or_label_change():
     assert all("average_rating" not in output[0][1]["content"] for output in outputs)
     assert all(output[3]["candidate_hash"] == snapshot.content_hash for output in outputs)
     assert "review1" not in outputs[3][0][1]["content"]
+
+
+def test_shuffled_categories_keep_candidate_identity_and_exact_text_multiset():
+    snapshot = CandidateSnapshot('q', tuple(f'i{i}' for i in range(20)), tuple(range(20)), 'model', 10)
+    view = RequestView('q', 'u', 10, (), 'validation')
+    metadata = {item: {'title': item, 'categories': [f'category {i}']} for i, item in enumerate(snapshot.item_ids)}
+    config = {'title_tokens': 40, 'category_tokens': 48, 'review_tokens': 128,
+              'recent_events': 1, 'max_history_events': 20, 'k': 10, 'category_permutation_seed': 42}
+    def build(plan):
+        return json.loads(build_prompt(view, snapshot, metadata, plan, config, lambda s, n: (s, False), 'rank')[0][1]['content'])
+    original, shuffled = build('R4'), build('S4')
+    assert [(r['id'], r['title']) for r in original['candidates']] == [(r['id'], r['title']) for r in shuffled['candidates']]
+    def categories(value):
+        return [r['categories'] for r in value['candidates']]
+    assert sorted(categories(original)) == sorted(categories(shuffled))
+    assert categories(original) != categories(shuffled)
+    assert build('S4') == shuffled
+    assert original['history'] == shuffled['history']
