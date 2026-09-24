@@ -1,0 +1,90 @@
+{
+  "config_sha256": "fe3fcefb7ae4ffe4c48200572a17976b6b6abfc808889fba9aca127bb75ecbf0",
+  "cpu_seconds": 19.171875,
+  "git_commit": "f19531720bbede4407480674027101f73484155d",
+  "git_dirty": false,
+  "paid_api_usd": 0,
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python": "3.11.15 (main, Mar 24 2026, 22:57:51) [MSC v.1944 64 bit (AMD64)]",
+  "source_sha256": {
+    "main.py": "9732d167c93cc6013b641693b30847b14d281abd96f61a5e3889b3dea39a3e90",
+    "src/__init__.py": "58cea931b945361325ecd190618610c7884afe2c47f471662bd8298b55e3875f",
+    "src/adapter.py": "fcd2bbef76174bc42f71c198520e106ba7ee53e2ed2f0de664f9e15deafe94c6",
+    "src/baseline_comparison.py": "dce28f4765fab6eb0c007b15dab2a62806aa4d1d3563ccfb8edef5e139d99f61",
+    "src/baselines.py": "0ef7757ca0e530423e601196216dbc1d4828629dddd5a4d8ec7348b5a9dba1d4",
+    "src/batch_experiment.py": "846ef8b169cebc0ece6ad60e2bca441a38a0731f40c4994fdb7a07c60c15f708",
+    "src/batch_matrix.py": "c4570c66f6f0269c5598d35da4b9d1b1340046f349e3a45ba9c1f4bc965c7e3f",
+    "src/batch_scheduler.py": "5cb3142c94b5aba5e89a3f32bd2136b9c25d7feceaaf316bb6309ffb00a019a8",
+    "src/data.py": "8ab57d94f242dc1f16f274bbf42c5ce3f2897243a89a5fc5a448c9b4965446b5",
+    "src/evidence.py": "4a34c8b94d870cd34d04fe128c82fd4e331ae4706a8265e28be701b0f2d062c2",
+    "src/evidence_analysis.py": "7d1386930faedcda3df357d540518f70cc97427af9da24918519c664eaf076d3",
+    "src/execution.py": "0a47fafce10ab80bb181afeebd4fe6d4ed572f64066f69f375b676c394ed1ae6",
+    "src/failure_analysis.py": "4193d59b04ba307a072219724e2c0b198277120e62b81a56ea5dc226955c8b68",
+    "src/feature.py": "bab82227d6d6c802b624dbfb8f21714247f3208bff798ee1d1405ca6ae5fac18",
+    "src/frozen_protocol.py": "bff57c18ee4b5665eb73b03ab96a7a1d9533255bc90f90381d606390b76af847",
+    "src/llm_experiment.py": "4beb481fa16d8d673bce1d5cfb10837e91aa95def1dcbd659e2629a2f86496f1",
+    "src/metrics.py": "8fb5ff5e6befd36b35008ab85ee62d8d3bd4e9a6d9612882a919778856de42d9",
+    "src/model.py": "75838b6a8c843469184d7527a607ed46142cff50901560b8e120d6ded59ad289",
+    "src/model_artifacts.py": "713957a4a1ae9ae8026b610a45714141ac0423a138940ab418e4f21fa123767d",
+    "src/openai_adapter.py": "b2425c06143e3e73ed9c7b129eeefd8165709c84951eeb3cb7a5a725eab0ac6b",
+    "src/paid_budget.py": "d363fd6ffa53ddb63d181b661b4761f7d512214aa5c99683ce95ea4b5a493809",
+    "src/policy_analysis.py": "01f0779fa2723cbb4b808b97c056d8fca81181b650e8e645ce706765f065c995",
+    "src/policy_inference.py": "0c879cfd1dab18fb673bc36ad2af7b1558afacb9190cdb433bb70b96de48ba31",
+    "src/profiling.py": "79e8335d352b32f113da4001ac862e154615ef6df556eeb158a12cef58d11357",
+    "src/protocol.py": "21f70a31ae6ab9c6e7b5454622d419540ae3e0a8bc25dd524ebdb758673d45e7",
+    "src/replay.py": "612f5228c7c9cbfe0fcf10028bcd0283dce0748ebeb83e921b5bc4f1f69a5d3f",
+    "src/resource_audit.py": "168a2ab179d3097b35d30e1e8cf12bdb1b8cdef9fda8b9c034aacb9707cd3e1f",
+    "src/result_archive.py": "4b83278e9ab0bc627361999e040254730914e3f48f5ba7629d6c557784a79299",
+    "src/routing_data.py": "a49979e68961b08cf27e521ad35ef70d8b2c987cc6c9d43fa67786ec03cc6632",
+    "src/routing_model.py": "8d52bb4a8b469300d7aa9886cd5e39c68223bb57288cd03d24c4e8a8599ecbf6",
+    "src/routing_trainer.py": "4177b20754bce3a991ff8547962669baaa7d43dc4d7ef1b565c211ea7172fd19",
+    "src/sequence_model.py": "f590d244b2230434c9dfdffa882d5390063d9b11a87ed6309801b5e61454db4d",
+    "src/sequence_trainer.py": "b647b8945a1e2d7e69da5972537e13953be943d14845ee10a294e3a9218e9e29",
+    "src/serving_audit.py": "62502d5d4ae42e9ad161b55c0075ab8943e2393c2dcaae120a60b97876e79052",
+    "src/telemetry.py": "879a5b622d7cffdf7598b76e5f139acf7084afbd4d5c47e111cf4a98efecc258",
+    "src/trainer.py": "52c3fc78f930ae92e279d1cec458e5283dfe715b15ea7d8e50f98933772bb6ef",
+    "src/utils.py": "18fc05e25535fe5db473ceca28481abda59a976291133840a471c169c93eb2c5"
+  },
+  "sources": {
+    "causal_sequence": {
+      "candidate_sha256": "03a5b8246d6e47a010a720f73f8c4f43467e500c480d28f5b82e0bf86fda0d95",
+      "config_sha256": "6aaa5851938b5d5a5b8f76af44439f65758df931a9d5eb3ba467ac4b948576f8",
+      "path": "logs/20260924_005821_amazon_sequence_validation_prepare",
+      "retriever": {
+        "artifact_path": "logs/20260923_233625_amazon_magazine_sequence",
+        "artifact_search_root": "logs",
+        "candidate_count": 200,
+        "cpu_threads": 2,
+        "model_hash": "3c706f2f0e67e3cf57aa0196e61615bc2f5b201d695d3a6c83aa271b45758932",
+        "name": "causal_sequence"
+      }
+    },
+    "itemknn": {
+      "candidate_sha256": "7d756ad99dedac95629e3a06b59e6c5290635bdf06e3947274f37f24ec8e2648",
+      "config_sha256": "acfebb3df96ec519acf5a0a0ab0a46e615efe0096def95da8cf8dccc891188bb",
+      "path": "logs/20260924_004459_amazon_validation_matrix_prepare",
+      "retriever": {
+        "artifact_path": "logs/20260923_232911_amazon_magazine_replay",
+        "artifact_search_root": "logs",
+        "candidate_count": 200,
+        "model_hash": "8f35c8afe52cf6cc1669ba9e9cea3b7eda364043e00d16cb7456e939781da6b8",
+        "name": "itemknn"
+      }
+    },
+    "popularity": {
+      "candidate_sha256": "ed03200e9802cc533ec4c99ae64d039b70031a4e6c2b436215f79d0aec10b1b3",
+      "retriever": {
+        "artifact_fallback_path": "artifacts/frozen_base/itemknn",
+        "artifact_path": "logs/20260923_232911_amazon_magazine_replay",
+        "artifact_search_root": "logs",
+        "candidate_count": 200,
+        "model_hash": "9af3900b3654761dceeefc2d46be812d77488828402d4ff4a7a13fd568f9d746",
+        "name": "popularity"
+      }
+    }
+  },
+  "status": "completed",
+  "test_scored": false,
+  "uv_lock_sha256": "d5385102c4edfd91f92f407eb90ed357568eb81cce9ce2c51ee24f9c9367f2a0",
+  "wall_seconds": 20.347034200000053
+}

@@ -70,9 +70,10 @@ def run_publish_results(config, config_path, root):
             settings = yaml.safe_load((analysis_source / "config.yaml").read_text(encoding="utf-8"))["analysis"]
         elif kind == "policy":
             settings = json.loads((analysis_source / "analysis_settings.json").read_text())
-            prepared = root / status["prepared_run"]
-            decision_file = prepared / "routing_decisions.json"
-            if digest(decision_file) != status["routing_decisions_sha256"]:
+            decision_source = root / status["prepared_run"] if status.get("test_scored") else analysis_source
+            decision_status = status if status.get("test_scored") else analyzed
+            decision_file = decision_source / "routing_decisions.json"
+            if digest(decision_file) != decision_status["routing_decisions_sha256"]:
                 raise ValueError("Policy decisions changed before publication")
             (destination / "routing_decisions.json").write_bytes(decision_file.read_bytes())
             extra_file = source / "additional_baseline_outcomes.json"

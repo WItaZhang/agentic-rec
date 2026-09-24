@@ -272,3 +272,11 @@ metadata and historical ratings, no user IDs or review text, and makes no model
 call. It has not run: the final test is still untouched. The serving audit also
 includes the frozen causal-sequence model at zero additional API cost, under the
 same request sampling, CPU and concurrency conditions as the other methods.
+
+At `f195317`, all three frozen conventional models were evaluated on the same
+3318 validation users: `logs/20260924_014748_amazon_three_validation_baselines`.
+Popularity NDCG is 0.063170, KNN 0.066556, sequence 0.068723. KNN minus
+Popularity is +0.003385 [0.000663, 0.006196]; the earlier KNN/sequence comparison
+reproduces exactly. Include both Popularity and causal_sequence in the final
+freeze's additional_baselines dictionary, and in the serving audit template.
+These are separate candidate pools, not evidence-routing effects.
