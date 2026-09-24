@@ -18,6 +18,7 @@ data:
 retriever:
   name: itemknn
   artifact_path: logs/20260923_232911_amazon_magazine_replay
+  artifact_fallback_path: artifacts/frozen_base/itemknn
   model_hash: 8f35c8afe52cf6cc1669ba9e9cea3b7eda364043e00d16cb7456e939781da6b8
   candidate_count: 200
   artifact_search_root: logs

@@ -14,6 +14,8 @@ def load_frozen_retriever(root, config):
         raise ValueError("Unsupported frozen retriever")
     directory = root / config["artifact_path"]
     weight_file = "itemknn.npz" if name == "itemknn" else "sequence.pt"
+    if not directory.exists() and config.get("artifact_fallback_path"):
+        directory = root / config["artifact_fallback_path"]
     if not directory.exists() and config.get("artifact_search_root"):
         # Timestamped reproductions resolve by the exact model hash, never by quality.
         for candidate in sorted((root / config["artifact_search_root"]).glob("*/manifest.json")):

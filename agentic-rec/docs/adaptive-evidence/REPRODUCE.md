@@ -58,6 +58,25 @@ timestamped model only when its fingerprint exactly matches. It never chooses a
 model using test scores or a latest-run heuristic. A present but mismatched model
 fails instead of being silently replaced.
 
+Small, checksummed historical weights are now included under
+`artifacts/frozen_base/`. Configured `artifact_fallback_path` points there when
+the original log directory is absent; the same model fingerprint must match.
+This avoids requiring bit-identical retraining across operating systems merely
+to inspect the evidence experiment. Retraining remains a separate documented run.
+
+## Reproduce published statistics with no API or raw-data download
+
+```sh
+uv run --locked --extra yaml --extra experiments python main.py --config configs/pilot_archive_reanalysis.yaml
+```
+
+The compact archive contains derived per-request outcomes and actual attempt
+usage. User identifiers are replaced by order-preserving per-artifact ordinals;
+review text, input prompts, credentials and provider response IDs are excluded.
+The command verifies all file hashes, regenerates confidence intervals/plots,
+and requires exact equality with the published numeric analysis. It does not
+read raw reviews, models or credential files and does not execute API calls.
+
 ## Paid calls and secrets
 
 The user's current authorization is USD 50 total; this is not permission for other

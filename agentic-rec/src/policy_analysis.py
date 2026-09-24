@@ -144,6 +144,7 @@ def run_final_analysis(config, config_path, root):
         settings["primary_comparison"] = [resolve(x) for x in settings["primary_comparison"]]
         settings["comparisons"] = [settings["primary_comparison"],
                                    *[[resolve(x) for x in pair] for pair in settings["secondary_comparisons"]]]
+        write_json(run_dir / "analysis_settings.json", settings)
         result, rows = evaluate_decisions(outcomes, calls, decisions, ["R0", *original["evidence"]["plans"]], settings)
         write_json(run_dir / "analysis.json", result)
         write_json(run_dir / "policy_outcomes.json", rows)

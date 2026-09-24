@@ -27,6 +27,12 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") in ("publish_results", "archive_analysis"):
+        from src.result_archive import run_archive_analysis, run_publish_results
+
+        runner = run_publish_results if config["stage"] == "publish_results" else run_archive_analysis
+        runner(config, args.config, root)
+        return
     if config.get("stage") == "validation_baseline_comparison":
         from src.baseline_comparison import run_baseline_comparison
 

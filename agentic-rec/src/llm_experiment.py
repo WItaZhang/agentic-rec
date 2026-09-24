@@ -137,8 +137,9 @@ def run_llm(config, config_path, root):
             for key in ("protocol", "data", "retriever", "sampling", "evaluation", "evidence", "llm", "runtime", "seed"):
                 current, old = config[key], old_config[key]
                 if key == "retriever":
-                    current = {k: v for k, v in current.items() if k != "artifact_search_root"}
-                    old = {k: v for k, v in old.items() if k != "artifact_search_root"}
+                    locations = {"artifact_path", "artifact_search_root", "artifact_fallback_path"}
+                    current = {k: v for k, v in current.items() if k not in locations}
+                    old = {k: v for k, v in old.items() if k not in locations}
                 if current != old:
                     raise ValueError("Resuming must preserve every inference and sampling setting")
             records = [json.loads(line) for line in (previous / "calls.jsonl").read_text().splitlines()]

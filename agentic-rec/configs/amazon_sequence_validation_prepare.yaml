@@ -18,6 +18,7 @@ data:
 retriever:
   name: causal_sequence
   artifact_path: logs/20260923_233625_amazon_magazine_sequence
+  artifact_fallback_path: artifacts/frozen_base/causal_sequence
   artifact_search_root: logs
   model_hash: 3c706f2f0e67e3cf57aa0196e61615bc2f5b201d695d3a6c83aa271b45758932
   candidate_count: 200
