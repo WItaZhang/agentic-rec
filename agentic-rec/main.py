@@ -27,6 +27,11 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") == "serving_resource_audit":
+        from src.serving_audit import run_serving_audit
+
+        run_serving_audit(config, args.config, root)
+        return
     if config.get("stage") == "final_policy_analysis":
         from src.policy_analysis import run_final_analysis
 

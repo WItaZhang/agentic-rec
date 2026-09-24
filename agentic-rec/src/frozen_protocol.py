@@ -46,6 +46,8 @@ def run_freeze(config, config_path, root):
                 raise ValueError("Routing selection differs from the recorded grid")
         if routing_config["seed"] != grid["seed"] or routing_config["runtime"] != grid["runtime"]:
             raise ValueError("Routing randomness or compute settings changed")
+        if routing_config["analysis"] != grid["analysis"]:
+            raise ValueError("Primary comparison or analysis rules changed after grid registration")
         validation = root / routing_config["routing"]["validation_run"]
         validation_manifest = json.loads((validation / "manifest.json").read_text())
         inference = root / validation_manifest["prepared_run"]

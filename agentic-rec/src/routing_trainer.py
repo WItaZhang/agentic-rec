@@ -127,6 +127,16 @@ def run_routing(config, config_path, root):
                 entry["random_control"] = {**random, "seed": settings["random_seed"],
                                            "observed_validation": replay_actions(validation, actions, plans)}
             chosen[f"{kind}_{budget}"] = entry
+        primary_budget = config["analysis"]["primary_budget_usd_per_1000"]
+        finalists = [(kind, chosen[f"{kind}_{primary_budget}"]) for kind in ("fixed", "rule", "learned")
+                     if f"{kind}_{primary_budget}" in chosen]
+        highest = max(row["ndcg"] for _, row in finalists)
+        near = [(kind, row) for kind, row in finalists
+                if row["ndcg"] >= highest - settings["validation_quality_tolerance"]]
+        deploy_kind, deploy_row = min(near, key=lambda pair: (
+            pair[1]["mean_accounted_usd"], {"fixed": 0, "rule": 1, "learned": 2}[pair[0]], pair[1]["id"]))
+        deployment = {"kind": deploy_kind, "validation_budget_usd_per_1000": primary_budget,
+                      "selected_policy": deploy_row, "selection_scope": "validation_only"}
         write_json(run_dir / "validation_grid.json", candidates)
         write_json(run_dir / "fit_resources.json", {"fits": fit_records, "paid_api_usd": 0,
             "sampling_correction": "inverse user-state inclusion weights, normalized to mean one",
@@ -136,6 +146,7 @@ def run_routing(config, config_path, root):
         write_json(run_dir / "selection_frozen.json", {"selection_scope": "validation_only", "chosen": chosen,
             "plans": plans, "feature_names": names, "training_mean_costs": costs,
             "quality_tolerance": settings["validation_quality_tolerance"],
+            "deployment_candidate": deployment,
             "cost_interpretation": "actual observed counterfactual matrix cost; cache/backend distribution can differ at deployment",
             "test_scored": False})
         manifest.update(test_scored=False, policy_outcome_sha256=train["outcome_sha256"],
