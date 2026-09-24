@@ -7,6 +7,7 @@ import yaml
 from .data import load_amazon_reviews
 from .llm_experiment import choose_views
 from .metrics import aggregate_requests, paired_bootstrap, single_target_metrics
+from .model_artifacts import load_frozen_retriever
 from .protocol import replay_requests
 from .utils import digest, managed_run, write_json
 
@@ -14,7 +15,7 @@ from .utils import digest, managed_run, write_json
 def run_baseline_comparison(config, config_path, root):
     with managed_run(config, config_path, root) as (run_dir, manifest):
         settings = config["comparison"]
-        sources, candidates, source_config = {}, {}, None
+        sources, candidates, catalogs, source_config = {}, {}, {}, None
         for name, location in settings["prepared_runs"].items():
             directory = root / location
             state = json.loads((directory / "manifest.json").read_text())
@@ -27,6 +28,7 @@ def run_baseline_comparison(config, config_path, root):
                 raise ValueError("Conventional baselines require identical request sampling and time visibility")
             source_config = original
             candidates[name] = json.loads((directory / "candidates.json").read_text())
+            catalogs[name] = set(load_frozen_retriever(root, original["retriever"]).catalog)
             sources[name] = {"path": location, "config_sha256": state["config_sha256"],
                              "candidate_sha256": state["candidates_sha256"], "retriever": original["retriever"]}
         names = list(candidates)
@@ -45,7 +47,7 @@ def run_baseline_comparison(config, config_path, root):
         outcomes, metrics = {}, {}
         for name in names:
             outcomes[name] = [{"request_id": q, "user_id": views[q].user_id,
-                "history_count": len(views[q].history), **single_target_metrics(
+                "history_count": len(views[q].history), "cold_item": targets[q] not in catalogs[name], **single_target_metrics(
                     candidates[name][q]["item_ids"][:settings["k"]], targets[q],
                     candidates[name][q]["item_ids"], settings["k"])} for q in ids]
             metrics[name] = aggregate_requests(outcomes[name])
