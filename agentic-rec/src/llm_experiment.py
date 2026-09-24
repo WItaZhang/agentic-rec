@@ -23,6 +23,13 @@ from .utils import digest, managed_run, utc_seconds, write_json
 
 
 def validate_llm_config(config):
+    if config["llm"]["provider"] != "openai":
+        raise ValueError("Unsupported provider in paid API experiment")
+    price = config["llm"]["pricing"]
+    if not 0 <= price["cached_input_per_million_usd"] <= price["input_per_million_usd"] or price["output_per_million_usd"] < 0:
+        raise ValueError("Invalid versioned price table")
+    if not config["budget"]["stop_on_unknown_usage"] or not config["budget"]["stop_on_api_error"]:
+        raise ValueError("Current API protocol requires stopping and checkpointing on errors")
     if config["evaluation"]["partition"] not in ("policy_train", "validation"):
         raise ValueError("Development API stage cannot score or call on test")
     if not 1 <= config["runtime"]["concurrency"] <= 4 or config["runtime"]["cache"] != "disabled":
@@ -184,6 +191,7 @@ def run_llm(config, config_path, root):
         outcomes = []
         for view in views:
             predictions.append({"request_id": view.request_id, "user_id": view.user_id, "plan": "R0",
+                                "candidate_hash": snapshots[view.request_id].content_hash,
                                 "service_latency_ms": retrieval_ms[view.request_id],
                                 "ranking": snapshots[view.request_id].item_ids[:config["evidence"]["k"]]})
         by_id = {v.request_id: v for v in views}

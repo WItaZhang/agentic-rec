@@ -1,0 +1,18 @@
+{
+  "batch_turnaround_seconds": 139,
+  "budget": {
+    "campaign_accounted_usd": 0.5338424000000007,
+    "campaign_actual_known_usd": 0.5213800000000007,
+    "campaign_attempts": 417,
+    "pending_reservations": 4,
+    "planning_stop_usd": 45,
+    "round_accounted_usd": 0.036245599999999996,
+    "round_cap_usd": 0.25,
+    "total_authorized_usd": 50,
+    "unknown_or_pending_calls": 5,
+    "unknown_settled_calls": 1
+  },
+  "known_usd": 0.036245599999999996,
+  "service_latency_ms": null,
+  "service_latency_reason": "Not observable from asynchronous batch API"
+}

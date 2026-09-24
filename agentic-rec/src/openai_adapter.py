@@ -34,7 +34,7 @@ class OpenAIBackend:
         common = {"model": self.config["model"], "input": messages,
                   "text": {"format": {"type": "json_schema", "name": "ranking",
                                       "strict": True, "schema": schema}}}
-        start, cpu_start = time.perf_counter(), time.process_time()
+        start, cpu_start = time.perf_counter(), time.thread_time()
         record = {**metadata, "model": self.config["model"], "status": "not_called",
                   "prompt_sha256": hashlib.sha256(json.dumps(common, sort_keys=True).encode()).hexdigest(),
                   "count_endpoint_calls": 1, "generation_attempts": 0, "usage": None,
@@ -80,6 +80,6 @@ class OpenAIBackend:
                                       if key.startswith("x-ratelimit-") or key == "retry-after"}
         record.update(generation_latency_ms=(time.perf_counter() - generation_start) * 1000,
                       total_latency_ms=(time.perf_counter() - start) * 1000,
-                      client_cpu_seconds=time.process_time() - cpu_start)
+                      client_thread_cpu_seconds=time.thread_time() - cpu_start)
         self.budget.settle(call_id, record["actual_known_usd"], record["status"])
         return record

@@ -22,6 +22,35 @@ def relevant_items(rows: list[Rating], positive_rating: int):
     return dict(relevant)
 
 
+def routing_features(request, candidates, training_catalog, positive_rating):
+    """Cheap observable state only; no target, review text, user ID, or LLM result feature."""
+    import math
+
+    import numpy as np
+
+    history = request.history
+    if request.request_id != candidates.request_id or request.prediction_time != candidates.prediction_time:
+        raise ValueError("Routing features need a matching immutable candidate snapshot")
+    if any(row.timestamp >= request.prediction_time for row in history):
+        raise ValueError("Routing cannot read contemporaneous or future events")
+    count = len(history)
+    positive = sum(row.rating >= positive_rating for row in history)
+    known = sum(row.item in training_catalog for row in history)
+    scores = np.asarray(candidates.scores)
+    mass = np.maximum(scores, 0)
+    probabilities = (mass / mass.sum() if mass.sum() else np.full(len(scores), 1 / len(scores))) if len(scores) else mass
+    nonzero = probabilities[probabilities > 0]
+    entropy = float(-(nonzero * np.log(nonzero)).sum() / np.log(len(scores))) if len(scores) > 1 else 0.0
+    return {"has_history": float(count > 0), "has_older_history": float(count > 1),
+            "log_history_count": math.log1p(count), "positive_fraction": positive / count if count else 0,
+            "known_item_fraction": known / count if count else 0,
+            "mean_rating": float(np.mean([row.rating for row in history])) if count else 0,
+            "log_days_since_last": math.log1p((request.prediction_time - history[-1].timestamp) / 86400000) if count else 0,
+            "log_history_span_days": math.log1p((history[-1].timestamp - history[0].timestamp) / 86400000) if count else 0,
+            "base_score_entropy_proxy": entropy,
+            "base_relative_top_gap": float((scores[0] - scores[1]) / (abs(scores[0]) + np.finfo(float).eps)) if len(scores) > 1 else 0}
+
+
 def training_profile(events, metadata, train_end, positive_rating, history_thresholds):
     """Category selection statistics use only events strictly before the cutoff."""
     from itertools import groupby

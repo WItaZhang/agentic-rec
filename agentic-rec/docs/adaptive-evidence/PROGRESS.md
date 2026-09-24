@@ -38,7 +38,7 @@ Last updated: 2026-09-23 UTC. The full research goal remains active.
 | M1b Amazon coverage | validated | `34cdb4e`; `logs/20260923_232442_amazon_training_profile`; `configs/amazon_profile.yaml` | Magazine selected using training-only coverage and memory. Digital Music retained as rejected candidate. |
 | M1c event replay | validated | `a20628e`; `logs/20260923_232911_amazon_magazine_replay`; [report](../../reports/20260923_m1c_amazon_replay/README.md) | Validation CandidateRecall@50=0.373081; improve/expand retrieval before LLM scale-up. Test unscored. |
 | M1d sequence baseline | validated | `45be0c3`; `logs/20260923_233625_amazon_magazine_sequence`; [report](../../reports/20260923_m1d_sequence/README.md) | Sequence validation NDCG 0.067832; retrieval no better. Freeze ItemKNN top-200 for main evidence comparisons. |
-| M2 real LLM | implementing | `configs/amazon_llm_smoke.yaml`, OpenAI GPT-4.1 mini snapshot | First real round: 8 development requests, 32 calls, upper USD 0.425; no effectiveness claim from smoke. |
+| M2 real LLM | real backends validated; development running | `2791754`, `7c26d47`, `00d8fcf`, `ea30200`; synchronous and batch smoke reports | 32+32 real completed smoke calls; USD 0.1055496 combined. Output repeatability requires analysis. 256-user paired pilot running; no effectiveness claim yet. |
 | M3–M4 evidence and routing | planned | Conditional on usable evidence variation | Keep fixed, rule and random controls; no obligation to retain a failed complex method. |
 | M5 sequential evidence | conditional | No implementation claimed | Only pursue if observations after fetching evidence can improve a decision. |
 | M6 report and career materials | planned | Claim ledger tied to completed results | Strong baseline, statistics, ablations, limitations and honest LaTeX. |
@@ -119,3 +119,14 @@ only aggregate evidence and reproducible configurations, with dataset attributio
 - After pilot completion: run its paired analysis, inspect evidence heterogeneity
   and output noise, size the next label/validation runs, then freeze routing and
   the final test protocol. Final Amazon test quality remains unscored.
+
+
+Batch smoke completed: `logs/20260924_000032_amazon_batch_smoke`, provider ID
+`batch_6ab46827b00c8190b3e8f841c897c1b1`; collected results at
+`logs/20260924_000757_amazon_batch_smoke_collect` (32 completed, USD 0.0362456,
+139 s turnaround, service latency unknown). Roundtrip evaluator output:
+`logs/20260924_000851_amazon_batch_roundtrip`. All new generation rounds remain
+subject to a preflight estimate and shared USD 50 campaign cap. No new paid
+round is started merely by preparing a batch bundle or recollecting its results.
+Routing feature/model definitions exist but have not been fitted or evaluated;
+this is not a completed learned-routing result. 68 local tests are available.
