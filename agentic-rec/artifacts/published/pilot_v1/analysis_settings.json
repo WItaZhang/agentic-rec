@@ -1,0 +1,58 @@
+{
+  "bootstrap_repetitions": 5000,
+  "comparisons": [
+    [
+      "R1",
+      "R0"
+    ],
+    [
+      "R4",
+      "R0"
+    ],
+    [
+      "R2",
+      "R1"
+    ],
+    [
+      "R3",
+      "R1"
+    ],
+    [
+      "R4",
+      "R1"
+    ]
+  ],
+  "confidence": 0.95,
+  "group_boundary_source": "base_train_history_profile",
+  "history_groups": [
+    [
+      "zero",
+      0,
+      1
+    ],
+    [
+      "one",
+      1,
+      2
+    ],
+    [
+      "at_least_two",
+      2,
+      1000000
+    ]
+  ],
+  "interpretation": "development_exploratory",
+  "minimum_detectable_difference": 0.01,
+  "minimum_group_users_for_interval": 30,
+  "normal_z_alpha": 1.96,
+  "normal_z_power": 0.84,
+  "plans": [
+    "R0",
+    "R1",
+    "R2",
+    "R3",
+    "R4"
+  ],
+  "seed": 42,
+  "source_run": "logs/20260923_235347_amazon_llm_development_pilot_resume"
+}

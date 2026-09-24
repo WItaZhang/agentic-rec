@@ -1,0 +1,32 @@
+{
+  "budget": {
+    "campaign_accounted_usd": 1.1548560000000014,
+    "campaign_actual_known_usd": 1.1513544000000016,
+    "campaign_attempts": 1088,
+    "planning_stop_usd": 45,
+    "round_accounted_usd": 0.9561348,
+    "round_cap_usd": 6,
+    "total_authorized_usd": 50,
+    "unknown_or_pending_calls": 1
+  },
+  "cached_input_tokens": 4196224,
+  "calls": 1024,
+  "count_endpoint_calls": 1024,
+  "input_tokens": 5614368,
+  "mean_service_latency_ms": 10958.143287792982,
+  "other_model_calls": {
+    "embedding": 0,
+    "planning": 0,
+    "reflection": 0,
+    "summary": 0
+  },
+  "output_tokens": 36828,
+  "p95_service_latency_ms": 14477.139519995937,
+  "provider_caching": "automatic; actual cached tokens recorded; application cache disabled",
+  "retrieval_total_cpu_wall_ms": 621.9154000209528,
+  "statuses": {
+    "completed": 1023,
+    "generation_error": 1
+  },
+  "usage_priced_usd": 1.0458048000000004
+}

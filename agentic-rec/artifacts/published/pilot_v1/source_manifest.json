@@ -1,33 +1,35 @@
 {
-  "config_sha256": "2d6390d8797593dd0c42fd32090873330041865d6ff37d3b6cc8c71dea4d9d8a",
-  "cpu_seconds": 438.40625,
-  "device": "cpu",
-  "git_commit": "45be0c38d3473f7cc5b09b08f46a02ab67e50cc0",
-  "git_dirty": true,
+  "candidates_sha256": "dee8ab61ccfd35655de4b2d35cf921b685f38e010834cc42b8ed67cce71a76c2",
+  "config_sha256": "963ab87832f33a61c0dd79eb7ae0304fd396151bfd4410d1b9ff62f492ed6cc2",
+  "cpu_seconds": 48.046875,
+  "git_commit": "7c26d47e7a18ae5a768e60934723905c6967ae15",
+  "git_dirty": false,
   "input_audit": {
     "exact_duplicates_removed": 575,
     "raw_rows": 71497,
     "valid_events": 70922
   },
-  "llm_calls": 0,
-  "model_hashes": {
-    "causal_sequence": "3c706f2f0e67e3cf57aa0196e61615bc2f5b201d695d3a6c83aa271b45758932",
-    "itemknn": "8f35c8afe52cf6cc1669ba9e9cea3b7eda364043e00d16cb7456e939781da6b8",
-    "popularity": "9af3900b3654761dceeefc2d46be812d77488828402d4ff4a7a13fd568f9d746"
-  },
-  "paid_api_usd": 0,
   "platform": "Windows-10-10.0.26200-SP0",
+  "prompt_sha256": "df75c829c081b9c9a0918fc355104ec27d34229d81c4fd57c3e83c78bf87d223",
   "python": "3.11.15 (main, Mar 24 2026, 22:57:51) [MSC v.1944 64 bit (AMD64)]",
+  "rate_limit_amendment": true,
   "raw_sha256": "c77a5c092039158c3f19f77f44e49c3a94fa28591eb159f4348c3d8af53bdf53",
+  "resume_from": "logs/20260923_235144_amazon_llm_development_pilot",
+  "reused_attempts": 48,
   "source_sha256": {
-    "main.py": "2d123630e30ec9b5cb09b163175dbc02ec28e347eed8f6a8596e88dc0af75859",
+    "main.py": "bcaf4dbe2a840609aa3e98f64e56b898215ab119bdad115a1fdc4608211e8144",
     "src/__init__.py": "58cea931b945361325ecd190618610c7884afe2c47f471662bd8298b55e3875f",
     "src/adapter.py": "fcd2bbef76174bc42f71c198520e106ba7ee53e2ed2f0de664f9e15deafe94c6",
     "src/baselines.py": "0ef7757ca0e530423e601196216dbc1d4828629dddd5a4d8ec7348b5a9dba1d4",
     "src/data.py": "8ab57d94f242dc1f16f274bbf42c5ce3f2897243a89a5fc5a448c9b4965446b5",
+    "src/evidence.py": "788d8378a7642c718458f75ef4f6d02c9d66e316b73794fa94af68facc40712b",
+    "src/execution.py": "0a47fafce10ab80bb181afeebd4fe6d4ed572f64066f69f375b676c394ed1ae6",
     "src/feature.py": "a36160694a4f9c5bf1e223c98f5a0950d28a19470a7dcac5317515b593844a6f",
+    "src/llm_experiment.py": "6b1e8fa7c5bec844146f4279cdc8d6212460ac88f8977c382034231ef21f5400",
     "src/metrics.py": "8fb5ff5e6befd36b35008ab85ee62d8d3bd4e9a6d9612882a919778856de42d9",
     "src/model.py": "145fa6c4b5a6ff18258c5345aaed6b2f5368724a9ce4a71c645dfc1d7589e587",
+    "src/openai_adapter.py": "4900c83cec95261b9742a7265cf303f7b3361f02982a24fa0a8ddf010e4c6829",
+    "src/paid_budget.py": "baec9baf361a2db70beca1a5cee388f1c5ab0a51a66f68abdbc1b71bd4187a75",
     "src/profiling.py": "7d137da9ef4c5657981d29ce9533f3023479c1a0f59c7c5bfee91a9746e6c86d",
     "src/protocol.py": "21f70a31ae6ab9c6e7b5454622d419540ae3e0a8bc25dd524ebdb758673d45e7",
     "src/replay.py": "612f5228c7c9cbfe0fcf10028bcd0283dce0748ebeb83e921b5bc4f1f69a5d3f",
@@ -35,11 +37,11 @@
     "src/sequence_trainer.py": "b647b8945a1e2d7e69da5972537e13953be943d14845ee10a294e3a9218e9e29",
     "src/telemetry.py": "879a5b622d7cffdf7598b76e5f139acf7084afbd4d5c47e111cf4a98efecc258",
     "src/trainer.py": "52c3fc78f930ae92e279d1cec458e5283dfe715b15ea7d8e50f98933772bb6ef",
-    "src/utils.py": "97a9758e16f1aeb254e634040f475f8e420a64c8bc1dc52baa7708f5529995a4"
+    "src/utils.py": "e6122c5dd11f00c47a94a01360eece3239e942c09316eec8cf412252d180ae61"
   },
   "status": "completed",
   "test_scored": false,
-  "torch_version": "2.14.0+cpu",
-  "uv_lock_sha256": "3a6df1a4b7f6517f9573a8050a9316efc1400922ba2a73bbe7bc6891b357b94a",
-  "wall_seconds": 257.4667296000007
+  "tokenizer": "o200k_base",
+  "uv_lock_sha256": "d5385102c4edfd91f92f407eb90ed357568eb81cce9ce2c51ee24f9c9367f2a0",
+  "wall_seconds": 2803.1436563000025
 }
