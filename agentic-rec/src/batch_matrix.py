@@ -100,6 +100,7 @@ def run_matrix_prepare(config, config_path, root):
             "paid_generation_usd": 0, "retrieval_ms": float(np.sum(list(retrieval.values())))})
         manifest.update(stage_status="prepared_not_executed", test_scored=False,
                         planned_calls_sha256=digest(run_dir / "planned_calls.jsonl"),
+                        physical_calls_sha256=digest(run_dir / "physical_calls.jsonl"),
                         candidates_sha256=digest(run_dir / "candidates.json"))
         print(f"Prepared {len(planned)} generation inputs using {len(counts)} count requests; no generations", flush=True)
 
@@ -109,6 +110,10 @@ def run_matrix_evaluate(config, config_path, root):
 
     with managed_run(config, config_path, root) as (run_dir, manifest):
         source = root / config["prepared_run"]
+        prepared_manifest = json.loads((source / "manifest.json").read_text())
+        for name, key in (("planned_calls.jsonl", "planned_calls_sha256"), ("candidates.json", "candidates_sha256")):
+            if prepared_manifest["status"] != "completed" or digest(source / name) != prepared_manifest[key]:
+                raise ValueError("Prepared matrix artifacts changed or preparation was incomplete")
         original = yaml.safe_load((source / "config.yaml").read_text())
         validate_llm_config(original)
         planned = [json.loads(line) for line in (source / "planned_calls.jsonl").read_text().splitlines()]

@@ -15,6 +15,7 @@ analysis:
   group_boundary_source: base_train_history_profile
   bootstrap_repetitions: 5000
   confidence: 0.95
+  minimum_group_users_for_interval: 30
   seed: 42
   minimum_detectable_difference: 0.01
   normal_z_alpha: 1.96

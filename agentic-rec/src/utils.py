@@ -46,7 +46,7 @@ def load_config(path):
         return config
     if config.get("stage") in ("profile_amazon", "replay_development", "sequence_development", "evidence_analysis",
                               "batch_submit", "batch_collect", "matrix_prepare", "matrix_evaluate", "routing_development",
-                              "sampling_profile"):
+                              "sampling_profile", "batch_schedule"):
         return config
     if config["model"]["name"] not in ("popularity", "baseline_suite"):
         raise ValueError("Unknown conventional model")

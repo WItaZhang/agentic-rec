@@ -44,8 +44,13 @@ def run_batch_submit(config, config_path, root):
             original_calls = original_calls[start:start + count]
             if not original_calls or sum(r["preflight_input_tokens"] for r in original_calls) > config["batch"]["max_enqueued_input_tokens"]:
                 raise ValueError("Empty batch or configured enqueue token cap exceeded")
-        if json.loads((source / "manifest.json").read_text())["status"] != "completed":
+        source_manifest = json.loads((source / "manifest.json").read_text())
+        if source_manifest["status"] != "completed":
             raise ValueError("Replication requires a complete original run")
+        if source_mode == "prepared_bundle":
+            hash_key = "physical_calls_sha256" if call_file == "physical_calls.jsonl" else "planned_calls_sha256"
+            if digest(source / call_file) != source_manifest[hash_key]:
+                raise ValueError("Prepared call file changed")
         for path, checksum in (("raw_path", "sha256"), ("metadata_path", "metadata_sha256")):
             if digest(root / original["data"][path]) != original["data"][checksum]:
                 raise ValueError("Input checksum changed")
@@ -118,6 +123,7 @@ def run_batch_submit(config, config_path, root):
         manifest.update(batch_id=batch.id, batch_status=batch.status, stage_status="submitted_not_evaluated",
                         source_run=config["batch"]["source_run"], test_scored=False)
         print(f"Submitted {batch.id}: {batch.status}; batch completion is separate from submission", flush=True)
+        return run_dir
 
 
 def parse_batch_line(row):
@@ -146,7 +152,7 @@ def run_batch_collect(config, config_path, root):
         manifest.update(batch_id=batch.id, batch_status=batch.status, stage_status="status_only", test_scored=False)
         if batch.status not in ("completed", "failed", "expired", "cancelled"):
             print(f"Batch {batch.status}: {batch.request_counts.model_dump()}", flush=True)
-            return
+            return run_dir
         lines = []
         for kind in ("output", "error"):
             file_id = getattr(batch, f"{kind}_file_id")
@@ -182,3 +188,4 @@ def run_batch_collect(config, config_path, root):
             "service_latency_ms": None, "service_latency_reason": "Not observable from asynchronous batch API"})
         manifest.update(stage_status="collected", source_run=str(Path(config["batch_run"])), results=len(results))
         print(f"Collected {len(results)} batch results; {budget.snapshot()}", flush=True)
+        return run_dir

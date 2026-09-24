@@ -63,9 +63,12 @@ def analyze_matrix(outcomes, calls, config):
             differences = np.array([a[u] - b[u] for u in users])
             sd = float(differences.std(ddof=1)) if len(users) > 1 else None
             result[metric]["paired_sd"] = sd
+            result[metric]["bootstrap_degenerate"] = sd is None or sd == 0
+            if selected is not None and len(users) < config.get("minimum_group_users_for_interval", 30):
+                result[metric].update(ci_low=None, ci_high=None, interval_status="descriptive_small_group")
             result[metric]["approx_users_for_target_power"] = (
                 math.ceil((config["normal_z_alpha"] + config["normal_z_power"]) ** 2 * sd ** 2
-                          / config["minimum_detectable_difference"] ** 2) if sd is not None else None)
+                          / config["minimum_detectable_difference"] ** 2) if sd is not None and sd > 0 else None)
         return result
 
     methods = {}
@@ -89,6 +92,9 @@ def analyze_matrix(outcomes, calls, config):
             "service_latency_observations": sum(v is not None for v in service),
             "mean_rate_queue_ms": average_available([r.get("rate_queue_ms") for r in attempts]),
             "mean_network_generation_ms": average_available([r.get("generation_latency_ms") for r in attempts])}
+        user_quality = values(plan, "ndcg")
+        methods[plan]["ndcg_interval"] = paired_bootstrap(list(user_quality.values()),
+            [0] * len(user_quality), config["bootstrap_repetitions"], config["seed"], config["confidence"])
     comparisons = {f"{a}_minus_{b}": comparison(a, b) for a, b in config["comparisons"]}
     groups = {}
     for name, lower, upper in config["history_groups"]:
@@ -100,7 +106,25 @@ def analyze_matrix(outcomes, calls, config):
     oracle = defaultdict(list)
     for methods_by_request in rows.values():
         oracle[methods_by_request["R0"]["user_id"]].append(max(r["ndcg"] for r in methods_by_request.values()))
+    identical = defaultdict(dict)
+    for call in calls:
+        if call.get("status") == "completed" and call.get("call_id"):
+            identical[call["request_id"], call.get("prompt_sha256")][call["call_id"]] = call["plan"]
+    noise = []
+    for (request, fingerprint), repetitions in identical.items():
+        if fingerprint is None or len(repetitions) < 2:
+            continue
+        repeated = [rows[request][plan] for plan in repetitions.values()]
+        quality = [r["ndcg"] for r in repeated]
+        noise.append({"distinct_rankings": len({tuple(r["ranking"]) for r in repeated}),
+                      "ndcg_range": max(quality) - min(quality),
+                      "label_aware_choice_gain": max(quality) - float(np.mean(quality))})
     return {"methods": methods, "comparisons": comparisons, "history_groups": groups,
+            "identical_input_noise": {"independent_repetition_groups": len(noise),
+                "groups_with_changed_ranking": sum(row["distinct_rankings"] > 1 for row in noise),
+                "groups_with_changed_ndcg": sum(row["ndcg_range"] > 0 for row in noise),
+                "mean_label_aware_choice_gain": float(np.mean([r["label_aware_choice_gain"] for r in noise])) if noise else None,
+                "interpretation": "descriptive noise diagnostic, not exploitable evidence or a serving policy"},
             "users": len(user_ids), "requests": len(rows),
             "oracle_user_macro_ndcg": float(np.mean([np.mean(v) for v in oracle.values()])),
             "oracle_warning": "Label-aware upper bound includes output noise; cannot be deployed or claimed as learnable gain",
@@ -115,10 +139,13 @@ def draw_cost_quality(result, output):
     import matplotlib.pyplot as plt
 
     fig, ax = plt.subplots(figsize=(7.6, 4.8))
-    for plan, row in result["methods"].items():
-        ax.scatter(row["mean_accounted_usd"] * 1000, row["user_macro"]["ndcg"], s=55)
+    for index, (plan, row) in enumerate(result["methods"].items()):
+        mean, interval = row["user_macro"]["ndcg"], row["ndcg_interval"]
+        ax.errorbar(row["mean_accounted_usd"] * 1000, mean,
+                    yerr=[[max(0, mean - interval["ci_low"])], [max(0, interval["ci_high"] - mean)]],
+                    fmt="o", capsize=3)
         ax.annotate(plan, (row["mean_accounted_usd"] * 1000, row["user_macro"]["ndcg"]),
-                    xytext=(6, 6), textcoords="offset points")
+                    xytext=(6, 8 if index % 2 else -14), textcoords="offset points")
     ax.set(xlabel="Incremental API USD / 1,000 requests (measured usage + unknown reservations)",
            ylabel="User-macro NDCG@10", title="Development evidence comparison — not final test")
     ax.grid(alpha=0.25)

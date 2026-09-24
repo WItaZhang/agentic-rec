@@ -27,6 +27,11 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") == "batch_schedule":
+        from src.batch_scheduler import run_batch_schedule
+
+        run_batch_schedule(config, args.config, root)
+        return
     if config.get("stage") == "sampling_profile":
         from src.profiling import run_sampling_profile
 
