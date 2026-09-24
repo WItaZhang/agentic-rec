@@ -1,0 +1,18 @@
+experiment_name: amazon_user_history_profile
+stage: sampling_profile
+seed: 42
+protocol:
+  positive_rating: 4
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  sha256: c77a5c092039158c3f19f77f44e49c3a94fa28591eb159f4348c3d8af53bdf53
+  processed_path: data/processed
+  staging_path: data/staging
+  base_train_end: '2018-01-01T00:00:00Z'
+  policy_train_end: '2020-01-01T00:00:00Z'
+  validation_end: '2021-01-01T00:00:00Z'
+profile:
+  partitions: [policy_train, validation]
+  history_groups: [[zero, 0, 1], [one, 1, 2], [at_least_two, 2, 1000000]]
+logging:
+  path: logs

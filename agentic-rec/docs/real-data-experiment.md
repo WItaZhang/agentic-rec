@@ -68,8 +68,10 @@ Tests use synthetic rows and need no network. They verify cutoff ties, leakage,
 cold-item denominators, known ranking metrics, corrupt input and path isolation.
 CI retains both supported test versions (3.11/3.12) and the original synthetic demo.
 
-Next bounded step: add one item-kNN baseline under this identical protocol, then
-compare it with popularity before wiring agent components into the real dataset.
+The ItemKNN follow-up has since been executed under this identical protocol;
+see its [null-result report](../reports/20260923_m1a_baselines/README.md).
+The broader [research progress record](adaptive-evidence/PROGRESS.md) tracks Amazon
+event replay and real LLM experiments separately from this original baseline.
 
 The first two reproducibility runs and their aggregate results are recorded in
 [reports/README.md](../reports/README.md). Raw data and full generated models stay local.

@@ -27,6 +27,16 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") == "sampling_profile":
+        from src.profiling import run_sampling_profile
+
+        run_sampling_profile(config, args.config, root)
+        return
+    if config.get("stage") == "routing_development":
+        from src.routing_trainer import run_routing
+
+        run_routing(config, args.config, root)
+        return
     if config.get("stage") in ("matrix_prepare", "matrix_evaluate"):
         from src.batch_matrix import run_matrix_evaluate, run_matrix_prepare
 

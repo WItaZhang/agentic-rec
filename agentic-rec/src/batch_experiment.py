@@ -36,7 +36,8 @@ def run_batch_submit(config, config_path, root):
         source_mode = config["batch"].get("source_mode", "replicate_run")
         if source_mode not in ("replicate_run", "prepared_bundle"):
             raise ValueError("Unknown batch source mode")
-        call_file = "calls.jsonl" if source_mode == "replicate_run" else "planned_calls.jsonl"
+        call_file = "calls.jsonl" if source_mode == "replicate_run" else (
+            "physical_calls.jsonl" if (source / "physical_calls.jsonl").exists() else "planned_calls.jsonl")
         original_calls = [json.loads(line) for line in (source / call_file).read_text().splitlines()]
         if source_mode == "prepared_bundle":
             start, count = config["batch"]["request_offset"], config["batch"]["request_count"]

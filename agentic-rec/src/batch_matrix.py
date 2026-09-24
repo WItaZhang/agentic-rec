@@ -19,6 +19,20 @@ from .replay import make_candidates
 from .utils import digest, managed_run, write_json
 
 
+def canonicalize_plans(planned, share_within_request):
+    """Common random draw only for identical inputs at the same prediction request."""
+    canonical, logical, physical = {}, [], []
+    for row in planned:
+        identity = f"{row['request_id']}_{row['plan']}"
+        key = (row["request_id"], row["evidence"]["candidate_hash"], row["prompt_sha256"])
+        shared_id = canonical.setdefault(key, identity) if share_within_request else identity
+        item = {**row, "canonical_id": shared_id}
+        logical.append(item)
+        if shared_id == identity:
+            physical.append(item)
+    return logical, physical
+
+
 def run_matrix_prepare(config, config_path, root):
     import tiktoken
 
@@ -77,7 +91,11 @@ def run_matrix_prepare(config, config_path, root):
                 planned.append(row)
                 stream.write(json.dumps(row) + "\n")
                 stream.flush()
+        planned, physical = canonicalize_plans(planned, config["preparation"].get("share_identical_inputs_within_request", False))
+        for name, records in (("planned_calls.jsonl", planned), ("physical_calls.jsonl", physical)):
+            (run_dir / name).write_text("".join(json.dumps(r) + "\n" for r in records), encoding="utf-8")
         write_json(run_dir / "resources.json", {"generation_calls": 0, "count_endpoint_calls": len(counts),
+            "planned_physical_calls": len(physical), "logical_action_outcomes": len(planned),
             "exact_payload_count_reuse": len(planned) - len(counts), "prepared_input_tokens": sum(r["preflight_input_tokens"] for r in planned),
             "paid_generation_usd": 0, "retrieval_ms": float(np.sum(list(retrieval.values())))})
         manifest.update(stage_status="prepared_not_executed", test_scored=False,
@@ -95,6 +113,7 @@ def run_matrix_evaluate(config, config_path, root):
         validate_llm_config(original)
         planned = [json.loads(line) for line in (source / "planned_calls.jsonl").read_text().splitlines()]
         plan_table = {f"{r['request_id']}_{r['plan']}": r for r in planned}
+        expected_ids = {r.get("canonical_id", identity) for identity, r in plan_table.items()}
         results = {}
         for location in config["collection_runs"]:
             collected = root / location
@@ -107,15 +126,18 @@ def run_matrix_evaluate(config, config_path, root):
                 if row["prompt_sha256"] != plan_table[row["custom_id"]]["prompt_sha256"]:
                     raise ValueError("Collected request has different model or evidence inputs")
                 results[row["custom_id"]] = row
-        if set(results) != set(plan_table):
+        if set(results) != expected_ids:
             raise ValueError("Incomplete matrix: keep waiting; never drop missing requests")
         views = {row["request_id"]: row for row in json.loads((source / "request_views.json").read_text())}
         snapshots = {q: CandidateSnapshot(item_ids=tuple(row.pop("item_ids")), scores=tuple(row.pop("scores")), **row)
                      for q, row in json.loads((source / "candidates.json").read_text()).items()}
         model = load_frozen_knn(root, original["retriever"])
         predictions, calls = [], []
-        for custom_id, result in results.items():
-            plan = plan_table[custom_id]
+        for custom_id, plan in plan_table.items():
+            canonical_id = plan.get("canonical_id", custom_id)
+            result = results[canonical_id]
+            if plan["request_id"] != plan_table[canonical_id]["request_id"] or result["prompt_sha256"] != plan["prompt_sha256"]:
+                raise ValueError("A reused output crossed request visibility or changed model inputs")
             request_id = plan["request_id"]
             aliases = {f"C{i:03d}": item for i, item in enumerate(snapshots[request_id].item_ids, 1)}
             ranked = []
@@ -129,7 +151,9 @@ def run_matrix_evaluate(config, config_path, root):
                 "plan": plan["plan"], "ranking": ranking, "repair_errors": errors,
                 "status": result["status"], "candidate_hash": snapshots[request_id].content_hash,
                 "service_latency_ms": None, "latency_mode": "offline_batch"})
-            calls.append({**plan, **result, "generation_attempts": 1, "count_endpoint_calls": 0,
+            calls.append({**plan, **result, "generation_attempts": int(canonical_id == custom_id),
+                          "counterfactual_generation_attempts": 1, "reused_generation": canonical_id != custom_id,
+                          "canonical_id": canonical_id, "logical_id": custom_id, "count_endpoint_calls": 0,
                           "total_latency_ms": None, "rate_queue_ms": None, "generation_latency_ms": None})
         for q, view in views.items():
             predictions.append({"request_id": q, "user_id": view["user_id"], "plan": "R0",
@@ -151,5 +175,18 @@ def run_matrix_evaluate(config, config_path, root):
         (run_dir / "calls.jsonl").write_text("".join(json.dumps(r) + "\n" for r in calls), encoding="utf-8")
         write_json(run_dir / "metrics.json", {plan: aggregate_requests([r for r in outcomes if r["plan"] == plan])
                                               for plan in ["R0", *original["evidence"]["plans"]]})
+        physical = list(results.values())
+        write_json(run_dir / "resources.json", {
+            "submitted_physical_requests": len(physical), "logical_action_outcomes": len(planned),
+            "same_request_exact_input_reuses": len(planned) - len(physical),
+            "input_tokens_known": sum((r["usage"] or {}).get("input_tokens", 0) for r in physical),
+            "output_tokens_known": sum((r["usage"] or {}).get("output_tokens", 0) for r in physical),
+            "cached_tokens_known": sum(((r["usage"] or {}).get("input_tokens_details") or {}).get("cached_tokens", 0) for r in physical),
+            "actual_known_usd": sum(r["actual_known_usd"] or 0 for r in physical),
+            "accounted_usd": sum(r["actual_known_usd"] if r["actual_known_usd"] is not None else r["reserved_usd"] for r in physical),
+            "unknown_usage_requests": sum(r["usage"] is None for r in physical),
+            "service_latency_ms": None,
+            "cost_scope": "offline label construction; each physical call counted once, including shared outcomes"})
         manifest.update(test_scored=False, prepared_run=config["prepared_run"],
-                        source_plan_sha256=digest(source / "planned_calls.jsonl"), stage_status="evaluated")
+                        source_plan_sha256=digest(source / "planned_calls.jsonl"), stage_status="evaluated",
+                        physical_generations=len(results), logical_outcomes=len(plan_table))

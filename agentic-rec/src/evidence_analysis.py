@@ -79,6 +79,7 @@ def analyze_matrix(outcomes, calls, config):
             "mean_accounted_usd": sum(dollars) / len(selected),
             "unknown_usage_attempts": sum(r.get("usage") is None and r["generation_attempts"] > 0 for r in attempts),
             "calls": sum(r["generation_attempts"] for r in attempts),
+            "counterfactual_single_action_calls": sum(r.get("counterfactual_generation_attempts", r["generation_attempts"]) for r in attempts),
             "input_tokens_known": sum((r["usage"] or {}).get("input_tokens", 0) for r in attempts),
             "output_tokens_known": sum((r["usage"] or {}).get("output_tokens", 0) for r in attempts),
             "cached_tokens_known": sum(((r["usage"] or {}).get("input_tokens_details") or {}).get("cached_tokens", 0)

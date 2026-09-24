@@ -44,6 +44,15 @@ def validate_llm_config(config):
 
 def load_frozen_knn(root, config):
     directory = root / config["artifact_path"]
+    if not directory.exists() and config.get("artifact_search_root"):
+        # Reproduced runs have new timestamps. Resolve identical weights by fingerprint,
+        # never by latest-run heuristics or by a validation/test performance score.
+        for candidate in sorted((root / config["artifact_search_root"]).glob("*/manifest.json")):
+            record = json.loads(candidate.read_text())
+            if record.get("status") == "completed" and record.get("model_hashes", {}).get("itemknn") == config["model_hash"]:
+                if (candidate.parent / "itemknn.npz").exists():
+                    directory = candidate.parent
+                    break
     model = json.loads((directory / "model.json").read_text())
     result = ItemKNNModel(tuple(model["catalog"]), sparse.load_npz(directory / "itemknn.npz"),
                           tuple(model["popularity"]))
@@ -121,7 +130,11 @@ def run_llm(config, config_path, root):
                 old_config["llm"]["rate_limits"] = config["llm"]["rate_limits"]
                 manifest["rate_limit_amendment"] = True
             for key in ("protocol", "data", "retriever", "sampling", "evaluation", "evidence", "llm", "runtime", "seed"):
-                if config[key] != old_config[key]:
+                current, old = config[key], old_config[key]
+                if key == "retriever":
+                    current = {k: v for k, v in current.items() if k != "artifact_search_root"}
+                    old = {k: v for k, v in old.items() if k != "artifact_search_root"}
+                if current != old:
                     raise ValueError("Resuming must preserve every inference and sampling setting")
             records = [json.loads(line) for line in (previous / "calls.jsonl").read_text().splitlines()]
             predictions = [json.loads(line) for line in (previous / "predictions.jsonl").read_text().splitlines()]
