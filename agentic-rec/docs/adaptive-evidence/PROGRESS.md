@@ -160,3 +160,28 @@ physical label-generation cost and logical action cost are preserved separately.
 - Final Amazon test remains unscored. Routing remains implemented but unfitted.
   74 tests and Python 3.11/3.12 CI passed at `d6b41bf`. Follow this checkpoint
   rather than the superseded running-pilot note above.
+
+## Expanded validation and reproducibility correction
+
+- Validation input bundle `logs/20260924_004459_amazon_validation_matrix_prepare`
+  is complete: 3318 users, 13272 logical actions, 6842 physical requests, 908
+  exact token-count queries. Preflight 37,580,364 input tokens; estimated USD
+  7.7131 at 36 output tokens without cache; maximum reserved USD 9.0925.
+  Config `configs/amazon_validation_batch.yaml` caps this phase at USD 12.
+- Scheduler `logs/20260924_005144_amazon_validation_batch` submitted its first
+  146 calls (`batch_6ab4742b02588190bdf3e76b72748346`). The second shard failed
+  payload comparison before reservations/upload; it made no paid request.
+- Root cause: summing ItemKNN rows selected from a string set permits floating
+  point reduction order to vary across processes. Auditing all 3318 validation
+  users found six changed score vectors, maximum absolute difference 1.39e-17,
+  zero changed candidate orders and zero changed top-10 rankings.
+- Fix: canonical sorted row reduction for future retrieval; batch submission
+  consumes the immutable saved candidate snapshot and verifies its file and
+  prompt hashes. Existing completed/prepared observations are preserved. This
+  is an execution/provenance fix, with no result-driven candidate replacement.
+- A recovery checkpoint records proof that shard 2 was never reserved/submitted,
+  marks that shard pending, and retains shard 1's provider ID. Resume config:
+  `configs/amazon_validation_batch_resume.yaml`; no generation is repeated.
+- Frozen-test gates and policy analysis are implemented and tested, but no final
+  freeze, test generation or test score exists yet. Selection grid was committed
+  before expanded validation outputs at `d672712`. Latest checks: 81 tests pass.

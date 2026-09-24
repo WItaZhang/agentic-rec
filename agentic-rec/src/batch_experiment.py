@@ -8,10 +8,9 @@ from .data import load_amazon_metadata, load_amazon_reviews
 from .evidence import build_prompt
 from .frozen_protocol import verify_final_config
 from .llm_experiment import choose_views
-from .model_artifacts import load_frozen_retriever
 from .openai_adapter import load_key
 from .paid_budget import PaidBudget, usage_cost
-from .replay import make_candidates
+from .protocol import CandidateSnapshot
 from .utils import digest, managed_run, write_json
 
 
@@ -55,6 +54,8 @@ def run_batch_submit(config, config_path, root):
             hash_key = "physical_calls_sha256" if call_file == "physical_calls.jsonl" else "planned_calls_sha256"
             if digest(source / call_file) != source_manifest[hash_key]:
                 raise ValueError("Prepared call file changed")
+            if digest(source / "candidates.json") != source_manifest["candidates_sha256"]:
+                raise ValueError("Prepared candidate snapshot changed")
         for path, checksum in (("raw_path", "sha256"), ("metadata_path", "metadata_sha256")):
             if digest(root / original["data"][path]) != original["data"][checksum]:
                 raise ValueError("Input checksum changed")
@@ -62,7 +63,7 @@ def run_batch_submit(config, config_path, root):
         views, _, _ = choose_views(events, original)
         views = {view.request_id: view for view in views}
         metadata = load_amazon_metadata(root / original["data"]["metadata_path"], ["title", "categories"])
-        model = load_frozen_retriever(root, original["retriever"])
+        candidates = json.loads((source / "candidates.json").read_text())
         tokenizer = tiktoken.get_encoding(original["evidence"]["tokenizer"])
 
         def truncate(text, limit):
@@ -76,8 +77,9 @@ def run_batch_submit(config, config_path, root):
         prepared = []
         for old in original_calls:
             view = views[old["request_id"]]
-            snapshot = make_candidates(view, model, original["retriever"]["candidate_count"],
-                original["protocol"]["positive_rating"], original["retriever"]["model_hash"])
+            record = candidates[view.request_id]
+            snapshot = CandidateSnapshot(request_id=record["request_id"], item_ids=tuple(record["item_ids"]),
+                scores=tuple(record["scores"]), model_hash=record["model_hash"], prediction_time=record["prediction_time"])
             messages, schema, _, evidence = build_prompt(view, snapshot, metadata, old["plan"],
                                                          original["evidence"], truncate, instructions)
             common = {"model": original["llm"]["model"], "input": messages,

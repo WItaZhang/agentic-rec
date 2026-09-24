@@ -33,5 +33,7 @@ class ItemKNNModel:
         import numpy as np
 
         indices = {item: index for index, item in enumerate(self.catalog)}
-        known = [indices[item] for item in set(positive_history) if item in indices]
+        # Floating point addition is order-dependent; string-set iteration varies
+        # across processes and must not perturb candidate hashes or tie ordering.
+        known = sorted(indices[item] for item in set(positive_history) if item in indices)
         return np.asarray(self.similarity[known].sum(axis=0)).ravel()
