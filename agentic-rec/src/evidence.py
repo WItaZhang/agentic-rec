@@ -44,5 +44,6 @@ def build_prompt(request, candidates, metadata, plan, config, truncate, instruct
                              "history_provided": len(history), "attributes": attributes,
                              "field_truncations": truncations,
                              "candidate_hash": candidates.content_hash,
+                             "metadata_visibility": "snapshot_assumed_static",
                              "history_event_ids": [e.event_id for e in request.history[-retained:]],
                              "tool_calls": 2 + int(attributes)})

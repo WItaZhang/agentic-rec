@@ -95,3 +95,27 @@ uv run --locked --extra yaml --extra experiments ruff check .
 
 Local raw data, full predictions, models and logs remain git-ignored. Publish
 only aggregate evidence and reproducible configurations, with dataset attribution.
+
+
+## Live checkpoint: 2026-09-24 UTC
+
+- Branch `codex/evidence-policy-study`; foundation merged via PR #2. GitHub also
+  marks PR #1 merged because its original commits are now in the default branch.
+- Real development pilot source `6c244dc`, 256 users, four plans, started at
+  `logs/20260923_235144_amazon_llm_development_pilot`. It stopped after 48 recorded
+  attempts when one call received HTTP 429. Its unknown usage remains reserved
+  at USD 0.0035016; the fallback is retained in the outcome denominator.
+- Resume source `7c26d47`, running in
+  `logs/20260923_235347_amazon_llm_development_pilot_resume`. Explicit pacing:
+  120,000 tokens/minute, 60 generation requests/minute, concurrency 4. No repeat
+  of the 48 recorded attempts. Latency regimes are recorded; include queue time
+  separately and do not pool the initial unpaced pilot as a controlled latency
+  benchmark. Current budget is always read from the append-only campaign ledger.
+- While this runs, paired analysis and batch replication feasibility were added.
+  Analysis config `configs/amazon_pilot_analysis.yaml` refuses incomplete runs.
+  The batch smoke reuses hash-identical inputs from the complete 32-call smoke,
+  with a USD 0.25 cap. Batch cost is offline construction; no per-request service
+  latency is inferred from batch turnaround.
+- After pilot completion: run its paired analysis, inspect evidence heterogeneity
+  and output noise, size the next label/validation runs, then freeze routing and
+  the final test protocol. Final Amazon test quality remains unscored.

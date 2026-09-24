@@ -81,6 +81,10 @@ class PaidBudget:
                 "campaign_attempts": len(calls), "total_authorized_usd": self.total,
                 "round_cap_usd": self.run_cap, "planning_stop_usd": self.stop}
 
+    def entries(self):
+        with self.lock:
+            return self._read()
+
 
 def usage_cost(usage, pricing):
     """Provider token usage -> estimated bill at frozen public prices, not an invoice."""

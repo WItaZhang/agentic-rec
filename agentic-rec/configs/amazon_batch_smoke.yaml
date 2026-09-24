@@ -1,0 +1,25 @@
+experiment_name: amazon_batch_smoke
+stage: batch_submit
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+batch:
+  purpose: asynchronous_replication_feasibility_not_effectiveness
+  source_run: logs/20260923_234647_amazon_llm_smoke
+  pricing:
+    model: gpt-4.1-mini-2025-04-14
+    input_per_million_usd: 0.20
+    cached_input_per_million_usd: 0.05
+    output_per_million_usd: 0.80
+    source: https://developers.openai.com/api/docs/guides/batch
+    checked_date: '2026-09-23'
+budget:
+  total_paid_usd: 50
+  per_run_paid_usd: 0.25
+  stop_at_usd: 45
+  ledger_path: logs/budget/openai_ledger.jsonl
+  cloud_rental_allowed: false

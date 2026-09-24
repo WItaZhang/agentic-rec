@@ -27,6 +27,17 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") in ("batch_submit", "batch_collect"):
+        from src.batch_experiment import run_batch_collect, run_batch_submit
+
+        runner = run_batch_submit if config["stage"] == "batch_submit" else run_batch_collect
+        runner(config, args.config, root)
+        return
+    if config.get("stage") == "evidence_analysis":
+        from src.evidence_analysis import run_analysis
+
+        run_analysis(config, args.config, root)
+        return
     if config.get("stage") == "llm_development":
         from src.llm_experiment import run_llm
 
