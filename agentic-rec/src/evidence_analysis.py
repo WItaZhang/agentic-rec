@@ -102,7 +102,7 @@ def analyze_matrix(outcomes, calls, config):
     for name, lower, upper in config["history_groups"]:
         ids = {q for q, v in rows.items() if lower <= v["R0"]["history_count"] < upper}
         groups[name] = {"requests": len(ids), "users": len({rows[q]["R0"]["user_id"] for q in ids}),
-                       "means": {plan: aggregate_requests([rows[q][plan] for q in ids]) for plan in plans},
+                       "means": {plan: aggregate_requests([rows[q][plan] for q in sorted(ids)]) for plan in plans},
                        "comparisons": {f"{a}_minus_{b}": comparison(a, b, ids) for a, b in config["comparisons"]},
                        "interpretation": "descriptive_exploration"}
     oracle = defaultdict(list)

@@ -231,3 +231,11 @@ physical label-generation cost and logical action cost are preserved separately.
   policy label phase to assess/fit routing if supported, execute the content and
   sequence controls, freeze all choices, and only then prepare final test inputs.
   No external input or new authorization is currently required.
+
+Reproduction follow-up: an isolated environment without the OpenAI package found
+a 1.39e-17 discrepancy in two zero-history mean fields. Group aggregation now
+sorts request IDs. Archive verification keeps all counts/structure exact and
+declares a 1e-14 absolute floating tolerance; it rejects looser tolerances above
+1e-12. The earlier exact-match run remains valid historical evidence, but is not
+claimed as a cross-process guarantee. Predictions, paired intervals and conclusions
+are unchanged. The isolated rerun passes after this correction.

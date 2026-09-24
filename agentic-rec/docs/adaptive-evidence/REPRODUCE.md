@@ -74,7 +74,9 @@ The compact archive contains derived per-request outcomes and actual attempt
 usage. User identifiers are replaced by order-preserving per-artifact ordinals;
 review text, input prompts, credentials and provider response IDs are excluded.
 The command verifies all file hashes, regenerates confidence intervals/plots,
-and requires exact equality with the published numeric analysis. It does not
+and requires exact nonnumeric fields/counts and floating values within the
+declared absolute tolerance `1e-14`. The tolerance covers last-bit reduction
+roundoff, far below any quality-selection margin. It does not
 read raw reviews, models or credential files and does not execute API calls.
 
 ## Paid calls and secrets

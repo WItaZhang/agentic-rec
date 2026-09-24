@@ -8,3 +8,4 @@ data:
 logging:
   path: logs
 archive_path: artifacts/published/pilot_v1
+absolute_float_tolerance: 1.0e-14

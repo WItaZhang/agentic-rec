@@ -9,10 +9,14 @@ uv run --locked --extra yaml --extra experiments python main.py --config configs
 ```
 
 This regenerates the tables, user-bootstrap intervals and plot with no raw-data,
-model, credential or API access. Numerical equality with the archived analysis
-is required. This was actually verified at
-`logs/20260924_011719_pilot_archive_reanalysis`; source/output provenance remains
-in the archive. Compressed files preserve exact JSON floats and ordering.
+model, credential or API access. Counts/structure must match exactly; floating
+values must agree within the declared absolute tolerance `1e-14`. The initial
+run `logs/20260924_011719_pilot_archive_reanalysis` matched bit for bit. A fresh
+isolated environment later exposed a `1.39e-17` difference in two group-mean
+fields caused by set iteration order. Group reductions now use sorted requests;
+the explicitly bounded tolerance also permits platform floating-point roundoff.
+No predictions, intervals, counts or substantive conclusions were changed.
+Compressed files preserve the original JSON floats and ordering exactly.
 
 User IDs are replaced with per-artifact ordinals preserving their original sort
 order, so seeded bootstrap draws remain identical. Ordinals must not be used to

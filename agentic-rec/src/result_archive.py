@@ -2,6 +2,7 @@
 
 import gzip
 import json
+import math
 
 import yaml
 
@@ -12,6 +13,29 @@ from .utils import digest, managed_run, write_json
 CALL_FIELDS = ("request_id", "plan", "call_id", "status", "prompt_sha256", "actual_known_usd", "reserved_usd",
     "usage", "generation_attempts", "counterfactual_generation_attempts", "rate_queue_ms", "generation_latency_ms",
     "total_latency_ms", "returned_model", "count_endpoint_calls", "reused_generation", "canonical_id")
+
+
+def numeric_reproduction(actual, expected, tolerance):
+    if not 0 <= tolerance <= 1e-12:
+        raise ValueError("Reanalysis tolerance must only accommodate floating-point roundoff")
+    differences = []
+
+    def visit(a, b):
+        if type(a) is not type(b):
+            return False
+        if isinstance(a, dict):
+            return a.keys() == b.keys() and all(visit(a[key], b[key]) for key in a)
+        if isinstance(a, list):
+            return len(a) == len(b) and all(visit(x, y) for x, y in zip(a, b, strict=True))
+        if isinstance(a, float):
+            differences.append(abs(a - b))
+            return math.isfinite(a) and math.isfinite(b) and abs(a - b) <= tolerance
+        return a == b
+
+    matches = visit(actual, expected)
+    return {"matches": matches, "absolute_float_tolerance": tolerance,
+            "max_absolute_float_difference": max(differences, default=0),
+            "non_float_fields": "exact"}
 
 
 def public_outcomes(rows):
@@ -95,10 +119,11 @@ def run_archive_analysis(config, config_path, root):
         else:
             raise ValueError("Unknown archive kind")
         expected = json.loads((source / "expected_analysis.json").read_text())
-        if result != expected:
+        comparison = numeric_reproduction(result, expected, config["absolute_float_tolerance"])
+        if not comparison["matches"]:
             write_json(run_dir / "mismatched_analysis.json", result)
-            raise ValueError("Published outcomes do not reproduce the archived numeric analysis exactly")
+            raise ValueError("Published outcomes do not reproduce the archived numeric analysis within the declared roundoff tolerance")
         write_json(run_dir / "analysis.json", result)
-        manifest.update(test_scored=record["test_scored"], numerical_reproduction="exact",
+        manifest.update(test_scored=record["test_scored"], numerical_reproduction=comparison,
                         archive_sha256=digest(source / "archive_manifest.json"), paid_api_usd=0, llm_calls=0)
-        print("Exact analysis reproduction from derived outputs; no dataset, credential or model access", flush=True)
+        print(f"Analysis reproduced: {comparison}; no dataset, credential or model access", flush=True)
