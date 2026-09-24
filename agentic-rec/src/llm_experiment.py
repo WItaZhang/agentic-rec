@@ -50,9 +50,11 @@ def choose_views(events, config):
     views = [view for view, _ in replay_requests(events, ends, config["protocol"]["positive_rating"])
              if view.partition == partition]
     sampling = config["sampling"]
-    if sampling["mode"] == "policy_history_strata":
-        if partition != "policy_train":
+    if sampling["mode"] in ("policy_history_strata", "diagnostic_history_strata"):
+        if sampling["mode"] == "policy_history_strata" and partition != "policy_train":
             raise ValueError("Training-only history oversampling cannot replace population evaluation")
+        if sampling["mode"] == "diagnostic_history_strata" and partition != "validation":
+            raise ValueError("Diagnostic strata are development-only, never the final test population")
         per_user, first_audit = hash_sample(views, len(views), config["seed"])
         chosen, audit, probabilities = [], {"one_request_per_user": first_audit, "strata": {}}, {}
         assigned = set()
@@ -70,6 +72,7 @@ def choose_views(events, config):
             raise ValueError("Sampling strata must cover the user-state population")
         audit["user_inclusion_probability_by_request"] = probabilities
         audit["definition"] = "Select one request/user before history stratification; use inverse inclusion weights for fitting"
+        audit["population_quality_claim_allowed"] = False
         return sorted(chosen, key=lambda view: (view.prediction_time, view.request_id)), audit, ends
     if sampling["mode"] == "smoke_history_strata":
         # Label-blind convenience sample for protocol checks only; not population estimates.

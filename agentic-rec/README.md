@@ -32,7 +32,8 @@ For the complete real-data workflow and resource controls, see
 [research reproduction](docs/adaptive-evidence/REPRODUCE.md). Actual results include
 [the MovieLens null comparison](reports/20260923_m1a_baselines/README.md),
 [Amazon candidate coverage](reports/20260923_m1d_sequence/README.md), and
-[real-API output variability](reports/20260924_m2_batch_feasibility/README.md).
+[real-API output variability](reports/20260924_m2_batch_feasibility/README.md), and
+[the 256-user evidence pilot](reports/20260924_m2_development_pilot/README.md).
 The TOML examples below demonstrate component structure with synthetic data;
 research quality/cost measurements use the separate `src/` and YAML pipeline.
 

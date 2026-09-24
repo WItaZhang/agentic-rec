@@ -1,14 +1,16 @@
 """Pure, target-free evidence construction; token truncation is supplied by the caller."""
 
+import hashlib
 import json
+import random
 
 
 def build_prompt(request, candidates, metadata, plan, config, truncate, instructions):
-    if plan not in ("R1", "R2", "R3", "R4"):
+    if plan not in ("R1", "R2", "R3", "R4", "S4"):
         raise ValueError("Unknown evidence plan")
     if request.request_id != candidates.request_id or request.prediction_time != candidates.prediction_time:
         raise ValueError("Candidate snapshot does not belong to request")
-    long_history, attributes = plan in ("R2", "R4"), plan in ("R3", "R4")
+    long_history, attributes = plan in ("R2", "R4", "S4"), plan in ("R3", "R4", "S4")
     aliases = {f"C{i:03d}": item for i, item in enumerate(candidates.item_ids, 1)}
     truncations = 0
 
@@ -26,6 +28,14 @@ def build_prompt(request, candidates, metadata, plan, config, truncate, instruct
         return value
 
     rows = [{"id": alias, **identity(item)} for alias, item in aliases.items()]
+    if plan == "S4":
+        # Preserve candidate identity/order and the category-text multiset; break
+        # only candidate/category alignment using a target-independent draw.
+        categories = [row["categories"] for row in rows]
+        seed = hashlib.sha256(f"{config['category_permutation_seed']}:{request.request_id}".encode()).hexdigest()
+        random.Random(seed).shuffle(categories)
+        for row, category in zip(rows, categories, strict=True):
+            row["categories"] = category
     recent_count = config["recent_events"]
     retained = config["max_history_events"] if long_history else recent_count
     history = [{**identity(event.item), "rating": event.rating,
@@ -46,4 +56,6 @@ def build_prompt(request, candidates, metadata, plan, config, truncate, instruct
                              "candidate_hash": candidates.content_hash,
                              "metadata_visibility": "snapshot_assumed_static",
                              "history_event_ids": [e.event_id for e in request.history[-retained:]],
-                             "tool_calls": 2 + int(attributes)})
+                             "tool_calls": 2 + int(attributes),
+                             "tool_calls_scope": "logical in-memory evidence bundles; not external network or LLM calls",
+                             "attribute_alignment": "shuffled_candidates" if plan == "S4" else "original"})

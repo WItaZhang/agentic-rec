@@ -1,6 +1,7 @@
 # Research execution checkpoint
 
-Last updated: 2026-09-23 UTC. The full research goal remains active.
+Last updated: 2026-09-24 UTC. The full research goal remains active. The newest
+checkpoint is at the bottom; historical spending/status entries are not current balances.
 
 ## Authorization and resources
 
@@ -38,13 +39,14 @@ Last updated: 2026-09-23 UTC. The full research goal remains active.
 | M1b Amazon coverage | validated | `34cdb4e`; `logs/20260923_232442_amazon_training_profile`; `configs/amazon_profile.yaml` | Magazine selected using training-only coverage and memory. Digital Music retained as rejected candidate. |
 | M1c event replay | validated | `a20628e`; `logs/20260923_232911_amazon_magazine_replay`; [report](../../reports/20260923_m1c_amazon_replay/README.md) | Validation CandidateRecall@50=0.373081; improve/expand retrieval before LLM scale-up. Test unscored. |
 | M1d sequence baseline | validated | `45be0c3`; `logs/20260923_233625_amazon_magazine_sequence`; [report](../../reports/20260923_m1d_sequence/README.md) | Sequence validation NDCG 0.067832; retrieval no better. Freeze ItemKNN top-200 for main evidence comparisons. |
-| M2 real LLM | real backends validated; development running | `2791754`, `7c26d47`, `00d8fcf`, `ea30200`; synchronous and batch smoke reports | 32+32 real completed smoke calls; USD 0.1055496 combined. Output repeatability requires analysis. 256-user paired pilot running; no effectiveness claim yet. |
-| M3–M4 evidence and routing | planned | Conditional on usable evidence variation | Keep fixed, rule and random controls; no obligation to retain a failed complex method. |
+| M2 real LLM | pilot completed and analyzed | `7c26d47`, `d6b41bf`; [pilot report](../../reports/20260924_m2_development_pilot/README.md) | 1024 attempts, one retained 429 fallback. Recent evidence has no established aggregate gain; full evidence is directionally worse. Same-input output noise can inflate oracle headroom. |
+| M3 fixed evidence | expanded validation running | `59ff478`, `453746d`; 1045-user policy bundle and 3318-user validation bundle | Exact input sharing within requests; immutable candidates; real batch cost accounting. Strong-base and content controls are being prepared. |
+| M4 routing | implemented, not yet fitted | `d672712` precommits the selection grid; `59460f5` adds final-test gates | Rules, cost-calibrated random control, weighted Ridge/boosting policies; wait for complete matrices before fitting/selection. |
 | M5 sequential evidence | conditional | No implementation claimed | Only pursue if observations after fetching evidence can improve a decision. |
 | M6 report and career materials | planned | Claim ledger tied to completed results | Strong baseline, statistics, ablations, limitations and honest LaTeX. |
 
-Current work: durable paid-call accounting, target-free R1–R4 evidence, real API
-smoke, then a development sample sized using variance and measured costs.
+Initial M2 checkpoint (superseded by the live checkpoints below): durable paid-call
+accounting, target-free R1–R4 evidence, real API smoke, then a variance-sized pilot.
 `configs/amazon_llm_smoke.yaml` fixes all settings and prices; prompts are versioned.
 The local float32 adapter remains implemented but unexecuted (only about 1.9 GB
 RAM free at inspection). No cloud resource, quantized model, or runtime was rented.

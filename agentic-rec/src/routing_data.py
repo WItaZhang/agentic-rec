@@ -24,6 +24,8 @@ def load_routing_data(root, run_path, expected_partition, plans):
     source_config = yaml.safe_load((inference / "config.yaml").read_text())
     if source_config["evaluation"]["partition"] != expected_partition:
         raise ValueError("Policy fitting/selection partition mismatch")
+    if expected_partition == "validation" and source_config["sampling"]["mode"] != "uniform_users":
+        raise ValueError("Routing selection requires population validation, not diagnostic strata")
     if digest(root / source_config["data"]["raw_path"]) != source_config["data"]["sha256"]:
         raise ValueError("Input source changed")
     outcomes = json.loads((directory / "outcomes.json").read_text())
