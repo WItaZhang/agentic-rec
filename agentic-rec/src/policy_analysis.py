@@ -105,8 +105,20 @@ def evaluate_decisions(outcomes, calls, decisions, plans, analysis):
             "learned_minus_expected_random_ndcg": paired_bootstrap([r["ndcg"] for r in per_policy[learner]],
                 expected_quality, draws, seed, confidence),
             "scope": "Exact policy expectation over the real outcome matrix, plus frozen seed variation; no additional calls or independent users"}
+    failures = {}
+    for name, observations in per_policy.items():
+        base = [table[q]["R0"] for q in ids]
+        failures[name] = {"requests": len(ids),
+            "unrecalled_targets": sum(not row["candidate_recall"] for row in observations),
+            "cold_targets": sum(row["cold_item"] for row in observations),
+            "baseline_hits_lost": sum(a["hr"] == 1 and b["hr"] == 0 for a, b in zip(base, observations, strict=True)),
+            "baseline_misses_rescued": sum(a["hr"] == 0 and b["hr"] == 1 for a, b in zip(base, observations, strict=True)),
+            "api_usd_on_unrecalled_targets": sum(row["accounted_usd"] for row in observations if not row["candidate_recall"]),
+            "api_usd_on_cold_targets": sum(row["accounted_usd"] for row in observations if row["cold_item"]),
+            "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy"}
     return {"methods": methods, "comparisons": comparisons, "history_groups": groups,
         "random_control_diagnostics": random_diagnostics,
+        "failure_attribution": failures,
         "primary_comparison": analysis["primary_comparison"], "primary_metric": "ndcg",
         "inference": "One prespecified primary comparison; secondary/group intervals are exploratory",
         "cost_scope": "counterfactual single-action spend measured in the batch label matrix; controller/local CPU separate",

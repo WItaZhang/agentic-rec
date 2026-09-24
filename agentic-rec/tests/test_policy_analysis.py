@@ -26,6 +26,9 @@ def test_policy_replay_retains_failed_and_unrecalled_users_and_unknown_costs():
     assert row['unknown_usage_requests'] == 1
     assert row['mean_failed'] == pytest.approx(1 / 3)
     assert row['p95_service_ms'] is None
+    assert result['failure_attribution']['fixed_R1']['unrecalled_targets'] == 1
+    assert result['failure_attribution']['fixed_R1']['baseline_misses_rescued'] == 1
+    assert result['failure_attribution']['fixed_R1']['api_usd_on_unrecalled_targets'] == .001
     assert result['comparisons']['fixed_R1_minus_fixed_R0']['noninferiority']['supported'] is False
     decisions['actions'].update({'learned_0.25': ['R1'] * 3, 'random_0.25': ['R0'] * 3})
     decisions['random_parameters'] = {'random_0.25': {'probabilities': [.5, .5], 'seed': 1729}}

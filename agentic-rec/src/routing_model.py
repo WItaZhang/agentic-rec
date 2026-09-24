@@ -70,5 +70,3 @@ def random_actions(request_ids, probabilities, plans, seed):
     return [plans[min(int(np.searchsorted(cumulative,
         int(hashlib.sha256(f"{seed}:{request}".encode()).hexdigest(), 16) / 2**256, side="right")), len(plans) - 1)]
         for request in request_ids]
-
-
