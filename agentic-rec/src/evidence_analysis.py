@@ -37,6 +37,12 @@ def analyze_matrix(outcomes, calls, config):
     rows, call_table = validate_table(outcomes, calls, plans)
     user_ids = sorted({r["R0"]["user_id"] for r in rows.values()})
 
+    def average_available(values, percentile=None):
+        observed = [v for v in values if v is not None]
+        if not observed:
+            return None
+        return float(np.percentile(observed, percentile) if percentile else np.mean(observed))
+
     def values(plan, metric, selected=None):
         by_user = defaultdict(list)
         for request, methods in rows.items():
@@ -78,9 +84,10 @@ def analyze_matrix(outcomes, calls, config):
             "cached_tokens_known": sum(((r["usage"] or {}).get("input_tokens_details") or {}).get("cached_tokens", 0)
                                        for r in attempts),
             "fallback_or_repair_requests": sum(bool(r.get("repair_errors")) for r in selected),
-            "mean_service_ms": float(np.mean(service)), "p95_service_ms": float(np.percentile(service, 95)),
-            "mean_rate_queue_ms": float(np.mean([r.get("rate_queue_ms", 0) for r in attempts])) if attempts else 0,
-            "mean_network_generation_ms": float(np.mean([r.get("generation_latency_ms", 0) for r in attempts])) if attempts else 0}
+            "mean_service_ms": average_available(service), "p95_service_ms": average_available(service, 95),
+            "service_latency_observations": sum(v is not None for v in service),
+            "mean_rate_queue_ms": average_available([r.get("rate_queue_ms") for r in attempts]),
+            "mean_network_generation_ms": average_available([r.get("generation_latency_ms") for r in attempts])}
     comparisons = {f"{a}_minus_{b}": comparison(a, b) for a, b in config["comparisons"]}
     groups = {}
     for name, lower, upper in config["history_groups"]:

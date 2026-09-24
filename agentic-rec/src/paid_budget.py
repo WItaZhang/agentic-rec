@@ -78,6 +78,8 @@ class PaidBudget:
                                            if c["run_id"] == self.run_id),
                 "campaign_actual_known_usd": sum(c.get("actual_usd") or 0 for c in calls.values()),
                 "unknown_or_pending_calls": sum(c.get("actual_usd") is None for c in calls.values()),
+                "pending_reservations": sum(c["event"] == "reserve" for c in calls.values()),
+                "unknown_settled_calls": sum(c["event"] == "settle" and c["actual_usd"] is None for c in calls.values()),
                 "campaign_attempts": len(calls), "total_authorized_usd": self.total,
                 "round_cap_usd": self.run_cap, "planning_stop_usd": self.stop}
 

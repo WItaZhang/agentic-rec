@@ -1,0 +1,10 @@
+experiment_name: amazon_batch_smoke_collect
+stage: batch_collect
+seed: 42
+batch_run: logs/20260924_000032_amazon_batch_smoke
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs

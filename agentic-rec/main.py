@@ -27,6 +27,12 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") in ("matrix_prepare", "matrix_evaluate"):
+        from src.batch_matrix import run_matrix_evaluate, run_matrix_prepare
+
+        runner = run_matrix_prepare if config["stage"] == "matrix_prepare" else run_matrix_evaluate
+        runner(config, args.config, root)
+        return
     if config.get("stage") in ("batch_submit", "batch_collect"):
         from src.batch_experiment import run_batch_collect, run_batch_submit
 

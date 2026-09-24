@@ -33,7 +33,16 @@ def run_batch_submit(config, config_path, root):
         original = yaml.safe_load((source / "config.yaml").read_text())
         if original["evaluation"]["partition"] == "test":
             raise ValueError("Batch smoke cannot access test")
-        original_calls = [json.loads(line) for line in (source / "calls.jsonl").read_text().splitlines()]
+        source_mode = config["batch"].get("source_mode", "replicate_run")
+        if source_mode not in ("replicate_run", "prepared_bundle"):
+            raise ValueError("Unknown batch source mode")
+        call_file = "calls.jsonl" if source_mode == "replicate_run" else "planned_calls.jsonl"
+        original_calls = [json.loads(line) for line in (source / call_file).read_text().splitlines()]
+        if source_mode == "prepared_bundle":
+            start, count = config["batch"]["request_offset"], config["batch"]["request_count"]
+            original_calls = original_calls[start:start + count]
+            if not original_calls or sum(r["preflight_input_tokens"] for r in original_calls) > config["batch"]["max_enqueued_input_tokens"]:
+                raise ValueError("Empty batch or configured enqueue token cap exceeded")
         if json.loads((source / "manifest.json").read_text())["status"] != "completed":
             raise ValueError("Replication requires a complete original run")
         for path, checksum in (("raw_path", "sha256"), ("metadata_path", "metadata_sha256")):
@@ -158,6 +167,7 @@ def run_batch_collect(config, config_path, root):
                                                 "usage": None, "text": ""})
             actual = usage_cost(row["usage"], submitted_config["batch"]["pricing"]) if row["usage"] else None
             row.update(call_id=reservation["call_id"], actual_known_usd=actual,
+                       prompt_sha256=reservation["prompt_sha256"],
                        reserved_usd=reservation["reserved_usd"], latency_mode="batch_turnaround_only")
             old = previous[reservation["call_id"]]
             if old["event"] == "reserve":
