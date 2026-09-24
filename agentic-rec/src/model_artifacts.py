@@ -4,16 +4,16 @@ import json
 
 from scipy import sparse
 
-from .model import ItemKNNModel
+from .model import ItemKNNModel, PopularityModel
 from .replay import model_fingerprint
 
 
 def load_frozen_retriever(root, config):
     name = config["name"]
-    if name not in ("itemknn", "causal_sequence"):
+    if name not in ("itemknn", "causal_sequence", "popularity"):
         raise ValueError("Unsupported frozen retriever")
     directory = root / config["artifact_path"]
-    weight_file = "itemknn.npz" if name == "itemknn" else "sequence.pt"
+    weight_file = {"itemknn": "itemknn.npz", "causal_sequence": "sequence.pt", "popularity": "model.json"}[name]
     if not directory.exists() and config.get("artifact_fallback_path"):
         directory = root / config["artifact_fallback_path"]
     if not directory.exists() and config.get("artifact_search_root"):
@@ -25,7 +25,10 @@ def load_frozen_retriever(root, config):
                     directory = candidate.parent
                     break
     metadata = json.loads((directory / "model.json").read_text())
-    if name == "itemknn":
+    if name == "popularity":
+        ordered = sorted(zip(metadata["catalog"], metadata["popularity"], strict=True), key=lambda pair: (-pair[1], pair[0]))
+        result = PopularityModel(tuple(item for item, _ in ordered))
+    elif name == "itemknn":
         result = ItemKNNModel(tuple(metadata["catalog"]), sparse.load_npz(directory / weight_file),
                               tuple(metadata["popularity"]))
     else:

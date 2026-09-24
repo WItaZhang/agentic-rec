@@ -7,6 +7,10 @@ from dataclasses import dataclass
 class PopularityModel:
     ranked_items: tuple[int, ...]
 
+    @property
+    def catalog(self):
+        return self.ranked_items
+
     def recommend(self, seen: set[int], k: int) -> list[int]:
         return [item for item in self.ranked_items if item not in seen][:k]
 

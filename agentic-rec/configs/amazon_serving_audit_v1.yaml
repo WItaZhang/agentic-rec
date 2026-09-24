@@ -3,7 +3,7 @@
 seed: 314159
 audit:
   users: 128
-  methods: [base, causal_sequence, recent, full, rule, random, learned]
+  methods: [base, popularity, causal_sequence, recent, full, rule, random, learned]
   concurrency: 1
   cpu_threads: 2
   rate_limits:

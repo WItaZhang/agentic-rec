@@ -1,6 +1,7 @@
 """Paired conventional-model comparison on identical sampled validation requests."""
 
 import json
+from dataclasses import asdict
 
 import yaml
 
@@ -9,6 +10,7 @@ from .llm_experiment import choose_views
 from .metrics import aggregate_requests, paired_bootstrap, single_target_metrics
 from .model_artifacts import load_frozen_retriever
 from .protocol import replay_requests
+from .replay import make_candidates
 from .utils import digest, managed_run, write_json
 
 
@@ -35,13 +37,24 @@ def run_baseline_comparison(config, config_path, root):
         ids = sorted(candidates[names[0]])
         if any(set(candidates[name]) != set(ids) for name in names):
             raise ValueError("Candidate snapshots do not cover identical users")
-        # Rankings are already materialized; labels only enter below this point.
         raw = root / source_config["data"]["raw_path"]
         if digest(raw) != source_config["data"]["sha256"]:
             raise ValueError("Raw data changed")
         events, _ = load_amazon_reviews(raw)
         views, _, ends = choose_views(events, source_config)
         views = {v.request_id: v for v in views}
+        for name, model_config in settings.get("additional_models", {}).items():
+            if name in candidates:
+                raise ValueError("Conventional model names must be unique")
+            model = load_frozen_retriever(root, model_config)
+            candidates[name] = {q: asdict(make_candidates(views[q], model, model_config["candidate_count"],
+                source_config["protocol"]["positive_rating"], model_config["model_hash"])) for q in ids}
+            catalogs[name] = set(model.catalog)
+            file = run_dir / f"{name}_candidates.json"
+            write_json(file, candidates[name])
+            sources[name] = {"retriever": model_config, "candidate_sha256": digest(file)}
+        names = list(candidates)
+        # All rankings are materialized before target lookup, including added baselines.
         targets = {label.request_id: label.item_id for _, label in replay_requests(
             events, ends, source_config["protocol"]["positive_rating"])}
         outcomes, metrics = {}, {}
