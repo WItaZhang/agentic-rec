@@ -27,6 +27,21 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") == "validation_policy_analysis":
+        from src.policy_analysis import run_validation_analysis
+
+        run_validation_analysis(config, args.config, root)
+        return
+    if config.get("stage") == "campaign_resource_audit":
+        from src.resource_audit import run_resource_audit
+
+        run_resource_audit(config, args.config, root)
+        return
+    if config.get("stage") == "final_failure_analysis":
+        from src.failure_analysis import run_failure_analysis
+
+        run_failure_analysis(config, args.config, root)
+        return
     if config.get("stage") in ("publish_results", "archive_analysis"):
         from src.result_archive import run_archive_analysis, run_publish_results
 

@@ -7,6 +7,7 @@ catalog. No LLM generation and no final-test scoring occur in this analysis.
 
 | Base model | NDCG@10 | HR@10 | CandidateRecall@200 |
 |---|---:|---:|---:|
+| Popularity | 0.063170 | 0.140145 | 0.552140 |
 | ItemKNN | 0.066556 | 0.144665 | 0.553948 |
 | Causal sequence model | 0.068723 | 0.146474 | 0.550030 |
 
@@ -31,10 +32,21 @@ was retrained or selected using this comparison. The preceding diagnostic run
 but omitted the cold-target flag; its displayed zero cold count is superseded
 by this corrected artifact, with all 418 cold-target misses retained.
 
+Popularity was subsequently evaluated on exactly the same sample in
+`logs/20260924_014748_amazon_three_validation_baselines`, clean source `f195317`.
+Its ordering is restored from the original pre-2018 positive counts and matches
+the original model fingerprint `9af3900b3654761dceeefc2d46be812d77488828402d4ff4a7a13fd568f9d746`.
+ItemKNN minus Popularity NDCG is +0.003385, nominal paired 95% interval
+[+0.000663, +0.006196]. No LLM calls or refitting were needed; the original
+ItemKNN/sequence metrics and intervals reproduce exactly. The additional run's
+config, manifest and aggregate metrics are preserved as `three_model_*` files.
+Popularity will also be a prespecified conventional final baseline, with its
+own candidate pool, and part of the controlled serving resource audit.
+
 Reproduce from the inner project after preparing both candidate bundles:
 
 ```sh
-uv run --locked --extra yaml --extra experiments --extra api --extra local-llm python main.py --config configs/amazon_validation_baselines.yaml
+uv run --locked --extra yaml --extra experiments --extra api --extra local-llm python main.py --config configs/amazon_three_validation_baselines.yaml
 ```
 
 Bind artifact paths to the newly emitted preparation runs when reproducing on

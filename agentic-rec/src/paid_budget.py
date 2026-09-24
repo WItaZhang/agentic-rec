@@ -35,8 +35,14 @@ class PaidBudget:
         return calls
 
     def _append(self, event):
+        self._append_many([event])
+
+    def _append_many(self, events):
+        # Serialize before writing. The caller holds the cross-process lock;
+        # fsync completes before any corresponding network request may begin.
+        payload = "".join(json.dumps({"timestamp": time.time(), **event}) + "\n" for event in events)
         with self.path.open("a", encoding="utf-8") as stream:
-            stream.write(json.dumps({"timestamp": time.time(), **event}) + "\n")
+            stream.write(payload)
             stream.flush()
             os.fsync(stream.fileno())
 
@@ -45,29 +51,45 @@ class PaidBudget:
         return call["reserved_usd"] if call.get("actual_usd") is None else call["actual_usd"]
 
     def reserve(self, amount, metadata):
-        if not math.isfinite(amount) or amount <= 0:
+        return self.reserve_many([(amount, metadata)])[0]
+
+    def reserve_many(self, requests):
+        """Reserve a whole shard under one lock and ledger read; denial writes nothing."""
+        if not requests or any(not math.isfinite(amount) or amount <= 0 for amount, _ in requests):
             raise ValueError("A positive finite reservation is required")
+        amount = sum(value for value, _ in requests)
         with self.lock:
             calls = self._read()
             total = sum(self._charge(c) for c in calls.values())
             current = sum(self._charge(c) for c in calls.values() if c["run_id"] == self.run_id)
             if total + amount > min(self.total, self.stop) or current + amount > self.run_cap:
                 raise BudgetExceeded("Reservation would exceed the campaign or round spending limit")
-            call_id = uuid.uuid4().hex
-            self._append({"event": "reserve", "call_id": call_id, "run_id": self.run_id,
-                          "reserved_usd": amount, "metadata": metadata})
-            return call_id
+            events = [{"event": "reserve", "call_id": uuid.uuid4().hex, "run_id": self.run_id,
+                       "reserved_usd": value, "metadata": metadata} for value, metadata in requests]
+            self._append_many(events)
+            return [event["call_id"] for event in events]
 
     def settle(self, call_id, actual_usd, status):
-        if actual_usd is not None and (not math.isfinite(actual_usd) or actual_usd < 0):
+        self.settle_many([(call_id, actual_usd, status)])
+
+    def settle_many(self, settlements):
+        """Record every physical charge before raising on any reservation overage."""
+        if any(actual is not None and (not math.isfinite(actual) or actual < 0)
+               for _, actual, _ in settlements):
             raise ValueError("Invalid measured charge")
+        if len({identity for identity, _, _ in settlements}) != len(settlements):
+            raise ValueError("Duplicate settlement in shard")
+        if not settlements:
+            return
         with self.lock:
-            call = self._read()[call_id]
-            if call["run_id"] != self.run_id or call["event"] != "reserve":
-                raise ValueError("Wrong owner or already settled")
-            self._append({"event": "settle", "call_id": call_id,
-                          "actual_usd": actual_usd, "status": status})
-            if actual_usd is not None and actual_usd > call["reserved_usd"] + 1e-12:
+            calls = self._read()
+            for identity, _, _ in settlements:
+                if calls[identity]["run_id"] != self.run_id or calls[identity]["event"] != "reserve":
+                    raise ValueError("Wrong owner or already settled")
+            self._append_many([{"event": "settle", "call_id": identity, "actual_usd": actual, "status": status}
+                               for identity, actual, status in settlements])
+            if any(actual is not None and actual > calls[identity]["reserved_usd"] + 1e-12
+                   for identity, actual, _ in settlements):
                 raise BudgetExceeded("Actual charge exceeded reservation; recorded actual charge and stopped")
 
     def snapshot(self):

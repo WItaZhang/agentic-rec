@@ -120,7 +120,7 @@ def evaluate_decisions(outcomes, calls, decisions, plans, analysis):
         "random_control_diagnostics": random_diagnostics,
         "failure_attribution": failures,
         "primary_comparison": analysis["primary_comparison"], "primary_metric": "ndcg",
-        "inference": "One prespecified primary comparison; secondary/group intervals are exploratory",
+        "inference": analysis.get("inference_scope", "One prespecified primary comparison; secondary/group intervals are exploratory"),
         "cost_scope": "counterfactual single-action spend measured in the batch label matrix; controller/local CPU separate",
         "latency_scope": "batch service latency is unknown; no cached replay latency is substituted"}, per_policy
 
@@ -157,6 +157,24 @@ def plot_policies(result, output):
     plt.close(fig)
 
 
+def compare_additional_baselines(outcomes, policy_rows, settings):
+    ids = [r["request_id"] for r in policy_rows['fixed_R0']]
+    summaries = {}
+    for name in sorted({row['plan'] for row in outcomes}):
+        table = {row['request_id']: row for row in outcomes if row['plan'] == name}
+        if set(table) != set(ids) or len(table) != sum(row['plan'] == name for row in outcomes):
+            raise ValueError("Additional baseline must cover each final-test request exactly once")
+        quality = [table[q]['ndcg'] for q in ids]
+        summaries[name] = {"requests": len(ids), "api_usd": 0,
+            "mean_ndcg": float(np.mean(quality)), "mean_hr": float(np.mean([table[q]['hr'] for q in ids])),
+            "mean_candidate_recall": float(np.mean([table[q]['candidate_recall'] for q in ids])),
+            "cold_targets": sum(table[q]['cold_item'] for q in ids),
+            "ndcg_minus_main_base": paired_bootstrap(quality, [row['ndcg'] for row in policy_rows['fixed_R0']],
+                settings['bootstrap_repetitions'], settings['seed'], settings['confidence']),
+            "scope": "Prespecified conventional baseline on its own candidate pool; this cross-pool difference is not an evidence-routing gain"}
+    return summaries
+
+
 def run_final_analysis(config, config_path, root):
     with managed_run(config, config_path, root) as (run_dir, manifest):
         matrix = root / config["analysis"]["matrix_run"]
@@ -182,9 +200,56 @@ def run_final_analysis(config, config_path, root):
                                    *[[resolve(x) for x in pair] for pair in settings["secondary_comparisons"]]]
         write_json(run_dir / "analysis_settings.json", settings)
         result, rows = evaluate_decisions(outcomes, calls, decisions, ["R0", *original["evidence"]["plans"]], settings)
+        extra_file = matrix / "additional_baseline_outcomes.json"
+        if extra_file.exists():
+            extra = json.loads(extra_file.read_text())
+            write_json(run_dir / "additional_baseline_analysis.json", compare_additional_baselines(extra, rows, settings))
         write_json(run_dir / "analysis.json", result)
         write_json(run_dir / "policy_outcomes.json", rows)
         plot_policies(result, run_dir)
         manifest.update(test_scored=True, final_test_freeze=original["final_test_freeze"],
             matrix_outcome_sha256=digest(matrix / "outcomes.json"), routing_decisions_sha256=evaluated["routing_decisions_sha256"])
+        print(json.dumps(result["comparisons"]), flush=True)
+
+
+def run_validation_analysis(config, config_path, root):
+    from .policy_inference import decide_frozen_policies
+    from .routing_data import load_routing_data
+
+    with managed_run(config, config_path, root) as (run_dir, manifest):
+        directory = root / config["analysis"]["routing_run"]
+        status = json.loads((directory / "manifest.json").read_text())
+        if status["status"] != "completed" or status.get("test_scored"):
+            raise ValueError("Validation analysis requires a completed development-only router fit")
+        fitting = yaml.safe_load((directory / "config.yaml").read_text(encoding="utf-8"))
+        plans = fitting["routing"]["plans"]
+        matrix_path = fitting["routing"]["validation_run"]
+        data = load_routing_data(root, matrix_path, "validation", plans)
+        if data["outcome_sha256"] != status["validation_outcome_sha256"]:
+            raise ValueError("Validation outcomes changed since selection")
+        files = [directory / "selection_frozen.json", *sorted(directory.glob("estimator_*.joblib"))]
+        hashes = {p.name: digest(p) for p in files}
+        decisions = decide_frozen_policies(root, config["analysis"]["routing_run"], data["ids"], data["features"],
+                                          hashes, fitting["runtime"]["cpu_threads"])
+        settings = {**fitting["analysis"], "seed": fitting["seed"],
+                    "inference_scope": "Descriptive validation after policy/hyperparameter selection; intervals do not account for selection and are not confirmatory"}
+        budget = str(settings["primary_budget_usd_per_1000"])
+
+        def resolve(name):
+            return name if name.startswith("fixed_") else f"{name}_{budget}"
+
+        settings["primary_comparison"] = [resolve(x) for x in settings["primary_comparison"]]
+        settings["comparisons"] = [settings["primary_comparison"],
+            *[[resolve(x) for x in pair] for pair in settings["secondary_comparisons"]]]
+        matrix = root / matrix_path
+        result, rows = evaluate_decisions(json.loads((matrix / "outcomes.json").read_text()),
+            [json.loads(line) for line in (matrix / "calls.jsonl").read_text().splitlines()], decisions, plans, settings)
+        write_json(run_dir / "routing_decisions.json", decisions)
+        write_json(run_dir / "analysis_settings.json", settings)
+        write_json(run_dir / "analysis.json", result)
+        write_json(run_dir / "policy_outcomes.json", rows)
+        plot_policies(result, run_dir)
+        manifest.update(test_scored=False, matrix_run=matrix_path, paid_api_usd=0,
+                        matrix_outcome_sha256=data["outcome_sha256"],
+                        routing_decisions_sha256=digest(run_dir / "routing_decisions.json"))
         print(json.dumps(result["comparisons"]), flush=True)

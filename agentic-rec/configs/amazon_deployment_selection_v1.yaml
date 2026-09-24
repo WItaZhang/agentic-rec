@@ -1,0 +1,15 @@
+# Declared before inspecting complete expanded LLM validation quality.
+# This chooses the practical recommendation from the entire comparison, while
+# the primary scientific test remains learned vs rule within ItemKNN candidates.
+selection:
+  partition: validation
+  candidates: [popularity, itemknn, causal_sequence, selected_rule, selected_learned, selected_fixed]
+  budget_usd_per_1000: 0.25
+  quality_metric: user_macro_ndcg_at_10
+  tolerance_to_highest_eligible_quality: 0.002
+  order: [lowest_observed_api_cost, simplest_method, highest_validation_quality]
+  simplicity_order: [popularity, itemknn, causal_sequence, selected_fixed, selected_rule, selected_learned]
+  cost_scope: observed_batch_usage_and_unknown_reservations
+  local_compute: reported_separately_in_controlled_serving_audit
+  interpretation: validation_selection_tolerance_is_not_a_noninferiority_claim
+  test_role: one_frozen_evaluation_without_method_or_parameter_reselection

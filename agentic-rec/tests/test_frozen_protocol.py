@@ -29,7 +29,7 @@ def frozen_fixture(root):
 def test_final_inputs_and_output_sharing_cannot_change_after_freeze(tmp_path):
     config = frozen_fixture(tmp_path)
     verify_final_config(config, tmp_path)
-    for key in ('evidence', 'sampling', 'retriever', 'llm', 'preparation', 'budget'):
+    for key in ('evidence', 'sampling', 'retriever', 'llm', 'preparation', 'budget', 'evaluation'):
         altered = copy.deepcopy(config)
         altered[key]['changed'] = True
         with pytest.raises(ValueError, match='configuration changed'):

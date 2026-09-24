@@ -1,0 +1,29 @@
+experiment_name: amazon_three_validation_baselines
+stage: validation_baseline_comparison
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+comparison:
+  prepared_runs:
+    itemknn: logs/20260924_004459_amazon_validation_matrix_prepare
+    causal_sequence: logs/20260924_005821_amazon_sequence_validation_prepare
+  k: 10
+  pairs:
+  - - causal_sequence
+    - itemknn
+  - - itemknn
+    - popularity
+  bootstrap_repetitions: 10000
+  confidence: 0.95
+  additional_models:
+    popularity:
+      name: popularity
+      artifact_path: logs/20260923_232911_amazon_magazine_replay
+      artifact_fallback_path: artifacts/frozen_base/itemknn
+      artifact_search_root: logs
+      model_hash: 9af3900b3654761dceeefc2d46be812d77488828402d4ff4a7a13fd568f9d746
+      candidate_count: 200

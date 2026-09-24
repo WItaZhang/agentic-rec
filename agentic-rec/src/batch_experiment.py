@@ -104,12 +104,13 @@ def run_batch_submit(config, config_path, root):
         if upper > budget_config["per_run_paid_usd"] or upper + budget.snapshot()["campaign_accounted_usd"] > budget_config["stop_at_usd"]:
             raise ValueError("Batch estimate exceeds authorization")
         reservations = {}
-        for row in prepared:
+        call_ids = budget.reserve_many([(row["reserved_usd"],
+            {"custom_id": row["custom_id"], "kind": "batch_replication"}) for row in prepared])
+        for row, call_id in zip(prepared, call_ids, strict=True):
             custom_id = row["custom_id"]
-            reservations[custom_id] = {"call_id": budget.reserve(row["reserved_usd"],
-                {"custom_id": custom_id, "kind": "batch_replication"}), "reserved_usd": row["reserved_usd"],
+            reservations[custom_id] = {"call_id": call_id, "reserved_usd": row["reserved_usd"],
                 "original_call_id": row["original_call_id"], "prompt_sha256": row["prompt_sha256"]}
-            write_json(run_dir / "reservations.json", reservations)
+        write_json(run_dir / "reservations.json", reservations)
         batch_input = run_dir / "batch_input.jsonl"
         with batch_input.open("w", encoding="utf-8") as stream:
             for row in prepared:
@@ -175,6 +176,7 @@ def run_batch_collect(config, config_path, root):
                             budget_config["per_run_paid_usd"], budget_config["stop_at_usd"])
         # Retry collection is safe: identical settlements are checked instead of charged twice.
         previous = budget.entries()
+        settlements = []
         for custom_id, reservation in reservations.items():
             row = results.setdefault(custom_id, {"custom_id": custom_id, "status": "missing_batch_result",
                                                 "usage": None, "text": ""})
@@ -184,9 +186,10 @@ def run_batch_collect(config, config_path, root):
                        reserved_usd=reservation["reserved_usd"], latency_mode="batch_turnaround_only")
             old = previous[reservation["call_id"]]
             if old["event"] == "reserve":
-                budget.settle(reservation["call_id"], actual, row["status"])
+                settlements.append((reservation["call_id"], actual, row["status"]))
             elif old["actual_usd"] != actual or old["status"] != row["status"]:
                 raise ValueError("Batch settlement changed unexpectedly")
+        budget.settle_many(settlements)
         write_json(run_dir / "results.json", list(results.values()))
         write_json(run_dir / "resources.json", {"budget": budget.snapshot(),
             "known_usd": sum(row["actual_known_usd"] or 0 for row in results.values()),

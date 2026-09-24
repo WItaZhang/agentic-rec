@@ -5,7 +5,7 @@ checkpoint is at the bottom; historical spending/status entries are not current 
 
 ## Authorization and resources
 
-- Branch: `codex/evidence-policy-study`; repository default:
+- Branch: `codex/validation-study-results`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
 - Paid API authorization updated by user: **USD 50 total**, estimate each round.
   First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
@@ -239,3 +239,63 @@ declares a 1e-14 absolute floating tolerance; it rejects looser tolerances above
 1e-12. The earlier exact-match run remains valid historical evidence, but is not
 claimed as a cross-process guarantee. Predictions, paired intervals and conclusions
 are unchanged. The isolated rerun passes after this correction.
+
+## Checkpoint: 2026-09-24 01:43 UTC
+
+- PR [#3](https://github.com/WItaZhang/agentic-rec/pull/3) passed both CI jobs and
+  merged as `958b145`. New branch `codex/validation-study-results` starts there;
+  `d64d6f9` adds prespecified final conventional baselines on their own candidate
+  pools. Neither final input preparation nor final scoring has occurred.
+- The main validation scheduler remains active: 34/48 shards collected at the
+  latest inspection. It still uses parent runtime commit `453746d`; no active
+  input, candidate, inference setting, or reservation was changed.
+- Subsequent batches will reserve/settle a complete shard with one locked ledger
+  scan and durable append, avoiding a full growing-ledger scan per request.
+  Denial writes no reservations; wrong-owner/duplicate settlements fail closed;
+  all measured overages are recorded before stopping. Existing ledger format,
+  campaign caps and interrupted-call reservations are preserved. 93 tests and
+  Ruff pass. This does not change model inputs or paid-call selection.
+- Next remains complete-matrix analysis, necessary policy/content/strong-base
+  controls, validation-only selection, then a frozen final test and resource
+  audit. No current external blocker or request for additional budget exists.
+
+The token-matched content control is queued in local execution session `67329`.
+It waits for the validation scheduler's completed manifest and starts
+`configs/amazon_content_control_batch.yaml`; a failed parent prevents launch.
+Estimated USD 1.486, upper USD 1.679, round cap USD 2. Do not independently start
+another scheduler while this queued process owns the next queue slot.
+
+The post-test failure audit now separates cold/retrieval misses, lost/rescued
+baseline hits, API failure and ranking repair. Case selection is deterministic
+within each class and does not prefer the largest loss. It exports public product
+metadata and historical ratings, no user IDs or review text, and makes no model
+call. It has not run: the final test is still untouched. The serving audit also
+includes the frozen causal-sequence model at zero additional API cost, under the
+same request sampling, CPU and concurrency conditions as the other methods.
+
+At `f195317`, all three frozen conventional models were evaluated on the same
+3318 validation users: `logs/20260924_014748_amazon_three_validation_baselines`.
+Popularity NDCG is 0.063170, KNN 0.066556, sequence 0.068723. KNN minus
+Popularity is +0.003385 [0.000663, 0.006196]; the earlier KNN/sequence comparison
+reproduces exactly. Include both Popularity and causal_sequence in the final
+freeze's additional_baselines dictionary, and in the serving audit template.
+These are separate candidate pools, not evidence-routing effects.
+
+`configs/amazon_deployment_selection_v1.yaml` records the whole-system adoption
+rule before the expanded LLM validation matrix is inspected. Under the already
+registered USD 0.25/1000 primary budget, compare all three conventional models
+with the validation-selected fixed/rule/learned policies; among candidates within
+0.002 NDCG of the best, prefer lower API spending then simpler methods. Local
+compute is reported separately. This keeps the practical method choice separate
+from the scientific learned-vs-rule comparison on fixed KNN candidates. The
+tolerance is a selection rule, not evidence of noninferiority. Final test does
+not trigger reselection or retuning.
+
+Queue amendment for **unsubmitted** policy, sequence and content phases: maximum
+shard input decreases from 800,000 to 300,000 tokens; total enqueue allowance
+remains 1,800,000. The current validation batch at offset 4786 had 148/149
+provider-completed requests for over ten minutes, occupying almost half the
+queue while one request waited. Smaller future shards reduce the capacity tied
+up by stragglers. Inference payloads, sample, prices, phase caps and completed
+data do not change. Batch turnaround is not compared as serving latency. The
+active validation schedule is unchanged and no slow request is dropped.

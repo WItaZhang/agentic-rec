@@ -7,7 +7,7 @@ import math
 import yaml
 
 from .evidence_analysis import analyze_matrix, draw_cost_quality
-from .policy_analysis import evaluate_decisions, plot_policies
+from .policy_analysis import compare_additional_baselines, evaluate_decisions, plot_policies
 from .utils import digest, managed_run, write_json
 
 CALL_FIELDS = ("request_id", "plan", "call_id", "status", "prompt_sha256", "actual_known_usd", "reserved_usd",
@@ -70,11 +70,16 @@ def run_publish_results(config, config_path, root):
             settings = yaml.safe_load((analysis_source / "config.yaml").read_text(encoding="utf-8"))["analysis"]
         elif kind == "policy":
             settings = json.loads((analysis_source / "analysis_settings.json").read_text())
-            prepared = root / status["prepared_run"]
-            decision_file = prepared / "routing_decisions.json"
-            if digest(decision_file) != status["routing_decisions_sha256"]:
+            decision_source = root / status["prepared_run"] if status.get("test_scored") else analysis_source
+            decision_status = status if status.get("test_scored") else analyzed
+            decision_file = decision_source / "routing_decisions.json"
+            if digest(decision_file) != decision_status["routing_decisions_sha256"]:
                 raise ValueError("Policy decisions changed before publication")
             (destination / "routing_decisions.json").write_bytes(decision_file.read_bytes())
+            extra_file = source / "additional_baseline_outcomes.json"
+            if extra_file.exists():
+                dump_compressed(destination / "additional_baseline_outcomes.json.gz", public_outcomes(json.loads(extra_file.read_text())))
+                (destination / "additional_baseline_analysis.json").write_bytes((analysis_source / "additional_baseline_analysis.json").read_bytes())
         else:
             raise ValueError("Unknown publication analysis kind")
         dump_compressed(destination / "outcomes.json.gz", public_outcomes(rows))
@@ -114,7 +119,14 @@ def run_archive_analysis(config, config_path, root):
         elif record["kind"] == "policy":
             decisions = json.loads((source / "routing_decisions.json").read_text())
             plans = sorted({r["plan"] for r in rows})
-            result, _ = evaluate_decisions(rows, calls, decisions, plans, settings)
+            result, policy_rows = evaluate_decisions(rows, calls, decisions, plans, settings)
+            extra_file = source / "additional_baseline_outcomes.json.gz"
+            if extra_file.exists():
+                additional = compare_additional_baselines(json.loads(gzip.decompress(extra_file.read_bytes())), policy_rows, settings)
+                extra_expected = json.loads((source / "additional_baseline_analysis.json").read_text())
+                if not numeric_reproduction(additional, extra_expected, config["absolute_float_tolerance"])["matches"]:
+                    raise ValueError("Additional conventional-baseline statistics do not reproduce")
+                write_json(run_dir / "additional_baseline_analysis.json", additional)
             plot_policies(result, run_dir)
         else:
             raise ValueError("Unknown archive kind")

@@ -63,6 +63,20 @@ def run_matrix_prepare(config, config_path, root):
             "history_count": len(v.history), "prediction_time": v.prediction_time,
             "history_event_ids": [e.event_id for e in v.history]} for v in views])
         if frozen is not None:
+            additional = {}
+            for name, model_config in config["evaluation"].get("additional_baselines", {}).items():
+                alternative = load_frozen_retriever(root, model_config)
+                alternative_snapshots, elapsed = {}, {}
+                for view in views:
+                    started = time.perf_counter()
+                    snapshot = make_candidates(view, alternative, model_config["candidate_count"],
+                        config["protocol"]["positive_rating"], model_config["model_hash"])
+                    alternative_snapshots[view.request_id] = asdict(snapshot)
+                    elapsed[view.request_id] = (time.perf_counter() - started) * 1000
+                additional[name] = {"model_config": model_config, "catalog": alternative.catalog,
+                                    "candidates": alternative_snapshots, "retrieval_latency_ms": elapsed}
+            write_json(run_dir / "additional_baselines.json", additional)
+            manifest["additional_baselines_sha256"] = digest(run_dir / "additional_baselines.json")
             # Decisions are materialized before any generation or target lookup.
             catalog = set(model.catalog)
             features = [routing_features(v, snapshots[v.request_id], catalog, config["protocol"]["positive_rating"])
@@ -197,6 +211,22 @@ def run_matrix_evaluate(config, config_path, root):
             **single_target_metrics(prediction["ranking"], targets[prediction["request_id"]],
                                     snapshots[prediction["request_id"]].item_ids, original["evidence"]["k"])}
             for prediction in predictions]
+        if frozen is not None:
+            if digest(source / "additional_baselines.json") != prepared_manifest["additional_baselines_sha256"]:
+                raise ValueError("Additional conventional candidates changed after freezing")
+            extra_outcomes = []
+            for name, record in json.loads((source / "additional_baselines.json").read_text()).items():
+                if set(record["candidates"]) != set(views):
+                    raise ValueError("Additional conventional baseline has a different request sample")
+                catalog = set(record["catalog"])
+                for q, snapshot in record["candidates"].items():
+                    ranking = snapshot["item_ids"][:original["evidence"]["k"]]
+                    extra_outcomes.append({"request_id": q, "user_id": views[q]["user_id"], "plan": name,
+                        "ranking": ranking, "history_count": views[q]["history_count"], "cold_item": targets[q] not in catalog,
+                        **single_target_metrics(ranking, targets[q], snapshot["item_ids"], original["evidence"]["k"]),
+                        "retrieval_ms": record["retrieval_latency_ms"][q], "actual_api_usd": 0})
+            write_json(run_dir / "additional_baseline_outcomes.json", extra_outcomes)
+            manifest["additional_baselines_sha256"] = prepared_manifest["additional_baselines_sha256"]
         write_json(run_dir / "outcomes.json", outcomes)
         (run_dir / "calls.jsonl").write_text("".join(json.dumps(r) + "\n" for r in calls), encoding="utf-8")
         write_json(run_dir / "metrics.json", {plan: aggregate_requests([r for r in outcomes if r["plan"] == plan])
