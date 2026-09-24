@@ -51,13 +51,17 @@ def load_routing_data(root, run_path, expected_partition, plans):
     if len({table[q]["R0"]["user_id"] for q in ids}) != len(ids):
         raise ValueError("Current router fitting requires one sampled request per user")
     costs = np.zeros((len(ids), len(plans)))
+    sample_audit = json.loads((inference / "sampling.json").read_text())
+    inclusion = sample_audit.get("user_inclusion_probability_by_request", {})
+    weights = np.array([1 / inclusion.get(q, 1) for q in ids], dtype=float)
+    weights /= weights.mean()
     quality = np.array([[table[q][plan]["ndcg"] for plan in plans] for q in ids])
     for i, request in enumerate(ids):
         for j, plan in enumerate(plans[1:], 1):
             call = call_table[request, plan]
             costs[i, j] = call["actual_known_usd"] if call["actual_known_usd"] is not None else call["reserved_usd"]
     physical_costs = {r["call_id"]: r["actual_known_usd"] if r["actual_known_usd"] is not None else r["reserved_usd"] for r in calls}
-    return {"ids": ids, "features": [features[q] for q in ids], "quality": quality, "costs": costs,
+    return {"ids": ids, "features": [features[q] for q in ids], "quality": quality, "costs": costs, "fit_weights": weights,
             "label_physical_cost": sum(physical_costs.values()),
             "feature_ms": feature_ms, "source_config": source_config, "table": table,
             "outcome_sha256": digest(directory / "outcomes.json"), "calls_sha256": digest(directory / "calls.jsonl")}

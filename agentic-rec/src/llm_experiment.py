@@ -69,6 +69,27 @@ def choose_views(events, config):
     views = [view for view, _ in replay_requests(events, ends, config["protocol"]["positive_rating"])
              if view.partition == partition]
     sampling = config["sampling"]
+    if sampling["mode"] == "policy_history_strata":
+        if partition != "policy_train":
+            raise ValueError("Training-only history oversampling cannot replace population evaluation")
+        per_user, first_audit = hash_sample(views, len(views), config["seed"])
+        chosen, audit, probabilities = [], {"one_request_per_user": first_audit, "strata": {}}, {}
+        assigned = set()
+        for name, low, high, maximum in sampling["strata"]:
+            group = [view for view in per_user if low <= len(view.history) < high]
+            if assigned.intersection(view.request_id for view in group):
+                raise ValueError("Overlapping sampling strata")
+            assigned.update(view.request_id for view in group)
+            selected, group_audit = hash_sample(group, len(group) if maximum is None else maximum, config["seed"])
+            chosen.extend(selected)
+            audit["strata"][name] = group_audit
+            for view in selected:
+                probabilities[view.request_id] = len(selected) / len(group)
+        if assigned != {view.request_id for view in per_user}:
+            raise ValueError("Sampling strata must cover the user-state population")
+        audit["user_inclusion_probability_by_request"] = probabilities
+        audit["definition"] = "Select one request/user before history stratification; use inverse inclusion weights for fitting"
+        return sorted(chosen, key=lambda view: (view.prediction_time, view.request_id)), audit, ends
     if sampling["mode"] == "smoke_history_strata":
         # Label-blind convenience sample for protocol checks only; not population estimates.
         chosen, audit = [], {}

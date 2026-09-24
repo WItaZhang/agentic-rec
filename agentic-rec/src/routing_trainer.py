@@ -79,13 +79,17 @@ def run_routing(config, config_path, root):
         names = tuple(settings["features"])
         x = np.array([[row[name] for name in names] for row in train["features"]])
         y = train["quality"][:, 1:] - train["quality"][:, [0]]
-        costs = tuple(train["costs"].mean(axis=0))
+        costs = tuple(np.average(train["costs"], axis=0, weights=train["fit_weights"]))
         candidates, policies, fit_records = [], {}, []
         for estimator_id, parameters in enumerate(settings["estimators"]):
             start, cpu_start = time.perf_counter(), time.process_time()
             estimator = build_quality_estimator(parameters, config["seed"])
             with threadpool_limits(limits=config["runtime"]["cpu_threads"]):
-                estimator.fit(x, y)
+                if parameters["kind"] == "ridge":
+                    estimator.fit(x, y, standardscaler__sample_weight=train["fit_weights"],
+                                  ridge__sample_weight=train["fit_weights"])
+                else:
+                    estimator.fit(x, y, sample_weight=train["fit_weights"])
             path = run_dir / f"estimator_{estimator_id}.joblib"
             joblib.dump(estimator, path)
             fit_records.append({"id": estimator_id, "parameters": parameters, "sha256": digest(path),
@@ -94,7 +98,8 @@ def run_routing(config, config_path, root):
                 policy_id = f"learned_{estimator_id}_weight_{weight}"
                 policy = UtilityRouter(estimator, plans, names, costs, weight)
                 started = time.perf_counter()
-                actions = policy.decide(validation["features"])
+                with threadpool_limits(limits=config["runtime"]["cpu_threads"]):
+                    actions = policy.decide(validation["features"])
                 policies[policy_id] = {"kind": "learned", "estimator_id": estimator_id, "cost_weight": weight,
                     "actions": actions, "inference_total_ms": (time.perf_counter() - started) * 1000}
                 candidates.append({"id": policy_id, "kind": "learned", **replay_actions(validation, actions, plans)})
@@ -124,6 +129,7 @@ def run_routing(config, config_path, root):
             chosen[f"{kind}_{budget}"] = entry
         write_json(run_dir / "validation_grid.json", candidates)
         write_json(run_dir / "fit_resources.json", {"fits": fit_records, "paid_api_usd": 0,
+            "sampling_correction": "inverse user-state inclusion weights, normalized to mean one",
             "policy_label_cost_already_accounted_usd": train["label_physical_cost"],
             "feature_computation_ms": {"policy_train": sum(train["feature_ms"].values()),
                                        "validation": sum(validation["feature_ms"].values())}})

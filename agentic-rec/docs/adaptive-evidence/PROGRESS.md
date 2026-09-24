@@ -130,3 +130,14 @@ subject to a preflight estimate and shared USD 50 campaign cap. No new paid
 round is started merely by preparing a batch bundle or recollecting its results.
 Routing feature/model definitions exist but have not been fitted or evaluated;
 this is not a completed learned-routing result. 68 local tests are available.
+
+
+`logs/20260924_002548_amazon_user_history_profile` (`7f59558`) formalizes the
+label-blind user-state coverage audit: policy training has 7,355 zero-history,
+656 one-history and 261 older-history user states; validation has 2,968/247/103.
+The stratified training sampler selects one request/user before grouping and
+records inclusion probabilities. Routing fitting applies inverse inclusion weights;
+evaluation remains population sampled. Implemented routing controls have not yet
+been fit to a completed train/validation pair, and no routing efficacy is claimed.
+Exact-input outcome reuse is limited to the same request/candidate snapshot; both
+physical label-generation cost and logical action cost are preserved separately.
