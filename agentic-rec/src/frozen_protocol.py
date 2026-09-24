@@ -59,7 +59,8 @@ def run_freeze(config, config_path, root):
         test_config = {"experiment_name": settings["test_experiment_name"], "stage": "frozen_matrix_prepare",
             "seed": config["seed"], **{key: original[key] for key in INFERENCE_KEYS},
             "sampling": settings["test_sampling"], "runtime": original["runtime"],
-            "evaluation": {"partition": "test", "purpose": "frozen_final_comparison"},
+            "evaluation": {"partition": "test", "purpose": "frozen_final_comparison",
+                           "additional_baselines": settings.get("additional_baselines", {})},
             "budget": settings["test_budget"], "logging": config["logging"],
             "preparation": original["preparation"],
             "final_test_freeze": str((run_dir / "freeze.json").relative_to(root))}

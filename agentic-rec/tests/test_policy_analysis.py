@@ -1,6 +1,6 @@
 import pytest
 
-from src.policy_analysis import evaluate_decisions
+from src.policy_analysis import compare_additional_baselines, evaluate_decisions
 
 
 def test_policy_replay_retains_failed_and_unrecalled_users_and_unknown_costs():
@@ -42,3 +42,16 @@ def test_policy_replay_retains_failed_and_unrecalled_users_and_unknown_costs():
     decisions['request_ids'].pop()
     with pytest.raises(ValueError, match='complete'):
         evaluate_decisions(outcomes, calls, decisions, ['R0', 'R1'], config)
+
+
+def test_additional_base_comparison_aligns_requests_and_keeps_cold_targets():
+    rows = {'fixed_R0': [{'request_id': 'q1', 'ndcg': 0.0}, {'request_id': 'q2', 'ndcg': 0.0}]}
+    extra = [{'request_id': q, 'plan': 'sequence', 'ndcg': value, 'hr': value,
+              'candidate_recall': value, 'cold_item': not value} for q, value in [('q2', 1.0), ('q1', 0.0)]]
+    settings = {'bootstrap_repetitions': 50, 'confidence': .95, 'seed': 42}
+    result = compare_additional_baselines(extra, rows, settings)['sequence']
+    assert result['mean_ndcg'] == .5
+    assert result['cold_targets'] == 1
+    assert result['ndcg_minus_main_base']['difference'] == .5
+    with pytest.raises(ValueError, match='exactly once'):
+        compare_additional_baselines(extra + extra[:1], rows, settings)

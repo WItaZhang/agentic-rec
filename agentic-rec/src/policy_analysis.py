@@ -157,6 +157,24 @@ def plot_policies(result, output):
     plt.close(fig)
 
 
+def compare_additional_baselines(outcomes, policy_rows, settings):
+    ids = [r["request_id"] for r in policy_rows['fixed_R0']]
+    summaries = {}
+    for name in sorted({row['plan'] for row in outcomes}):
+        table = {row['request_id']: row for row in outcomes if row['plan'] == name}
+        if set(table) != set(ids) or len(table) != sum(row['plan'] == name for row in outcomes):
+            raise ValueError("Additional baseline must cover each final-test request exactly once")
+        quality = [table[q]['ndcg'] for q in ids]
+        summaries[name] = {"requests": len(ids), "api_usd": 0,
+            "mean_ndcg": float(np.mean(quality)), "mean_hr": float(np.mean([table[q]['hr'] for q in ids])),
+            "mean_candidate_recall": float(np.mean([table[q]['candidate_recall'] for q in ids])),
+            "cold_targets": sum(table[q]['cold_item'] for q in ids),
+            "ndcg_minus_main_base": paired_bootstrap(quality, [row['ndcg'] for row in policy_rows['fixed_R0']],
+                settings['bootstrap_repetitions'], settings['seed'], settings['confidence']),
+            "scope": "Prespecified conventional baseline on its own candidate pool; this cross-pool difference is not an evidence-routing gain"}
+    return summaries
+
+
 def run_final_analysis(config, config_path, root):
     with managed_run(config, config_path, root) as (run_dir, manifest):
         matrix = root / config["analysis"]["matrix_run"]
@@ -182,6 +200,10 @@ def run_final_analysis(config, config_path, root):
                                    *[[resolve(x) for x in pair] for pair in settings["secondary_comparisons"]]]
         write_json(run_dir / "analysis_settings.json", settings)
         result, rows = evaluate_decisions(outcomes, calls, decisions, ["R0", *original["evidence"]["plans"]], settings)
+        extra_file = matrix / "additional_baseline_outcomes.json"
+        if extra_file.exists():
+            extra = json.loads(extra_file.read_text())
+            write_json(run_dir / "additional_baseline_analysis.json", compare_additional_baselines(extra, rows, settings))
         write_json(run_dir / "analysis.json", result)
         write_json(run_dir / "policy_outcomes.json", rows)
         plot_policies(result, run_dir)
