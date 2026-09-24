@@ -280,3 +280,13 @@ Popularity is +0.003385 [0.000663, 0.006196]; the earlier KNN/sequence compariso
 reproduces exactly. Include both Popularity and causal_sequence in the final
 freeze's additional_baselines dictionary, and in the serving audit template.
 These are separate candidate pools, not evidence-routing effects.
+
+`configs/amazon_deployment_selection_v1.yaml` records the whole-system adoption
+rule before the expanded LLM validation matrix is inspected. Under the already
+registered USD 0.25/1000 primary budget, compare all three conventional models
+with the validation-selected fixed/rule/learned policies; among candidates within
+0.002 NDCG of the best, prefer lower API spending then simpler methods. Local
+compute is reported separately. This keeps the practical method choice separate
+from the scientific learned-vs-rule comparison on fixed KNN candidates. The
+tolerance is a selection rule, not evidence of noninferiority. Final test does
+not trigger reselection or retuning.
