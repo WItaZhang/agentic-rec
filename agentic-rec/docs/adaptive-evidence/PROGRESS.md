@@ -308,3 +308,21 @@ all archived numbers exactly without API access. Main validation and the queued
 content phase still own execution sessions `10259` and `67329`, respectively.
 The working methods/report manuscript is now under
 `reports/adaptive_evidence_study/STUDY.md`; it explicitly marks unfinished results.
+
+## Provider-tail execution plan (2026-09-24 02:10 UTC)
+
+Validation shard 33 remains at 148/149 completed for roughly half an hour; other
+shards continue. To avoid serializing all independent work behind this tail,
+the waiting content launcher may start **only when validation has no pending or
+submitting shards and at most 800,000 submitted input tokens**. Its overlap
+config then caps its own queue at 1,000,000 tokens. Thus both processes together
+remain at or below the existing 1,800,000 allowance, and the older scheduler has
+no work left to submit. If validation completes normally first, use the original
+content config. No request is cancelled, excluded or resubmitted. The content
+study is independent of unfinished validation quality and was specified from
+the pilot before any expanded matrix analysis.
+
+The original waiting launcher (session `67329`, PowerShell PID 25896) has not
+started paid work at this checkpoint. Replace that task-owned waiting process
+with the guarded launcher; never run both. Once content starts, do not launch a
+third scheduler until its phase is complete. Budget estimate/cap remain unchanged.
