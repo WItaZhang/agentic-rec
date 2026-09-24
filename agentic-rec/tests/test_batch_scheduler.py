@@ -28,6 +28,8 @@ def test_ambiguous_submit_cannot_be_reissued_on_resume(tmp_path, monkeypatch):
     (source / "manifest.json").write_text(json.dumps({"status": "completed", "physical_calls_sha256": fingerprint}))
     (source / "config.yaml").write_text(yaml.safe_dump({"llm": {"model": "m", "input_reservation_margin_tokens": 0,
                                                                "max_output_tokens": 1}}))
+    (source / "manifest.json").write_text(json.dumps({"status": "completed", "physical_calls_sha256": fingerprint,
+        "config_sha256": digest(source / "config.yaml")}))
     config = {"experiment_name": "resume_test", "seed": 42, "resume_from": "logs/previous",
         "data": {"raw_path": "data/raw/input", "processed_path": "data/processed", "staging_path": "data/staging"},
         "logging": {"path": "logs"},

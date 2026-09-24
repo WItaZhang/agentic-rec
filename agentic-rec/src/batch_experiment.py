@@ -11,7 +11,7 @@ from .llm_experiment import choose_views
 from .openai_adapter import load_key
 from .paid_budget import PaidBudget, usage_cost
 from .protocol import CandidateSnapshot
-from .utils import digest, managed_run, write_json
+from .utils import digest, managed_run, verified_run_config, write_json
 
 
 def client_for(config, root):
@@ -25,13 +25,12 @@ def client_for(config, root):
 
 def run_batch_submit(config, config_path, root):
     import tiktoken
-    import yaml
 
     if config["budget"]["total_paid_usd"] > 50:
         raise ValueError("Budget exceeds authorization")
     with managed_run(config, config_path, root) as (run_dir, manifest):
         source = root / config["batch"]["source_run"]
-        original = yaml.safe_load((source / "config.yaml").read_text())
+        original = verified_run_config(source)
         source_mode = config["batch"].get("source_mode", "replicate_run")
         if original["evaluation"]["partition"] == "test":
             if source_mode != "prepared_bundle" or original["stage"] != "frozen_matrix_prepare":
@@ -146,12 +145,10 @@ def parse_batch_line(row):
 
 
 def run_batch_collect(config, config_path, root):
-    import yaml
-
     with managed_run(config, config_path, root) as (run_dir, manifest):
         source = root / config["batch_run"]
-        submitted_config = yaml.safe_load((source / "config.yaml").read_text())
-        original = yaml.safe_load((root / submitted_config["batch"]["source_run"] / "config.yaml").read_text())
+        submitted_config = verified_run_config(source)
+        original = verified_run_config(root / submitted_config["batch"]["source_run"])
         submission = json.loads((source / "submission.json").read_text())
         client = client_for(original["llm"], root)
         batch = client.batches.retrieve(submission["id"])

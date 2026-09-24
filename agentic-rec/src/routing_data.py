@@ -4,7 +4,6 @@ import json
 import time
 
 import numpy as np
-import yaml
 
 from .data import load_amazon_reviews
 from .evidence_analysis import validate_table
@@ -12,7 +11,7 @@ from .feature import routing_features
 from .llm_experiment import choose_views
 from .model_artifacts import load_frozen_retriever
 from .protocol import CandidateSnapshot
-from .utils import digest
+from .utils import digest, verified_run_config
 
 
 def load_routing_data(root, run_path, expected_partition, plans):
@@ -21,7 +20,7 @@ def load_routing_data(root, run_path, expected_partition, plans):
     if manifest["status"] != "completed" or manifest.get("test_scored"):
         raise ValueError("Routing development requires completed, non-test outcomes")
     inference = root / manifest["prepared_run"] if "prepared_run" in manifest else directory
-    source_config = yaml.safe_load((inference / "config.yaml").read_text())
+    source_config = verified_run_config(inference)
     if source_config["evaluation"]["partition"] != expected_partition:
         raise ValueError("Policy fitting/selection partition mismatch")
     if expected_partition == "validation" and source_config["sampling"]["mode"] != "uniform_users":

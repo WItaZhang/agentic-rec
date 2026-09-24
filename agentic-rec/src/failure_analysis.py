@@ -8,7 +8,6 @@ import yaml
 from .data import load_amazon_metadata, load_amazon_reviews
 from .evidence_analysis import validate_table
 from .frozen_protocol import verify_final_config
-from .llm_experiment import choose_views
 from .protocol import replay_requests
 from .utils import digest, managed_run, write_json
 
@@ -45,6 +44,8 @@ def choose_case_ids(tagged, limit, seed):
 
 
 def run_failure_analysis(config, config_path, root):
+    from .llm_experiment import choose_views
+
     with managed_run(config, config_path, root) as (run_dir, manifest):
         settings = config["failure_analysis"]
         matrix = root / settings["matrix_run"]
