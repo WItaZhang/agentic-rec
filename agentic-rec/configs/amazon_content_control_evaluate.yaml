@@ -1,0 +1,36 @@
+experiment_name: amazon_content_control_evaluate
+stage: matrix_evaluate
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+prepared_run: logs/20260924_010156_amazon_content_control_prepare
+collection_runs:
+- logs\20260925_071336_amazon_content_control_batch_c000
+- logs\20260925_071206_amazon_content_control_batch_c001
+- logs\20260925_071209_amazon_content_control_batch_c002
+- logs\20260925_071255_amazon_content_control_batch_c003
+- logs\20260925_071415_amazon_content_control_batch_c004
+- logs\20260925_071508_amazon_content_control_batch_c005
+- logs\20260925_071418_amazon_content_control_batch_c006
+- logs\20260925_071511_amazon_content_control_batch_c007
+- logs\20260925_071513_amazon_content_control_batch_c008
+- logs\20260925_071608_amazon_content_control_batch_c009
+- logs\20260925_071610_amazon_content_control_batch_c010
+- logs\20260925_071659_amazon_content_control_batch_c011
+- logs\20260925_071740_amazon_content_control_batch_c012
+- logs\20260925_071742_amazon_content_control_batch_c013
+- logs\20260925_071833_amazon_content_control_batch_c014
+- logs\20260925_071923_amazon_content_control_batch_c015
+- logs\20260925_071835_amazon_content_control_batch_c016
+- logs\20260925_072004_amazon_content_control_batch_c017
+- logs\20260925_072006_amazon_content_control_batch_c018
+- logs\20260925_072057_amazon_content_control_batch_c019
+- logs\20260925_072059_amazon_content_control_batch_c020
+- logs\20260925_072132_amazon_content_control_batch_c021
+- logs\20260925_072134_amazon_content_control_batch_c022
+- logs\20260925_072207_amazon_content_control_batch_c023
+- logs\20260925_072209_amazon_content_control_batch_c024

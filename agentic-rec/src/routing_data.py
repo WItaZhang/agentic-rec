@@ -1,27 +1,28 @@
 """Load complete development matrices and reconstruct label-free routing inputs."""
 
+import gzip
 import json
 import time
 
 import numpy as np
-import yaml
 
 from .data import load_amazon_reviews
 from .evidence_analysis import validate_table
 from .feature import routing_features
-from .llm_experiment import choose_views
 from .model_artifacts import load_frozen_retriever
 from .protocol import CandidateSnapshot
-from .utils import digest
+from .utils import digest, verified_run_config
 
 
 def load_routing_data(root, run_path, expected_partition, plans):
+    from .llm_experiment import choose_views
+
     directory = root / run_path
     manifest = json.loads((directory / "manifest.json").read_text())
     if manifest["status"] != "completed" or manifest.get("test_scored"):
         raise ValueError("Routing development requires completed, non-test outcomes")
     inference = root / manifest["prepared_run"] if "prepared_run" in manifest else directory
-    source_config = yaml.safe_load((inference / "config.yaml").read_text())
+    source_config = verified_run_config(inference)
     if source_config["evaluation"]["partition"] != expected_partition:
         raise ValueError("Policy fitting/selection partition mismatch")
     if expected_partition == "validation" and source_config["sampling"]["mode"] != "uniform_users":
@@ -68,3 +69,37 @@ def load_routing_data(root, run_path, expected_partition, plans):
             "label_physical_cost": sum(physical_costs.values()),
             "feature_ms": feature_ms, "source_config": source_config, "table": table,
             "outcome_sha256": digest(directory / "outcomes.json"), "calls_sha256": digest(directory / "calls.jsonl")}
+
+
+def save_routing_matrix(path, data):
+    """Public derived training data: no user IDs, review text, prompts or current targets."""
+    keys = ("ids", "features", "source_config", "label_physical_cost", "feature_ms", "outcome_sha256", "calls_sha256")
+    record = {key: data[key] for key in keys}
+    record.update({key: data[key].tolist() for key in ("quality", "costs", "fit_weights")})
+    path.write_bytes(gzip.compress(json.dumps(record, sort_keys=True).encode(), mtime=0))
+
+
+def load_routing_matrix(root, settings, expected_partition, plans):
+    path = root / settings["path"]
+    if digest(path) != settings["sha256"]:
+        raise ValueError("Published routing matrix changed")
+    data = json.loads(gzip.decompress(path.read_bytes()))
+    source = data["source_config"]
+    if expected_partition not in ("policy_train", "validation") or source["evaluation"]["partition"] != expected_partition:
+        raise ValueError("Published matrix has the wrong development partition")
+    if expected_partition == "validation" and source["sampling"]["mode"] != "uniform_users":
+        raise ValueError("Validation must represent the full request population")
+    if ["R0", *source["evidence"]["plans"]] != list(plans):
+        raise ValueError("Published matrix action order changed")
+    for key in ("quality", "costs", "fit_weights"):
+        data[key] = np.asarray(data[key], dtype=float)
+        if not np.isfinite(data[key]).all():
+            raise ValueError("Non-finite archived training values")
+    n = len(data["ids"])
+    if not n or len(set(data["ids"])) != n or len(data["features"]) != n:
+        raise ValueError("Training rows are missing, duplicated or misaligned")
+    if data["quality"].shape != (n, len(plans)) or data["costs"].shape != data["quality"].shape or data["fit_weights"].shape != (n,):
+        raise ValueError("Published training matrix dimensions changed")
+    if np.any(data["costs"] < 0) or np.any(data["fit_weights"] <= 0) or np.any((data["quality"] < 0) | (data["quality"] > 1)):
+        raise ValueError("Invalid cost, quality or inclusion weight")
+    return data

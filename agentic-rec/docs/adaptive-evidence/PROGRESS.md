@@ -1,11 +1,11 @@
 # Research execution checkpoint
 
-Last updated: 2026-09-24 UTC. The full research goal remains active. The newest
+Last updated: 2026-09-25 UTC. The full research goal remains active. The newest
 checkpoint is at the bottom; historical spending/status entries are not current balances.
 
 ## Authorization and resources
 
-- Branch: `codex/validation-study-results`; repository default:
+- Branch: `codex/evidence-results`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
 - Paid API authorization updated by user: **USD 50 total**, estimate each round.
   First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
@@ -40,7 +40,7 @@ checkpoint is at the bottom; historical spending/status entries are not current 
 | M1c event replay | validated | `a20628e`; `logs/20260923_232911_amazon_magazine_replay`; [report](../../reports/20260923_m1c_amazon_replay/README.md) | Validation CandidateRecall@50=0.373081; improve/expand retrieval before LLM scale-up. Test unscored. |
 | M1d sequence baseline | validated | `45be0c3`; `logs/20260923_233625_amazon_magazine_sequence`; [report](../../reports/20260923_m1d_sequence/README.md) | Sequence validation NDCG 0.067832; retrieval no better. Freeze ItemKNN top-200 for main evidence comparisons. |
 | M2 real LLM | pilot completed and analyzed | `7c26d47`, `d6b41bf`; [pilot report](../../reports/20260924_m2_development_pilot/README.md) | 1024 attempts, one retained 429 fallback. Recent evidence has no established aggregate gain; full evidence is directionally worse. Same-input output noise can inflate oracle headroom. |
-| M3 fixed evidence | expanded validation running | `59ff478`, `453746d`; 1045-user policy bundle and 3318-user validation bundle | Exact input sharing within requests; immutable candidates; real batch cost accounting. Strong-base and content controls are being prepared. |
+| M3 fixed evidence | complete primary validation; controls running | `72deac0`, `d8b22f6`; [complete validation](../../reports/20260925_m3_evidence_validation/README.md) | R1 overall gain unestablished; R4 −0.026559 NDCG with negative paired interval. History-state directions differ. |
 | M4 routing | implemented, not yet fitted | `d672712` precommits the selection grid; `59460f5` adds final-test gates | Rules, cost-calibrated random control, weighted Ridge/boosting policies; wait for complete matrices before fitting/selection. |
 | M5 sequential evidence | conditional | No implementation claimed | Only pursue if observations after fetching evidence can improve a decision. |
 | M6 report and career materials | planned | Claim ledger tied to completed results | Strong baseline, statistics, ablations, limitations and honest LaTeX. |
@@ -299,3 +299,90 @@ queue while one request waited. Smaller future shards reduce the capacity tied
 up by stragglers. Inference payloads, sample, prices, phase caps and completed
 data do not change. Batch turnaround is not compared as serving latency. The
 active validation schedule is unchanged and no slow request is dropped.
+
+PR [#4](https://github.com/WItaZhang/agentic-rec/pull/4) passed all Python 3.11/3.12
+CI jobs at head `2d81448` and merged as `9e5a604` at 01:54:57 UTC. The new
+`codex/evidence-results` branch starts from that merge. Full local validation is
+96 tests plus Ruff; `logs/20260924_015002_pilot_archive_reanalysis` again matches
+all archived numbers exactly without API access. Main validation and the queued
+content phase still own execution sessions `10259` and `67329`, respectively.
+The working methods/report manuscript is now under
+`reports/adaptive_evidence_study/STUDY.md`; it explicitly marks unfinished results.
+
+## Provider-tail execution plan (2026-09-24 02:10 UTC)
+
+Validation shard 33 remains at 148/149 completed for roughly half an hour; other
+shards continue. To avoid serializing all independent work behind this tail,
+the waiting content launcher may start **only when validation has no pending or
+submitting shards and at most 800,000 submitted input tokens**. Its overlap
+config then caps its own queue at 1,000,000 tokens. Thus both processes together
+remain at or below the existing 1,800,000 allowance, and the older scheduler has
+no work left to submit. If validation completes normally first, use the original
+content config. No request is cancelled, excluded or resubmitted. The content
+study is independent of unfinished validation quality and was specified from
+the pilot before any expanded matrix analysis.
+
+The original waiting launcher (session `67329`, PowerShell PID 25896) has not
+started paid work at this checkpoint. Replace that task-owned waiting process
+with the guarded launcher; never run both. Once content starts, do not launch a
+third scheduler until its phase is complete. Budget estimate/cap remain unchanged.
+
+Execution follow-up: the verified waiting process was stopped with no child
+generation process or content run present. Its old session `67329` exited.
+The replacement guarded launcher is session **`22026`**. Validation's delayed
+shard completed all 149 requests at 02:09:53; nothing was cancelled, omitted or
+retried. At 02:13, 45/48 validation shards were collected, two submitted and one
+pending. The main session remains `10259`.
+
+At `00ddcd8`, batch execution, matrix evaluation and router-data loading also
+verify saved run configuration hashes, including temperature/output settings
+that do not affect a token-count prompt hash. All four prepared source configs
+passed this check. At `3928a95`, controller fitting saves compact derived
+feature/quality/cost/inclusion-weight matrices and can refit from their verified
+archives without raw reviews, models or API access. That refit pathway is tested
+but has not yet run on completed expanded labels. Latest full local suite:
+**98 tests and Ruff pass**. Repository Markdown relative-link check also passes.
+
+## Checkpoint: 2026-09-25 resumed execution
+
+- Prior sessions `10259` and `22026` are no longer live. Inspection confirms the
+  main validation scheduler **completed all 48 shards**, with zero pending ledger
+  reservations. The queued content phase had never started; it was not rerun.
+  Campaign known cost before the new content phase is USD 8.8644768; accounted
+  USD 8.8679784 includes only the pilot's USD 0.0035016 unknown settled attempt.
+- Complete evaluation: `logs/20260925_071030_amazon_validation_matrix_evaluate`
+  (`72deac0`); paired/group analysis: `logs/20260925_071120_amazon_validation_evidence_analysis`
+  (`d8b22f6`). The 6842 physical generations cost USD 7.7131224; all usage known.
+  R1 minus R0 NDCG +0.000612 [−0.002067, +0.003260]; R4 minus R0 −0.026559
+  [−0.032734, −0.020497]. All 3318 users and 1480 retrieval misses remain.
+- R1 gains slightly for empty histories but loses for at-least-two-event histories.
+  Grid **v2** adds `recent_if_no_history` and `recent_unless_older` before router
+  fitting/final test, to avoid a weak history-only rule comparator. It preserves
+  v1 learner settings, penalties, budgets, primary test comparison and margin.
+  This is explicitly validation-informed development, not a pre-observation rule.
+  Use `configs/amazon_routing_grid_v2.yaml` for fitting and final freezing.
+- Published outcomes/usage: `artifacts/published/validation_v1`.
+  `logs/20260925_071447_validation_archive_reanalysis` reproduces all numeric
+  statistics exactly without dataset, credentials or model access.
+- **Live content scheduler session `37995`**: `logs/20260925_071014_amazon_content_control_batch`,
+  normal 1.8M-token queue, 25 shards. Expected USD 1.486, maximum 1.679, cap 2.
+  It started from runtime commit `64fa0c2`; child provenance records the parent.
+- **Queued policy launcher session `79485`** waits for that content manifest to
+  finish, then runs `configs/amazon_policy_batch.yaml`. Estimate USD 2.979, upper
+  3.505, cap 6. Do not start another independent scheduler. Sequence validation
+  is still prepared but unsubmitted. No final freeze/test or router fit exists yet.
+- Next: analyze the content control when complete, collect/fit the policy labels,
+  execute strong-retriever evidence robustness, freeze validation-only choices,
+  run final test and controlled serving/failure/resource audits, finish materials.
+
+
+## 2026-09-25 UTC: equal-token control complete; policy labels running
+
+- Content execution `logs/20260925_071014_amazon_content_control_batch` completed all 25 shards / 956 calls. Every R4/S4 pair has equal actual input token counts; actual total USD 1.4859628. All returned the dated model. Report: [content control](../../reports/20260925_m3_content_control/README.md).
+- Evaluation `logs/20260925_072306_amazon_content_control_evaluate` (`771f8a6`); analysis `logs/20260925_072335_amazon_content_control_analysis` (`f8630c8`). R4 minus S4 NDCG +0.022272 on the enriched diagnostic sample, but signs differ by history. R4 minus base −0.025280. No population gain or neutral-padding claim.
+- Public archive `artifacts/published/content_control_v1`; offline reanalysis `logs/20260925_072511_content_control_archive_reanalysis` reproduced every number exactly, no dataset/API/model access.
+- At content completion known campaign API cost USD 10.3504396, accounted USD 10.3539412 including the old uncertain 429 reservation. This is a historical snapshot; policy calls are now adding cost.
+- LIVE: policy scheduler `logs/20260925_072230_amazon_policy_batch`, exec session 79485, source `f940975`, 49 shards. No duplicate submission. Estimated USD 2.9788184, upper USD 3.5053976, round cap USD 6.
+- QUEUED: exec session 69278 waits for that policy scheduler to complete all shards, then launches `configs/amazon_sequence_validation_batch.yaml`. Expected USD 7.7100102, upper USD 9.0893574, cap USD 12. This estimate was communicated before execution. Do not independently submit it while the launcher lives.
+- Added a deterministic executable adoption-selection stage for the already registered `amazon_deployment_selection_v1.yaml`; it will choose among all conventional and selected routed methods on the same validation requests. The final freeze can hash this decision, preventing later test-based reselection. No selection has been run yet.
+- Next: evaluate complete policy matrix, fit the unchanged v2 grid, analyze selected validation routes and verify offline refitting. Finish strong-base evidence control, then freeze practical method + final-test protocol. Final test remains unscored.

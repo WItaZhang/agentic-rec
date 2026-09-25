@@ -1,5 +1,7 @@
 import pytest
 
+pytest.importorskip("filelock")
+
 from src.resource_audit import reconcile_usage
 
 

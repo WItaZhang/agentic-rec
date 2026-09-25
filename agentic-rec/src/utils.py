@@ -28,6 +28,16 @@ def write_json(path, value):
     Path(path).write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def verified_run_config(directory):
+    """Read an immutable run's config, including non-prompt generation settings."""
+    directory = Path(directory)
+    manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
+    path = directory / "config.yaml"
+    if digest(path) != manifest.get("config_sha256"):
+        raise ValueError("Saved run configuration changed after execution/preparation")
+    return yaml.safe_load(path.read_text(encoding="utf-8"))
+
+
 def utc_seconds(value):
     date = datetime.fromisoformat(value.replace("Z", "+00:00"))
     if date.utcoffset() is None:
@@ -49,7 +59,7 @@ def load_config(path):
                               "sampling_profile", "batch_schedule", "freeze_final_protocol", "frozen_matrix_prepare",
                               "final_policy_analysis", "serving_resource_audit", "validation_baseline_comparison",
                               "publish_results", "archive_analysis", "final_failure_analysis", "campaign_resource_audit",
-                              "validation_policy_analysis"):
+                              "validation_policy_analysis", "deployment_selection"):
         return config
     if config.get("stage"):
         raise ValueError("Unknown experiment stage")

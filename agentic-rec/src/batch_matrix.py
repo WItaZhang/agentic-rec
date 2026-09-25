@@ -20,7 +20,7 @@ from .model_artifacts import load_frozen_retriever
 from .policy_inference import decide_frozen_policies
 from .protocol import CandidateSnapshot, replay_requests, validate_ranking
 from .replay import make_candidates
-from .utils import digest, managed_run, write_json
+from .utils import digest, managed_run, verified_run_config, write_json
 
 
 def canonicalize_plans(planned, share_within_request):
@@ -135,15 +135,13 @@ def run_matrix_prepare(config, config_path, root):
 
 
 def run_matrix_evaluate(config, config_path, root):
-    import yaml
-
     with managed_run(config, config_path, root) as (run_dir, manifest):
         source = root / config["prepared_run"]
         prepared_manifest = json.loads((source / "manifest.json").read_text())
         for name, key in (("planned_calls.jsonl", "planned_calls_sha256"), ("candidates.json", "candidates_sha256")):
             if prepared_manifest["status"] != "completed" or digest(source / name) != prepared_manifest[key]:
                 raise ValueError("Prepared matrix artifacts changed or preparation was incomplete")
-        original = yaml.safe_load((source / "config.yaml").read_text())
+        original = verified_run_config(source)
         frozen = verify_final_config(original, root) if original["stage"] == "frozen_matrix_prepare" else None
         validate_llm_config(original, verified_final_test=frozen is not None)
         if frozen is not None:

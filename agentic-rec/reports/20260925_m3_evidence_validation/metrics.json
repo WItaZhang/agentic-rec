@@ -1,0 +1,82 @@
+{
+  "R0": {
+    "cold_item_misses": 418,
+    "request_micro": {
+      "candidate_recall": 0.5539481615430982,
+      "hr": 0.14466546112115733,
+      "ndcg": 0.06655572819112526
+    },
+    "requests": 3318,
+    "user_macro": {
+      "candidate_recall": 0.5539481615430982,
+      "hr": 0.14466546112115733,
+      "ndcg": 0.06655572819112526
+    },
+    "users": 3318,
+    "zero_history_requests": 2968
+  },
+  "R1": {
+    "cold_item_misses": 418,
+    "request_micro": {
+      "candidate_recall": 0.5539481615430982,
+      "hr": 0.1479807112718505,
+      "ndcg": 0.06716764554094486
+    },
+    "requests": 3318,
+    "user_macro": {
+      "candidate_recall": 0.5539481615430982,
+      "hr": 0.1479807112718505,
+      "ndcg": 0.06716764554094486
+    },
+    "users": 3318,
+    "zero_history_requests": 2968
+  },
+  "R2": {
+    "cold_item_misses": 418,
+    "request_micro": {
+      "candidate_recall": 0.5539481615430982,
+      "hr": 0.1491862567811935,
+      "ndcg": 0.06748554869497238
+    },
+    "requests": 3318,
+    "user_macro": {
+      "candidate_recall": 0.5539481615430982,
+      "hr": 0.1491862567811935,
+      "ndcg": 0.06748554869497238
+    },
+    "users": 3318,
+    "zero_history_requests": 2968
+  },
+  "R3": {
+    "cold_item_misses": 418,
+    "request_micro": {
+      "candidate_recall": 0.5539481615430982,
+      "hr": 0.08740204942736589,
+      "ndcg": 0.040342101903748775
+    },
+    "requests": 3318,
+    "user_macro": {
+      "candidate_recall": 0.5539481615430982,
+      "hr": 0.08740204942736589,
+      "ndcg": 0.040342101903748775
+    },
+    "users": 3318,
+    "zero_history_requests": 2968
+  },
+  "R4": {
+    "cold_item_misses": 418,
+    "request_micro": {
+      "candidate_recall": 0.5539481615430982,
+      "hr": 0.0867992766726944,
+      "ndcg": 0.03999689663688747
+    },
+    "requests": 3318,
+    "user_macro": {
+      "candidate_recall": 0.5539481615430982,
+      "hr": 0.0867992766726944,
+      "ndcg": 0.03999689663688747
+    },
+    "users": 3318,
+    "zero_history_requests": 2968
+  }
+}

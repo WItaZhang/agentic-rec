@@ -8,7 +8,7 @@ import yaml
 
 from .batch_experiment import client_for, run_batch_collect, run_batch_submit
 from .paid_budget import PaidBudget, usage_cost
-from .utils import digest, managed_run, write_json
+from .utils import digest, managed_run, verified_run_config, write_json
 
 
 def split_batches(rows, max_requests, max_input_tokens):
@@ -43,7 +43,7 @@ def run_batch_schedule(config, config_path, root):
         raise ValueError("Invalid queue or polling limits")
     with managed_run(config, config_path, root) as (run_dir, manifest):
         prepared = root / settings["prepared_run"]
-        original = yaml.safe_load((prepared / "config.yaml").read_text())
+        original = verified_run_config(prepared)
         rows = [json.loads(line) for line in (prepared / "physical_calls.jsonl").read_text().splitlines()]
         fingerprint = digest(prepared / "physical_calls.jsonl")
         prepared_manifest = json.loads((prepared / "manifest.json").read_text())

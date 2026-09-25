@@ -27,6 +27,11 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") == "deployment_selection":
+        from src.deployment_selection import run_deployment_selection
+
+        run_deployment_selection(config, args.config, root)
+        return
     if config.get("stage") == "validation_policy_analysis":
         from src.policy_analysis import run_validation_analysis
 

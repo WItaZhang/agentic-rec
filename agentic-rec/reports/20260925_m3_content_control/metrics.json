@@ -1,0 +1,50 @@
+{
+  "R0": {
+    "cold_item_misses": 46,
+    "request_micro": {
+      "candidate_recall": 0.600418410041841,
+      "hr": 0.17782426778242677,
+      "ndcg": 0.08814762295354885
+    },
+    "requests": 478,
+    "user_macro": {
+      "candidate_recall": 0.600418410041841,
+      "hr": 0.17782426778242677,
+      "ndcg": 0.08814762295354885
+    },
+    "users": 478,
+    "zero_history_requests": 128
+  },
+  "R4": {
+    "cold_item_misses": 46,
+    "request_micro": {
+      "candidate_recall": 0.600418410041841,
+      "hr": 0.11506276150627615,
+      "ndcg": 0.06286771340939186
+    },
+    "requests": 478,
+    "user_macro": {
+      "candidate_recall": 0.600418410041841,
+      "hr": 0.11506276150627615,
+      "ndcg": 0.06286771340939186
+    },
+    "users": 478,
+    "zero_history_requests": 128
+  },
+  "S4": {
+    "cold_item_misses": 46,
+    "request_micro": {
+      "candidate_recall": 0.600418410041841,
+      "hr": 0.0794979079497908,
+      "ndcg": 0.04059524723363469
+    },
+    "requests": 478,
+    "user_macro": {
+      "candidate_recall": 0.600418410041841,
+      "hr": 0.0794979079497908,
+      "ndcg": 0.04059524723363469
+    },
+    "users": 478,
+    "zero_history_requests": 128
+  }
+}
