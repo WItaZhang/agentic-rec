@@ -1,6 +1,6 @@
 # Research execution checkpoint
 
-Last updated: 2026-09-24 UTC. The full research goal remains active. The newest
+Last updated: 2026-09-25 UTC. The full research goal remains active. The newest
 checkpoint is at the bottom; historical spending/status entries are not current balances.
 
 ## Authorization and resources
@@ -374,3 +374,15 @@ but has not yet run on completed expanded labels. Latest full local suite:
 - Next: analyze the content control when complete, collect/fit the policy labels,
   execute strong-retriever evidence robustness, freeze validation-only choices,
   run final test and controlled serving/failure/resource audits, finish materials.
+
+
+## 2026-09-25 UTC: equal-token control complete; policy labels running
+
+- Content execution `logs/20260925_071014_amazon_content_control_batch` completed all 25 shards / 956 calls. Every R4/S4 pair has equal actual input token counts; actual total USD 1.4859628. All returned the dated model. Report: [content control](../../reports/20260925_m3_content_control/README.md).
+- Evaluation `logs/20260925_072306_amazon_content_control_evaluate` (`771f8a6`); analysis `logs/20260925_072335_amazon_content_control_analysis` (`f8630c8`). R4 minus S4 NDCG +0.022272 on the enriched diagnostic sample, but signs differ by history. R4 minus base −0.025280. No population gain or neutral-padding claim.
+- Public archive `artifacts/published/content_control_v1`; offline reanalysis `logs/20260925_072511_content_control_archive_reanalysis` reproduced every number exactly, no dataset/API/model access.
+- At content completion known campaign API cost USD 10.3504396, accounted USD 10.3539412 including the old uncertain 429 reservation. This is a historical snapshot; policy calls are now adding cost.
+- LIVE: policy scheduler `logs/20260925_072230_amazon_policy_batch`, exec session 79485, source `f940975`, 49 shards. No duplicate submission. Estimated USD 2.9788184, upper USD 3.5053976, round cap USD 6.
+- QUEUED: exec session 69278 waits for that policy scheduler to complete all shards, then launches `configs/amazon_sequence_validation_batch.yaml`. Expected USD 7.7100102, upper USD 9.0893574, cap USD 12. This estimate was communicated before execution. Do not independently submit it while the launcher lives.
+- Added a deterministic executable adoption-selection stage for the already registered `amazon_deployment_selection_v1.yaml`; it will choose among all conventional and selected routed methods on the same validation requests. The final freeze can hash this decision, preventing later test-based reselection. No selection has been run yet.
+- Next: evaluate complete policy matrix, fit the unchanged v2 grid, analyze selected validation routes and verify offline refitting. Finish strong-base evidence control, then freeze practical method + final-test protocol. Final test remains unscored.

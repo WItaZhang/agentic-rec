@@ -25,6 +25,8 @@ def verify_final_config(config, root):
     for filename, checksum in freeze["selection_artifact_hashes"].items():
         if digest(root / freeze["routing_run"] / filename) != checksum:
             raise ValueError("Development-selected routing artifact changed")
+    if "deployment_selection_path" in freeze and digest(root / freeze["deployment_selection_path"]) != freeze["deployment_selection_sha256"]:
+        raise ValueError("Practical method selection changed after freeze")
     return freeze
 
 
@@ -74,6 +76,17 @@ def run_freeze(config, config_path, root):
             "prompt_sha256": digest(root / original["evidence"]["prompt_path"]),
             "validation_outcome_sha256": status["validation_outcome_sha256"],
             "policy_outcome_sha256": status["policy_outcome_sha256"], "test_scored": False}
+        if settings.get("deployment_selection_run"):
+            selection_dir = root / settings["deployment_selection_run"]
+            selection_status = json.loads((selection_dir / "manifest.json").read_text())
+            selection_config = yaml.safe_load((selection_dir / "config.yaml").read_text(encoding="utf-8"))
+            selection_path = selection_dir / "deployment_selection.json"
+            if (selection_status["status"] != "completed" or selection_status.get("test_scored")
+                    or selection_config["sources"]["routing_run"] != settings["routing_run"]
+                    or digest(selection_path) != selection_status["decision_sha256"]):
+                raise ValueError("Practical method selection must use this completed development fit")
+            record.update(deployment_selection_path=str(selection_path.relative_to(root)),
+                          deployment_selection_sha256=digest(selection_path))
         write_json(run_dir / "freeze.json", record)
         (run_dir / "test_config.yaml").write_text(yaml.safe_dump(test_config, sort_keys=False), encoding="utf-8")
         manifest.update(test_scored=False, freeze_sha256=digest(run_dir / "freeze.json"), stage_status="frozen")

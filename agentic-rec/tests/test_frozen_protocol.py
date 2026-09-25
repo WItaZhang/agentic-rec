@@ -49,6 +49,22 @@ def test_artifact_mutation_or_unfinished_freeze_is_rejected(tmp_path):
         verify_final_config(config, tmp_path)
 
 
+def test_practical_method_cannot_change_after_freeze(tmp_path):
+    config = frozen_fixture(tmp_path)
+    decision = tmp_path / 'deployment.json'
+    decision.write_text('{"selected_method": "causal_sequence"}')
+    freeze = tmp_path / 'freeze.json'
+    record = json.loads(freeze.read_text())
+    record.update(deployment_selection_path='deployment.json', deployment_selection_sha256=digest(decision))
+    freeze.write_text(json.dumps(record))
+    (tmp_path / 'manifest.json').write_text(json.dumps({'status': 'completed', 'test_scored': False,
+                                                     'freeze_sha256': digest(freeze)}))
+    verify_final_config(config, tmp_path)
+    decision.write_text('{"selected_method": "popularity"}')
+    with pytest.raises(ValueError, match='Practical method'):
+        verify_final_config(config, tmp_path)
+
+
 def test_frozen_policy_decisions_need_no_outcomes_or_targets(tmp_path):
     selection = {'plans': ['R0', 'R1', 'R4'], 'chosen': {
         'rule_0.25': {'policy': {'kind': 'rule', 'rule': 'full_if_history'}}}}

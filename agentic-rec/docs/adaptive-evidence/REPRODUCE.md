@@ -147,3 +147,6 @@ All unrecalled targets, OOV items, cold users and failed requests remain in the
 relevant quality denominator. Single-request smoke scores are not effectiveness
 evidence. A confidence interval containing zero is not evidence of equivalence;
 quality tolerance and main test comparisons must be frozen on validation.
+
+
+The completed equal-token category-alignment diagnostic is also published. From the inner project root, run `uv run --locked --extra yaml --extra experiments python main.py --config configs/content_control_archive_reanalysis.yaml`. This reproduces the 478-user stratified diagnostic, not the full-population estimate. No data download, credentials or paid calls are needed.

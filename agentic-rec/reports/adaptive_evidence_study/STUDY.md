@@ -214,6 +214,14 @@ motivate adding two opposite-history rules in grid v2 before final testing, whil
 retaining the original learner grid, budgets and scientific primary comparison.
 The original v1 rule list is preserved as part of the development record.
 
+The [478-user equal-token control](../20260925_m3_content_control/README.md)
+holds actual input counts and category-text multisets fixed. Correct category
+alignment is better than shuffled alignment with history, but worse without
+history. Its unweighted diagnostic mean is not representative of the request
+population. Full evidence still trails ItemKNN on this cohort. Correct alignment
+versus corrupted alignment is a narrower contrast than useful information versus
+neutral padding; it does not establish a general benefit of adding categories.
+
 Routing results, final results, final quality–cost figures,
 failure cases and reconciled campaign resources must be added only after their
 actual runs complete. No final method, adaptive gain or sequential stopping

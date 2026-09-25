@@ -1,0 +1,19 @@
+{
+  "analysis_run": "logs/20260925_072335_amazon_content_control_analysis",
+  "calls_scope": "Actual provider usage, including repeated/shared/failed attempts; not newly executed calls",
+  "files": {
+    "analysis_settings.json": "3849cdf669607f5f1cf18cfeee8416736d18c872a6ecfec2a05bf8ee029ba0b9",
+    "calls.jsonl.gz": "2b8879b145922eddfc916de555f4eb6548817261e4eb8277ee4667136d00e041",
+    "expected_analysis.json": "08d6673087102f27c27d29a81a07ac3675c412e4f25163242c7f0fd4f7ee7234",
+    "outcomes.json.gz": "e23f0dc49514541d8430c5948d1dc6f2caab658df5e0c6e5195354e7efeb9599",
+    "resources.json": "a88b7082e367da6d5ac35e689141f94a0a28819a4dd595abd95d3c94d844650f",
+    "source_manifest.json": "6776c1be58584acdbfbbdf6d1e6fdd9019cca0727e0c33394f5d19487724f298"
+  },
+  "kind": "evidence",
+  "privacy": "Per-artifact user ordinals preserve ordering; request IDs link same requests. No review text, prompts, keys or response IDs.",
+  "source_calls_sha256": "0e2e9757705fbc3ca6cb4f2a28a08735900fd550f50eb1c5047eba64a5e45533",
+  "source_outcomes_sha256": "9bab6280306aeff7f0258d912ba52c3eeea2aec84ec95c9d9a91b4a5fa3f3ed3",
+  "source_run": "logs/20260925_072306_amazon_content_control_evaluate",
+  "status": "completed",
+  "test_scored": false
+}
