@@ -10,7 +10,9 @@
 [配对结果与不确定性](../../reports/20260924_m2_development_pilot/README.md) 已归档。
 完整验证集已完成：[3,318 用户证据结果](../../reports/20260925_m3_evidence_validation/README.md)。
 近期方案的整体收益尚未确立，充分证据方案明显下降；历史分组呈现不同方向。
-强序列基线与内容消融继续推进，学习路由尚未拟合。
+[等 token 内容对照](../../reports/20260925_m3_content_control/README.md) 也已完成；类别对应的作用随历史分组而异。
+当前 [API 账户账单额度阻塞](../../reports/20260925_resource_checkpoint/README.md) 使扩展策略标签、强序列证据对照和最终测试待续；学习路由尚未拟合。
+项目预算授权尚余约 38.92 美元，具体恢复点见进度记录。已有 [英文简历与面试材料草稿](../../reports/career_materials/README.md) 仅表述已验证的开发结果。
 以下正文保留原设计；LLM 和路由能力只有进度记录中的实际实验支持后才算完成。
 
 实际运行入口与资源控制见 [复现说明](REPRODUCE.md)。原有 PR #1 的提交已经

@@ -10,6 +10,10 @@ validated and planned capabilities. MovieLens reproduction, Amazon temporal repl
 ItemKNN and a causal sequence baseline are complete. Real OpenAI synchronous and
 batch calls have passed protocol checks; evidence and routing research is ongoing.
 Final Amazon test quality and learned-routing gains are not yet reported.
+Complete [3,318-user evidence validation](reports/20260925_m3_evidence_validation/README.md)
+and [equal-token content controls](reports/20260925_m3_content_control/README.md) are published with offline reanalysis.
+An [API-account billing block and exact recovery checkpoint](reports/20260925_resource_checkpoint/README.md)
+currently prevent the remaining paid experiments; project authorization has not been exhausted.
 
 Between 2023 and 2026, several dozen papers put an LLM *agent* at the centre of a recommender: as the recommender itself (RecMind, InteRecAgent, MACRec, BiLLP), as a simulated user (RecAgent, Agent4Rec, SimUSER, RecoWorld), as an item (AgentCF), or as an assistant on the user's side (RAH, iAgent). Read side by side, they share nine components and differ mainly in which ones they attach and how they are optimised.
 

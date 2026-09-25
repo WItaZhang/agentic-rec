@@ -23,6 +23,21 @@ def client_for(config, root):
                   max_retries=0, timeout=config["timeout_seconds"])
 
 
+def settle_billing_rejection(budget, reservations, run_dir, error):
+    """A rejected Batch creation never dispatched generation; ambiguous errors stay reserved."""
+    if (error.get("stage") != "batch_create" or error.get("http_status") != 400
+            or error.get("provider_code") != "billing_hard_limit_reached"):
+        return False
+    status = "submission_rejected_before_generation"
+    rows = [{"call_id": row["call_id"], "usage": None, "actual_known_usd": 0.0,
+        "reserved_usd": row["reserved_usd"], "generation_attempts": 0, "status": status,
+        "http_status": 400, "provider_code": "billing_hard_limit_reached"} for row in reservations.values()]
+    # Persist the reason before releasing money; never invent zero-token provider usage.
+    write_json(run_dir / "results.json", rows)
+    budget.settle_many([(row["call_id"], 0.0, status) for row in rows])
+    return True
+
+
 def run_batch_submit(config, config_path, root):
     import tiktoken
 
@@ -115,15 +130,26 @@ def run_batch_submit(config, config_path, root):
             for row in prepared:
                 stream.write(json.dumps({k: row[k] for k in ("custom_id", "method", "url", "body")}) + "\n")
         client = client_for(original["llm"], root)
+        submission_stage = "file_upload"
         try:
             with batch_input.open("rb") as stream:
                 uploaded = client.files.create(file=stream, purpose="batch")
             write_json(run_dir / "upload.json", {"file_id": uploaded.id})
+            submission_stage = "batch_create"
             batch = client.batches.create(input_file_id=uploaded.id, endpoint="/v1/responses", completion_window="24h",
-                                          metadata={"research_run": run_dir.name})
+                                          metadata={"research_run": run_dir.name},
+                                          extra_headers={"Idempotency-Key": run_dir.name})
         except Exception as error:
-            write_json(run_dir / "submission_error.json", {"type": type(error).__name__,
-                "recovery": "Do not resubmit blindly; list batches and match metadata.research_run before reconciling reservations"})
+            body = getattr(error, "body", {})
+            detail = body.get("error", body) if isinstance(body, dict) else {}
+            code = detail.get("code") if isinstance(detail, dict) else None
+            failure = {"type": type(error).__name__, "stage": submission_stage,
+                "http_status": getattr(error, "status_code", None),
+                "provider_code": code if code == "billing_hard_limit_reached" else None,
+                "recovery": "Do not resubmit blindly; list batches and match metadata.research_run before reconciling reservations"}
+            write_json(run_dir / "submission_error.json", failure)
+            if settle_billing_rejection(budget, reservations, run_dir, failure):
+                raise RuntimeError("Provider billing hard limit; Batch creation rejected before generation, stop until account resources are restored") from None
             raise RuntimeError("Batch submission uncertain; retained reservations and redacted error") from None
         write_json(run_dir / "submission.json", batch.model_dump())
         manifest.update(batch_id=batch.id, batch_status=batch.status, stage_status="submitted_not_evaluated",

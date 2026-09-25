@@ -226,3 +226,6 @@ Routing results, final results, final quality–cost figures,
 failure cases and reconciled campaign resources must be added only after their
 actual runs complete. No final method, adaptive gain or sequential stopping
 result is asserted by this working report.
+
+
+Current execution is blocked by the provider account's billing hard limit, with USD 11.0849600 conservatively accounted against the USD 50 project authorization. The [resource checkpoint](../20260925_resource_checkpoint/README.md) gives exact tokens, costs, preserved partial labels and a safe resume command. The [interim career materials](../career_materials/README.md) include only supported development claims. Expanded router fitting and final testing remain incomplete.

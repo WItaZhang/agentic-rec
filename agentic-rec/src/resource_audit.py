@@ -1,6 +1,7 @@
 """Reconcile physical provider usage with the durable campaign ledger."""
 
 import json
+import re
 from collections import defaultdict
 
 import yaml
@@ -9,8 +10,16 @@ from .paid_budget import PaidBudget
 from .utils import digest, managed_run, write_json
 
 
+def is_scheduler_child(config, child_run):
+    """Fallback for older nested runs; imported checkpoints are not CPU parents."""
+    experiment = child_run.replace("\\", "/").split("/")[-1].split("_", 2)[-1]
+    return config.get("stage") == "batch_schedule" and bool(re.fullmatch(
+        re.escape(config["experiment_name"]) + r"_[sc]\d{3}", experiment))
+
+
 def reconcile_usage(entries, records):
     usage_by_id = {}
+    rejected_before_generation = set()
     for row in records:
         identity = row.get("call_id")
         if not identity:
@@ -18,12 +27,17 @@ def reconcile_usage(entries, records):
         if identity not in entries:
             raise ValueError("Recorded physical call is absent from the budget ledger")
         usage = row.get("usage")
+        if (row.get("status") == "submission_rejected_before_generation"
+                and row.get("generation_attempts") == 0 and row.get("http_status") == 400
+                and row.get("provider_code") == "billing_hard_limit_reached" and usage is None):
+            rejected_before_generation.add(identity)
         if identity in usage_by_id and usage_by_id[identity] != usage:
             raise ValueError("Conflicting provider usage for the same physical call")
         usage_by_id[identity] = usage
     totals = defaultdict(lambda: {"physical_attempts": 0, "pending": 0, "unknown_settled": 0,
         "known_usage_priced_usd": 0.0, "accounted_usd": 0.0, "input_tokens": 0,
-        "output_tokens": 0, "cached_input_tokens": 0, "usage_observed_attempts": 0})
+        "output_tokens": 0, "cached_input_tokens": 0, "usage_observed_attempts": 0,
+        "rejected_before_generation": 0})
     for identity, entry in entries.items():
         summary = totals[entry["run_id"]]
         summary["physical_attempts"] += 1
@@ -38,6 +52,9 @@ def reconcile_usage(entries, records):
             summary["input_tokens"] += usage["input_tokens"]
             summary["output_tokens"] += usage["output_tokens"]
             summary["cached_input_tokens"] += (usage.get("input_tokens_details") or {}).get("cached_tokens", 0)
+        elif (identity in rejected_before_generation and actual == 0
+              and entry.get("status") == "submission_rejected_before_generation"):
+            summary["rejected_before_generation"] += 1
         elif actual is not None:
             raise ValueError("Known physical charge lacks its provider usage record")
     return dict(totals)
@@ -67,7 +84,7 @@ def run_resource_audit(config, config_path, root):
                 chunks = json.loads(scheduler.read_text())["chunks"]
                 for chunk in chunks:
                     for field in ("submit_run", "collection_run"):
-                        if chunk.get(field):
+                        if chunk.get(field) and is_scheduler_child(cfg, chunk[field]):
                             nested.add(chunk[field].replace("\\", "/").split("/")[-1])
             for file in (directory / "calls.jsonl", directory / "results.json"):
                 if not file.exists():
@@ -103,7 +120,7 @@ def run_resource_audit(config, config_path, root):
                 "runs_without_cpu_timing": [name for name, row in roots.items() if "cpu_seconds" not in row],
                 "nested_runs_excluded_from_double_counting": sorted(nested), "running_runs": running,
                 "scope": "Recorded experiment processes including failed attempts and analysis; excludes agent/tool UI, installation/download time and uninstrumented diagnostics. Summed wall time is not elapsed campaign time."},
-            "accounting": "Physical attempts counted once across resumed, collected and counterfactual aliases. Unknown usage retains its reservation. Dollar estimates use provider usage and frozen prices, not invoices.",
+            "accounting": "Reserved request attempts counted once across resumed, collected and counterfactual aliases. Explicit pre-generation Batch rejections are counted separately with zero charge and no fabricated usage. Unknown usage retains its reservation. Dollar estimates use provider usage and frozen prices, not invoices.",
             "unmetered": ["Host energy consumption", "Provider-internal compute", "Network bytes"],
             "source_record_hashes": sources}
         write_json(run_dir / "campaign_resources.json", report)

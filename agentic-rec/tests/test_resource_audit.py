@@ -2,7 +2,7 @@ import pytest
 
 pytest.importorskip("filelock")
 
-from src.resource_audit import reconcile_usage
+from src.resource_audit import is_scheduler_child, reconcile_usage
 
 
 def test_usage_counts_shared_resumed_calls_once_and_retains_unknown_failures():
@@ -19,3 +19,11 @@ def test_usage_counts_shared_resumed_calls_once_and_retains_unknown_failures():
         reconcile_usage(entries, [row, {**row, "usage": None}])
     with pytest.raises(ValueError, match="lacks"):
         reconcile_usage(entries, [])
+
+
+def test_standalone_recovery_collection_is_not_hidden_as_nested_cpu():
+    parent = {'stage': 'batch_schedule', 'experiment_name': 'amazon_policy_batch'}
+    assert is_scheduler_child(parent, 'logs/20260925_072000_amazon_policy_batch_c011')
+    assert not is_scheduler_child(parent, 'logs/20260925_073041_amazon_policy_batch_billing_collect')
+    checkpoint = {**parent, 'stage': 'batch_recovery_checkpoint'}
+    assert not is_scheduler_child(checkpoint, 'logs/20260925_072000_amazon_policy_batch_c011')
