@@ -68,6 +68,7 @@ to inspect the evidence experiment. Retraining remains a separate documented run
 
 ```sh
 uv run --locked --extra yaml --extra experiments python main.py --config configs/pilot_archive_reanalysis.yaml
+uv run --locked --extra yaml --extra experiments python main.py --config configs/validation_archive_reanalysis.yaml
 ```
 
 The compact archive contains derived per-request outcomes and actual attempt

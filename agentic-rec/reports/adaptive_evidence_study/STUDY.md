@@ -1,8 +1,8 @@
 # Evidence allocation for next-item recommendation
 
 **Working research report.** Conventional comparisons and the development pilot
-are complete. Expanded LLM validation, routing selection and final-test results
-are still pending. This document must not be cited as a completed final study.
+and expanded LLM validation are complete. Content/strong-base controls, routing
+selection and final-test results are still pending. This document must not be cited as a completed final study.
 Current execution status is in [PROGRESS](../../docs/adaptive-evidence/PROGRESS.md).
 
 ## Research question and scope
@@ -206,7 +206,15 @@ same-request repeated-input groups changed ranking, seven changed NDCG. A
 label-aware oracle therefore includes output noise and is not proof of a
 learnable policy advantage.
 
-Expanded evidence matrices, routing results, final results, quality–cost figures,
+The [complete 3,318-user evidence validation](../20260925_m3_evidence_validation/README.md)
+finds R1 minus R0 NDCG +0.000612 [−0.002067, +0.003260], and R4 minus R0
+−0.026559 [−0.032734, −0.020497]. R1 is slightly beneficial without observed
+history but harmful in the at-least-two-event group. These exploratory findings
+motivate adding two opposite-history rules in grid v2 before final testing, while
+retaining the original learner grid, budgets and scientific primary comparison.
+The original v1 rule list is preserved as part of the development record.
+
+Routing results, final results, final quality–cost figures,
 failure cases and reconciled campaign resources must be added only after their
 actual runs complete. No final method, adaptive gain or sequential stopping
 result is asserted by this working report.
