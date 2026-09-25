@@ -1,0 +1,11 @@
+experiment_name: content_control_archive_reanalysis
+stage: archive_analysis
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+archive_path: artifacts/published/content_control_v1
+absolute_float_tolerance: 1.0e-14

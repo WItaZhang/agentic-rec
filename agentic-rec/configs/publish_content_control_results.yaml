@@ -1,0 +1,14 @@
+experiment_name: publish_content_control_results
+stage: publish_results
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+publication:
+  kind: evidence
+  matrix_run: logs/20260925_072306_amazon_content_control_evaluate
+  analysis_run: logs/20260925_072335_amazon_content_control_analysis
+  output_path: artifacts/published/content_control_v1
