@@ -1,0 +1,49 @@
+experiment_name: amazon_validation_evidence_analysis
+stage: evidence_analysis
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+analysis:
+  source_run: logs/20260925_071030_amazon_validation_matrix_evaluate
+  plans:
+  - R0
+  - R1
+  - R2
+  - R3
+  - R4
+  comparisons:
+  - - R1
+    - R0
+  - - R4
+    - R0
+  - - R2
+    - R1
+  - - R3
+    - R1
+  - - R4
+    - R2
+  - - R4
+    - R1
+  history_groups:
+  - - zero
+    - 0
+    - 1
+  - - one
+    - 1
+    - 2
+  - - at_least_two
+    - 2
+    - 1000000
+  group_boundary_source: base_train_history_profile
+  bootstrap_repetitions: 10000
+  confidence: 0.95
+  minimum_group_users_for_interval: 30
+  seed: 42
+  minimum_detectable_difference: 0.01
+  normal_z_alpha: 1.96
+  normal_z_power: 0.84
+  interpretation: development_exploratory
