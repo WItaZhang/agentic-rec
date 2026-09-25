@@ -1,0 +1,9 @@
+% Verified development-stage claims as of 2026-09-25; not a final-test result.
+% Paste into the projects section of an English recommendation/ML resume.
+\noindent\textbf{Adaptive Evidence for Recommendation}
+\hfill\href{https://github.com/WItaZhang/agentic-rec}{GitHub}
+\begin{itemize}
+  \item Built a reproducible temporal recommendation pipeline on 70,922 deduplicated Amazon reviews, comparing popularity, ItemKNN, and a causal Transformer against GPT-4.1 mini reranking with immutable top-200 candidates and leakage checks.
+  \item Evaluated four evidence configurations on 3,318 validation users with paired bootstrap intervals and real token accounting; found that full evidence reduced NDCG@10 by 0.02656 versus ItemKNN, motivating selective use of LLM calls instead of unconditional reranking.
+  \item Designed a 478-user category-alignment control with exactly matched provider input tokens; exposed opposite effects across history groups and published per-request derived results that reproduce all reported statistics offline.
+\end{itemize}

@@ -1,12 +1,20 @@
 """Reconcile physical provider usage with the durable campaign ledger."""
 
 import json
+import re
 from collections import defaultdict
 
 import yaml
 
 from .paid_budget import PaidBudget
 from .utils import digest, managed_run, write_json
+
+
+def is_scheduler_child(config, child_run):
+    """Fallback for older nested runs; imported checkpoints are not CPU parents."""
+    experiment = child_run.replace("\\", "/").split("/")[-1].split("_", 2)[-1]
+    return config.get("stage") == "batch_schedule" and bool(re.fullmatch(
+        re.escape(config["experiment_name"]) + r"_[sc]\d{3}", experiment))
 
 
 def reconcile_usage(entries, records):
@@ -76,7 +84,7 @@ def run_resource_audit(config, config_path, root):
                 chunks = json.loads(scheduler.read_text())["chunks"]
                 for chunk in chunks:
                     for field in ("submit_run", "collection_run"):
-                        if chunk.get(field):
+                        if chunk.get(field) and is_scheduler_child(cfg, chunk[field]):
                             nested.add(chunk[field].replace("\\", "/").split("/")[-1])
             for file in (directory / "calls.jsonl", directory / "results.json"):
                 if not file.exists():
