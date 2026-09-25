@@ -1,0 +1,14 @@
+experiment_name: amazon_validation_failure_analysis
+stage: development_failure_analysis
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+failure_analysis:
+  matrix_run: logs/20260925_071030_amazon_validation_matrix_evaluate
+  policies: [fixed_R1, fixed_R4]
+  cases_per_class: 3
+  history_items_per_case: 3

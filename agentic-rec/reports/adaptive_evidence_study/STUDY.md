@@ -229,3 +229,12 @@ result is asserted by this working report.
 
 
 Current execution is blocked by the provider account's billing hard limit, with USD 11.0849600 conservatively accounted against the USD 50 project authorization. The [resource checkpoint](../20260925_resource_checkpoint/README.md) gives exact tokens, costs, preserved partial labels and a safe resume command. The [interim career materials](../career_materials/README.md) include only supported development claims. Expanded router fitting and final testing remain incomplete.
+
+The zero-call [validation failure audit](../20260925_validation_failures/README.md)
+finds that full evidence loses 388 base hits and rescues 196, whereas recent
+evidence loses 38 and rescues 49. Both spend about 44.6% of their single-action
+API cost on targets outside the fixed candidate pool. These are post-evaluation
+diagnostics; target visibility cannot be used to skip those requests in a policy.
+Deterministic examples show both useful rescues and harmful reordering, including
+empty-history requests. They do not identify the model's internal reasoning or
+justify changing the registered grid before test.
