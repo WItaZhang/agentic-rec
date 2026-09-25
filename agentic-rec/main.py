@@ -42,7 +42,7 @@ def main():
 
         run_resource_audit(config, args.config, root)
         return
-    if config.get("stage") == "final_failure_analysis":
+    if config.get("stage") in ("final_failure_analysis", "development_failure_analysis"):
         from src.failure_analysis import run_failure_analysis
 
         run_failure_analysis(config, args.config, root)

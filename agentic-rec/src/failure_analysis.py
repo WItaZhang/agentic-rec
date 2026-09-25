@@ -3,13 +3,11 @@
 import hashlib
 import json
 
-import yaml
-
 from .data import load_amazon_metadata, load_amazon_reviews
 from .evidence_analysis import validate_table
 from .frozen_protocol import verify_final_config
 from .protocol import replay_requests
-from .utils import digest, managed_run, write_json
+from .utils import digest, managed_run, verified_run_config, write_json
 
 
 def error_tags(base, outcome, call):
@@ -43,6 +41,18 @@ def choose_case_ids(tagged, limit, seed):
             for tag in names}
 
 
+def development_fixed_decisions(original, status, request_ids, policies):
+    if (status["status"] != "completed" or status.get("test_scored")
+            or original["evaluation"]["partition"] != "validation"
+            or original["sampling"]["mode"] != "uniform_users"):
+        raise ValueError("Development failure diagnostics require complete population validation")
+    plans = ["R0", *original["evidence"]["plans"]]
+    if any(name not in [f"fixed_{p}" for p in plans] for name in policies):
+        raise ValueError("Development case analysis supports fixed evidence actions only")
+    return {"request_ids": sorted(request_ids), "label_access": False,
+            "actions": {name: [name.removeprefix("fixed_")] * len(request_ids) for name in policies}}
+
+
 def run_failure_analysis(config, config_path, root):
     from .llm_experiment import choose_views
 
@@ -50,25 +60,32 @@ def run_failure_analysis(config, config_path, root):
         settings = config["failure_analysis"]
         matrix = root / settings["matrix_run"]
         status = json.loads((matrix / "manifest.json").read_text())
-        if status["status"] != "completed" or not status.get("test_scored"):
-            raise ValueError("Failure analysis requires an already evaluated frozen final test")
+        is_final = config["stage"] == "final_failure_analysis"
+        if config["stage"] not in ("final_failure_analysis", "development_failure_analysis"):
+            raise ValueError("Unknown failure-analysis scope")
+        if status["status"] != "completed" or bool(status.get("test_scored")) != is_final:
+            raise ValueError("Failure-analysis scope must match the complete evaluated partition")
         prepared = root / status["prepared_run"]
         preparation = json.loads((prepared / "manifest.json").read_text())
         if digest(prepared / "candidates.json") != preparation["candidates_sha256"]:
             raise ValueError("Candidates changed after preparation")
-        original = yaml.safe_load((prepared / "config.yaml").read_text(encoding="utf-8"))
-        verify_final_config(original, root)
-        if digest(prepared / "routing_decisions.json") != status["routing_decisions_sha256"]:
-            raise ValueError("Saved decisions changed after evaluation")
-        decisions = json.loads((prepared / "routing_decisions.json").read_text())
+        original = verified_run_config(prepared)
         rows = json.loads((matrix / "outcomes.json").read_text())
         calls = [json.loads(line) for line in (matrix / "calls.jsonl").read_text().splitlines()]
         table, attempts = validate_table(rows, calls, ["R0", *original["evidence"]["plans"]])
+        if is_final:
+            verify_final_config(original, root)
+            if digest(prepared / "routing_decisions.json") != status["routing_decisions_sha256"]:
+                raise ValueError("Saved decisions changed after evaluation")
+            decisions = json.loads((prepared / "routing_decisions.json").read_text())
+        else:
+            decisions = development_fixed_decisions(original, status, table, settings["policies"])
+        write_json(run_dir / "analyzed_decisions.json", decisions)
         if set(decisions["request_ids"]) != set(table):
-            raise ValueError("Failure analysis must retain the complete final sample")
+            raise ValueError("Failure analysis must retain the complete evaluated sample")
         for path, checksum in (("raw_path", "sha256"), ("metadata_path", "metadata_sha256")):
             if digest(root / original["data"][path]) != original["data"][checksum]:
-                raise ValueError("Final evaluation source changed")
+                raise ValueError("Evaluation source changed")
         events, _ = load_amazon_reviews(root / original["data"]["raw_path"])
         views, _, ends = choose_views(events, original)
         views = {v.request_id: v for v in views}
@@ -106,11 +123,18 @@ def run_failure_analysis(config, config_path, root):
                         for e in views[q].history[-settings["history_items_per_case"]:]]}
             analyses[policy] = {"requests": len(actions),
                 "class_counts": {tag: sum(tag in tags for tags in tagged.values()) for tag in selected},
+                "api_usd_on_retrieval_misses": sum(
+                    (attempts[q, action]["actual_known_usd"] if attempts[q, action]["actual_known_usd"] is not None
+                     else attempts[q, action]["reserved_usd"])
+                    for q, action in actions.items() if action != "R0" and not table[q][action]["candidate_recall"]),
                 "case_ids_by_class": selected, "cases": cases}
         write_json(run_dir / "failure_cases.json", {"policies": analyses,
+            "partition": original["evaluation"]["partition"],
             "scope": "Post-evaluation diagnostics; overlapping classes, deterministic illustrative cases, not causal explanations of model reasoning",
             "privacy": "No user identifiers or review text; public product metadata only",
             "llm_calls": 0, "paid_api_usd": 0})
-        manifest.update(test_scored=True, final_test_freeze=original["final_test_freeze"],
+        manifest.update(test_scored=is_final,
                         matrix_outcome_sha256=digest(matrix / "outcomes.json"),
                         stage_status="failure_analysis_complete", paid_api_usd=0, llm_calls=0)
+        if is_final:
+            manifest["final_test_freeze"] = original["final_test_freeze"]
