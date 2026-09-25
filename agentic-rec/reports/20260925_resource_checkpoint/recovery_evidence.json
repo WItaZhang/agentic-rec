@@ -1,0 +1,11 @@
+{
+  "completed_physical_requests": 641,
+  "existing_batch_collected": "batch_6ab622255ab88190ae6efe3842f1d344",
+  "original_scheduler": "logs\\20260925_072230_amazon_policy_batch",
+  "original_scheduler_sha256": "dddfcf75e788d12d10fd38e0b66ccd6e40133c661091566de319078b1f424a92",
+  "provider_listing_sha256": "c67a4a221301a741004842762477e95cfa1ce18f31eb82ab8333c95f50e408e9",
+  "rejected_submission": "logs\\20260925_072740_amazon_policy_batch_s012",
+  "rejection_error_sha256": "6c55a7f26dd435b3ad0b1709381892ff07e0c2b4f561fdb39d98aad711950c2c",
+  "released_zero_generation_reservations": 56,
+  "resume_condition": "User restores provider billing resources; do not run before then"
+}

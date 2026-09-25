@@ -5,7 +5,7 @@ checkpoint is at the bottom; historical spending/status entries are not current 
 
 ## Authorization and resources
 
-- Branch: `codex/evidence-results`; repository default:
+- Branch: `codex/routing-final-study`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
 - Paid API authorization updated by user: **USD 50 total**, estimate each round.
   First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
@@ -386,3 +386,17 @@ but has not yet run on completed expanded labels. Latest full local suite:
 - QUEUED: exec session 69278 waits for that policy scheduler to complete all shards, then launches `configs/amazon_sequence_validation_batch.yaml`. Expected USD 7.7100102, upper USD 9.0893574, cap USD 12. This estimate was communicated before execution. Do not independently submit it while the launcher lives.
 - Added a deterministic executable adoption-selection stage for the already registered `amazon_deployment_selection_v1.yaml`; it will choose among all conventional and selected routed methods on the same validation requests. The final freeze can hash this decision, preventing later test-based reselection. No selection has been run yet.
 - Next: evaluate complete policy matrix, fit the unchanged v2 grid, analyze selected validation routes and verify offline refitting. Finish strong-base evidence control, then freeze practical method + final-test protocol. Final test remains unscored.
+
+
+## 2026-09-25: provider billing hard limit — recovery checkpoint (current)
+
+- PR [#5](https://github.com/WItaZhang/agentic-rec/pull/5) merged at `a8dd7e7b06ee38948d75e6587f170f76f6b2e44d`; exact-head Python 3.11/3.12 CI, 101 local tests and Ruff passed. Current working branch is `codex/routing-final-study`.
+- Policy scheduler `logs/20260925_072230_amazon_policy_batch` failed during shard 12 (zero-based) creation. The initial error type was BadRequestError; provider batch listing found no matching created batch. Reusing the same uploaded file and reservations returned explicit HTTP 400 / `billing_hard_limit_reached`. This is a provider billing block, not project-budget exhaustion. A popup asks the user to restore provider capacity. No new paid request should be launched before that condition is resolved.
+- Sessions 79485 (policy) and 69278 (waiting sequence launcher) have exited. The strong-sequence comparison **never started**. No experiments or paid reservations are currently pending.
+- The last already accepted batch completed 50/50 and was collected in `logs/20260925_073041_amazon_policy_batch_billing_collect` (`4fe109f`). Expanded policy matrix: 641/2612 physical calls completed, 1971 left. Never fit or score a partial counterfactual matrix.
+- `eaea6b0` distinguishes explicit Batch billing rejection before generation from ambiguous errors. The 56 rejected reservations are settled at zero, with a rejection record and no invented token usage; uncertain network errors still retain their reservations. `3fe7d85` preserves standalone recovery-collection CPU in the resource audit.
+- Durable checkpoint: `logs/20260925_073228_amazon_policy_billing_checkpoint`. The original failed scheduler and error records remain intact. Resume config: `configs/amazon_policy_batch_resume_after_billing.yaml`; it preserves 12 collected shards, then resumes at offset 641. After provider recovery, expected remaining phase USD 2.2477996, upper USD 2.6451532; original phase cap USD 6 remains.
+- Latest reconciled resources: `logs/20260925_191002_amazon_interim_campaign_resources`, source `3fe7d85`; [report and blocking evidence](../../reports/20260925_resource_checkpoint/README.md). Known USD 11.0814584, conservative accounted USD 11.0849600 including the old unknown 429. Authorization remaining USD 38.9150400. Actual observed 54,402,912 input / 342,936 output / 4,206,848 cached input tokens. 9526 observed generations + one uncertain pilot attempt; 56 pre-generation rejected requests are separate.
+- [Career drafts](../../reports/career_materials/README.md) now contain an evidence-backed English LaTeX snippet and bilingual interview explanation. They explicitly state development status and exclude unverified adaptive gains, final-test performance and multistep capabilities.
+- Remaining sequence after account recovery: resume policy labels → complete evaluation → fit v2 grid → selected validation analysis + offline refitting → strong-base evidence study → validation-only practical method selection → freeze (including popularity and sequence extra baselines) → final test and final analyses → controlled serving audit → campaign resources/final report/career revisions.
+- The research objective is not achieved. Missing external condition is account billing capacity, not additional code permission. The goal has not been marked complete or paused.
