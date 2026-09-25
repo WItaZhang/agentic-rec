@@ -5,7 +5,7 @@ checkpoint is at the bottom; historical spending/status entries are not current 
 
 ## Authorization and resources
 
-- Branch: `codex/routing-final-study`; repository default:
+- Branch: `codex/development-failure-analysis`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
 - Paid API authorization updated by user: **USD 50 total**, estimate each round.
   First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
@@ -400,3 +400,12 @@ but has not yet run on completed expanded labels. Latest full local suite:
 - [Career drafts](../../reports/career_materials/README.md) now contain an evidence-backed English LaTeX snippet and bilingual interview explanation. They explicitly state development status and exclude unverified adaptive gains, final-test performance and multistep capabilities.
 - Remaining sequence after account recovery: resume policy labels → complete evaluation → fit v2 grid → selected validation analysis + offline refitting → strong-base evidence study → validation-only practical method selection → freeze (including popularity and sequence extra baselines) → final test and final analyses → controlled serving audit → campaign resources/final report/career revisions.
 - The research objective is not achieved. Missing external condition is account billing capacity, not additional code permission. The goal has not been marked complete or paused.
+
+
+## 2026-09-25: zero-cost validation failure analysis while billing is unresolved
+
+- Previous goal turn classified as progress: PR #6 merged as `1219777`, accounting and recovery checkpoint preserved. This continuation rechecked a clean worktree, merged PR state and absence of Python experiment processes. The user's provider-capacity response is still pending; no paid probe or submission was made.
+- New implementation `994cedc` adds development-only fixed-action failure diagnostics while retaining the separate frozen final-test gate. It rejects partial/test/stratified matrices and does not substitute incomplete policy labels.
+- Actual zero-call run `logs/20260925_191516_amazon_validation_failure_analysis` on all 3318 population-validation requests. [Report and deterministic cases](../../reports/20260925_validation_failures/README.md): R4 loses 388 base hits and rescues 196; R1 loses 38 and rescues 49. About 44.6% of each counterfactual single-action API cost is on unrecalled targets. These labels are diagnostic only, never policy features.
+- Working study and interview drafts now include these observed failures. Grid v2, prompts, final comparison and group boundaries are unchanged. Final test remains unopened.
+- Same provider billing blocker has persisted across two goal turns. Expanded policy labels remain 641/2612; no new cost, no running session, no pending paid reservation. The exact resume config remains `configs/amazon_policy_batch_resume_after_billing.yaml`. Await restored provider capacity before dependent work.

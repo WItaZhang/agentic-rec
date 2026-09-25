@@ -1,0 +1,5366 @@
+{
+  "llm_calls": 0,
+  "paid_api_usd": 0,
+  "partition": "validation",
+  "policies": {
+    "fixed_R1": {
+      "api_usd_on_retrieval_misses": 1.0552606000000295,
+      "case_ids_by_class": {
+        "baseline_hit_lost": [
+          "q_e000068406",
+          "q_e000028270",
+          "q_e000035890"
+        ],
+        "baseline_miss_rescued": [
+          "q_e000027954",
+          "q_e000009569",
+          "q_e000067147"
+        ],
+        "cold_target": [
+          "q_e000035575",
+          "q_e000013962",
+          "q_e000028196"
+        ],
+        "no_history_miss": [
+          "q_e000064385",
+          "q_e000022632",
+          "q_e000000432"
+        ],
+        "rank_quality_loss": [
+          "q_e000006205",
+          "q_e000006668",
+          "q_e000008535"
+        ],
+        "ranking_repair": [
+          "q_e000010867",
+          "q_e000000158",
+          "q_e000065075"
+        ],
+        "retrieval_miss": [
+          "q_e000070873",
+          "q_e000012524",
+          "q_e000005053"
+        ]
+      },
+      "cases": {
+        "q_e000000158": {
+          "action": "R1",
+          "api_usd": 0.0007222000000000001,
+          "base_ndcg": 0.0,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation"
+              ],
+              "item_id": "B00005R8BH",
+              "title": "Sports Illustrated KIDS    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B002PXVYRS",
+              "title": "Sports Illustrated    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B00B8C8V5K",
+              "title": "Sports Illustrated    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B00007AX0N",
+              "title": "ESPN    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Baby-3"
+              ],
+              "item_id": "B000063XJL",
+              "title": "National Geographic Kids    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Ages 4-8"
+              ],
+              "item_id": "B002PXW1ZC",
+              "title": "Sparkle World    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Ages 4-8"
+              ],
+              "item_id": "B0000A0NLJ",
+              "title": "chickaDEE"
+            },
+            {
+              "categories": [],
+              "item_id": "B003DQK3PA",
+              "title": "Yoga Journal (2-year)-Discontinued ASIN    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B00009MQ2F",
+              "title": "Bimmer    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Humanities & Social Sciences",
+                "Economics & Economic Theory"
+              ],
+              "item_id": "B002PXVYGY",
+              "title": "Harvard Business Review    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 1849,
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation"
+              ],
+              "item_id": "B002PXW04Y",
+              "rating": 5.0,
+              "title": "Sports Illustrated KIDS    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000000158",
+          "status": "completed",
+          "tags": [
+            "cold_target",
+            "retrieval_miss",
+            "ranking_repair"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Children & Teen",
+              "Children",
+              "By Age",
+              "Ages 4-8"
+            ],
+            "item_id": "B07DRWHT3P",
+            "title": "Highlights for Children    Print Magazine"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000000432": {
+          "action": "R1",
+          "api_usd": 0.000712,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Baby-3"
+              ],
+              "item_id": "B000063XJL",
+              "title": "National Geographic Kids    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [],
+              "item_id": "B002PXW1IE",
+              "title": "Real Simple    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B002PXVYEQ",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B007Q4WWLI",
+              "title": "HGTV Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Literary, Sci-Fi & Mystery",
+                "Literary Magazines & Journals"
+              ],
+              "item_id": "B004GVZUTU",
+              "title": "Reader's Digest    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000000432",
+          "status": "completed",
+          "tags": [
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "Home Organization"
+            ],
+            "item_id": "B001THPA1C",
+            "title": "Good Housekeeping    Print Magazine"
+          },
+          "target_base_candidate_rank": 23,
+          "target_output_rank": null
+        },
+        "q_e000005053": {
+          "action": "R1",
+          "api_usd": 0.0007192,
+          "base_ndcg": 0.0,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [],
+              "item_id": "B000LXHJFU",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Arts",
+                "Decorative Arts"
+              ],
+              "item_id": "B0001MS2D4",
+              "title": "Country Sampler"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Travel, City & Regional"
+              ],
+              "item_id": "B002PXW15C",
+              "title": "Coastal Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Travel, City & Regional"
+              ],
+              "item_id": "B000EGCIW8",
+              "title": "Coastal Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B000063XJR",
+              "title": "Fine Homebuilding"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine"
+              ],
+              "item_id": "B002PXW0EO",
+              "title": "Martha Stewart Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine"
+              ],
+              "item_id": "B00005NIOA",
+              "title": "Martha Stewart Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B0029XHGSK",
+              "title": "Traditional Home    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B002PXVYSC",
+              "title": "Sunset    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 27,
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B008RO9JM6",
+              "rating": 5.0,
+              "title": "Country Living    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000005053",
+          "status": "completed",
+          "tags": [
+            "cold_target",
+            "retrieval_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "Design & Decoration"
+            ],
+            "item_id": "B07QMB5L67",
+            "title": "Southern Living    Print Magazine"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000006205": {
+          "action": "R1",
+          "api_usd": 0.0007194,
+          "base_ndcg": 0.3333333333333333,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B015HSVULM",
+              "title": "This Old House    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B002PXW0XK",
+              "title": "This Old House    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B00005R8BL",
+              "title": "This Old House    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B0000AWD94",
+              "title": "This Old House    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B004GVZUUE",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B002PXVYEQ",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B00005N7Q1",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B007Q4WWLI",
+              "title": "HGTV Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B0089FUF6W",
+              "title": "HGTV Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 0,
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B002VB3X96",
+              "rating": 5.0,
+              "title": "Do it Yourself    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000006205",
+          "status": "completed",
+          "tags": [
+            "baseline_hit_lost",
+            "rank_quality_loss"
+          ],
+          "target": {
+            "categories": [],
+            "item_id": "B002PXW1IE",
+            "title": "Real Simple    Print Magazine"
+          },
+          "target_base_candidate_rank": 7,
+          "target_output_rank": null
+        },
+        "q_e000006668": {
+          "action": "R1",
+          "api_usd": 0.000744,
+          "base_ndcg": 0.3333333333333333,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [],
+              "item_id": "B000LXHJFU",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Gardening & Horticulture"
+              ],
+              "item_id": "B00005N7OV",
+              "title": "Better Homes & Gardens    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B00X6LREFE",
+              "title": "Better Homes and Gardens Print Access    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B002PXVYSC",
+              "title": "Sunset    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B00005NIOW",
+              "title": "Sunset    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Education",
+                "History of Education"
+              ],
+              "item_id": "B000UHI334",
+              "title": "Country Living - England"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Arts",
+                "Decorative Arts"
+              ],
+              "item_id": "B0001MS2D4",
+              "title": "Country Sampler"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B0036QY68W",
+              "title": "Mountain Living"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Travel, City & Regional"
+              ],
+              "item_id": "B000EGCIW8",
+              "title": "Coastal Living    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 49,
+              "categories": [
+                "Magazine Subscriptions",
+                "Travel, City & Regional"
+              ],
+              "item_id": "B002PXW15C",
+              "rating": 5.0,
+              "title": "Coastal Living    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000006668",
+          "status": "completed",
+          "tags": [
+            "baseline_hit_lost",
+            "rank_quality_loss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "Design & Decoration"
+            ],
+            "item_id": "B0089FUF6W",
+            "title": "HGTV Magazine    Print Magazine"
+          },
+          "target_base_candidate_rank": 7,
+          "target_output_rank": null
+        },
+        "q_e000008535": {
+          "action": "R1",
+          "api_usd": 0.0007192,
+          "base_ndcg": 0.38685280723454163,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Boating"
+              ],
+              "item_id": "B002CT51EM",
+              "title": "Field & Stream    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B00005N7Q5",
+              "title": "Field & Stream    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B002PXW0XK",
+              "title": "This Old House    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B00005R8BL",
+              "title": "This Old House    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B0000AWD94",
+              "title": "This Old House    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B002PXVYBE",
+              "title": "Car and Driver    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B00007AVYI",
+              "title": "Car and Driver    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B00009MQ5C",
+              "title": "Corvette Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Hunting & Firearms"
+              ],
+              "item_id": "B002PXVYGO",
+              "title": "Guns & Ammo"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Hunting & Firearms"
+              ],
+              "item_id": "B00007AXQ2",
+              "title": "Guns & Ammo"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 99,
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B00I4E7RJQ",
+              "rating": 2.0,
+              "title": "Florida Sport Fishing"
+            }
+          ],
+          "request_id": "q_e000008535",
+          "status": "completed",
+          "tags": [
+            "baseline_hit_lost",
+            "rank_quality_loss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "How-To & Home Improvements"
+            ],
+            "item_id": "B002PXVYEQ",
+            "title": "Family Handyman    Print Magazine"
+          },
+          "target_base_candidate_rank": 5,
+          "target_output_rank": null
+        },
+        "q_e000009569": {
+          "action": "R1",
+          "api_usd": 0.0007197999999999999,
+          "base_ndcg": 0.0,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B01N9XXCBU",
+              "title": "Car and Driver    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B00007AVYI",
+              "title": "Car and Driver    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B01FV50Y18",
+              "title": "Motor Trend    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B00007AZRW",
+              "title": "Motor Trend    Print Magazine"
+            },
+            {
+              "categories": [],
+              "item_id": "B002PXVZ86",
+              "title": "Autoweek    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B00009MQ2F",
+              "title": "Bimmer    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B00009ALLX",
+              "title": "Classic Motorsports    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B002PXVYO6",
+              "title": "Road & Track    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B002PXVYRS",
+              "title": "Sports Illustrated    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B00B8C8V5K",
+              "title": "Sports Illustrated    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.5,
+          "recent_history": [
+            {
+              "age_days": 65,
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B002PXVYBE",
+              "rating": 5.0,
+              "title": "Car and Driver    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000009569",
+          "status": "completed",
+          "tags": [
+            "baseline_miss_rescued"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Automotive & Motorcycles",
+              "Automotive"
+            ],
+            "item_id": "B01FV50Y18",
+            "title": "Motor Trend    Print Magazine"
+          },
+          "target_base_candidate_rank": 16,
+          "target_output_rank": 3
+        },
+        "q_e000010867": {
+          "action": "R1",
+          "api_usd": 0.0007187999999999999,
+          "base_ndcg": 0.0,
+          "history_count": 2,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B002PXVYRS",
+              "title": "Sports Illustrated    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B00B8C8V5K",
+              "title": "Sports Illustrated    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B00007AX0N",
+              "title": "ESPN    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B008TVG2HW",
+              "title": "ESPN The Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation"
+              ],
+              "item_id": "B00005R8BH",
+              "title": "Sports Illustrated KIDS    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation"
+              ],
+              "item_id": "B002PXW04Y",
+              "title": "Sports Illustrated KIDS    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Fashion & Style",
+                "Men"
+              ],
+              "item_id": "B0061SHL02",
+              "title": "Reminisce    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine"
+              ],
+              "item_id": "B002PXW0EO",
+              "title": "Martha Stewart Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B005WLGMAE",
+              "title": "Buckeye Sports Bulletin"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B01NC0IPLF",
+              "title": "Country Living    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 384,
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Gardening & Horticulture"
+              ],
+              "item_id": "B0061SHL16",
+              "rating": 5.0,
+              "title": "Birds & Blooms    Print Magazine"
+            },
+            {
+              "age_days": 384,
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Basketball"
+              ],
+              "item_id": "B007Q1M37Y",
+              "rating": 5.0,
+              "title": "Sports Illustrated    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000010867",
+          "status": "completed",
+          "tags": [
+            "retrieval_miss",
+            "ranking_repair"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Cooking, Food & Wine",
+              "Recipes & Techniques"
+            ],
+            "item_id": "B01N702LLM",
+            "title": "AllRecipes    Print Magazine"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000012524": {
+          "action": "R1",
+          "api_usd": 0.000712,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Baby-3"
+              ],
+              "item_id": "B000063XJL",
+              "title": "National Geographic Kids    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [],
+              "item_id": "B002PXW1IE",
+              "title": "Real Simple    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B002PXVYEQ",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B007Q4WWLI",
+              "title": "HGTV Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B004GVZUUE",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Literary, Sci-Fi & Mystery",
+                "Literary Magazines & Journals"
+              ],
+              "item_id": "B004GVZUTU",
+              "title": "Reader's Digest    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000012524",
+          "status": "completed",
+          "tags": [
+            "retrieval_miss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Cooking, Food & Wine"
+            ],
+            "item_id": "B0000AFQRG",
+            "title": "VegNews Magazine"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000013962": {
+          "action": "R1",
+          "api_usd": 0.000712,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Baby-3"
+              ],
+              "item_id": "B000063XJL",
+              "title": "National Geographic Kids    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [],
+              "item_id": "B002PXW1IE",
+              "title": "Real Simple    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B002PXVYEQ",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B007Q4WWLI",
+              "title": "HGTV Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B004GVZUUE",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Literary, Sci-Fi & Mystery",
+                "Literary Magazines & Journals"
+              ],
+              "item_id": "B004GVZUTU",
+              "title": "Reader's Digest    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000013962",
+          "status": "completed",
+          "tags": [
+            "cold_target",
+            "retrieval_miss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Children & Teen",
+              "Children",
+              "By Age",
+              "Ages 4-8"
+            ],
+            "item_id": "B07DRWHT3P",
+            "title": "Highlights for Children    Print Magazine"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000022632": {
+          "action": "R1",
+          "api_usd": 0.000712,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Baby-3"
+              ],
+              "item_id": "B000063XJL",
+              "title": "National Geographic Kids    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [],
+              "item_id": "B002PXW1IE",
+              "title": "Real Simple    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B002PXVYEQ",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B007Q4WWLI",
+              "title": "HGTV Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B004GVZUUE",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Literary, Sci-Fi & Mystery",
+                "Literary Magazines & Journals"
+              ],
+              "item_id": "B004GVZUTU",
+              "title": "Reader's Digest    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000022632",
+          "status": "completed",
+          "tags": [
+            "retrieval_miss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Business & Investing",
+              "International"
+            ],
+            "item_id": "B01MCU84LB",
+            "title": "The Economist    Print Magazine"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000027954": {
+          "action": "R1",
+          "api_usd": 0.000718,
+          "base_ndcg": 0.0,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B01LZ307TD",
+              "title": "HGTV Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B007Q4WWLI",
+              "title": "HGTV Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Gardening & Horticulture"
+              ],
+              "item_id": "B00005N7OV",
+              "title": "Better Homes & Gardens    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B001THPA1W",
+              "title": "House Beautiful    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B0029XHGSK",
+              "title": "Traditional Home    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B002PXW0XK",
+              "title": "This Old House    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B00005R8BL",
+              "title": "This Old House    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B000063XJR",
+              "title": "Fine Homebuilding"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B00008RUJP",
+              "title": "Veranda    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B002PXVYSC",
+              "title": "Sunset    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.31546487678572877,
+          "recent_history": [
+            {
+              "age_days": 345,
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B0089FUF6W",
+              "rating": 5.0,
+              "title": "HGTV Magazine    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000027954",
+          "status": "completed",
+          "tags": [
+            "baseline_miss_rescued"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "Home Organization"
+            ],
+            "item_id": "B000063XJR",
+            "title": "Fine Homebuilding"
+          },
+          "target_base_candidate_rank": 188,
+          "target_output_rank": 8
+        },
+        "q_e000028196": {
+          "action": "R1",
+          "api_usd": 0.000712,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Baby-3"
+              ],
+              "item_id": "B000063XJL",
+              "title": "National Geographic Kids    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [],
+              "item_id": "B002PXW1IE",
+              "title": "Real Simple    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B002PXVYEQ",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B007Q4WWLI",
+              "title": "HGTV Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B004GVZUUE",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Literary, Sci-Fi & Mystery",
+                "Literary Magazines & Journals"
+              ],
+              "item_id": "B004GVZUTU",
+              "title": "Reader's Digest    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000028196",
+          "status": "completed",
+          "tags": [
+            "cold_target",
+            "retrieval_miss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "Design & Decoration"
+            ],
+            "item_id": "B07451TKHF",
+            "title": "Southern Home"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000028270": {
+          "action": "R1",
+          "api_usd": 0.0007304,
+          "base_ndcg": 0.3010299956639812,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Boating"
+              ],
+              "item_id": "B00005N7QD",
+              "title": "Golf Digest"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Golf"
+              ],
+              "item_id": "B002PXW0DK",
+              "title": "Golf Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Travel, City & Regional",
+                "United States",
+                "Midwest"
+              ],
+              "item_id": "B002PXVZ90",
+              "title": "Pittsburgh Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Travel, City & Regional",
+                "United States"
+              ],
+              "item_id": "B00005N7T3",
+              "title": "Texas Monthly"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Travel, City & Regional",
+                "United States"
+              ],
+              "item_id": "B002KUNVD6",
+              "title": "Texas Monthly"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B002PXVYRS",
+              "title": "Sports Illustrated    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B00B8C8V5K",
+              "title": "Sports Illustrated    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation"
+              ],
+              "item_id": "B002PXW04Y",
+              "title": "Sports Illustrated KIDS    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation"
+              ],
+              "item_id": "B00005R8BH",
+              "title": "Sports Illustrated KIDS    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Boating"
+              ],
+              "item_id": "B002CT51EM",
+              "title": "Field & Stream    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 416,
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation",
+                "Baseball"
+              ],
+              "item_id": "B00006J9HV",
+              "rating": 5.0,
+              "title": "Golf Tips"
+            }
+          ],
+          "request_id": "q_e000028270",
+          "status": "completed",
+          "tags": [
+            "baseline_hit_lost",
+            "rank_quality_loss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "How-To & Home Improvements"
+            ],
+            "item_id": "B002PXVYEQ",
+            "title": "Family Handyman    Print Magazine"
+          },
+          "target_base_candidate_rank": 9,
+          "target_output_rank": null
+        },
+        "q_e000035575": {
+          "action": "R1",
+          "api_usd": 0.0007192,
+          "base_ndcg": 0.0,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Ages 4-8"
+              ],
+              "item_id": "B000I0RKX2",
+              "title": "Highlights High Five    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "Educational"
+              ],
+              "item_id": "B00008IHFC",
+              "title": "Highlights For Children    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation"
+              ],
+              "item_id": "B00005R8BH",
+              "title": "Sports Illustrated KIDS    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation"
+              ],
+              "item_id": "B002PXW04Y",
+              "title": "Sports Illustrated KIDS    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Business & Investing",
+                "Women in Business"
+              ],
+              "item_id": "B002PXW1WU",
+              "title": "All You    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Business & Investing",
+                "Women in Business"
+              ],
+              "item_id": "B000W3MB5M",
+              "title": "All You    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "Educational"
+              ],
+              "item_id": "B00006FXOR",
+              "title": "Ladybug    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "Educational"
+              ],
+              "item_id": "B00006FXOQ",
+              "title": "Babybug    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Pets & Animals"
+              ],
+              "item_id": "B00Y05PFX8",
+              "title": "Catster"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Pets & Animals"
+              ],
+              "item_id": "B00Y05PFZ6",
+              "title": "Dogster"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 0,
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Ages 4-8"
+              ],
+              "item_id": "B07D54LF9Z",
+              "rating": 5.0,
+              "title": "Highlights High Five"
+            }
+          ],
+          "request_id": "q_e000035575",
+          "status": "completed",
+          "tags": [
+            "cold_target",
+            "retrieval_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Children & Teen",
+              "Children",
+              "Educational"
+            ],
+            "item_id": "B07D4ZPMC5",
+            "title": "Highlights for Children - 6 Month Auto Renew"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000035890": {
+          "action": "R1",
+          "api_usd": 0.0007212000000000001,
+          "base_ndcg": 1.0,
+          "history_count": 2,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B0039L2QLS",
+              "title": "Elle Decor    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Business & Investing",
+                "International"
+              ],
+              "item_id": "B00D8GWI12",
+              "title": "Vogue All Access    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Arts",
+                "Photography"
+              ],
+              "item_id": "B000K0YFRY",
+              "title": "Vanity Fair    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Fashion & Style",
+                "Women"
+              ],
+              "item_id": "B00005N7QN",
+              "title": "Harper's Bazaar    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Fashion & Style",
+                "Women"
+              ],
+              "item_id": "B001THPA3A",
+              "title": "Town & Country    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Entertainment & Media"
+              ],
+              "item_id": "B002PXW26A",
+              "title": "PeopleStyle    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Fashion & Style",
+                "Women"
+              ],
+              "item_id": "B00005N7RA",
+              "title": "Marie Claire    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Fashion & Style",
+                "Women"
+              ],
+              "item_id": "B002PXW0QW",
+              "title": "InStyle    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Fashion & Style",
+                "Women"
+              ],
+              "item_id": "B00007IJZT",
+              "title": "InStyle    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Fashion & Style",
+                "Women"
+              ],
+              "item_id": "B00005N7TG",
+              "title": "Vogue    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 1751,
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Astronomy"
+              ],
+              "item_id": "B0058K4RA6",
+              "rating": 5.0,
+              "title": "Sky & Telescope    Print Magazine"
+            },
+            {
+              "age_days": 962,
+              "categories": [
+                "Magazine Subscriptions",
+                "Fashion & Style",
+                "Women"
+              ],
+              "item_id": "B002PXVZWW",
+              "rating": 5.0,
+              "title": "Elle    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000035890",
+          "status": "completed",
+          "tags": [
+            "baseline_hit_lost",
+            "rank_quality_loss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Fashion & Style",
+              "Women"
+            ],
+            "item_id": "B001THPA1M",
+            "title": "Harper's Bazaar    Print Magazine"
+          },
+          "target_base_candidate_rank": 1,
+          "target_output_rank": null
+        },
+        "q_e000064385": {
+          "action": "R1",
+          "api_usd": 0.000712,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Baby-3"
+              ],
+              "item_id": "B000063XJL",
+              "title": "National Geographic Kids    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [],
+              "item_id": "B002PXW1IE",
+              "title": "Real Simple    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B002PXVYEQ",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B007Q4WWLI",
+              "title": "HGTV Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B004GVZUUE",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Literary, Sci-Fi & Mystery",
+                "Literary Magazines & Journals"
+              ],
+              "item_id": "B004GVZUTU",
+              "title": "Reader's Digest    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000064385",
+          "status": "completed",
+          "tags": [
+            "retrieval_miss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Professional & Educational Journals",
+              "Professional & Trade",
+              "Humanities & Social Sciences",
+              "Economics & Economic Theory"
+            ],
+            "item_id": "B00005N7NQ",
+            "title": "Reason"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000065075": {
+          "action": "R1",
+          "api_usd": 0.0007258,
+          "base_ndcg": 0.0,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [],
+              "item_id": "B005CAOGJO",
+              "title": "Entertainment Weekly"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B007Q1M38I",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STAZS",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Arts, Music & Photography",
+                "Music"
+              ],
+              "item_id": "B002EDTNXQ",
+              "title": "Rolling Stone    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Fashion & Style",
+                "Women"
+              ],
+              "item_id": "B001THPA3A",
+              "title": "Town & Country    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Literary, Sci-Fi & Mystery",
+                "Literary Magazines & Journals"
+              ],
+              "item_id": "B00006KT0K",
+              "title": "Poets & Writers    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Fashion & Style",
+                "Women"
+              ],
+              "item_id": "B000U5IQ2Y",
+              "title": "InStyle    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Business & Investing",
+                "International"
+              ],
+              "item_id": "B000LXS9PE",
+              "title": "Seventeen    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Fashion & Style",
+                "Women"
+              ],
+              "item_id": "B001THPA4O",
+              "title": "Marie Claire    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 3681,
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "rating": 5.0,
+              "title": "Entertainment Weekly    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000065075",
+          "status": "completed",
+          "tags": [
+            "ranking_repair"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Cooking, Food & Wine",
+              "Recipes & Techniques"
+            ],
+            "item_id": "B004GVZUU4",
+            "title": "Taste of Home    Print Magazine"
+          },
+          "target_base_candidate_rank": 71,
+          "target_output_rank": null
+        },
+        "q_e000067147": {
+          "action": "R1",
+          "api_usd": 0.0007176,
+          "base_ndcg": 0.0,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B00005N7QG",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [],
+              "item_id": "B000LXS9P4",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Special Diet"
+              ],
+              "item_id": "B01NAZ9P2V",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Gardening & Horticulture"
+              ],
+              "item_id": "B00005N7OV",
+              "title": "Better Homes & Gardens    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B001THPA1W",
+              "title": "House Beautiful    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B0089FUF6W",
+              "title": "HGTV Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B007Q4WWLI",
+              "title": "HGTV Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine"
+              ],
+              "item_id": "B002PXW0EO",
+              "title": "Martha Stewart Living    Print Magazine"
+            },
+            {
+              "categories": [],
+              "item_id": "B003F1W9XC",
+              "title": "Creating Keepsakes"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Travel, City & Regional"
+              ],
+              "item_id": "B002PXW15C",
+              "title": "Coastal Living    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.31546487678572877,
+          "recent_history": [
+            {
+              "age_days": 197,
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "rating": 5.0,
+              "title": "Good Housekeeping    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000067147",
+          "status": "completed",
+          "tags": [
+            "baseline_miss_rescued"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Cooking, Food & Wine"
+            ],
+            "item_id": "B002PXW0EO",
+            "title": "Martha Stewart Living    Print Magazine"
+          },
+          "target_base_candidate_rank": 20,
+          "target_output_rank": 8
+        },
+        "q_e000068406": {
+          "action": "R1",
+          "api_usd": 0.0007214,
+          "base_ndcg": 0.5,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [],
+              "item_id": "B000LXHJFU",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Education",
+                "History of Education"
+              ],
+              "item_id": "B000UHI334",
+              "title": "Country Living - England"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Arts",
+                "Decorative Arts"
+              ],
+              "item_id": "B0001MS2D4",
+              "title": "Country Sampler"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Travel, City & Regional",
+                "United States",
+                "Midwest"
+              ],
+              "item_id": "B00006KRQP",
+              "title": "Our State"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Humanities & Social Sciences",
+                "History"
+              ],
+              "item_id": "B00007AZWJ",
+              "title": "National Geographic Traveler    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B01F2MKW0I",
+              "title": "National Geographic History    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B002PXW0XK",
+              "title": "This Old House    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B0000AWD94",
+              "title": "This Old House    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 31,
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Country Life"
+              ],
+              "item_id": "B0061SHKVW",
+              "rating": 1.0,
+              "title": "Country    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000068406",
+          "status": "completed",
+          "tags": [
+            "baseline_hit_lost",
+            "rank_quality_loss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Science, History & Nature",
+              "Archaeology"
+            ],
+            "item_id": "B002CT515Q",
+            "title": "Popular Science    Print Magazine"
+          },
+          "target_base_candidate_rank": 3,
+          "target_output_rank": null
+        },
+        "q_e000070873": {
+          "action": "R1",
+          "api_usd": 0.000712,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Baby-3"
+              ],
+              "item_id": "B000063XJL",
+              "title": "National Geographic Kids    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [],
+              "item_id": "B002PXW1IE",
+              "title": "Real Simple    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B002PXVYEQ",
+              "title": "Family Handyman    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B007Q4WWLI",
+              "title": "HGTV Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Literary, Sci-Fi & Mystery",
+                "Literary Magazines & Journals"
+              ],
+              "item_id": "B004GVZUTU",
+              "title": "Reader's Digest    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000070873",
+          "status": "completed",
+          "tags": [
+            "cold_target",
+            "retrieval_miss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Entertainment & Pop Culture",
+              "Celebrities & Gossip"
+            ],
+            "item_id": "B077319LWD",
+            "title": "Closer Weekly"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        }
+      },
+      "class_counts": {
+        "baseline_hit_lost": 38,
+        "baseline_miss_rescued": 49,
+        "cold_target": 418,
+        "no_history_miss": 2524,
+        "rank_quality_loss": 43,
+        "ranking_repair": 15,
+        "retrieval_miss": 1480
+      },
+      "requests": 3318
+    },
+    "fixed_R4": {
+      "api_usd_on_retrieval_misses": 2.27953120000004,
+      "case_ids_by_class": {
+        "baseline_hit_lost": [
+          "q_e000053715",
+          "q_e000017230",
+          "q_e000053891"
+        ],
+        "baseline_miss_rescued": [
+          "q_e000019670",
+          "q_e000022084",
+          "q_e000012934"
+        ],
+        "cold_target": [
+          "q_e000035575",
+          "q_e000013962",
+          "q_e000028196"
+        ],
+        "no_history_miss": [
+          "q_e000064385",
+          "q_e000022632",
+          "q_e000053800"
+        ],
+        "rank_quality_loss": [
+          "q_e000030795",
+          "q_e000022397",
+          "q_e000049787"
+        ],
+        "ranking_repair": [
+          "q_e000001172",
+          "q_e000001335",
+          "q_e000041306"
+        ],
+        "retrieval_miss": [
+          "q_e000070873",
+          "q_e000012524",
+          "q_e000005053"
+        ]
+      },
+      "cases": {
+        "q_e000001172": {
+          "action": "R4",
+          "api_usd": 0.0015467999999999999,
+          "base_ndcg": 0.3333333333333333,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Crafts & Hobbies",
+                "Needlecrafts"
+              ],
+              "item_id": "B000PUAI3O",
+              "title": "Bead & Button    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Crafts & Hobbies",
+                "Needlecrafts"
+              ],
+              "item_id": "B0045FEHE6",
+              "title": "Wood"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Crafts & Hobbies",
+                "Painting"
+              ],
+              "item_id": "B0000A8YW4",
+              "title": "Watercolor Artist"
+            },
+            {
+              "categories": [],
+              "item_id": "B004JYTVXU",
+              "title": "Step By Step Wire Jewelry    Print Magazine"
+            },
+            {
+              "categories": [],
+              "item_id": "B00007J82Z",
+              "title": "Sew Beautiful    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Travel, City & Regional",
+                "United States",
+                "Midwest"
+              ],
+              "item_id": "B002PXVZ90",
+              "title": "Pittsburgh Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Humanities & Social Sciences",
+                "Religion & Spirituality"
+              ],
+              "item_id": "B00007B9L0",
+              "title": "Parabola"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Humanities & Social Sciences",
+                "Religion & Spirituality"
+              ],
+              "item_id": "B00006KXX2",
+              "title": "Spirituality & Health"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B00006KVLZ",
+              "title": "Rock & Gem"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B000FTJ7BE",
+              "title": "Archaeology"
+            }
+          ],
+          "policy_ndcg": 0.3010299956639812,
+          "recent_history": [
+            {
+              "age_days": 466,
+              "categories": [
+                "Magazine Subscriptions",
+                "Crafts & Hobbies"
+              ],
+              "item_id": "B00007AVLA",
+              "rating": 5.0,
+              "title": "Beadwork    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000001172",
+          "status": "completed",
+          "tags": [
+            "rank_quality_loss",
+            "ranking_repair"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Science, History & Nature",
+              "Archaeology"
+            ],
+            "item_id": "B00006KVLZ",
+            "title": "Rock & Gem"
+          },
+          "target_base_candidate_rank": 7,
+          "target_output_rank": 9
+        },
+        "q_e000001335": {
+          "action": "R4",
+          "api_usd": 0.0015474,
+          "base_ndcg": 0.0,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Health, Fitness & Wellness",
+                "Women's Health & Fitness"
+              ],
+              "item_id": "B002V0CJL0",
+              "title": "Woman's Day    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Health, Fitness & Wellness",
+                "Women's Health & Fitness"
+              ],
+              "item_id": "B000A177ZA",
+              "title": "Women's Health    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Health, Fitness & Wellness",
+                "Women's Health & Fitness"
+              ],
+              "item_id": "B00006LKH1",
+              "title": "First For Women"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Health, Fitness & Wellness",
+                "Men's Health & Fitness"
+              ],
+              "item_id": "B00005NIOC",
+              "title": "Men's Journal    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Health, Fitness & Wellness",
+                "Men's Health & Fitness"
+              ],
+              "item_id": "B002LDA9VY",
+              "title": "Men's Journal    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Health, Fitness & Wellness",
+                "Health"
+              ],
+              "item_id": "B00005NIOO",
+              "title": "Prevention    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Health, Fitness & Wellness",
+                "Men's Health & Fitness"
+              ],
+              "item_id": "B002BFZ9MQ",
+              "title": "Yoga Journal (1-year automatic renewal)-Discontinued ASIN    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B000GAKWVQ",
+              "title": "Diesel Power    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Arts",
+                "Photography"
+              ],
+              "item_id": "B00005NIPX",
+              "title": "Vanity Fair    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 2,
+              "categories": [
+                "Magazine Subscriptions",
+                "Health, Fitness & Wellness",
+                "Women's Health & Fitness"
+              ],
+              "item_id": "B001TP73UA",
+              "rating": 5.0,
+              "title": "Women's Health    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000001335",
+          "status": "completed",
+          "tags": [
+            "retrieval_miss",
+            "ranking_repair"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Health, Fitness & Wellness",
+              "Women's Health & Fitness"
+            ],
+            "item_id": "B01N819UDU",
+            "title": "Shape    Print Magazine"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000005053": {
+          "action": "R4",
+          "api_usd": 0.0015488,
+          "base_ndcg": 0.0,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [],
+              "item_id": "B000LXHJFU",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B01N35UMQV",
+              "title": "The Magnolia Journal    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B0029XHGSK",
+              "title": "Traditional Home    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B0046Z4NEE",
+              "title": "High Times"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Gardening & Horticulture"
+              ],
+              "item_id": "B00005N7OV",
+              "title": "Better Homes & Gardens    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Gardening & Horticulture"
+              ],
+              "item_id": "B000063XJI",
+              "title": "Fine Gardening"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Farming"
+              ],
+              "item_id": "B000G6DK5U",
+              "title": "Hobby Farms"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "How-To & Home Improvements"
+              ],
+              "item_id": "B00008RUJP",
+              "title": "Veranda    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B00005R8BL",
+              "title": "This Old House    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 27,
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B008RO9JM6",
+              "rating": 5.0,
+              "title": "Country Living    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000005053",
+          "status": "completed",
+          "tags": [
+            "cold_target",
+            "retrieval_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "Design & Decoration"
+            ],
+            "item_id": "B07QMB5L67",
+            "title": "Southern Living    Print Magazine"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000012524": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000012524",
+          "status": "completed",
+          "tags": [
+            "retrieval_miss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Cooking, Food & Wine"
+            ],
+            "item_id": "B0000AFQRG",
+            "title": "VegNews Magazine"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000012934": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.38685280723454163,
+          "recent_history": [],
+          "request_id": "q_e000012934",
+          "status": "completed",
+          "tags": [
+            "baseline_miss_rescued"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Cooking, Food & Wine",
+              "Recipes & Techniques"
+            ],
+            "item_id": "B001THPA58",
+            "title": "Food Network Magazine    Print Magazine"
+          },
+          "target_base_candidate_rank": 11,
+          "target_output_rank": 5
+        },
+        "q_e000013962": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000013962",
+          "status": "completed",
+          "tags": [
+            "cold_target",
+            "retrieval_miss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Children & Teen",
+              "Children",
+              "By Age",
+              "Ages 4-8"
+            ],
+            "item_id": "B07DRWHT3P",
+            "title": "Highlights for Children    Print Magazine"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000017230": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.43067655807339306,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000017230",
+          "status": "completed",
+          "tags": [
+            "baseline_hit_lost",
+            "rank_quality_loss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [],
+            "item_id": "B002PXW1IE",
+            "title": "Real Simple    Print Magazine"
+          },
+          "target_base_candidate_rank": 4,
+          "target_output_rank": null
+        },
+        "q_e000019670": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.38685280723454163,
+          "recent_history": [],
+          "request_id": "q_e000019670",
+          "status": "completed",
+          "tags": [
+            "baseline_miss_rescued"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Cooking, Food & Wine",
+              "Recipes & Techniques"
+            ],
+            "item_id": "B001THPA58",
+            "title": "Food Network Magazine    Print Magazine"
+          },
+          "target_base_candidate_rank": 11,
+          "target_output_rank": 5
+        },
+        "q_e000022084": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.38685280723454163,
+          "recent_history": [],
+          "request_id": "q_e000022084",
+          "status": "completed",
+          "tags": [
+            "baseline_miss_rescued"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Cooking, Food & Wine",
+              "Recipes & Techniques"
+            ],
+            "item_id": "B001THPA58",
+            "title": "Food Network Magazine    Print Magazine"
+          },
+          "target_base_candidate_rank": 11,
+          "target_output_rank": 5
+        },
+        "q_e000022397": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.38685280723454163,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000022397",
+          "status": "completed",
+          "tags": [
+            "baseline_hit_lost",
+            "rank_quality_loss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "How-To & Home Improvements"
+            ],
+            "item_id": "B002PXVYEQ",
+            "title": "Family Handyman    Print Magazine"
+          },
+          "target_base_candidate_rank": 5,
+          "target_output_rank": null
+        },
+        "q_e000022632": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000022632",
+          "status": "completed",
+          "tags": [
+            "retrieval_miss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Business & Investing",
+              "International"
+            ],
+            "item_id": "B01MCU84LB",
+            "title": "The Economist    Print Magazine"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000028196": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000028196",
+          "status": "completed",
+          "tags": [
+            "cold_target",
+            "retrieval_miss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "Design & Decoration"
+            ],
+            "item_id": "B07451TKHF",
+            "title": "Southern Home"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000030795": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.31546487678572877,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000030795",
+          "status": "completed",
+          "tags": [
+            "baseline_hit_lost",
+            "rank_quality_loss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "How-To & Home Improvements"
+            ],
+            "item_id": "B004GVZUUE",
+            "title": "Family Handyman    Print Magazine"
+          },
+          "target_base_candidate_rank": 8,
+          "target_output_rank": null
+        },
+        "q_e000035575": {
+          "action": "R4",
+          "api_usd": 0.001551,
+          "base_ndcg": 0.0,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Ages 4-8"
+              ],
+              "item_id": "B003I7HS4I",
+              "title": "Ranger Rick    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Ages 4-8"
+              ],
+              "item_id": "B00006FXOV",
+              "title": "Ask"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "Educational"
+              ],
+              "item_id": "B00006FXOR",
+              "title": "Ladybug    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "Educational"
+              ],
+              "item_id": "B00008IHFC",
+              "title": "Highlights For Children    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "Educational"
+              ],
+              "item_id": "B00006FXOQ",
+              "title": "Babybug    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age"
+              ],
+              "item_id": "B00006FXOP",
+              "title": "Muse    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Ages 4-8"
+              ],
+              "item_id": "B000I0RKX2",
+              "title": "Highlights High Five    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Ages 9-12"
+              ],
+              "item_id": "B00006K37V",
+              "title": "American Girl    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation"
+              ],
+              "item_id": "B00005R8BH",
+              "title": "Sports Illustrated KIDS    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Sports & Recreation"
+              ],
+              "item_id": "B002PXW04Y",
+              "title": "Sports Illustrated KIDS    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 0,
+              "categories": [
+                "Magazine Subscriptions",
+                "Children & Teen",
+                "Children",
+                "By Age",
+                "Ages 4-8"
+              ],
+              "item_id": "B07D54LF9Z",
+              "rating": 5.0,
+              "title": "Highlights High Five"
+            }
+          ],
+          "request_id": "q_e000035575",
+          "status": "completed",
+          "tags": [
+            "cold_target",
+            "retrieval_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Children & Teen",
+              "Children",
+              "Educational"
+            ],
+            "item_id": "B07D4ZPMC5",
+            "title": "Highlights for Children - 6 Month Auto Renew"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000041306": {
+          "action": "R4",
+          "api_usd": 0.0015536,
+          "base_ndcg": 0.3333333333333333,
+          "history_count": 1,
+          "output": [
+            {
+              "categories": [],
+              "item_id": "B004AAON6S",
+              "title": "Clean Eating    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B000310L82",
+              "title": "EatingWell    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B002PXW06C",
+              "title": "EatingWell    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001UJE7J0",
+              "title": "EatingWell    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine"
+              ],
+              "item_id": "B001LJGVM0",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B00079RO7G",
+              "title": "O, The Oprah Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA4Y",
+              "title": "O, The Oprah Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B000WPCN2G",
+              "title": "Fine Cooking    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Sports, Recreation & Outdoors",
+                "Outdoors",
+                "Hiking & Camping"
+              ],
+              "item_id": "B002BFZ9NA",
+              "title": "Backpacker (1-year automatic renewal)-Discontinued ASIN    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [
+            {
+              "age_days": 0,
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Special Diet"
+              ],
+              "item_id": "B00KRPPEWW",
+              "rating": 5.0,
+              "title": "Clean Eating (1-year automatic renewal)-Discontinued ASIN    Print Magazine"
+            }
+          ],
+          "request_id": "q_e000041306",
+          "status": "completed",
+          "tags": [
+            "baseline_hit_lost",
+            "rank_quality_loss",
+            "ranking_repair"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "How-To & Home Improvements"
+            ],
+            "item_id": "B002PXVYEQ",
+            "title": "Family Handyman    Print Magazine"
+          },
+          "target_base_candidate_rank": 7,
+          "target_output_rank": null
+        },
+        "q_e000049787": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.38685280723454163,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000049787",
+          "status": "completed",
+          "tags": [
+            "baseline_hit_lost",
+            "rank_quality_loss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "How-To & Home Improvements"
+            ],
+            "item_id": "B002PXVYEQ",
+            "title": "Family Handyman    Print Magazine"
+          },
+          "target_base_candidate_rank": 5,
+          "target_output_rank": null
+        },
+        "q_e000053715": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.38685280723454163,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000053715",
+          "status": "completed",
+          "tags": [
+            "baseline_hit_lost",
+            "rank_quality_loss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "How-To & Home Improvements"
+            ],
+            "item_id": "B002PXVYEQ",
+            "title": "Family Handyman    Print Magazine"
+          },
+          "target_base_candidate_rank": 5,
+          "target_output_rank": null
+        },
+        "q_e000053800": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.38685280723454163,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Design & Decoration"
+              ],
+              "item_id": "B002PXW0XK",
+              "title": "This Old House    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000053800",
+          "status": "completed",
+          "tags": [
+            "baseline_hit_lost",
+            "rank_quality_loss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "How-To & Home Improvements"
+            ],
+            "item_id": "B002PXVYEQ",
+            "title": "Family Handyman    Print Magazine"
+          },
+          "target_base_candidate_rank": 5,
+          "target_output_rank": null
+        },
+        "q_e000053891": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.38685280723454163,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000053891",
+          "status": "completed",
+          "tags": [
+            "baseline_hit_lost",
+            "rank_quality_loss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Home & Garden",
+              "How-To & Home Improvements"
+            ],
+            "item_id": "B002PXVYEQ",
+            "title": "Family Handyman    Print Magazine"
+          },
+          "target_base_candidate_rank": 5,
+          "target_output_rank": null
+        },
+        "q_e000064385": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000064385",
+          "status": "completed",
+          "tags": [
+            "retrieval_miss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Professional & Educational Journals",
+              "Professional & Trade",
+              "Humanities & Social Sciences",
+              "Economics & Economic Theory"
+            ],
+            "item_id": "B00005N7NQ",
+            "title": "Reason"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        },
+        "q_e000070873": {
+          "action": "R4",
+          "api_usd": 0.001538,
+          "base_ndcg": 0.0,
+          "history_count": 0,
+          "output": [
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005NIOH",
+              "title": "National Geographic Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Science, History & Nature",
+                "Archaeology"
+              ],
+              "item_id": "B002CT515Q",
+              "title": "Popular Science    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B0032KHQTS",
+              "title": "Smithsonian"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Automotive & Motorcycles",
+                "Automotive"
+              ],
+              "item_id": "B001THPA26",
+              "title": "Popular Mechanics    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Cooking, Food & Wine",
+                "Recipes & Techniques"
+              ],
+              "item_id": "B001THPA58",
+              "title": "Food Network Magazine    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Television"
+              ],
+              "item_id": "B003N3QRF8",
+              "title": "TV Guide Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Entertainment & Pop Culture",
+                "Movies"
+              ],
+              "item_id": "B0037STB02",
+              "title": "Entertainment Weekly    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Sustainable Living"
+              ],
+              "item_id": "B001THPA3U",
+              "title": "Country Living    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Home & Garden",
+                "Home Organization"
+              ],
+              "item_id": "B001THPA1C",
+              "title": "Good Housekeeping    Print Magazine"
+            },
+            {
+              "categories": [
+                "Magazine Subscriptions",
+                "Professional & Educational Journals",
+                "Professional & Trade",
+                "Science & Technology",
+                "Earth Sciences"
+              ],
+              "item_id": "B00005N7TL",
+              "title": "Wired    Print Magazine"
+            }
+          ],
+          "policy_ndcg": 0.0,
+          "recent_history": [],
+          "request_id": "q_e000070873",
+          "status": "completed",
+          "tags": [
+            "cold_target",
+            "retrieval_miss",
+            "no_history_miss"
+          ],
+          "target": {
+            "categories": [
+              "Magazine Subscriptions",
+              "Entertainment & Pop Culture",
+              "Celebrities & Gossip"
+            ],
+            "item_id": "B077319LWD",
+            "title": "Closer Weekly"
+          },
+          "target_base_candidate_rank": null,
+          "target_output_rank": null
+        }
+      },
+      "class_counts": {
+        "baseline_hit_lost": 388,
+        "baseline_miss_rescued": 196,
+        "cold_target": 418,
+        "no_history_miss": 2720,
+        "rank_quality_loss": 395,
+        "ranking_repair": 5,
+        "retrieval_miss": 1480
+      },
+      "requests": 3318
+    }
+  },
+  "privacy": "No user identifiers or review text; public product metadata only",
+  "scope": "Post-evaluation diagnostics; overlapping classes, deterministic illustrative cases, not causal explanations of model reasoning"
+}
