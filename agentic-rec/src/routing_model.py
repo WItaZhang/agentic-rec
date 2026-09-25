@@ -46,11 +46,16 @@ class UtilityRouter:
 
 
 def rule_actions(features, name):
-    if name not in ("base", "recent_if_history", "full_if_history", "full_if_older", "full_if_negative"):
+    if name not in ("base", "recent_if_history", "full_if_history", "full_if_older", "full_if_negative",
+                    "recent_if_no_history", "recent_unless_older"):
         raise ValueError("Unknown rule")
     actions = []
     for row in features:
-        if not row["has_history"] or name == "base":
+        if name == "recent_if_no_history":
+            actions.append("R0" if row["has_history"] else "R1")
+        elif name == "recent_unless_older":
+            actions.append("R0" if row["has_older_history"] else "R1")
+        elif not row["has_history"] or name == "base":
             actions.append("R0")
         elif name == "recent_if_history":
             actions.append("R1")

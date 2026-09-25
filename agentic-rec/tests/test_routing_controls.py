@@ -17,9 +17,17 @@ def test_random_allocation_matches_cost_in_expectation_and_is_order_invariant():
     assert random_actions(["q1", "q2"], all_base["probabilities"], plans, 42) == ["R0", "R0"]
 
 
-def test_strong_rule_skips_empty_history_and_unknown_rules_fail():
+def test_history_rule_skips_empty_history_and_unknown_rules_fail():
     features = [{"has_history": 0, "has_older_history": 0, "positive_fraction": 0},
                 {"has_history": 1, "has_older_history": 1, "positive_fraction": .5}]
     assert rule_actions(features, "full_if_older") == ["R0", "R4"]
     with pytest.raises(ValueError):
         rule_actions(features[:1], "typo")
+
+
+def test_development_justified_rules_can_choose_empty_history_without_labels():
+    features = [{"has_history": 0, "has_older_history": 0},
+                {"has_history": 1, "has_older_history": 0},
+                {"has_history": 1, "has_older_history": 1}]
+    assert rule_actions(features, "recent_if_no_history") == ["R1", "R0", "R0"]
+    assert rule_actions(features, "recent_unless_older") == ["R1", "R1", "R0"]
