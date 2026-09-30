@@ -119,3 +119,62 @@ def run_scheduler_checkpoint(config, config_path, root):
             "submission_sha256": digest(source / "submission.json"), "original_failure_preserved": True})
         manifest.update(test_scored=False, stage_status="recovery_checkpoint", paid_api_usd=0)
         print(f"Recovery checkpoint: {run_dir.relative_to(root)}", flush=True)
+
+
+def run_queue_recovery(config, config_path, root):
+    with managed_run(config, config_path, root) as (run_dir, manifest):
+        settings = config['recovery']
+        parent = root / settings['scheduler_run']
+        previous = verified_run_config(parent)
+        expected = {**previous['scheduler'], 'max_inflight_input_tokens': config['scheduler']['max_inflight_input_tokens']}
+        if (config['scheduler'] != expected or config['budget'] != previous['budget']
+                or not previous['scheduler']['max_batch_input_tokens'] <= expected['max_inflight_input_tokens']
+                < previous['scheduler']['max_inflight_input_tokens']):
+            raise ValueError('Queue recovery may only reduce the inflight limit; inputs/prices/budget remain frozen')
+        state = json.loads((parent/'scheduler_state.json').read_text())
+        index = settings['shard_index']
+        chunk = state['chunks'][index]
+        if chunk['state'] != 'collected' or chunk.get('provider_status') != 'failed':
+            raise ValueError('Queue rejection must be collected before reconciliation')
+        collected = root/chunk['collection_run']
+        if verified_run_config(collected)['batch_run'] != chunk['submit_run']:
+            raise ValueError('Queue receipt belongs to a different submitted shard')
+        receipt = json.loads((collected/'batch_status.json').read_text())
+        submitted = root/chunk['submit_run']
+        original = verified_run_config(submitted)
+        if (receipt.get('id') != chunk['batch_id']
+                or original['batch']['source_run'] != previous['scheduler']['prepared_run']
+                or original['batch']['request_offset'] != chunk['offset']
+                or original['batch']['request_count'] != chunk['count']):
+            raise ValueError('Queue rejection does not match the immutable shard intent')
+        reservations = json.loads((submitted/'reservations.json').read_text())
+        rows = json.loads((collected/'results.json').read_text())
+        if (len(rows) != len(reservations) or len(rows) != chunk['count']
+                or {r['call_id'] for r in rows} != {r['call_id'] for r in reservations.values()}
+                or any(r.get('usage') is not None or r['status'] != 'missing_batch_result' for r in rows)):
+            raise ValueError('Queue receipt and original reservations differ')
+        limits = original['budget']
+        ledger = PaidBudget(root/limits['ledger_path'], submitted.name, limits['total_paid_usd'],
+                            limits['per_run_paid_usd'], limits['stop_at_usd'])
+        rejected = [{**r, 'actual_known_usd': 0.0, 'usage': None, 'generation_attempts': 0,
+                     'status': 'submission_rejected_before_generation', 'provider_code': 'token_limit_exceeded',
+                     'rejection_stage': 'batch_validation'} for r in rows]
+        # Durably preserve valid proof and zero-generation records before releasing
+        # reservations. Repeating the same proof after an interruption is idempotent.
+        from .batch_scheduler import persist_state
+
+        ledger.validate_queue_rejection(receipt)
+        persist_state(run_dir/'provider_receipt.json', receipt)
+        persist_state(run_dir/'results.json', rejected)
+        ledger.reconcile_queue_rejection([r['call_id'] for r in rows], receipt)
+        history = chunk.get('rejected_attempts', []) + [{key: chunk[key] for key in ('submit_run', 'collection_run', 'batch_id')}]
+        state['chunks'][index] = {key: chunk[key] for key in ('offset', 'count', 'input_tokens')}
+        state['chunks'][index].update(state='pending', rejected_attempts=history)
+        persist_state(run_dir/'scheduler_state.json', state)
+        write_json(run_dir/'recovery_evidence.json', {'provider_code': 'token_limit_exceeded',
+            'source_receipt_sha256': digest(collected/'batch_status.json'), 'requests_requeued': len(rows),
+            'observed_batch_input_tokens': receipt['usage']['input_tokens'],
+            'observed_batch_output_tokens': receipt['usage']['output_tokens'],
+            'note': 'Provider batch usage is zero; no per-request zero-token usage is fabricated'})
+        manifest.update(test_scored=False, paid_api_usd=0, stage_status='queue_recovery_checkpoint')
+        print(f'Queue checkpoint: {run_dir.relative_to(root)}; {len(rows)} unexecuted requests requeued', flush=True)

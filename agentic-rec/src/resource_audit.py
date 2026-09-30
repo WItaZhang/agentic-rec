@@ -28,8 +28,9 @@ def reconcile_usage(entries, records):
             raise ValueError("Recorded physical call is absent from the budget ledger")
         usage = row.get("usage")
         if (row.get("status") == "submission_rejected_before_generation"
-                and row.get("generation_attempts") == 0 and row.get("http_status") == 400
-                and row.get("provider_code") == "billing_hard_limit_reached" and usage is None):
+                and row.get("generation_attempts") == 0 and usage is None
+                and ((row.get("http_status") == 400 and row.get("provider_code") == "billing_hard_limit_reached")
+                     or (row.get("provider_code") == "token_limit_exceeded" and row.get("rejection_stage") == "batch_validation"))):
             rejected_before_generation.add(identity)
         if identity in usage_by_id and usage_by_id[identity] != usage:
             raise ValueError("Conflicting provider usage for the same physical call")

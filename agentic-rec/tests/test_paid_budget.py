@@ -85,3 +85,55 @@ def test_concurrent_shards_share_the_same_budget_lock(tmp_path):
             return 0
     with ThreadPoolExecutor(max_workers=6) as pool:
         assert sum(pool.map(attempt, range(6))) == 6
+
+
+def queue_rejection_receipt():
+    return {'id': 'batch_rejected', 'status': 'failed', 'in_progress_at': None,
+            'output_file_id': None, 'error_file_id': None,
+            'metadata': {'research_run': 'a'}, 'errors': {'data': [{'code': 'token_limit_exceeded'}]},
+            'request_counts': {'total': 0, 'completed': 0, 'failed': 0},
+            'usage': {'input_tokens': 0, 'output_tokens': 0}}
+
+
+def test_proven_queue_rejection_releases_unknown_and_is_restart_safe(tmp_path):
+    budget = PaidBudget(tmp_path/'ledger', 'a', 1, 1, 1)
+    calls = budget.reserve_many([(.1, {}), (.2, {})])
+    budget.settle_many([(calls[0], None, 'missing_batch_result')])
+    original = budget.path.read_text()
+    receipt = queue_rejection_receipt()
+    budget.reconcile_queue_rejection(calls, receipt)
+    assert budget.snapshot()['campaign_accounted_usd'] == 0
+    assert budget.path.read_text().startswith(original)
+    settled = budget.path.read_bytes()
+    budget.reconcile_queue_rejection(calls, receipt)
+    assert budget.path.read_bytes() == settled
+    assert all(c['reconciliation_evidence_sha256'] for c in budget.entries().values())
+
+
+@pytest.mark.parametrize('change', [
+    {'usage': None}, {'usage': {'input_tokens': 1, 'output_tokens': 0}},
+    {'request_counts': {'total': 1, 'completed': 0, 'failed': 0}},
+    {'in_progress_at': 123}, {'output_file_id': 'output'}, {'error_file_id': 'errors'},
+    {'errors': {'data': [{'code': 'server_error'}]}}, {'metadata': {'research_run': 'other'}},
+    {'status': 'expired'}, {'id': None},
+])
+def test_queue_rejection_requires_positive_provider_evidence(tmp_path, change):
+    budget = PaidBudget(tmp_path/'ledger', 'a', 1, 1, 1)
+    call = budget.reserve(.1, {})
+    before = budget.path.read_bytes()
+    with pytest.raises(ValueError, match='Provider evidence'):
+        budget.reconcile_queue_rejection([call], {**queue_rejection_receipt(), **change})
+    assert budget.path.read_bytes() == before
+
+
+@pytest.mark.parametrize('owner,actual,status', [
+    ('other', None, 'missing_batch_result'), ('a', .01, 'completed'), ('a', None, 'timeout'),
+])
+def test_queue_reconciliation_cannot_release_unrelated_or_generated_calls(tmp_path, owner, actual, status):
+    budget = PaidBudget(tmp_path/'ledger', owner, 1, 1, 1)
+    call = budget.reserve(.1, {})
+    budget.settle(call, actual, status)
+    before = budget.path.read_bytes()
+    with pytest.raises(ValueError, match='Only original'):
+        PaidBudget(budget.path, 'a', 1, 1, 1).reconcile_queue_rejection([call], queue_rejection_receipt())
+    assert budget.path.read_bytes() == before
