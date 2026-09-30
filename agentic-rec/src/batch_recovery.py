@@ -9,6 +9,42 @@ from .frozen_protocol import verify_final_config
 from .paid_budget import PaidBudget
 from .utils import digest, managed_run, verified_run_config, write_json
 
+# Reviewed pre-stage-logging implementation: the upload receipt is written before
+# batch creation. With this exact source and no receipt, APIConnectionError can
+# only have come from file upload. Other legacy sources remain fail-closed.
+LEGACY_UPLOAD_RECEIPT_SOURCE = "afc86395c9aceaca2137444b50dc7e30992ad2a25379d3d260f556199cf69bfa"
+
+
+def validate_interrupted_upload_recovery(source, previous, root):
+    prior_config = verified_run_config(previous)
+    state = json.loads((previous / "manifest.json").read_text())
+    error = json.loads((previous / "recovery_error.json").read_text())
+    if (state["status"] != "failed" or prior_config["stage"] != "batch_upload_recovery"
+            or root / prior_config["recovery"]["submission_run"].replace("\\", "/") != source):
+        raise ValueError("Interrupted recovery belongs to a different or nonfailed submission")
+    if any((previous / name).exists() for name in ("upload.json", "submission.json", "upload_retry_intent.json")):
+        raise ValueError("Upload receipt or previous retry intent exists; reconcile rather than reupload")
+    proven_stage = error.get("stage") == "file_upload" or (
+        error.get("stage") is None and state["source_sha256"].get("src/batch_recovery.py") == LEGACY_UPLOAD_RECEIPT_SOURCE)
+    if error.get("type") != "APIConnectionError" or error.get("http_status") is not None or not proven_stage:
+        raise ValueError("Only a proven pre-create upload connection failure can continue")
+    first = json.loads((source / "upload_recovery_intent.json").read_text())
+    linked = first
+    if root / first["recovery_run"].replace("\\", "/") != previous:
+        predecessor = prior_config["recovery"].get("resume_upload_recovery_run")
+        if predecessor is None:
+            raise ValueError("Interrupted recovery is not linked to the original intent")
+        linked = json.loads((root / predecessor.replace("\\", "/") / "upload_retry_intent.json").read_text())
+    fingerprint = digest(source / "batch_input.jsonl")
+    if (root / linked["recovery_run"].replace("\\", "/") != previous
+            or any(record["input_sha256"] != fingerprint for record in (first, linked))):
+        raise ValueError("Interrupted recovery intent or input changed")
+    return {"previous_recovery": previous.relative_to(root).as_posix(),
+            "previous_manifest_sha256": digest(previous / "manifest.json"),
+            "previous_error_sha256": digest(previous / "recovery_error.json"),
+            "input_sha256": fingerprint, "proven_stage": "file_upload",
+            "legacy_source_proof": error.get("stage") is None}
+
 
 def validate_recovery_inputs(source, config, original, entries):
     error = json.loads((source / "submission_error.json").read_text())
@@ -61,20 +97,28 @@ def run_upload_recovery(config, config_path, root):
             # Exclusive durable intent prevents repeated upload/create after an
             # interrupted recovery. A later matching Batch may still be adopted.
             intent = source / "upload_recovery_intent.json"
+            previous = config["recovery"].get("resume_upload_recovery_run")
+            if previous is not None:
+                prior_run = root / previous.replace("\\", "/")
+                proof = validate_interrupted_upload_recovery(source, prior_run, root)
+                write_json(run_dir / "recovery_resume_proof.json", proof)
+                intent = prior_run / "upload_retry_intent.json"
             with intent.open("x", encoding="utf-8") as stream:
                 json.dump({"recovery_run": str(run_dir.relative_to(root)),
                            "input_sha256": digest(source / "batch_input.jsonl")}, stream)
                 stream.flush()
                 os.fsync(stream.fileno())
+            recovery_stage = "file_upload"
             try:
                 with (source / "batch_input.jsonl").open("rb") as stream:
                     uploaded = client.files.create(file=stream, purpose="batch")
                 write_json(run_dir / "upload.json", {"file_id": uploaded.id})
+                recovery_stage = "batch_create"
                 batch = client.batches.create(input_file_id=uploaded.id, endpoint="/v1/responses", completion_window="24h",
                     metadata={"research_run": source.name}, extra_headers={"Idempotency-Key": source.name})
             except Exception as error:
                 write_json(run_dir / "recovery_error.json", {"type": type(error).__name__,
-                    "http_status": getattr(error, "status_code", None)})
+                    "http_status": getattr(error, "status_code", None), "stage": recovery_stage})
                 raise RuntimeError("Recovery interrupted; reservations and intent retained for reconciliation") from None
         write_json(run_dir / "submission.json", batch.model_dump())
         # Add a receipt; preserve the original failed manifest/config/error.
