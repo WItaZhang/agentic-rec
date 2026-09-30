@@ -5,6 +5,18 @@ import math
 import numpy as np
 
 
+def sum_in_order(values):
+    """Preserve the recorded left-to-right reduction across Python versions.
+
+    Python 3.12 changed built-in float summation. Explicit additions retain the
+    original archive's rounding and empty/integer types without relaxing checks.
+    """
+    total = 0
+    for value in values:
+        total += value
+    return total
+
+
 def multipositive_metrics(ranking, targets, k):
     if not targets or k < 1:
         raise ValueError("Nonempty targets and positive k required")

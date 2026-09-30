@@ -6,7 +6,7 @@ from collections import defaultdict
 
 import numpy as np
 
-from .metrics import aggregate_requests, paired_bootstrap
+from .metrics import aggregate_requests, paired_bootstrap, sum_in_order
 from .utils import digest, managed_run, write_json
 
 
@@ -80,8 +80,9 @@ def analyze_matrix(outcomes, calls, config):
         dollars = [r.get("actual_known_usd") if r.get("actual_known_usd") is not None
                    else r["reserved_usd"] for r in attempts]
         service = [r["service_latency_ms"] for r in selected]
-        methods[plan] = {**aggregate_requests(selected), "total_accounted_usd": sum(dollars),
-            "mean_accounted_usd": sum(dollars) / len(selected),
+        total_dollars = sum_in_order(dollars)
+        methods[plan] = {**aggregate_requests(selected), "total_accounted_usd": total_dollars,
+            "mean_accounted_usd": total_dollars / len(selected),
             "unknown_usage_attempts": sum(r.get("usage") is None and r["generation_attempts"] > 0 for r in attempts),
             "calls": sum(r["generation_attempts"] for r in attempts),
             "counterfactual_single_action_calls": sum(r.get("counterfactual_generation_attempts", r["generation_attempts"]) for r in attempts),

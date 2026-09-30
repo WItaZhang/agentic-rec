@@ -7,7 +7,7 @@ import yaml
 
 from .evidence_analysis import validate_table
 from .frozen_protocol import verify_final_config
-from .metrics import paired_bootstrap
+from .metrics import paired_bootstrap, sum_in_order
 from .routing_model import random_actions
 from .utils import digest, managed_run, write_json
 
@@ -120,8 +120,8 @@ def evaluate_decisions(outcomes, calls, decisions, plans, analysis):
             "cold_targets": sum(row["cold_item"] for row in observations),
             "baseline_hits_lost": sum(a["hr"] == 1 and b["hr"] == 0 for a, b in zip(base, observations, strict=True)),
             "baseline_misses_rescued": sum(a["hr"] == 0 and b["hr"] == 1 for a, b in zip(base, observations, strict=True)),
-            "api_usd_on_unrecalled_targets": sum(row["accounted_usd"] for row in observations if not row["candidate_recall"]),
-            "api_usd_on_cold_targets": sum(row["accounted_usd"] for row in observations if row["cold_item"]),
+            "api_usd_on_unrecalled_targets": sum_in_order(row["accounted_usd"] for row in observations if not row["candidate_recall"]),
+            "api_usd_on_cold_targets": sum_in_order(row["accounted_usd"] for row in observations if row["cold_item"]),
             "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy"}
     return {"methods": methods, "comparisons": comparisons, "history_groups": groups,
         "secondary_budget_comparisons": budgetwise,
