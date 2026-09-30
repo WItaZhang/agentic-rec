@@ -39,6 +39,9 @@ def test_policy_replay_retains_failed_and_unrecalled_users_and_unknown_costs():
     assert diagnostic['expected_accounted_usd'] == pytest.approx(.002)
     assert diagnostic['learned_minus_expected_random_ndcg']['difference'] == pytest.approx(1 / 6)
     assert len(diagnostic['allocation_seed_sensitivity']) == 2
+    secondary = result['secondary_budget_comparisons']['learned_0.25_minus_random_0.25']
+    assert secondary['ndcg']['difference'] == pytest.approx(1 / 3)
+    assert result['primary_comparison'] == ['fixed_R1', 'fixed_R0']
     decisions['request_ids'].pop()
     with pytest.raises(ValueError, match='complete'):
         evaluate_decisions(outcomes, calls, decisions, ['R0', 'R1'], config)

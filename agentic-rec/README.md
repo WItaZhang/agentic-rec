@@ -13,7 +13,8 @@ Final Amazon test quality and learned-routing gains are not yet reported.
 Complete [3,318-user evidence validation](reports/20260925_m3_evidence_validation/README.md)
 and [equal-token content controls](reports/20260925_m3_content_control/README.md) are published with offline reanalysis.
 The [earlier billing interruption](reports/20260925_resource_checkpoint/README.md) was resolved on September 30;
-policy-label collection has resumed from its preserved checkpoint within the original USD 50 authorization.
+policy-label collection and [weighted routing validation](reports/20260930_m4_routing_validation/README.md) are complete within the original USD 50 authorization.
+The primary validation budget selects all-base actions; the registered practical selection favors the causal sequence recommender. Final-test confirmation and serving costs are pending.
 
 Between 2023 and 2026, several dozen papers put an LLM *agent* at the centre of a recommender: as the recommender itself (RecMind, InteRecAgent, MACRec, BiLLP), as a simulated user (RecAgent, Agent4Rec, SimUSER, RecoWorld), as an item (AgentCF), or as an assistant on the user's side (RAH, iAgent). Read side by side, they share nine components and differ mainly in which ones they attach and how they are optimised.
 

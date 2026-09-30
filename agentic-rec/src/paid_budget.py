@@ -1,5 +1,6 @@
 """Durable USD reservations shared by all experiment runs, including interrupted calls."""
 
+import hashlib
 import json
 import math
 import os
@@ -108,6 +109,41 @@ class PaidBudget:
     def entries(self):
         with self.lock:
             return self._read()
+
+    def validate_queue_rejection(self, receipt):
+        """Require explicit batch-level zero usage, not inference from missing rows."""
+        errors = (receipt.get("errors") or {}).get("data") or []
+        counts, usage = receipt.get("request_counts") or {}, receipt.get("usage") or {}
+        if (not receipt.get("id") or receipt.get("status") != "failed" or receipt.get("in_progress_at") is not None
+                or receipt.get("output_file_id") or receipt.get("error_file_id")
+                or not errors or any(e.get("code") != "token_limit_exceeded" for e in errors)
+                or any(counts.get(k) != 0 for k in ("total", "completed", "failed"))
+                or any(usage.get(k) != 0 for k in ("input_tokens", "output_tokens"))
+                or (receipt.get("metadata") or {}).get("research_run") != self.run_id):
+            raise ValueError("Provider evidence does not establish a zero-generation queue rejection")
+        return hashlib.sha256(json.dumps(receipt, sort_keys=True).encode()).hexdigest()
+
+    def reconcile_queue_rejection(self, identities, receipt):
+        """Release only a provider-proven queue rejection before any generation."""
+        proof = self.validate_queue_rejection(receipt)
+        if not identities or len(set(identities)) != len(identities):
+            raise ValueError("Unique original reservations required")
+        with self.lock:
+            entries = self._read()
+            pending = []
+            for identity in identities:
+                old = entries[identity]
+                if (old['run_id'] == self.run_id and old.get('actual_usd') == 0
+                        and old.get('status') == 'submission_rejected_before_generation'
+                        and old.get('reconciliation_evidence_sha256') == proof):
+                    continue  # Safe checkpoint recovery after a settled-ledger interruption.
+                if (old['run_id'] != self.run_id or old.get('actual_usd') is not None
+                        or (old['event'] == 'settle' and old['status'] != 'missing_batch_result')):
+                    raise ValueError("Only original pending or unknown missing-result charges can be reconciled")
+                pending.append(identity)
+            self._append_many([{'event': 'settle', 'call_id': identity, 'actual_usd': 0.0,
+                'status': 'submission_rejected_before_generation', 'provider_code': 'token_limit_exceeded',
+                'provider_batch_id': receipt['id'], 'reconciliation_evidence_sha256': proof} for identity in pending])
 
 
 def usage_cost(usage, pricing):

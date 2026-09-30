@@ -1,0 +1,462 @@
+{
+  "chosen": {
+    "fixed_0.0": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "fixed_R0",
+      "kind": "fixed",
+      "mean_accounted_usd": 0.0,
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "kind": "fixed",
+        "plan": "R0"
+      },
+      "requests": 3318
+    },
+    "fixed_0.1": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "fixed_R0",
+      "kind": "fixed",
+      "mean_accounted_usd": 0.0,
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "kind": "fixed",
+        "plan": "R0"
+      },
+      "requests": 3318
+    },
+    "fixed_0.25": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "fixed_R0",
+      "kind": "fixed",
+      "mean_accounted_usd": 0.0,
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "kind": "fixed",
+        "plan": "R0"
+      },
+      "requests": 3318
+    },
+    "fixed_0.5": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "fixed_R0",
+      "kind": "fixed",
+      "mean_accounted_usd": 0.0,
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "kind": "fixed",
+        "plan": "R0"
+      },
+      "requests": 3318
+    },
+    "fixed_1.5": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "fixed_R0",
+      "kind": "fixed",
+      "mean_accounted_usd": 0.0,
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "kind": "fixed",
+        "plan": "R0"
+      },
+      "requests": 3318
+    },
+    "learned_0.0": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "learned_0_weight_0.3",
+      "kind": "learned",
+      "mean_accounted_usd": 0.0,
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "cost_weight": 0.3,
+        "estimator_id": 0,
+        "inference_total_ms": 7.615999999870837,
+        "kind": "learned"
+      },
+      "random_control": {
+        "definition": "frozen marginal allocation; actual test cost can differ",
+        "expected_validation_usd": 0.0,
+        "observed_validation": {
+          "action_counts": {
+            "R0": 3318,
+            "R1": 0,
+            "R2": 0,
+            "R3": 0,
+            "R4": 0
+          },
+          "mean_accounted_usd": 0.0,
+          "ndcg": 0.06655572819112526,
+          "requests": 3318
+        },
+        "probabilities": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seed": 1729,
+        "target_validation_usd": 0.0
+      },
+      "requests": 3318
+    },
+    "learned_0.1": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "learned_0_weight_0.3",
+      "kind": "learned",
+      "mean_accounted_usd": 0.0,
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "cost_weight": 0.3,
+        "estimator_id": 0,
+        "inference_total_ms": 7.615999999870837,
+        "kind": "learned"
+      },
+      "random_control": {
+        "definition": "frozen marginal allocation; actual test cost can differ",
+        "expected_validation_usd": 0.0,
+        "observed_validation": {
+          "action_counts": {
+            "R0": 3318,
+            "R1": 0,
+            "R2": 0,
+            "R3": 0,
+            "R4": 0
+          },
+          "mean_accounted_usd": 0.0,
+          "ndcg": 0.06655572819112526,
+          "requests": 3318
+        },
+        "probabilities": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seed": 1729,
+        "target_validation_usd": 0.0
+      },
+      "requests": 3318
+    },
+    "learned_0.25": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "learned_0_weight_0.3",
+      "kind": "learned",
+      "mean_accounted_usd": 0.0,
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "cost_weight": 0.3,
+        "estimator_id": 0,
+        "inference_total_ms": 7.615999999870837,
+        "kind": "learned"
+      },
+      "random_control": {
+        "definition": "frozen marginal allocation; actual test cost can differ",
+        "expected_validation_usd": 0.0,
+        "observed_validation": {
+          "action_counts": {
+            "R0": 3318,
+            "R1": 0,
+            "R2": 0,
+            "R3": 0,
+            "R4": 0
+          },
+          "mean_accounted_usd": 0.0,
+          "ndcg": 0.06655572819112526,
+          "requests": 3318
+        },
+        "probabilities": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seed": 1729,
+        "target_validation_usd": 0.0
+      },
+      "requests": 3318
+    },
+    "learned_0.5": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "learned_0_weight_0.3",
+      "kind": "learned",
+      "mean_accounted_usd": 0.0,
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "cost_weight": 0.3,
+        "estimator_id": 0,
+        "inference_total_ms": 7.615999999870837,
+        "kind": "learned"
+      },
+      "random_control": {
+        "definition": "frozen marginal allocation; actual test cost can differ",
+        "expected_validation_usd": 0.0,
+        "observed_validation": {
+          "action_counts": {
+            "R0": 3318,
+            "R1": 0,
+            "R2": 0,
+            "R3": 0,
+            "R4": 0
+          },
+          "mean_accounted_usd": 0.0,
+          "ndcg": 0.06655572819112526,
+          "requests": 3318
+        },
+        "probabilities": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seed": 1729,
+        "target_validation_usd": 0.0
+      },
+      "requests": 3318
+    },
+    "learned_1.5": {
+      "action_counts": {
+        "R0": 3144,
+        "R1": 90,
+        "R2": 60,
+        "R3": 6,
+        "R4": 18
+      },
+      "id": "learned_2_weight_0.01",
+      "kind": "learned",
+      "mean_accounted_usd": 4.418077154912598e-05,
+      "ndcg": 0.06800589349238442,
+      "policy": {
+        "cost_weight": 0.01,
+        "estimator_id": 2,
+        "inference_total_ms": 24.25970000012967,
+        "kind": "learned"
+      },
+      "random_control": {
+        "definition": "frozen marginal allocation; actual test cost can differ",
+        "expected_validation_usd": 4.418077154912599e-05,
+        "observed_validation": {
+          "action_counts": {
+            "R0": 3122,
+            "R1": 91,
+            "R2": 80,
+            "R3": 3,
+            "R4": 22
+          },
+          "mean_accounted_usd": 4.8376853526220613e-05,
+          "ndcg": 0.06667626543428366,
+          "requests": 3318
+        },
+        "probabilities": [
+          0.9466000620958188,
+          0.02762065753664544,
+          0.01841377169109696,
+          0.001841377169109696,
+          0.005524131507329088
+        ],
+        "seed": 1729,
+        "target_validation_usd": 4.418077154912598e-05
+      },
+      "requests": 3318
+    },
+    "rule_0.0": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "base",
+      "kind": "rule",
+      "mean_accounted_usd": 0.0,
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "kind": "rule",
+        "rule": "base"
+      },
+      "requests": 3318
+    },
+    "rule_0.1": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "base",
+      "kind": "rule",
+      "mean_accounted_usd": 0.0,
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "kind": "rule",
+        "rule": "base"
+      },
+      "requests": 3318
+    },
+    "rule_0.25": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "base",
+      "kind": "rule",
+      "mean_accounted_usd": 0.0,
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "kind": "rule",
+        "rule": "base"
+      },
+      "requests": 3318
+    },
+    "rule_0.5": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "base",
+      "kind": "rule",
+      "mean_accounted_usd": 0.0,
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "kind": "rule",
+        "rule": "base"
+      },
+      "requests": 3318
+    },
+    "rule_1.5": {
+      "action_counts": {
+        "R0": 350,
+        "R1": 2968,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "recent_if_no_history",
+      "kind": "rule",
+      "mean_accounted_usd": 0.0006368945147679325,
+      "ndcg": 0.0686806724855278,
+      "policy": {
+        "kind": "rule",
+        "rule": "recent_if_no_history"
+      },
+      "requests": 3318
+    }
+  },
+  "cost_interpretation": "actual observed counterfactual matrix cost; cache/backend distribution can differ at deployment",
+  "deployment_candidate": {
+    "kind": "fixed",
+    "selected_policy": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "id": "fixed_R0",
+      "kind": "fixed",
+      "mean_accounted_usd": 0.0,
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "kind": "fixed",
+        "plan": "R0"
+      },
+      "requests": 3318
+    },
+    "selection_scope": "validation_only",
+    "validation_budget_usd_per_1000": 0.25
+  },
+  "feature_names": [
+    "has_history",
+    "has_older_history",
+    "log_history_count",
+    "positive_fraction",
+    "known_item_fraction",
+    "mean_rating",
+    "log_days_since_last",
+    "log_history_span_days",
+    "base_score_entropy_proxy",
+    "base_relative_top_gap"
+  ],
+  "plans": [
+    "R0",
+    "R1",
+    "R2",
+    "R3",
+    "R4"
+  ],
+  "quality_tolerance": 0.002,
+  "selection_scope": "validation_only",
+  "test_scored": false,
+  "training_mean_costs": [
+    0.0,
+    0.0007130473887814304,
+    0.0007137413442940034,
+    0.0015394334381044442,
+    0.0015404056818181765
+  ]
+}

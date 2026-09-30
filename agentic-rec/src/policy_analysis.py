@@ -76,6 +76,13 @@ def evaluate_decisions(outcomes, calls, decisions, plans, analysis):
 
     indices = list(range(len(ids)))
     comparisons = {f"{a}_minus_{b}": compare(a, b, indices) for a, b in analysis["comparisons"]}
+    budgetwise = {}
+    for learner in sorted(name for name in per_policy if name.startswith("learned_")):
+        for kind in ("rule", "random"):
+            reference = learner.replace("learned_", kind + "_", 1)
+            if reference in per_policy:
+                key = f"{learner}_minus_{reference}"
+                budgetwise[key] = comparisons[key] if key in comparisons else compare(learner, reference, indices)
     groups = {}
     for name, low, high in analysis["group_boundaries"]:
         chosen = [i for i, q in enumerate(ids) if low <= table[q]["R0"]["history_count"] < high]
@@ -117,6 +124,8 @@ def evaluate_decisions(outcomes, calls, decisions, plans, analysis):
             "api_usd_on_cold_targets": sum(row["accounted_usd"] for row in observations if row["cold_item"]),
             "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy"}
     return {"methods": methods, "comparisons": comparisons, "history_groups": groups,
+        "secondary_budget_comparisons": budgetwise,
+        "secondary_budget_inference": "Exploratory nominal intervals across the registered budget grid; the primary comparison is unchanged",
         "random_control_diagnostics": random_diagnostics,
         "failure_attribution": failures,
         "primary_comparison": analysis["primary_comparison"], "primary_metric": "ndcg",
@@ -146,9 +155,11 @@ def plot_policies(result, output):
             continue
         x, y = row["mean_accounted_usd"] * 1000, row["mean_ndcg"]
         ax.scatter(x, y, marker="x", color="black")
-        ax.annotate(name.removeprefix("fixed_"), (x, y), xytext=(6, 5), textcoords="offset points")
+        label = name.removeprefix("fixed_")
+        ax.annotate(label, (x, y), xytext=(8, -15 if label in ("R1", "R4") else 8), textcoords="offset points")
     ax.set(xlabel="Observed batch API USD per 1,000 requests", ylabel="User-macro NDCG@10",
-           title="Frozen policies: quality and counterfactual API cost")
+           title=("Validation-selected policies (exploratory)" if "validation" in result["inference"].lower()
+                  else "Frozen final-test policies: quality and counterfactual API cost"))
     ax.grid(alpha=.25)
     ax.legend()
     fig.tight_layout()

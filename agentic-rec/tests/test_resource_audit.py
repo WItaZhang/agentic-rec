@@ -27,3 +27,15 @@ def test_standalone_recovery_collection_is_not_hidden_as_nested_cpu():
     assert not is_scheduler_child(parent, 'logs/20260925_073041_amazon_policy_batch_billing_collect')
     checkpoint = {**parent, 'stage': 'batch_recovery_checkpoint'}
     assert not is_scheduler_child(checkpoint, 'logs/20260925_072000_amazon_policy_batch_c011')
+
+
+def test_queue_rejection_preserves_unknown_record_without_fabricated_token_usage():
+    entries = {'a': {'run_id': 'labels', 'event': 'settle', 'actual_usd': 0, 'reserved_usd': .01,
+                     'status': 'submission_rejected_before_generation'}}
+    old = {'call_id': 'a', 'usage': None, 'status': 'missing_batch_result'}
+    proven = {**old, 'status': 'submission_rejected_before_generation', 'generation_attempts': 0,
+              'provider_code': 'token_limit_exceeded', 'rejection_stage': 'batch_validation'}
+    result = reconcile_usage(entries, [old, proven])['labels']
+    assert result['rejected_before_generation'] == 1
+    assert result['physical_attempts'] == 1
+    assert result['usage_observed_attempts'] == result['input_tokens'] == result['accounted_usd'] == 0

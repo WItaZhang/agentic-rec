@@ -168,3 +168,10 @@ experiment recipes. Do not replay a completed recovery or blindly repeat a
 Batch-creation error. A failed recovery intent requires provider reconciliation;
 unknown charges remain reserved. Final-test recovery also verifies the frozen
 protocol. Concrete executed examples are recorded in [PROGRESS](PROGRESS.md).
+
+
+## Offline learned-router reproduction
+
+`configs/amazon_routing_archive_refit.yaml` refits the registered controller from checksummed public feature/outcome/cost matrices using `uv run --locked --extra yaml --extra experiments python main.py --config configs/amazon_routing_archive_refit.yaml`. It needs neither raw reviews nor API access. The original four selected-model artifacts are preserved under `artifacts/frozen_router/v2`. Actual verification reproduces every model hash and all 25 policies' actions for all 3,318 validation users.
+
+`configs/routing_validation_archive_reanalysis.yaml` reproduces the selected-policy quality, cost, paired statistics, random-allocation sensitivity and figures from `artifacts/published/routing_validation_v2`. See [the development report](../../reports/20260930_m4_routing_validation/README.md). These are development-selected results; the final test remains separate.

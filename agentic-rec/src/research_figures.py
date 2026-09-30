@@ -49,9 +49,11 @@ def action_allocation_figure(result, output):
     primary = result['primary_comparison']
     names = [name for name in ['fixed_R0', 'fixed_R1', 'fixed_R2', 'fixed_R3', 'fixed_R4',
                               *primary, primary[0].replace('learned_', 'random_', 1)] if name in result['methods']]
+    names.extend(name for name, row in result['methods'].items()
+                 if name.startswith(('learned_', 'rule_', 'random_')) and row['mean_llm_calls'] > 0)
     names = list(dict.fromkeys(names))
     plans = list(result['methods'][names[0]]['action_counts'])
-    fig, ax = plt.subplots(figsize=(9, 5.2))
+    fig, ax = plt.subplots(figsize=(max(9, .75 * len(names) + 2), 5.2))
     bottom = [0.0] * len(names)
     colors = ['#8c8c8c', '#0072b2', '#009e73', '#e69f00', '#d55e00']
     for plan, color in zip(plans, colors[:len(plans)], strict=True):

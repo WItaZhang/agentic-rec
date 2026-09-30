@@ -1,0 +1,7 @@
+{
+  "analysis_sha256": "e8093ff40d2bc50c2c1d06cb8b7d94959ee7d2704169e627e714c2d2bacbbda3",
+  "scope": "development_only; final_test_unscored",
+  "selection_run": "logs\\20260930_204405_amazon_routing_development_v2",
+  "selection_sha256": "f06269b1a6e5adec760fd3758ec0b65058642f9bc9ddaca1990cefb8707dd4b7",
+  "source_analysis": "logs\\20260930_204625_amazon_routing_validation_analysis"
+}

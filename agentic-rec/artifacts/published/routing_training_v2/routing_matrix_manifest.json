@@ -1,0 +1,7 @@
+{
+  "files": {
+    "policy_train_matrix.json.gz": "bbdbe809caf45898f0928648e6a7cc452a7f7c0be71994cf3efea8cb8f48a12b",
+    "validation_matrix.json.gz": "390e15bd875109468cc3f700688ca27ad2ba584daf06fdecdde6f7b8f5f3c2d9"
+  },
+  "scope": "Derived features, measured action outcomes/costs and inclusion weights for offline controller refitting; no raw reviews, user IDs or API access required"
+}

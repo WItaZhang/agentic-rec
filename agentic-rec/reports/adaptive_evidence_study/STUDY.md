@@ -2,7 +2,8 @@
 
 **Working research report.** Conventional comparisons and the development pilot
 and expanded LLM validation, equal-token content controls and development failure analysis are complete.
-Strong-base evidence controls, routing selection and final-test results are still pending. This document must not be cited as a completed final study.
+Routing fitting and validation-only method selection are also complete.
+Strong-base evidence controls, row-order sensitivity and final-test results are still pending. This document must not be cited as a completed final study.
 Current execution status is in [PROGRESS](../../docs/adaptive-evidence/PROGRESS.md).
 
 ## Research question and scope
@@ -222,13 +223,10 @@ population. Full evidence still trails ItemKNN on this cohort. Correct alignment
 versus corrupted alignment is a narrower contrast than useful information versus
 neutral padding; it does not establish a general benefit of adding categories.
 
-Routing results, final results, final quality–cost figures,
-failure cases and reconciled campaign resources must be added only after their
-actual runs complete. No final method, adaptive gain or sequential stopping
-result is asserted by this working report.
+Final results, final quality–cost figures, final failure cases and reconciled campaign resources must be added only after their actual runs complete. No confirmed adaptive gain or sequential stopping result is asserted by this working report.
 
 
-The earlier provider billing interruption was resolved on September 30. Policy-label collection resumed with USD 11.0849600 previously accounted against the original USD 50 authorization. The [historical resource checkpoint](../20260925_resource_checkpoint/README.md) preserves exact tokens, costs, partial labels and the recovery evidence; current running costs are recorded in the shared ledger. The [interim career materials](../career_materials/README.md) include only supported development claims. Expanded router fitting and final testing remain incomplete.
+The earlier provider billing interruption was resolved on September 30. Policy-label collection resumed with USD 11.0849600 previously accounted against the original USD 50 authorization. The [historical resource checkpoint](../20260925_resource_checkpoint/README.md) preserves exact tokens, costs, partial labels and the recovery evidence; current running costs are recorded in the shared ledger. The [interim career materials](../career_materials/README.md) include only supported development claims. Router fitting is now complete; final testing remains incomplete.
 
 The zero-call [validation failure audit](../20260925_validation_failures/README.md)
 finds that full evidence loses 388 base hits and rescues 196, whereas recent
@@ -238,3 +236,14 @@ diagnostics; target visibility cannot be used to skip those requests in a policy
 Deterministic examples show both useful rescues and harmful reordering, including
 empty-history requests. They do not identify the model's internal reasoning or
 justify changing the registered grid before test.
+
+
+## Complete routing development and adoption selection
+
+The [full routing validation](../20260930_m4_routing_validation/README.md) fitted four utility estimators on 1,045 users with complete real action labels and inverse-inclusion weights. Labels cost USD 2.9788184; this includes the previously partial calls once. Offline refitting reproduces all four estimator file hashes and all 25 selected/fixed/random policies' actions on the 3,318-user validation set.
+
+At the registered primary budget USD 0.25/1,000, all selected policies retain ItemKNN for every validation request. At the secondary envelope 1.5, learned routing calls the LLM for 174 requests and has NDCG 0.068006 at USD 0.044181/1,000, versus rule NDCG 0.068681 at USD 0.636895/1,000. The learner's one-sided lower quality bound -0.002205 fails the -0.002 margin; lower cost does not establish preserved quality. Superiority over the frozen-seed budget-matched random control is also unresolved. All these intervals are descriptive after validation selection.
+
+Budget-envelope selection applies a 0.002 tolerance relative to the best feasible candidate, then minimizes cost. This explains both the all-base primary result and why secondary selected policies can spend much less than their allowed envelope. These are conclusions about this registered finite deterministic policy class and tolerance, not all possible adaptive or stochastic allocators. Most requests have no history and identical conventional inputs, further restricting deterministic differentiation. No parameters were changed to force a nonzero primary result.
+
+The registered practical all-method comparison selects **the causal sequence recommender**, using NDCG 0.068723 and zero API expense on validation. This choice is separate from the within-ItemKNN primary scientific comparison and will not be reselected using test results. A stronger base-model comparison is not evidence-routing improvement. Controlled serving latency and the final frozen test are still required.

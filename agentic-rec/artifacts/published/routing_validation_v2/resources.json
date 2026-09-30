@@ -1,0 +1,13 @@
+{
+  "accounted_usd": 7.71312240000023,
+  "actual_known_usd": 7.71312240000023,
+  "cached_tokens_known": 0,
+  "cost_scope": "offline label construction; each physical call counted once, including shared outcomes",
+  "input_tokens_known": 37580364,
+  "logical_action_outcomes": 13272,
+  "output_tokens_known": 246312,
+  "same_request_exact_input_reuses": 6430,
+  "service_latency_ms": null,
+  "submitted_physical_requests": 6842,
+  "unknown_usage_requests": 0
+}

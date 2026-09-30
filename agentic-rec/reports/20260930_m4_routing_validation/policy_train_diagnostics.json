@@ -1,0 +1,43 @@
+{
+  "groups": {
+    "at_least_two": {
+      "mean_action_ndcg": {
+        "R0": 0.11399841011412085,
+        "R1": 0.0875094079325836,
+        "R2": 0.07031652709564484,
+        "R3": 0.07554206649825226,
+        "R4": 0.07968920602933233
+      },
+      "users": 261
+    },
+    "one": {
+      "mean_action_ndcg": {
+        "R0": 0.12911567873128563,
+        "R1": 0.10743483296237337,
+        "R2": 0.10743483296237337,
+        "R3": 0.08733914778350266,
+        "R4": 0.08733914778350266
+      },
+      "users": 656
+    },
+    "zero": {
+      "mean_action_ndcg": {
+        "R0": 0.05801508092368084,
+        "R1": 0.05810855880919719,
+        "R2": 0.05810855880919719,
+        "R3": 0.027819184365767125,
+        "R4": 0.027819184365767125
+      },
+      "users": 128
+    }
+  },
+  "inverse_inclusion_weighted_ndcg": {
+    "R0": 0.06542001819163214,
+    "R1": 0.0629479758142367,
+    "R2": 0.06240550218047933,
+    "R3": 0.03404509928823001,
+    "R4": 0.03417595076521404
+  },
+  "unweighted_training_cohort_oracle_ndcg": 0.185963653253006,
+  "warning": "Training cohort enriched for observed history; weighted estimates use only 128 sampled empty-history users. Label-aware oracle is not deployable or proof of learnability."
+}
