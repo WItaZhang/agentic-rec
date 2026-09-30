@@ -1,0 +1,21 @@
+{
+  "all_validation_actions_equal": true,
+  "excluded_field": "inference_total_ms only (measured runtime, not policy parameters)",
+  "model_hashes_equal": {
+    "estimator_0.joblib": true,
+    "estimator_1.joblib": true,
+    "estimator_2.joblib": true,
+    "estimator_3.joblib": true
+  },
+  "offline_refit_run": "logs\\20260930_204717_amazon_routing_archive_refit",
+  "original_run": "logs\\20260930_204405_amazon_routing_development_v2",
+  "paid_api_usd": 0,
+  "policies_compared": 25,
+  "selection_reproduction": {
+    "absolute_float_tolerance": 1e-14,
+    "matches": true,
+    "max_absolute_float_difference": 0.0,
+    "non_float_fields": "exact"
+  },
+  "users_per_policy": 3318
+}

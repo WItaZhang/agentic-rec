@@ -155,9 +155,11 @@ def plot_policies(result, output):
             continue
         x, y = row["mean_accounted_usd"] * 1000, row["mean_ndcg"]
         ax.scatter(x, y, marker="x", color="black")
-        ax.annotate(name.removeprefix("fixed_"), (x, y), xytext=(6, 5), textcoords="offset points")
+        label = name.removeprefix("fixed_")
+        ax.annotate(label, (x, y), xytext=(8, -15 if label in ("R1", "R4") else 8), textcoords="offset points")
     ax.set(xlabel="Observed batch API USD per 1,000 requests", ylabel="User-macro NDCG@10",
-           title="Frozen policies: quality and counterfactual API cost")
+           title=("Validation-selected policies (exploratory)" if "validation" in result["inference"].lower()
+                  else "Frozen final-test policies: quality and counterfactual API cost"))
     ax.grid(alpha=.25)
     ax.legend()
     fig.tight_layout()

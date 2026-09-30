@@ -1,0 +1,2902 @@
+{
+  "comparisons": {
+    "fixed_R1_minus_fixed_R0": {
+      "accounted_usd": {
+        "bootstrap_degenerate": false,
+        "ci_high": 0.0007131835473176614,
+        "ci_low": 0.000712939056660639,
+        "confidence": 0.95,
+        "difference": 0.000713056901748041,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": false,
+        "ci_high": 0.008740204942736588,
+        "ci_low": -0.002109704641350211,
+        "confidence": 0.95,
+        "difference": 0.003315250150693189,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": false,
+        "ci_high": 0.0032840990020279676,
+        "ci_low": -0.0021193419369028967,
+        "confidence": 0.95,
+        "difference": 0.0006119173498196068,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": -0.0016710494158464772,
+        "one_sided_confidence": 0.95,
+        "supported": true,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    },
+    "fixed_R4_minus_fixed_R0": {
+      "accounted_usd": {
+        "bootstrap_degenerate": false,
+        "ci_high": 0.0015407104445449066,
+        "ci_low": 0.0015400330289330924,
+        "confidence": 0.95,
+        "difference": 0.0015403560578661846,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": false,
+        "ci_high": -0.043701024713682944,
+        "ci_low": -0.07203134418324292,
+        "confidence": 0.95,
+        "difference": -0.05786618444846293,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": false,
+        "ci_high": -0.020471284640882013,
+        "ci_low": -0.032726626585631156,
+        "confidence": 0.95,
+        "difference": -0.02655883155423779,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": -0.031732162632527164,
+        "one_sided_confidence": 0.95,
+        "supported": false,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    },
+    "learned_0.25_minus_fixed_R4": {
+      "accounted_usd": {
+        "bootstrap_degenerate": false,
+        "ci_high": -0.0015400330289330924,
+        "ci_low": -0.0015407104445449066,
+        "confidence": 0.95,
+        "difference": -0.0015403560578661846,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": false,
+        "ci_high": 0.07203134418324292,
+        "ci_low": 0.043701024713682944,
+        "confidence": 0.95,
+        "difference": 0.05786618444846293,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": false,
+        "ci_high": 0.032726626585631156,
+        "ci_low": 0.020471284640882013,
+        "confidence": 0.95,
+        "difference": 0.02655883155423779,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": 0.021434362775747923,
+        "one_sided_confidence": 0.95,
+        "supported": true,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    },
+    "learned_0.25_minus_random_0.25": {
+      "accounted_usd": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": 0.0,
+        "one_sided_confidence": 0.95,
+        "supported": false,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    },
+    "learned_0.25_minus_rule_0.25": {
+      "accounted_usd": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": 0.0,
+        "one_sided_confidence": 0.95,
+        "supported": false,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    }
+  },
+  "cost_scope": "counterfactual single-action spend measured in the batch label matrix; controller/local CPU separate",
+  "failure_attribution": {
+    "fixed_0.0": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "fixed_0.1": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "fixed_0.25": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "fixed_0.5": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "fixed_1.5": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "fixed_R0": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "fixed_R1": {
+      "api_usd_on_cold_targets": 0.29792999999999803,
+      "api_usd_on_unrecalled_targets": 1.0552606000000295,
+      "baseline_hits_lost": 38,
+      "baseline_misses_rescued": 49,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "fixed_R2": {
+      "api_usd_on_cold_targets": 0.29815219999999804,
+      "api_usd_on_unrecalled_targets": 1.0562018000000295,
+      "baseline_hits_lost": 38,
+      "baseline_misses_rescued": 53,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "fixed_R3": {
+      "api_usd_on_cold_targets": 0.643303000000002,
+      "api_usd_on_unrecalled_targets": 2.2781952000000407,
+      "baseline_hits_lost": 388,
+      "baseline_misses_rescued": 198,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "fixed_R4": {
+      "api_usd_on_cold_targets": 0.6436020000000018,
+      "api_usd_on_unrecalled_targets": 2.27953120000004,
+      "baseline_hits_lost": 388,
+      "baseline_misses_rescued": 196,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "learned_0.0": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "learned_0.1": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "learned_0.25": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "learned_0.5": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "learned_1.5": {
+      "api_usd_on_cold_targets": 0.01477,
+      "api_usd_on_unrecalled_targets": 0.064639,
+      "baseline_hits_lost": 12,
+      "baseline_misses_rescued": 14,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "random_0.0": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "random_0.1": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "random_0.25": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "random_0.5": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "random_1.5": {
+      "api_usd_on_cold_targets": 0.014962200000000009,
+      "api_usd_on_unrecalled_targets": 0.06308199999999992,
+      "baseline_hits_lost": 6,
+      "baseline_misses_rescued": 7,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "rule_0.0": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "rule_0.1": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "rule_0.25": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "rule_0.5": {
+      "api_usd_on_cold_targets": 0,
+      "api_usd_on_unrecalled_targets": 0,
+      "baseline_hits_lost": 0,
+      "baseline_misses_rescued": 0,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    },
+    "rule_1.5": {
+      "api_usd_on_cold_targets": 0.27696799999999827,
+      "api_usd_on_unrecalled_targets": 0.9562160000000247,
+      "baseline_hits_lost": 1,
+      "baseline_misses_rescued": 25,
+      "cold_targets": 418,
+      "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy",
+      "requests": 3318,
+      "unrecalled_targets": 1480
+    }
+  },
+  "history_groups": {
+    "at_least_two": {
+      "comparisons": {
+        "fixed_R1_minus_fixed_R0": {
+          "accounted_usd": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.0007237883495145632,
+            "ci_low": 0.0007212019417475729,
+            "confidence": 0.95,
+            "difference": 0.0007224271844660195,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "hr": {
+            "bootstrap_degenerate": false,
+            "ci_high": -0.009708737864077669,
+            "ci_low": -0.1553398058252427,
+            "confidence": 0.95,
+            "difference": -0.07766990291262135,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "ndcg": {
+            "bootstrap_degenerate": false,
+            "ci_high": -0.005753664728006844,
+            "ci_low": -0.10461021026073722,
+            "confidence": 0.95,
+            "difference": -0.054357564570870695,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": -0.09574025096542704,
+            "one_sided_confidence": 0.95,
+            "supported": false,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 103
+        },
+        "fixed_R4_minus_fixed_R0": {
+          "accounted_usd": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.0015872601941747573,
+            "ci_low": 0.00157566213592233,
+            "confidence": 0.95,
+            "difference": 0.0015810640776699027,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "hr": {
+            "bootstrap_degenerate": false,
+            "ci_high": -0.009708737864077669,
+            "ci_low": -0.1553398058252427,
+            "confidence": 0.95,
+            "difference": -0.07766990291262135,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "ndcg": {
+            "bootstrap_degenerate": false,
+            "ci_high": -0.012299646875127909,
+            "ci_low": -0.09321440502573017,
+            "confidence": 0.95,
+            "difference": -0.051273855963344196,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": -0.08515839282816805,
+            "one_sided_confidence": 0.95,
+            "supported": false,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 103
+        },
+        "learned_0.25_minus_fixed_R4": {
+          "accounted_usd": {
+            "bootstrap_degenerate": false,
+            "ci_high": -0.00157566213592233,
+            "ci_low": -0.0015872601941747573,
+            "confidence": 0.95,
+            "difference": -0.0015810640776699027,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "hr": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.1553398058252427,
+            "ci_low": 0.009708737864077669,
+            "confidence": 0.95,
+            "difference": 0.07766990291262135,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "ndcg": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.09321440502573015,
+            "ci_low": 0.0122996468751279,
+            "confidence": 0.95,
+            "difference": 0.051273855963344196,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": 0.018255552081909356,
+            "one_sided_confidence": 0.95,
+            "supported": true,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 103
+        },
+        "learned_0.25_minus_random_0.25": {
+          "accounted_usd": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "hr": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "ndcg": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": 0.0,
+            "one_sided_confidence": 0.95,
+            "supported": false,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 103
+        },
+        "learned_0.25_minus_rule_0.25": {
+          "accounted_usd": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "hr": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "ndcg": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": 0.0,
+            "one_sided_confidence": 0.95,
+            "supported": false,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 103
+        }
+      },
+      "descriptive": true,
+      "means": {
+        "fixed_0.0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "fixed_0.1": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "fixed_0.25": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "fixed_0.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "fixed_1.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "fixed_R0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "fixed_R1": {
+          "mean_accounted_usd": 0.0007224271844660195,
+          "mean_hr": 0.08737864077669903,
+          "mean_ndcg": 0.04266758376669208
+        },
+        "fixed_R2": {
+          "mean_accounted_usd": 0.0007430932038834952,
+          "mean_hr": 0.1262135922330097,
+          "mean_ndcg": 0.05290838634012172
+        },
+        "fixed_R3": {
+          "mean_accounted_usd": 0.0015510640776699024,
+          "mean_hr": 0.10679611650485436,
+          "mean_ndcg": 0.05687159407757619
+        },
+        "fixed_R4": {
+          "mean_accounted_usd": 0.0015810640776699027,
+          "mean_hr": 0.08737864077669903,
+          "mean_ndcg": 0.04575129237421858
+        },
+        "learned_0.0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "learned_0.1": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "learned_0.25": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "learned_0.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "learned_1.5": {
+          "mean_accounted_usd": 0.00047520194174757285,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.1044470381199251
+        },
+        "random_0.0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "random_0.1": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "random_0.25": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "random_0.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "random_1.5": {
+          "mean_accounted_usd": 4.975922330097088e-05,
+          "mean_hr": 0.17475728155339806,
+          "mean_ndcg": 0.10120647414410058
+        },
+        "rule_0.0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "rule_0.1": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "rule_0.25": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "rule_0.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        },
+        "rule_1.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.1650485436893204,
+          "mean_ndcg": 0.09702514833756277
+        }
+      },
+      "users": 103
+    },
+    "one": {
+      "comparisons": {
+        "fixed_R1_minus_fixed_R0": {
+          "accounted_usd": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.0007225603238866396,
+            "ci_low": 0.0007211546558704453,
+            "confidence": 0.95,
+            "difference": 0.0007218493927125505,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "hr": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.032388663967611336,
+            "ci_low": -0.0728744939271255,
+            "confidence": 0.95,
+            "difference": -0.020242914979757085,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "ndcg": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.028330707570247925,
+            "ci_low": -0.02371391511103506,
+            "confidence": 0.95,
+            "difference": 0.00234253339543928,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": -0.019593210125527834,
+            "one_sided_confidence": 0.95,
+            "supported": false,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 247
+        },
+        "fixed_R4_minus_fixed_R0": {
+          "accounted_usd": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.0015525692510121457,
+            "ci_low": 0.0015508356275303642,
+            "confidence": 0.95,
+            "difference": 0.0015516914979757086,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "hr": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.004048582995951417,
+            "ci_low": -0.10526315789473684,
+            "confidence": 0.95,
+            "difference": -0.048582995951417005,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "ndcg": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.019325855101819233,
+            "ci_low": -0.04448739343683894,
+            "confidence": 0.95,
+            "difference": -0.012829441156647024,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": -0.039797291286495715,
+            "one_sided_confidence": 0.95,
+            "supported": false,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 247
+        },
+        "learned_0.25_minus_fixed_R4": {
+          "accounted_usd": {
+            "bootstrap_degenerate": false,
+            "ci_high": -0.0015508356275303642,
+            "ci_low": -0.0015525692510121457,
+            "confidence": 0.95,
+            "difference": -0.0015516914979757086,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "hr": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.10526315789473684,
+            "ci_low": -0.004048582995951417,
+            "confidence": 0.95,
+            "difference": 0.048582995951417005,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "ndcg": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.04448739343683893,
+            "ci_low": -0.019325855101819236,
+            "confidence": 0.95,
+            "difference": 0.012829441156647024,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": -0.013916276086279511,
+            "one_sided_confidence": 0.95,
+            "supported": false,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 247
+        },
+        "learned_0.25_minus_random_0.25": {
+          "accounted_usd": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "hr": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "ndcg": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": 0.0,
+            "one_sided_confidence": 0.95,
+            "supported": false,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 247
+        },
+        "learned_0.25_minus_rule_0.25": {
+          "accounted_usd": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "hr": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "ndcg": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": 0.0,
+            "one_sided_confidence": 0.95,
+            "supported": false,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 247
+        }
+      },
+      "descriptive": true,
+      "means": {
+        "fixed_0.0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "fixed_0.1": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "fixed_0.25": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "fixed_0.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "fixed_1.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "fixed_R0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "fixed_R1": {
+          "mean_accounted_usd": 0.0007218493927125505,
+          "mean_hr": 0.15384615384615385,
+          "mean_ndcg": 0.08627817025983249
+        },
+        "fixed_R2": {
+          "mean_accounted_usd": 0.0007218493927125505,
+          "mean_hr": 0.15384615384615385,
+          "mean_ndcg": 0.08627817025983249
+        },
+        "fixed_R3": {
+          "mean_accounted_usd": 0.0015516914979757086,
+          "mean_hr": 0.12550607287449392,
+          "mean_ndcg": 0.07110619570774619
+        },
+        "fixed_R4": {
+          "mean_accounted_usd": 0.0015516914979757086,
+          "mean_hr": 0.12550607287449392,
+          "mean_ndcg": 0.07110619570774619
+        },
+        "learned_0.0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "learned_0.1": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "learned_0.25": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "learned_0.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "learned_1.5": {
+          "mean_accounted_usd": 0.0003953279352226721,
+          "mean_hr": 0.18218623481781376,
+          "mean_ndcg": 0.10032103695344015
+        },
+        "random_0.0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "random_0.1": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "random_0.25": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "random_0.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "random_1.5": {
+          "mean_accounted_usd": 5.062024291497975e-05,
+          "mean_hr": 0.17813765182186234,
+          "mean_ndcg": 0.08682047454061881
+        },
+        "rule_0.0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "rule_0.1": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "rule_0.25": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "rule_0.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        },
+        "rule_1.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.17408906882591094,
+          "mean_ndcg": 0.0839356368643932
+        }
+      },
+      "users": 247
+    },
+    "zero": {
+      "comparisons": {
+        "fixed_R1_minus_fixed_R0": {
+          "accounted_usd": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.000712,
+            "ci_low": 0.000712,
+            "confidence": 0.95,
+            "difference": 0.000712,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "hr": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.011455525606469003,
+            "ci_low": 0.005053908355795148,
+            "confidence": 0.95,
+            "difference": 0.008086253369272238,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "ndcg": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.0033754188008315467,
+            "ci_low": 0.001467434871779439,
+            "confidence": 0.95,
+            "difference": 0.002375527347987748,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": 0.0015874819770271872,
+            "one_sided_confidence": 0.95,
+            "supported": true,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 2968
+        },
+        "fixed_R4_minus_fixed_R0": {
+          "accounted_usd": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0015379999999999999,
+            "ci_low": 0.0015379999999999999,
+            "confidence": 0.95,
+            "difference": 0.0015379999999999999,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "hr": {
+            "bootstrap_degenerate": false,
+            "ci_high": -0.0431266846361186,
+            "ci_low": -0.07311320754716981,
+            "confidence": 0.95,
+            "difference": -0.057951482479784364,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "ndcg": {
+            "bootstrap_degenerate": false,
+            "ci_high": -0.020750174680910775,
+            "ci_low": -0.03310901121574732,
+            "confidence": 0.95,
+            "difference": -0.026843707536066276,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": -0.03218293166252683,
+            "one_sided_confidence": 0.95,
+            "supported": false,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 2968
+        },
+        "learned_0.25_minus_fixed_R4": {
+          "accounted_usd": {
+            "bootstrap_degenerate": true,
+            "ci_high": -0.0015379999999999999,
+            "ci_low": -0.0015379999999999999,
+            "confidence": 0.95,
+            "difference": -0.0015379999999999999,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "hr": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.07311320754716981,
+            "ci_low": 0.0431266846361186,
+            "confidence": 0.95,
+            "difference": 0.057951482479784364,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "ndcg": {
+            "bootstrap_degenerate": false,
+            "ci_high": 0.03310901121574732,
+            "ci_low": 0.020750174680910775,
+            "confidence": 0.95,
+            "difference": 0.026843707536066276,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": 0.02176784331674173,
+            "one_sided_confidence": 0.95,
+            "supported": true,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 2968
+        },
+        "learned_0.25_minus_random_0.25": {
+          "accounted_usd": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "hr": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "ndcg": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": 0.0,
+            "one_sided_confidence": 0.95,
+            "supported": false,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 2968
+        },
+        "learned_0.25_minus_rule_0.25": {
+          "accounted_usd": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "hr": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "ndcg": {
+            "bootstrap_degenerate": true,
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "confidence": 0.95,
+            "difference": 0.0,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "noninferiority": {
+            "epsilon": 0.002,
+            "lower_bound": 0.0,
+            "one_sided_confidence": 0.95,
+            "supported": false,
+            "warning": "Specific to the frozen margin and sampling/model-output realization"
+          },
+          "users": 2968
+        }
+      },
+      "descriptive": true,
+      "means": {
+        "fixed_0.0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "fixed_0.1": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "fixed_0.25": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "fixed_0.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "fixed_1.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "fixed_R0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "fixed_R1": {
+          "mean_accounted_usd": 0.000712,
+          "mean_hr": 0.1495956873315364,
+          "mean_ndcg": 0.06642748609255632
+        },
+        "fixed_R2": {
+          "mean_accounted_usd": 0.000712,
+          "mean_hr": 0.1495956873315364,
+          "mean_ndcg": 0.06642748609255632
+        },
+        "fixed_R3": {
+          "mean_accounted_usd": 0.0015379999999999999,
+          "mean_hr": 0.08355795148247978,
+          "mean_ndcg": 0.03720825120850229
+        },
+        "fixed_R4": {
+          "mean_accounted_usd": 0.0015379999999999999,
+          "mean_hr": 0.08355795148247978,
+          "mean_ndcg": 0.03720825120850229
+        },
+        "learned_0.0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "learned_0.1": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "learned_0.25": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "learned_0.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "learned_1.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "random_0.0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "random_0.1": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "random_0.25": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "random_0.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "random_1.5": {
+          "mean_accounted_usd": 4.81421832884097e-05,
+          "mean_hr": 0.14117250673854448,
+          "mean_ndcg": 0.06380152448200067
+        },
+        "rule_0.0": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "rule_0.1": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "rule_0.25": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "rule_0.5": {
+          "mean_accounted_usd": 0.0,
+          "mean_hr": 0.14150943396226415,
+          "mean_ndcg": 0.06405195874456857
+        },
+        "rule_1.5": {
+          "mean_accounted_usd": 0.000712,
+          "mean_hr": 0.1495956873315364,
+          "mean_ndcg": 0.06642748609255632
+        }
+      },
+      "users": 2968
+    }
+  },
+  "inference": "Descriptive validation after policy/hyperparameter selection; intervals do not account for selection and are not confirmatory",
+  "latency_scope": "batch service latency is unknown; no cached replay latency is substituted",
+  "methods": {
+    "fixed_0.0": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "fixed_0.1": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "fixed_0.25": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "fixed_0.5": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "fixed_1.5": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "fixed_R0": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "fixed_R1": {
+      "action_counts": {
+        "R0": 0,
+        "R1": 3318,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.000713056901748041,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.1479807112718505,
+      "mean_input_tokens_known": 3421.2845087402047,
+      "mean_llm_calls": 1.0,
+      "mean_ndcg": 0.06716764554094487,
+      "mean_output_tokens_known": 36.0,
+      "mean_repair": 0.0045207956600361665,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07315480195890996,
+        "ci_low": 0.06143963788935303,
+        "confidence": 0.95,
+        "difference": 0.06716764554094487,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "fixed_R2": {
+      "action_counts": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 3318,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0007136984327908379,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.1491862567811935,
+      "mean_input_tokens_known": 3424.4921639541894,
+      "mean_llm_calls": 1.0,
+      "mean_ndcg": 0.06748554869497236,
+      "mean_output_tokens_known": 36.0,
+      "mean_repair": 0.0039180229053646775,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07340834747864519,
+        "ci_low": 0.061834309558381824,
+        "confidence": 0.95,
+        "difference": 0.06748554869497236,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "fixed_R3": {
+      "action_counts": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 0,
+        "R3": 3318,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0015394247739602173,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.08740204942736589,
+      "mean_input_tokens_known": 7553.123869801085,
+      "mean_llm_calls": 1.0,
+      "mean_ndcg": 0.040342101903748775,
+      "mean_output_tokens_known": 36.0,
+      "mean_repair": 0.0018083182640144665,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.04541923911750787,
+        "ci_low": 0.03565664280201621,
+        "confidence": 0.95,
+        "difference": 0.040342101903748775,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "fixed_R4": {
+      "action_counts": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 3318
+      },
+      "mean_accounted_usd": 0.0015403560578661846,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.0867992766726944,
+      "mean_input_tokens_known": 7557.780289330923,
+      "mean_llm_calls": 1.0,
+      "mean_ndcg": 0.03999689663688747,
+      "mean_output_tokens_known": 36.0,
+      "mean_repair": 0.0015069318866787222,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.045040586386897424,
+        "ci_low": 0.035299797863417984,
+        "confidence": 0.95,
+        "difference": 0.03999689663688747,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "learned_0.0": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "learned_0.1": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "learned_0.25": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "learned_0.5": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "learned_1.5": {
+      "action_counts": {
+        "R0": 3144,
+        "R1": 90,
+        "R2": 60,
+        "R3": 6,
+        "R4": 18
+      },
+      "mean_accounted_usd": 4.418077154912598e-05,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14526823387582882,
+      "mean_input_tokens_known": 213.3523206751055,
+      "mean_llm_calls": 0.05244122965641953,
+      "mean_ndcg": 0.06800589349238442,
+      "mean_output_tokens_known": 1.8878842676311032,
+      "mean_repair": 0.0030138637733574444,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07411032360596607,
+        "ci_low": 0.06205475440550409,
+        "confidence": 0.95,
+        "difference": 0.06800589349238442,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "random_0.0": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "random_0.1": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "random_0.25": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "random_0.5": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "random_1.5": {
+      "action_counts": {
+        "R0": 3122,
+        "R1": 91,
+        "R2": 80,
+        "R3": 3,
+        "R4": 22
+      },
+      "mean_accounted_usd": 4.8376853526220613e-05,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14496684749849306,
+      "mean_input_tokens_known": 233.37793851717902,
+      "mean_llm_calls": 0.05907172995780591,
+      "mean_ndcg": 0.06667626543428366,
+      "mean_output_tokens_known": 2.1265822784810124,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.0726862091983747,
+        "ci_low": 0.06090552423688184,
+        "confidence": 0.95,
+        "difference": 0.06667626543428366,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "rule_0.0": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "rule_0.1": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "rule_0.25": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "rule_0.5": {
+      "action_counts": {
+        "R0": 3318,
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.14466546112115733,
+      "mean_input_tokens_known": 0.0,
+      "mean_llm_calls": 0.0,
+      "mean_ndcg": 0.06655572819112526,
+      "mean_output_tokens_known": 0.0,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07252356454114106,
+        "ci_low": 0.06078722913745649,
+        "confidence": 0.95,
+        "difference": 0.06655572819112526,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    },
+    "rule_1.5": {
+      "action_counts": {
+        "R0": 350,
+        "R1": 2968,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0
+      },
+      "mean_accounted_usd": 0.0006368945147679325,
+      "mean_cached_tokens_known": 0.0,
+      "mean_candidate_recall": 0.5539481615430982,
+      "mean_failed": 0.0,
+      "mean_hr": 0.1518987341772152,
+      "mean_input_tokens_known": 3055.662447257384,
+      "mean_llm_calls": 0.8945147679324894,
+      "mean_ndcg": 0.0686806724855278,
+      "mean_output_tokens_known": 32.20253164556962,
+      "mean_repair": 0.0,
+      "mean_service_ms": null,
+      "ndcg_interval": {
+        "ci_high": 0.07469796030751352,
+        "ci_low": 0.06285410800509766,
+        "confidence": 0.95,
+        "difference": 0.0686806724855278,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "p95_service_ms": null,
+      "requests": 3318,
+      "unknown_usage_requests": 0,
+      "users": 3318
+    }
+  },
+  "primary_comparison": [
+    "learned_0.25",
+    "rule_0.25"
+  ],
+  "primary_metric": "ndcg",
+  "random_control_diagnostics": {
+    "random_0.0": {
+      "allocation_seed_sensitivity": [
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 11
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 97
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 2027
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 4099
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 9001
+        }
+      ],
+      "expected_accounted_usd": 0.0,
+      "expected_ndcg": 0.06655572819112526,
+      "learned_minus_expected_random_ndcg": {
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "scope": "Exact policy expectation over the real outcome matrix, plus frozen seed variation; no additional calls or independent users"
+    },
+    "random_0.1": {
+      "allocation_seed_sensitivity": [
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 11
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 97
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 2027
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 4099
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 9001
+        }
+      ],
+      "expected_accounted_usd": 0.0,
+      "expected_ndcg": 0.06655572819112526,
+      "learned_minus_expected_random_ndcg": {
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "scope": "Exact policy expectation over the real outcome matrix, plus frozen seed variation; no additional calls or independent users"
+    },
+    "random_0.25": {
+      "allocation_seed_sensitivity": [
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 11
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 97
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 2027
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 4099
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 9001
+        }
+      ],
+      "expected_accounted_usd": 0.0,
+      "expected_ndcg": 0.06655572819112526,
+      "learned_minus_expected_random_ndcg": {
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "scope": "Exact policy expectation over the real outcome matrix, plus frozen seed variation; no additional calls or independent users"
+    },
+    "random_0.5": {
+      "allocation_seed_sensitivity": [
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 11
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 97
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 2027
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 4099
+        },
+        {
+          "mean_accounted_usd": 0.0,
+          "mean_ndcg": 0.06655572819112526,
+          "seed": 9001
+        }
+      ],
+      "expected_accounted_usd": 0.0,
+      "expected_ndcg": 0.06655572819112526,
+      "learned_minus_expected_random_ndcg": {
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "scope": "Exact policy expectation over the real outcome matrix, plus frozen seed variation; no additional calls or independent users"
+    },
+    "random_1.5": {
+      "allocation_seed_sensitivity": [
+        {
+          "mean_accounted_usd": 4.235647980711273e-05,
+          "mean_ndcg": 0.06638751853233235,
+          "seed": 11
+        },
+        {
+          "mean_accounted_usd": 5.12968655816757e-05,
+          "mean_ndcg": 0.06653030743149829,
+          "seed": 97
+        },
+        {
+          "mean_accounted_usd": 4.5567510548523217e-05,
+          "mean_ndcg": 0.06694640067595993,
+          "seed": 2027
+        },
+        {
+          "mean_accounted_usd": 3.846968053044002e-05,
+          "mean_ndcg": 0.0668779539068931,
+          "seed": 4099
+        },
+        {
+          "mean_accounted_usd": 5.095955394816154e-05,
+          "mean_ndcg": 0.06604804622596679,
+          "seed": 9001
+        }
+      ],
+      "expected_accounted_usd": 4.4180771549124287e-05,
+      "expected_ndcg": 0.06639476760200513,
+      "learned_minus_expected_random_ndcg": {
+        "ci_high": 0.003188688386362473,
+        "ci_low": 9.952548676525598e-05,
+        "confidence": 0.95,
+        "difference": 0.0016111258903792859,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "scope": "Exact policy expectation over the real outcome matrix, plus frozen seed variation; no additional calls or independent users"
+    }
+  },
+  "secondary_budget_comparisons": {
+    "learned_0.0_minus_random_0.0": {
+      "accounted_usd": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": 0.0,
+        "one_sided_confidence": 0.95,
+        "supported": false,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    },
+    "learned_0.0_minus_rule_0.0": {
+      "accounted_usd": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": 0.0,
+        "one_sided_confidence": 0.95,
+        "supported": false,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    },
+    "learned_0.1_minus_random_0.1": {
+      "accounted_usd": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": 0.0,
+        "one_sided_confidence": 0.95,
+        "supported": false,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    },
+    "learned_0.1_minus_rule_0.1": {
+      "accounted_usd": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": 0.0,
+        "one_sided_confidence": 0.95,
+        "supported": false,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    },
+    "learned_0.25_minus_random_0.25": {
+      "accounted_usd": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": 0.0,
+        "one_sided_confidence": 0.95,
+        "supported": false,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    },
+    "learned_0.25_minus_rule_0.25": {
+      "accounted_usd": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": 0.0,
+        "one_sided_confidence": 0.95,
+        "supported": false,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    },
+    "learned_0.5_minus_random_0.5": {
+      "accounted_usd": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": 0.0,
+        "one_sided_confidence": 0.95,
+        "supported": false,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    },
+    "learned_0.5_minus_rule_0.5": {
+      "accounted_usd": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": true,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "confidence": 0.95,
+        "difference": 0.0,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": 0.0,
+        "one_sided_confidence": 0.95,
+        "supported": false,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    },
+    "learned_1.5_minus_random_1.5": {
+      "accounted_usd": {
+        "bootstrap_degenerate": false,
+        "ci_high": 5.495991561181431e-06,
+        "ci_low": -1.395958860759493e-05,
+        "confidence": 0.95,
+        "difference": -4.196081977094636e-06,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": false,
+        "ci_high": 0.003616636528028933,
+        "ci_low": -0.003315250150693189,
+        "confidence": 0.95,
+        "difference": 0.0003013863773357444,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": false,
+        "ci_high": 0.003102761518163934,
+        "ci_low": -0.000413026914245998,
+        "confidence": 0.95,
+        "difference": 0.001329628058100754,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": -0.00013580074556226041,
+        "one_sided_confidence": 0.95,
+        "supported": true,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    },
+    "learned_1.5_minus_rule_1.5": {
+      "accounted_usd": {
+        "bootstrap_degenerate": false,
+        "ci_high": -0.0005794825452079566,
+        "ci_low": -0.0006050671081977094,
+        "confidence": 0.95,
+        "difference": -0.0005927137432188065,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "bootstrap_degenerate": false,
+        "ci_high": -0.0024110910186859553,
+        "ci_low": -0.0108499095840868,
+        "confidence": 0.95,
+        "difference": -0.006630500301386378,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "bootstrap_degenerate": false,
+        "ci_high": 0.0012027129714059367,
+        "ci_low": -0.0024948866717924775,
+        "confidence": 0.95,
+        "difference": -0.0006747789931433768,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "noninferiority": {
+        "epsilon": 0.002,
+        "lower_bound": -0.002205126534291135,
+        "one_sided_confidence": 0.95,
+        "supported": false,
+        "warning": "Specific to the frozen margin and sampling/model-output realization"
+      },
+      "users": 3318
+    }
+  },
+  "secondary_budget_inference": "Exploratory nominal intervals across the registered budget grid; the primary comparison is unchanged"
+}

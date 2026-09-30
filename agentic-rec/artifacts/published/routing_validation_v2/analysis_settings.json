@@ -1,0 +1,80 @@
+{
+  "bootstrap_repetitions": 10000,
+  "comparisons": [
+    [
+      "learned_0.25",
+      "rule_0.25"
+    ],
+    [
+      "learned_0.25",
+      "random_0.25"
+    ],
+    [
+      "learned_0.25",
+      "fixed_R4"
+    ],
+    [
+      "fixed_R1",
+      "fixed_R0"
+    ],
+    [
+      "fixed_R4",
+      "fixed_R0"
+    ]
+  ],
+  "confidence": 0.95,
+  "group_boundaries": [
+    [
+      "zero",
+      0,
+      1
+    ],
+    [
+      "one",
+      1,
+      2
+    ],
+    [
+      "at_least_two",
+      2,
+      1000000
+    ]
+  ],
+  "inference_scope": "Descriptive validation after policy/hyperparameter selection; intervals do not account for selection and are not confirmatory",
+  "minimum_group_users_for_interval": 30,
+  "noninferiority_tolerance": 0.002,
+  "primary_budget_usd_per_1000": 0.25,
+  "primary_comparison": [
+    "learned_0.25",
+    "rule_0.25"
+  ],
+  "primary_metric": "ndcg",
+  "random_sensitivity_interpretation": "secondary_full_information_expectation_and_seed_variation",
+  "random_sensitivity_seeds": [
+    11,
+    97,
+    2027,
+    4099,
+    9001
+  ],
+  "secondary_comparisons": [
+    [
+      "learned",
+      "random"
+    ],
+    [
+      "learned",
+      "fixed_R4"
+    ],
+    [
+      "fixed_R1",
+      "fixed_R0"
+    ],
+    [
+      "fixed_R4",
+      "fixed_R0"
+    ]
+  ],
+  "secondary_inference": "exploratory_nominal_intervals",
+  "seed": 42
+}

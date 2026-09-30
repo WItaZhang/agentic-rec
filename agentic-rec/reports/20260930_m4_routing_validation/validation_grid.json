@@ -1,0 +1,618 @@
+[
+  {
+    "action_counts": {
+      "R0": 180,
+      "R1": 3033,
+      "R2": 69,
+      "R3": 20,
+      "R4": 16
+    },
+    "id": "learned_0_weight_0.0",
+    "kind": "learned",
+    "mean_accounted_usd": 0.0006833414707655214,
+    "ndcg": 0.06826034366866855,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3156,
+      "R1": 68,
+      "R2": 63,
+      "R3": 16,
+      "R4": 15
+    },
+    "id": "learned_0_weight_0.001",
+    "kind": "learned",
+    "mean_accounted_usd": 4.343447860156721e-05,
+    "ndcg": 0.06623971236308826,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3164,
+      "R1": 71,
+      "R2": 60,
+      "R3": 9,
+      "R4": 14
+    },
+    "id": "learned_0_weight_0.003",
+    "kind": "learned",
+    "mean_accounted_usd": 3.968481012658228e-05,
+    "ndcg": 0.06634555979825431,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3179,
+      "R1": 71,
+      "R2": 57,
+      "R3": 1,
+      "R4": 10
+    },
+    "id": "learned_0_weight_0.01",
+    "kind": "learned",
+    "mean_accounted_usd": 3.3411754068716095e-05,
+    "ndcg": 0.06653571343103654,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3217,
+      "R1": 55,
+      "R2": 45,
+      "R3": 0,
+      "R4": 1
+    },
+    "id": "learned_0_weight_0.03",
+    "kind": "learned",
+    "mean_accounted_usd": 2.252857142857143e-05,
+    "ndcg": 0.06648359504215674,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3295,
+      "R1": 15,
+      "R2": 8,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "learned_0_weight_0.1",
+    "kind": "learned",
+    "mean_accounted_usd": 5.05370705244123e-06,
+    "ndcg": 0.06670106195821207,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3318,
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "learned_0_weight_0.3",
+    "kind": "learned",
+    "mean_accounted_usd": 0.0,
+    "ndcg": 0.06655572819112526,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3318,
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "learned_0_weight_1.0",
+    "kind": "learned",
+    "mean_accounted_usd": 0.0,
+    "ndcg": 0.06655572819112526,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 187,
+      "R1": 3035,
+      "R2": 64,
+      "R3": 16,
+      "R4": 16
+    },
+    "id": "learned_1_weight_0.0",
+    "kind": "learned",
+    "mean_accounted_usd": 0.0006808179626280892,
+    "ndcg": 0.06821934877821038,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3156,
+      "R1": 69,
+      "R2": 64,
+      "R3": 14,
+      "R4": 15
+    },
+    "id": "learned_1_weight_0.001",
+    "kind": "learned",
+    "mean_accounted_usd": 4.293791440626884e-05,
+    "ndcg": 0.06619486660958643,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3161,
+      "R1": 72,
+      "R2": 61,
+      "R3": 10,
+      "R4": 14
+    },
+    "id": "learned_1_weight_0.003",
+    "kind": "learned",
+    "mean_accounted_usd": 4.059186256781194e-05,
+    "ndcg": 0.06634555979825431,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3178,
+      "R1": 72,
+      "R2": 58,
+      "R3": 1,
+      "R4": 9
+    },
+    "id": "learned_1_weight_0.01",
+    "kind": "learned",
+    "mean_accounted_usd": 3.337329716696805e-05,
+    "ndcg": 0.06662283363185567,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3227,
+      "R1": 45,
+      "R2": 46,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "learned_1_weight_0.03",
+    "kind": "learned",
+    "mean_accounted_usd": 2.0096383363471975e-05,
+    "ndcg": 0.06659956499957456,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3302,
+      "R1": 10,
+      "R2": 6,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "learned_1_weight_0.1",
+    "kind": "learned",
+    "mean_accounted_usd": 3.5300180831826403e-06,
+    "ndcg": 0.06670106195821207,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3318,
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "learned_1_weight_0.3",
+    "kind": "learned",
+    "mean_accounted_usd": 0.0,
+    "ndcg": 0.06655572819112526,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3318,
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "learned_1_weight_1.0",
+    "kind": "learned",
+    "mean_accounted_usd": 0.0,
+    "ndcg": 0.06655572819112526,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 128,
+      "R1": 3056,
+      "R2": 70,
+      "R3": 32,
+      "R4": 32
+    },
+    "id": "learned_2_weight_0.0",
+    "kind": "learned",
+    "mean_accounted_usd": 0.0007015492465340566,
+    "ndcg": 0.06943988208364922,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3108,
+      "R1": 88,
+      "R2": 63,
+      "R3": 28,
+      "R4": 31
+    },
+    "id": "learned_2_weight_0.001",
+    "kind": "learned",
+    "mean_accounted_usd": 6.0787522603978294e-05,
+    "ndcg": 0.06737851077709542,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3115,
+      "R1": 87,
+      "R2": 63,
+      "R3": 25,
+      "R4": 28
+    },
+    "id": "learned_2_weight_0.003",
+    "kind": "learned",
+    "mean_accounted_usd": 5.776365280289331e-05,
+    "ndcg": 0.06733583093027337,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3144,
+      "R1": 90,
+      "R2": 60,
+      "R3": 6,
+      "R4": 18
+    },
+    "id": "learned_2_weight_0.01",
+    "kind": "learned",
+    "mean_accounted_usd": 4.418077154912598e-05,
+    "ndcg": 0.06800589349238442,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3186,
+      "R1": 76,
+      "R2": 51,
+      "R3": 1,
+      "R4": 4
+    },
+    "id": "learned_2_weight_0.03",
+    "kind": "learned",
+    "mean_accounted_usd": 3.023381555153707e-05,
+    "ndcg": 0.06740832964927392,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3307,
+      "R1": 9,
+      "R2": 2,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "learned_2_weight_0.1",
+    "kind": "learned",
+    "mean_accounted_usd": 2.401928872814949e-06,
+    "ndcg": 0.06636557455834302,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3318,
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "learned_2_weight_0.3",
+    "kind": "learned",
+    "mean_accounted_usd": 0.0,
+    "ndcg": 0.06655572819112526,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3318,
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "learned_2_weight_1.0",
+    "kind": "learned",
+    "mean_accounted_usd": 0.0,
+    "ndcg": 0.06655572819112526,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3111,
+      "R1": 81,
+      "R2": 61,
+      "R3": 25,
+      "R4": 40
+    },
+    "id": "learned_3_weight_0.0",
+    "kind": "learned",
+    "mean_accounted_usd": 6.163791440626884e-05,
+    "ndcg": 0.06736733475881576,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3111,
+      "R1": 83,
+      "R2": 62,
+      "R3": 25,
+      "R4": 37
+    },
+    "id": "learned_3_weight_0.001",
+    "kind": "learned",
+    "mean_accounted_usd": 6.088764315852923e-05,
+    "ndcg": 0.06746779688459434,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3116,
+      "R1": 82,
+      "R2": 64,
+      "R3": 23,
+      "R4": 33
+    },
+    "id": "learned_3_weight_0.003",
+    "kind": "learned",
+    "mean_accounted_usd": 5.828233875828813e-05,
+    "ndcg": 0.06730097365557047,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3132,
+      "R1": 84,
+      "R2": 62,
+      "R3": 20,
+      "R4": 20
+    },
+    "id": "learned_3_weight_0.01",
+    "kind": "learned",
+    "mean_accounted_usd": 5.079282700421941e-05,
+    "ndcg": 0.06771507544819073,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3178,
+      "R1": 71,
+      "R2": 61,
+      "R3": 2,
+      "R4": 6
+    },
+    "id": "learned_3_weight_0.03",
+    "kind": "learned",
+    "mean_accounted_usd": 3.2636106088004826e-05,
+    "ndcg": 0.06737310680453899,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3293,
+      "R1": 14,
+      "R2": 11,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "learned_3_weight_0.1",
+    "kind": "learned",
+    "mean_accounted_usd": 5.450753465943339e-06,
+    "ndcg": 0.06636557455834302,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3318,
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "learned_3_weight_0.3",
+    "kind": "learned",
+    "mean_accounted_usd": 0.0,
+    "ndcg": 0.06655572819112526,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3318,
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "learned_3_weight_1.0",
+    "kind": "learned",
+    "mean_accounted_usd": 0.0,
+    "ndcg": 0.06655572819112526,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3318,
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "base",
+    "kind": "rule",
+    "mean_accounted_usd": 0.0,
+    "ndcg": 0.06655572819112526,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 2968,
+      "R1": 350,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "recent_if_history",
+    "kind": "rule",
+    "mean_accounted_usd": 7.61623869801085e-05,
+    "ndcg": 0.06504270124654232,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 2968,
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 350
+    },
+    "id": "full_if_history",
+    "kind": "rule",
+    "mean_accounted_usd": 0.00016459234478601565,
+    "ndcg": 0.06400898945395941,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 2968,
+      "R1": 247,
+      "R2": 0,
+      "R3": 0,
+      "R4": 103
+    },
+    "id": "full_if_older",
+    "kind": "rule",
+    "mean_accounted_usd": 0.0001028168776371308,
+    "ndcg": 0.06513842818643842,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 2968,
+      "R1": 276,
+      "R2": 0,
+      "R3": 0,
+      "R4": 74
+    },
+    "id": "full_if_negative",
+    "kind": "rule",
+    "mean_accounted_usd": 9.498577456298976e-05,
+    "ndcg": 0.0646108833612294,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 350,
+      "R1": 2968,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "recent_if_no_history",
+    "kind": "rule",
+    "mean_accounted_usd": 0.0006368945147679325,
+    "ndcg": 0.0686806724855278,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 103,
+      "R1": 3215,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "recent_unless_older",
+    "kind": "rule",
+    "mean_accounted_usd": 0.0006906307414104883,
+    "ndcg": 0.06885505637602615,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 3318,
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "fixed_R0",
+    "kind": "fixed",
+    "mean_accounted_usd": 0.0,
+    "ndcg": 0.06655572819112526,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 0,
+      "R1": 3318,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "fixed_R1",
+    "kind": "fixed",
+    "mean_accounted_usd": 0.000713056901748041,
+    "ndcg": 0.06716764554094487,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 0,
+      "R1": 0,
+      "R2": 3318,
+      "R3": 0,
+      "R4": 0
+    },
+    "id": "fixed_R2",
+    "kind": "fixed",
+    "mean_accounted_usd": 0.0007136984327908379,
+    "ndcg": 0.06748554869497236,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 0,
+      "R1": 0,
+      "R2": 0,
+      "R3": 3318,
+      "R4": 0
+    },
+    "id": "fixed_R3",
+    "kind": "fixed",
+    "mean_accounted_usd": 0.0015394247739602173,
+    "ndcg": 0.040342101903748775,
+    "requests": 3318
+  },
+  {
+    "action_counts": {
+      "R0": 0,
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 3318
+    },
+    "id": "fixed_R4",
+    "kind": "fixed",
+    "mean_accounted_usd": 0.0015403560578661846,
+    "ndcg": 0.03999689663688747,
+    "requests": 3318
+  }
+]
