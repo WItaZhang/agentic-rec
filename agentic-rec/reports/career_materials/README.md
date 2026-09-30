@@ -3,6 +3,7 @@
 These materials describe completed engineering and **development** experiments as of 2026-09-30. They do not present an unfinished research project as finished. The previous billing block is resolved. Complete weighted routing validation is available; strong-base/presentation controls and the frozen final test are still pending. Update this directory after those stages complete; do not silently replace “validation” with “test.”
 
 - [English LaTeX project description](resume_project.tex), a fragment requiring `hyperref` in the enclosing résumé.
+- [Standalone LaTeX preview](resume_preview.tex), with a visible development-status notice. It embeds the fragment so the built-in editor needs no additional project files. The native compiler currently fails with “Unable to find standard directories for platform”; compilation/layout are unverified, and no PDF is claimed. See [compiler status](latex_compile_status.json).
 - [Interview explanation and questions](INTERVIEW.md).
 - [Working study](../adaptive_evidence_study/STUDY.md), [population validation](../20260925_m3_evidence_validation/README.md), [equal-token diagnostic](../20260925_m3_content_control/README.md).
 

@@ -1,3 +1,18 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\hypersetup{colorlinks=true,urlcolor=blue}
+\setlength{\parindent}{0pt}
+\setlist[itemize]{leftmargin=1.2em,itemsep=0.55em,topsep=0.5em}
+\pagestyle{empty}
+\begin{document}
+{\Large\bfseries Recommendation Research Project}\par
+\vspace{0.5em}
+{\small Development-stage excerpt, September 30, 2026. Final test and controlled serving audit pending.}\par
+\vspace{1.2em}
 % Verified development-stage claims as of 2026-09-30; not a final-test result.
 % Paste into the projects section of an English recommendation/ML resume.
 \noindent\textbf{Adaptive Evidence for Recommendation}
@@ -7,3 +22,5 @@
   \item Trained cost-aware utility routers on real action outcomes for 1,045 earlier-period users, using inverse-inclusion weights and validation-selected Ridge/boosting models; compared fixed workflows, rules, and budget-matched random allocation and reproduced all four fitted checkpoints and 25 policies' validation decisions offline.
   \item Evaluated four evidence configurations on 3,318 validation users with paired bootstrap intervals and provider token accounting; full evidence reduced NDCG@10 by 0.02656 versus ItemKNN. A 478-user, exactly token-matched category-alignment control exposed different effects across history groups; the primary routing budget selected all-base validation actions.
 \end{itemize}
+
+\end{document}

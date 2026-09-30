@@ -1,0 +1,9 @@
+{
+  "source": "resume_preview.tex",
+  "status": "unverified_compilation",
+  "compiler": "Codex built-in LaTeX compiler",
+  "tool_kind": "compile-failed",
+  "diagnostic": "Unable to find standard directories for platform",
+  "interpretation": "Compiler environment failed before reporting a LaTeX source error. Source is preserved; no PDF generation or layout verification is claimed.",
+  "date": "2026-09-30"
+}
