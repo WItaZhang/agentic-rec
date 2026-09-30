@@ -75,3 +75,5 @@ uv run --locked --extra yaml --extra experiments python main.py --config configs
 ```
 
 The separate candidate-row presentation diagnostic is still running. Final generations, final quality conclusions and controlled serving latency are pending.
+
+Python 3.12 verification initially found only ~1e-13 USD drift from changed built-in float summation, with all quality fields identical. Explicit original-order reductions preserve the published numbers and the unchanged 1e-14 tolerance. The [Python 3.12 replay](archive_reanalysis_python312_manifest.json), `logs/20260930_230423_sequence_validation_archive_reanalysis`, now reproduces every field exactly.

@@ -79,6 +79,10 @@ and requires exact nonnumeric fields/counts and floating values within the
 declared absolute tolerance `1e-14`. The tolerance covers last-bit reduction
 roundoff, far below any quality-selection margin. It does not
 read raw reviews, models or credential files and does not execute API calls.
+Published monetary aggregates use explicit left-to-right additions, preserving
+the original Python 3.11 reductions across versions. Python 3.12 changed its
+built-in float summation; the explicit order avoids approximately 1e-13 USD
+drift without changing archive values or widening verification tolerances.
 
 ## Paid calls and secrets
 
