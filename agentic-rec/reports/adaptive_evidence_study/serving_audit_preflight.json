@@ -1,0 +1,61 @@
+{
+  "additional_expected_usd": 0.1829183999999976,
+  "additional_maximum_usd": 0.23372160000000353,
+  "all_actions_match": true,
+  "allocations": {
+    "base": {
+      "R0": 128
+    },
+    "causal_sequence": {
+      "R0": 128
+    },
+    "full": {
+      "R4": 128
+    },
+    "learned": {
+      "R0": 128
+    },
+    "learned_1.5": {
+      "R0": 124,
+      "R1": 1,
+      "R2": 2,
+      "R4": 1
+    },
+    "popularity": {
+      "R0": 128
+    },
+    "random": {
+      "R0": 128
+    },
+    "random_1.5": {
+      "R0": 121,
+      "R1": 2,
+      "R2": 4,
+      "R4": 1
+    },
+    "recent": {
+      "R1": 128
+    },
+    "rule": {
+      "R0": 128
+    },
+    "rule_1.5": {
+      "R0": 13,
+      "R1": 115
+    }
+  },
+  "campaign_conservative_forecast_usd": 42.0812432,
+  "cap_usd": 2.5,
+  "config_sha256": "7a20fbd303d6ef3594bea64f863d291770f10dd677c9df338475d11a95c46b40",
+  "expected_uncached_usd_using_validation_output_lengths": 0.7596523999999985,
+  "freeze_sha256": "e18d278b55775c4b2610cdacf6880be6088aa428485da47821fe4220cb3c39b5",
+  "frozen_validation_action_checks": 768,
+  "generation_attempts_planned": 382,
+  "input_tokens_precounted": 1844123,
+  "maximum_reserved_usd": 0.9136748000000053,
+  "requests": 1408,
+  "scope": "Target-free resource planning on the same prespecified validation users; no service call or quality evaluation. Independently executed primary and secondary methods share runtime conditions; provider cache hits remain unknown until execution.",
+  "status": "planned_not_executed",
+  "users": 128,
+  "validation_decisions_sha256": "c03c5bd0d8c9cf0a859ad9c3211ffa5b24c700babe1b2749b071a0365c0cc8c6"
+}

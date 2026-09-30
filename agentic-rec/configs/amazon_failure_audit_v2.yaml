@@ -1,0 +1,23 @@
+# Supplemental case list registered before final generation/scoring; v1 is preserved.
+# Bind matrix_run only after the entire frozen test has been evaluated.
+seed: 42
+failure_analysis:
+  policies:
+  - fixed_R1
+  - fixed_R4
+  - rule_0.25
+  - learned_0.25
+  - rule_1.5
+  - random_1.5
+  - learned_1.5
+  cases_per_class: 3
+  history_items_per_case: 3
+diagnostic_scope:
+  primary_unchanged: true
+  secondary_scope: Exploratory post-evaluation cases for already frozen active policies;
+    no model or method selection
+  reason: Primary-budget routes select R0 for every prepared final request; retain
+    them and additionally explain actual LLM allocations at the registered secondary
+    budget
+  selection: Same fixed hash seed and case count for every overlapping observable
+    error class

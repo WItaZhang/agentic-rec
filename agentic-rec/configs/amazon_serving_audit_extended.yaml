@@ -1,0 +1,47 @@
+seed: 314159
+audit:
+  users: 128
+  methods:
+  - base
+  - popularity
+  - causal_sequence
+  - recent
+  - full
+  - rule
+  - random
+  - learned
+  - rule_1.5
+  - random_1.5
+  - learned_1.5
+  concurrency: 1
+  cpu_threads: 2
+  rate_limits:
+    tokens_per_minute: 120000
+    requests_per_minute: 60
+  freeze_path: artifacts/frozen_protocol/v1/freeze.json
+  validation_prepared_run: logs/20260924_004459_amazon_validation_matrix_prepare
+  additional_budget_points:
+  - 1.5
+budget:
+  total_paid_usd: 50
+  per_run_paid_usd: 2.5
+  stop_at_usd: 45
+  ledger_path: logs/budget/openai_ledger.jsonl
+  cloud_rental_allowed: false
+  stop_on_unknown_usage: true
+  stop_on_api_error: true
+experiment_name: amazon_serving_audit_extended
+stage: serving_resource_audit
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+registration:
+  reason: Measure active frozen secondary policies alongside unchanged primary policies;
+    primary allocations are all R0
+  scope: Resource-only extension before final scoring; same validation users and runtime
+    conditions, no quality selection
+  supersedes_unexecuted_config: configs/amazon_serving_audit.yaml
+  original_preserved: true

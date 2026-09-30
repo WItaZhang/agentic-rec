@@ -267,3 +267,26 @@ realizations; it is not an isolated embedding effect or a routing improvement.
 Empty-history R1 has a small positive difference, which cannot come from personal
 history. The negative full-evidence result persists after strengthening the base.
 These controls do not change the already frozen final choices.
+
+## Sequential scope decision before final scoring
+
+The implemented research scope remains request-level evidence selection and
+one-call reranking. We do not add a sequential, post-tool controller to this
+campaign. On complete development data, full evidence harms both base
+recommenders; recent evidence has no established overall advantage; and the
+learned allocator has not established quality preservation against the simple
+rule or superiority over the frozen random control. The equal-token control
+shows that category alignment matters in some groups, but does not demonstrate
+that observing an intermediate tool result creates an additional useful
+decision. Identical-input output variability also prevents treating the
+label-aware action oracle as proof of learnable sequential gain.
+
+This is a conditional scope decision under the original research route, not an
+experimental finding that multistep acquisition is ineffective. No post-tool
+policy, adaptive stopping rule, reflection, model-generated summary or
+multistep-versus-full-evidence comparison was executed. That question remains
+unmeasured. A later extension would need a concrete, prediction-time observable
+intermediate result and a separate comparison against the same one-call
+evidence and cost controls. The remaining presentation diagnostic, frozen final
+test and synchronous resource audit are still required to finish the selected
+scope; this decision does not end the project.
