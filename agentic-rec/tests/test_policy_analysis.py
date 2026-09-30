@@ -56,5 +56,8 @@ def test_additional_base_comparison_aligns_requests_and_keeps_cold_targets():
     assert result['mean_ndcg'] == .5
     assert result['cold_targets'] == 1
     assert result['ndcg_minus_main_base']['difference'] == .5
+    assert result['ndcg_interval']['difference'] == .5
+    assert result['ndcg_interval']['ci_low'] == 0.0
+    assert result['ndcg_interval']['ci_high'] == 1.0
     with pytest.raises(ValueError, match='exactly once'):
         compare_additional_baselines(extra + extra[:1], rows, settings)

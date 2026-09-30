@@ -5,7 +5,7 @@ checkpoint is at the bottom; historical spending/status entries are not current 
 
 ## Authorization and resources
 
-- Branch: `codex/control-results`; repository default:
+- Branch: `codex/robustness-results`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
 - Paid API authorization updated by user: **USD 50 total**, estimate each round.
   First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
@@ -43,7 +43,7 @@ checkpoint is at the bottom; historical spending/status entries are not current 
 | M3 fixed evidence | complete primary validation; controls running | `72deac0`, `d8b22f6`; [complete validation](../../reports/20260925_m3_evidence_validation/README.md) | R1 overall gain unestablished; R4 −0.026559 NDCG with negative paired interval. History-state directions differ. |
 | M4 routing | fitted and validation analyzed | `4ee41e1`, `adc13e6`; [routing report](../../reports/20260930_m4_routing_validation/README.md); `configs/amazon_routing_development_v2.yaml` | Primary selected validation actions all R0; secondary quality preservation unestablished. Four model hashes and every validation action reproduce offline. Practical selection: causal sequence model. |
 | M5 sequential evidence | conditional | No implementation claimed | Only pursue if observations after fetching evidence can improve a decision. |
-| M6 final test/report/materials | pending final freeze/test; development reports published | Claim ledger tied to completed results; `configs/amazon_final_protocol_plan_v1.yaml` | Finish strong-base and presentation controls, freeze unchanged validation choices, then final test, serving/resource audit and final materials. |
+| M6 final test/report/materials | immutable freeze and target-free inputs complete; test ungenerated/unscored | `artifacts/frozen_protocol/v1`; `logs/20260930_211006_amazon_final_test_prepare` | Finish diagnostic controls without changing selection, then final test, serving/resource audit and final materials. |
 
 Initial M2 checkpoint (superseded by the live checkpoints below): durable paid-call
 accounting, target-free R1–R4 evidence, real API smoke, then a variance-sized pilot.
@@ -497,3 +497,26 @@ but has not yet run on completed expanded labels. Latest full local suite:
 - Published [resource snapshot](../../reports/20260930_resource_checkpoint/README.md) and sanitized archive `artifacts/published/resources_checkpoint_20260930`; replay `logs/20260930_213718_resource_checkpoint_archive_replay` (`124a614`) has maximum numerical difference **zero**. Its config is `configs/resource_checkpoint_archive_replay.yaml`. This is explicitly interim, not a final resource total; final audit still requires no pending/running experiment.
 - Latest local verification: **136 tests and Ruff pass**. The published accounting replay is now also a Python 3.11/3.12 CI check. Prompt, model, utility grid, group thresholds, quality tolerance and final selection remain frozen and unchanged.
 - The standalone English excerpt source is saved, but the native compiler's platform-directory error still prevents verified compilation. The optional preview does not block research execution; no compiled PDF is claimed.
+
+
+## 2026-09-30: robustness results continuation
+
+- PR [#11](https://github.com/WItaZhang/agentic-rec/pull/11) merged at `fd9149f` after exact-head Python 3.11/3.12 CI, including public accounting replay, and no unresolved review issues. Current branch `codex/robustness-results`.
+- Revalidated the original sequence scheduler (session 52809) and queued presentation launcher (38021); both remain live. No duplicate process was started. Final preparation is completed and frozen; no final generation or scoring has run.
+- The strong-retriever offline replay configuration binds the archive path already registered by the paired robustness analysis. Diagnostic findings cannot change frozen final choices.
+
+- At 22:06 UTC, the original sequence run had 126/127 shards collected; shard 119 had 50/51 provider requests completed, zero failed, and remained `in_progress`. The last unfinished request is retained; the scheduler and queued presentation launcher are alive. No duplicate generation or partial-matrix evaluation is authorized by this checkpoint.
+- Label-free inspection of the immutable final decisions confirms all 3,572 primary-budget learned/rule/random/fixed decisions are R0. At secondary envelope 1.5, the learned policy assigns 3,329 R0 / 96 R1 / 96 R2 / 23 R3 / 28 R4; these are already frozen inference decisions, not test-quality findings. The primary comparison will retain its degenerate-result guard; no policy is retuned to force activity.
+- Latest checkpoint `logs/CURRENT_CHECKPOINT.json` binds active handles, fresh ledger totals, final-input location and frozen action counts. Presentation dispatch remains automatic only after complete sequence collection. Next concrete step: evaluate the completed sequence matrix, publish/reanalyze its derived archive, then run the registered cross-retriever paired sensitivity analysis.
+
+
+## 2026-09-30: bounded overlap around one slow provider tail
+
+- Direct provider listing confirms the only active Batch is the known 51-request sequence shard, with 50 completed / zero failed. Every sequence shard has already been submitted, so its remaining queued input can only decrease. Waiting on one slow asynchronous request was blocking independent diagnostics.
+- Stopped queued launcher session 38021 (exit 1 from explicit interrupt) before any presentation directory or child dispatch existed. It must **not** be resumed. The original sequence scheduler 52809 remains untouched, retaining the final request and its reservation.
+- New unstarted config `configs/amazon_presentation_control_batch_overlap_tail.yaml` lowers presentation inflight input to 900,000. Together with the entire outstanding sequence shard (299,596 tokens), aggregate queued input is at most **1,199,596**, below the already adopted 1.2M cap. Provider listing, local state guard and cost preflight are saved in `logs/budget/presentation_tail_overlap_preflight.json`.
+- Presentation input, models, seeds, budget and generation retries are unchanged: expected USD 7.4874418, maximum 8.8252594, cap 9. Only submission scheduling changes. This replaces the earlier single-scheduler gate for this bounded tail; final test still waits for both complete diagnostic analyses. No partial matrix is scored.
+
+- Presentation dispatch is now live at `logs/20260930_220737_amazon_presentation_control_batch_overlap_tail`, runtime source `faff7ac`, session **56214**, 123 shards. One file-upload-only recovery completed with the original 55 reservations and no generation retry. The earlier queued launcher 38021 is terminal and must not be restarted. Sequence scheduler 52809 is still waiting on its retained tail.
+- Added [delivery evidence audit](../../reports/adaptive_evidence_study/DELIVERY_AUDIT.md), distinguishing verified development evidence from pending final, serving and reporting work.
+- Final quality-cost plotting now includes both frozen conventional baselines at zero API cost with their own-candidate-pool labels and user-bootstrap marginal quality intervals. This display-only addition does not change method selection, pairwise comparisons or frozen inference. Offline final archive reanalysis regenerates the same complete plot. Full local **136 tests and Ruff pass**; final rendering still awaits actual final outcomes.

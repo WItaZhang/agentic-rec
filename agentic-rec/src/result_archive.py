@@ -121,13 +121,14 @@ def run_archive_analysis(config, config_path, root):
             plans = sorted({r["plan"] for r in rows})
             result, policy_rows = evaluate_decisions(rows, calls, decisions, plans, settings)
             extra_file = source / "additional_baseline_outcomes.json.gz"
+            additional = None
             if extra_file.exists():
                 additional = compare_additional_baselines(json.loads(gzip.decompress(extra_file.read_bytes())), policy_rows, settings)
                 extra_expected = json.loads((source / "additional_baseline_analysis.json").read_text())
                 if not numeric_reproduction(additional, extra_expected, config["absolute_float_tolerance"])["matches"]:
                     raise ValueError("Additional conventional-baseline statistics do not reproduce")
                 write_json(run_dir / "additional_baseline_analysis.json", additional)
-            plot_policies(result, run_dir)
+            plot_policies(result, run_dir, additional)
         else:
             raise ValueError("Unknown archive kind")
         expected = json.loads((source / "expected_analysis.json").read_text())

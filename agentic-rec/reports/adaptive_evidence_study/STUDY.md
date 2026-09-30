@@ -5,6 +5,8 @@ and expanded LLM validation, equal-token content controls and development failur
 Routing fitting and validation-only method selection are also complete.
 Strong-base evidence controls, row-order sensitivity and final-test results are still pending. This document must not be cited as a completed final study.
 Current execution status is in [PROGRESS](../../docs/adaptive-evidence/PROGRESS.md).
+The [delivery evidence audit](DELIVERY_AUDIT.md) maps the requested end state to
+completed evidence and remaining experiments.
 
 ## Research question and scope
 
