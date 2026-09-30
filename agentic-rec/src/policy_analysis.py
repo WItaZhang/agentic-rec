@@ -134,7 +134,7 @@ def evaluate_decisions(outcomes, calls, decisions, plans, analysis):
         "latency_scope": "batch service latency is unknown; no cached replay latency is substituted"}, per_policy
 
 
-def plot_policies(result, output):
+def plot_policies(result, output, additional_baselines=None):
     import matplotlib
 
     matplotlib.use("Agg")
@@ -157,6 +157,12 @@ def plot_policies(result, output):
         ax.scatter(x, y, marker="x", color="black")
         label = name.removeprefix("fixed_")
         ax.annotate(label, (x, y), xytext=(8, -15 if label in ("R1", "R4") else 8), textcoords="offset points")
+    for index, (name, row) in enumerate((additional_baselines or {}).items()):
+        mean, interval = row["mean_ndcg"], row["ndcg_interval"]
+        ax.errorbar(0, mean,
+                    yerr=[[max(0, mean - interval["ci_low"])], [max(0, interval["ci_high"] - mean)]],
+                    fmt="D" if index == 0 else "P", capsize=3,
+                    label=f"{name} (own candidates)")
     ax.set(xlabel="Observed batch API USD per 1,000 requests", ylabel="User-macro NDCG@10",
            title=("Validation-selected policies (exploratory)" if "validation" in result["inference"].lower()
                   else "Frozen final-test policies: quality and counterfactual API cost"))
@@ -182,6 +188,8 @@ def compare_additional_baselines(outcomes, policy_rows, settings):
         quality = [table[q]['ndcg'] for q in ids]
         summaries[name] = {"requests": len(ids), "api_usd": 0,
             "mean_ndcg": float(np.mean(quality)), "mean_hr": float(np.mean([table[q]['hr'] for q in ids])),
+            "ndcg_interval": paired_bootstrap(quality, [0] * len(ids),
+                settings['bootstrap_repetitions'], settings['seed'], settings['confidence']),
             "mean_candidate_recall": float(np.mean([table[q]['candidate_recall'] for q in ids])),
             "cold_targets": sum(table[q]['cold_item'] for q in ids),
             "ndcg_minus_main_base": paired_bootstrap(quality, [row['ndcg'] for row in policy_rows['fixed_R0']],
@@ -216,12 +224,14 @@ def run_final_analysis(config, config_path, root):
         write_json(run_dir / "analysis_settings.json", settings)
         result, rows = evaluate_decisions(outcomes, calls, decisions, ["R0", *original["evidence"]["plans"]], settings)
         extra_file = matrix / "additional_baseline_outcomes.json"
+        extra_analysis = None
         if extra_file.exists():
             extra = json.loads(extra_file.read_text())
-            write_json(run_dir / "additional_baseline_analysis.json", compare_additional_baselines(extra, rows, settings))
+            extra_analysis = compare_additional_baselines(extra, rows, settings)
+            write_json(run_dir / "additional_baseline_analysis.json", extra_analysis)
         write_json(run_dir / "analysis.json", result)
         write_json(run_dir / "policy_outcomes.json", rows)
-        plot_policies(result, run_dir)
+        plot_policies(result, run_dir, extra_analysis)
         manifest.update(test_scored=True, final_test_freeze=original["final_test_freeze"],
             matrix_outcome_sha256=digest(matrix / "outcomes.json"), routing_decisions_sha256=evaluated["routing_decisions_sha256"])
         print(json.dumps(result["comparisons"]), flush=True)
