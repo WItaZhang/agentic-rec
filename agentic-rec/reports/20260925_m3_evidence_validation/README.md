@@ -111,3 +111,6 @@ analysis value with maximum absolute difference 0.0. The command needs no raw
 dataset, credential, model weight or API access. The configured 1e-14 tolerance
 only accommodates floating reduction roundoff. Original API execution is a
 separate paid reproduction requiring its own authorized key and budget.
+
+
+The [paired subgroup figure](evidence_group_effects.png) was added on September 30 from the published archive. Reanalysis `logs/20260930_203502_validation_archive_reanalysis` reproduced every numeric statistic exactly (maximum difference 0) without API calls. Bars show nominal paired 95% intervals; zero-width points in identical-input groups are shared outcomes, not evidence of population equivalence.

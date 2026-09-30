@@ -1,5 +1,7 @@
 import json
 
+import pytest
+
 from src.data import ReviewEvent
 from src.evidence import build_prompt
 from src.protocol import CandidateSnapshot, RequestView
@@ -41,3 +43,26 @@ def test_shuffled_categories_keep_candidate_identity_and_exact_text_multiset():
     assert categories(original) != categories(shuffled)
     assert build('S4') == shuffled
     assert original['history'] == shuffled['history']
+
+
+def test_row_permutation_preserves_alias_decoding_and_all_evidence():
+    snapshot = CandidateSnapshot('q', tuple(f'i{i}' for i in range(20)), tuple(range(20)), 'model', 10)
+    view = RequestView('q', 'u', 10, (), 'validation')
+    metadata = {item: {'title': item, 'categories': [f'category {i}']} for i, item in enumerate(snapshot.item_ids)}
+    config = {'title_tokens': 40, 'category_tokens': 48, 'review_tokens': 128,
+              'recent_events': 1, 'max_history_events': 20, 'k': 10}
+    def build(plan, settings):
+        return build_prompt(view, snapshot, metadata, plan, settings, lambda s, n: (s, False), 'rank')
+    settings = {**config, 'candidate_presentation': 'shuffled_rows', 'presentation_seed': 8675309}
+    original, shuffled = build('R4', config), build('R4', settings)
+    a, b = [json.loads(result[0][1]['content']) for result in (original, shuffled)]
+    assert a['candidates'] != b['candidates']
+    assert sorted(a['candidates'], key=lambda r: r['id']) == sorted(b['candidates'], key=lambda r: r['id'])
+    assert original[1:] == shuffled[1:]
+    assert a['history'] == b['history']
+    assert build('R4', settings) == shuffled
+    recent = json.loads(build('R1', settings)[0][1]['content'])
+    assert [r['id'] for r in recent['candidates']] == [r['id'] for r in b['candidates']]
+    assert build('R4', {**config, 'candidate_presentation': 'base_score'}) == original
+    with pytest.raises(ValueError, match='Unknown candidate presentation'):
+        build('R4', {**config, 'candidate_presentation': 'unknown'})

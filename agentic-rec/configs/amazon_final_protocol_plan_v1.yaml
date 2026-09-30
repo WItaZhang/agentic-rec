@@ -1,0 +1,46 @@
+# Planning template: bind completed validation selection paths before execution.
+seed: 42
+freeze:
+  grid_path: configs/amazon_routing_grid_v2.yaml
+  test_experiment_name: amazon_final_test_prepare
+  test_sampling:
+    mode: uniform_users
+    max_users: 1000000
+  additional_baselines:
+    popularity:
+      name: popularity
+      artifact_path: logs/20260923_232911_amazon_magazine_replay
+      artifact_fallback_path: artifacts/frozen_base/itemknn
+      artifact_search_root: logs
+      model_hash: 9af3900b3654761dceeefc2d46be812d77488828402d4ff4a7a13fd568f9d746
+      candidate_count: 200
+    causal_sequence:
+      name: causal_sequence
+      artifact_path: logs/20260923_233625_amazon_magazine_sequence
+      artifact_fallback_path: artifacts/frozen_base/causal_sequence
+      artifact_search_root: logs
+      model_hash: 3c706f2f0e67e3cf57aa0196e61615bc2f5b201d695d3a6c83aa271b45758932
+      candidate_count: 200
+      cpu_threads: 2
+  test_budget:
+    total_paid_usd: 50
+    per_run_paid_usd: 12
+    stop_at_usd: 45
+    ledger_path: logs/budget/openai_ledger.jsonl
+    cloud_rental_allowed: false
+    stop_on_unknown_usage: true
+    stop_on_api_error: true
+planning:
+  population: All eligible users in the predefined test interval; one hash-selected
+    request per user
+  sample_size_rationale: Use the complete available population, not a target-enriched
+    subset; report uncertainty when predefined tolerance cannot be resolved
+  primary_comparison_source: configs/amazon_routing_grid_v2.yaml
+  selection_rule_source: configs/amazon_deployment_selection_v1.yaml
+  sequence_extension: Conditional on evidence; no sequential acquisition implemented
+    or claimed
+  remaining_bindings:
+  - routing_run
+  - deployment_selection_run
+  freeze_requires: Completed validation-only routing and strong-base evidence comparison
+    before preparing or evaluating final test

@@ -42,7 +42,17 @@ def build_prompt(request, candidates, metadata, plan, config, truncate, instruct
                 "age_days": (request.prediction_time - event.timestamp) // 86400000,
                 "review": shorten(event.text, config["review_tokens"])}
                for event in request.history[-retained:]]
-    data = {"candidate_order": "descending frozen base-model score", "candidates": rows,
+    presentation = config.get("candidate_presentation", "base_score")
+    order_description = "descending frozen base-model score"
+    if presentation == "shuffled_rows":
+        seed = hashlib.sha256(f"{config['presentation_seed']}:{request.request_id}".encode()).hexdigest()
+        random.Random(seed).shuffle(rows)
+        # Keep identity decoding and the available base prior unchanged. This
+        # control reorders rows; it does not remove the rank encoded by aliases.
+        order_description = "shuffled rows; ascending candidate IDs encode descending frozen base-model score"
+    elif presentation != "base_score":
+        raise ValueError("Unknown candidate presentation")
+    data = {"candidate_order": order_description, "candidates": rows,
             "history": history, "history_order": "oldest to newest", "top_k": config["k"]}
     schema = {"type": "object", "properties": {"item_ids": {"type": "array",
               "items": {"type": "string", "enum": list(aliases)},

@@ -1,8 +1,8 @@
 # Evidence allocation for next-item recommendation
 
 **Working research report.** Conventional comparisons and the development pilot
-and expanded LLM validation are complete. Content/strong-base controls, routing
-selection and final-test results are still pending. This document must not be cited as a completed final study.
+and expanded LLM validation, equal-token content controls and development failure analysis are complete.
+Strong-base evidence controls, routing selection and final-test results are still pending. This document must not be cited as a completed final study.
 Current execution status is in [PROGRESS](../../docs/adaptive-evidence/PROGRESS.md).
 
 ## Research question and scope
@@ -228,7 +228,7 @@ actual runs complete. No final method, adaptive gain or sequential stopping
 result is asserted by this working report.
 
 
-Current execution is blocked by the provider account's billing hard limit, with USD 11.0849600 conservatively accounted against the USD 50 project authorization. The [resource checkpoint](../20260925_resource_checkpoint/README.md) gives exact tokens, costs, preserved partial labels and a safe resume command. The [interim career materials](../career_materials/README.md) include only supported development claims. Expanded router fitting and final testing remain incomplete.
+The earlier provider billing interruption was resolved on September 30. Policy-label collection resumed with USD 11.0849600 previously accounted against the original USD 50 authorization. The [historical resource checkpoint](../20260925_resource_checkpoint/README.md) preserves exact tokens, costs, partial labels and the recovery evidence; current running costs are recorded in the shared ledger. The [interim career materials](../career_materials/README.md) include only supported development claims. Expanded router fitting and final testing remain incomplete.
 
 The zero-call [validation failure audit](../20260925_validation_failures/README.md)
 finds that full evidence loses 388 base hits and rescues 196, whereas recent
