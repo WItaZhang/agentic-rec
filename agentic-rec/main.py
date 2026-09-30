@@ -27,6 +27,11 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") == "presentation_analysis":
+        from src.presentation_analysis import run_presentation_analysis
+
+        run_presentation_analysis(config, args.config, root)
+        return
     if config.get("stage") in ("batch_upload_recovery", "batch_scheduler_checkpoint"):
         from src.batch_recovery import run_scheduler_checkpoint, run_upload_recovery
 
