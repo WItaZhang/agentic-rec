@@ -1,0 +1,11 @@
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+experiment_name: amazon_policy_upload_recovery_s026
+stage: batch_upload_recovery
+recovery:
+  submission_run: logs/20260930_203124_amazon_policy_batch_resume_after_upload_s026
