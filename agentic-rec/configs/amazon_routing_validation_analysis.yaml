@@ -1,0 +1,11 @@
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+experiment_name: amazon_routing_validation_analysis
+stage: validation_policy_analysis
+analysis:
+  routing_run: logs/20260930_204405_amazon_routing_development_v2

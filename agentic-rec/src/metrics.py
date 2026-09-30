@@ -21,10 +21,14 @@ def paired_bootstrap(left, right, repetitions, seed, confidence):
     difference = np.asarray(left, dtype=float) - np.asarray(right, dtype=float)
     if difference.ndim != 1 or not len(difference) or len(left) != len(right):
         raise ValueError("Aligned nonempty user arrays required")
-    rng = np.random.default_rng(seed)
-    means = np.empty(repetitions)
-    for i in range(repetitions):
-        means[i] = rng.choice(difference, size=len(difference), replace=True).mean()
+    if np.all(difference == difference[0]):
+        # Every possible resample is identical, including its floating reduction.
+        means = np.full(repetitions, difference.mean())
+    else:
+        rng = np.random.default_rng(seed)
+        means = np.empty(repetitions)
+        for i in range(repetitions):
+            means[i] = rng.choice(difference, size=len(difference), replace=True).mean()
     tail = (1 - confidence) / 2
     return {"difference": float(difference.mean()), "users": len(difference),
             "ci_low": float(np.quantile(means, tail)),

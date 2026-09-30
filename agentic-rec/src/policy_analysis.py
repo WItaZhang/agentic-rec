@@ -76,6 +76,13 @@ def evaluate_decisions(outcomes, calls, decisions, plans, analysis):
 
     indices = list(range(len(ids)))
     comparisons = {f"{a}_minus_{b}": compare(a, b, indices) for a, b in analysis["comparisons"]}
+    budgetwise = {}
+    for learner in sorted(name for name in per_policy if name.startswith("learned_")):
+        for kind in ("rule", "random"):
+            reference = learner.replace("learned_", kind + "_", 1)
+            if reference in per_policy:
+                key = f"{learner}_minus_{reference}"
+                budgetwise[key] = comparisons[key] if key in comparisons else compare(learner, reference, indices)
     groups = {}
     for name, low, high in analysis["group_boundaries"]:
         chosen = [i for i, q in enumerate(ids) if low <= table[q]["R0"]["history_count"] < high]
@@ -117,6 +124,8 @@ def evaluate_decisions(outcomes, calls, decisions, plans, analysis):
             "api_usd_on_cold_targets": sum(row["accounted_usd"] for row in observations if row["cold_item"]),
             "interpretation": "Target-dependent error attribution only; none of these labels can be used by the policy"}
     return {"methods": methods, "comparisons": comparisons, "history_groups": groups,
+        "secondary_budget_comparisons": budgetwise,
+        "secondary_budget_inference": "Exploratory nominal intervals across the registered budget grid; the primary comparison is unchanged",
         "random_control_diagnostics": random_diagnostics,
         "failure_attribution": failures,
         "primary_comparison": analysis["primary_comparison"], "primary_metric": "ndcg",
