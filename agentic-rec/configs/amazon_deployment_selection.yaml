@@ -1,0 +1,13 @@
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+experiment_name: amazon_deployment_selection
+stage: deployment_selection
+sources:
+  baseline_run: logs/20260924_014748_amazon_three_validation_baselines
+  routing_run: artifacts/frozen_router/v2
+  selection_plan: configs/amazon_deployment_selection_v1.yaml

@@ -1,0 +1,13 @@
+{
+  "source_run": "logs\\20260930_204405_amazon_routing_development_v2",
+  "source_commit": "4ee41e1884a66108684395f5c3fe5407c2015414",
+  "files": {
+    "policy_train_matrix.json.gz": "bbdbe809caf45898f0928648e6a7cc452a7f7c0be71994cf3efea8cb8f48a12b",
+    "routing_matrix_manifest.json": "d7bacc5aad6a0f2157139251f20f506e12b14a01ceda5f235401eacd957b83d9",
+    "selection_frozen.json": "f06269b1a6e5adec760fd3758ec0b65058642f9bc9ddaca1990cefb8707dd4b7",
+    "validation_grid.json": "c8748f61fccc8c73bef73c0e692394af2e1a09f4b77e77b5577719dce80f4510",
+    "validation_matrix.json.gz": "390e15bd875109468cc3f700688ca27ad2ba584daf06fdecdde6f7b8f5f3c2d9"
+  },
+  "privacy": "Derived features, action metrics/costs and inverse-inclusion weights; no user IDs, review text, raw targets or API credentials",
+  "purpose": "Offline refit of the registered v2 controller; no dataset, API access or new labels"
+}

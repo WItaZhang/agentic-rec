@@ -1,0 +1,14 @@
+{
+  "source_run": "logs\\20260930_204405_amazon_routing_development_v2",
+  "files": {
+    "config.yaml": "4d556d47d793234e2572b94eaa7d1bc23d51978d681f727a9393b7328326fabc",
+    "estimator_0.joblib": "0585881a037ffa5715e6639e834ba9536314744904433400a5928593be428747",
+    "estimator_1.joblib": "24edbaba6eb4c6dcbfa88bb728f7ca869205f290f73a4b400bea4b3cea11ff6b",
+    "estimator_2.joblib": "0dac006e8df6bcc9cc62b1090e6c40a62829135e1071502d4c605d7470b0d959",
+    "estimator_3.joblib": "3e42fca5be2f1bc80d6291dd41cbb203d68f30d70d28d8332918353446a4d0fa",
+    "fit_resources.json": "ab70d1a6097ea69ccb40751a509f1f4d60cf082e4fe5471a999b692f5b82a9f4",
+    "manifest.json": "06711544febd3bf29587b48986962e12668ef9b92979b20b3aa5c6bcaae9d563",
+    "selection_frozen.json": "f06269b1a6e5adec760fd3758ec0b65058642f9bc9ddaca1990cefb8707dd4b7",
+    "validation_grid.json": "c8748f61fccc8c73bef73c0e692394af2e1a09f4b77e77b5577719dce80f4510"
+  }
+}
