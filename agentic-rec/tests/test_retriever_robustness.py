@@ -24,7 +24,7 @@ def test_interaction_uses_each_retrievers_own_baseline_and_keeps_misses():
     assert result['overall']['users'] == 3
     effect = result['overall']['evidence_effect_interactions']['R1']['ndcg']
     assert effect['difference'] == pytest.approx(.2 * 2 / 3)
-    assert result['identical_candidate_pools'] == 0
+    assert result['identical_candidate_snapshots'] == 0
     assert result['history_groups']['warm']['users'] == 0
     assert result['history_groups']['empty']['base_second_minus_first']['ndcg']['ci_low'] is None
 
