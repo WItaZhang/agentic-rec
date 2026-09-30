@@ -141,16 +141,15 @@ def draw_cost_quality(result, output):
     import matplotlib.pyplot as plt
 
     fig, ax = plt.subplots(figsize=(7.6, 4.8))
-    for index, (plan, row) in enumerate(result["methods"].items()):
+    for plan, row in result["methods"].items():
         mean, interval = row["user_macro"]["ndcg"], row["ndcg_interval"]
         ax.errorbar(row["mean_accounted_usd"] * 1000, mean,
                     yerr=[[max(0, mean - interval["ci_low"])], [max(0, interval["ci_high"] - mean)]],
-                    fmt="o", capsize=3)
-        ax.annotate(plan, (row["mean_accounted_usd"] * 1000, row["user_macro"]["ndcg"]),
-                    xytext=(6, 8 if index % 2 else -14), textcoords="offset points")
+                    fmt="o", capsize=3, label=plan)
     ax.set(xlabel="Incremental API USD / 1,000 requests (measured usage + unknown reservations)",
            ylabel="User-macro NDCG@10", title="Development evidence comparison — not final test")
     ax.grid(alpha=0.25)
+    ax.legend()
     fig.tight_layout()
     fig.savefig(output / "quality_cost.png", dpi=180)
     fig.savefig(output / "quality_cost.svg")
