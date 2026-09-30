@@ -5,7 +5,7 @@ checkpoint is at the bottom; historical spending/status entries are not current 
 
 ## Authorization and resources
 
-- Branch: `codex/final-controls`; repository default:
+- Branch: `codex/control-results`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
 - Paid API authorization updated by user: **USD 50 total**, estimate each round.
   First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
@@ -472,3 +472,28 @@ but has not yet run on completed expanded labels. Latest full local suite:
 - Current source tests: 129 pytest tests and Ruff pass. No sequential acquisition/stopping implementation or positive routing effect is inferred from these changes.
 
 - Immutable final freeze completed at `logs/20260930_210942_amazon_final_protocol_freeze` (`dfc5836`), published byte-for-byte under `artifacts/frozen_protocol/v1`. Its executable config relocates only the freeze reference and passed the full frozen-field verification. Final target-free preparation is **`logs/20260930_211006_amazon_final_test_prepare`**, source `90f61f3`, session **23408**: census of **3572 users**, one predetermined request per user from 4012 eligible events. No test generations or quality scores exist yet. Source config `configs/amazon_final_test_prepare.yaml`.
+
+- PR [#10](https://github.com/WItaZhang/agentic-rec/pull/10) merged at `2202db5` after exact-head Python 3.11/3.12 CI and no unresolved review threads. `e3bd18c` verifies the actual public freeze on Linux without private logs/credentials and resolves historical Windows path separators without changing frozen bytes. Prompts now preserve their hash-bearing bytes on checkout. Current branch `codex/control-results`.
+- Checkpoint at 2026-09-30T21:15:48.878053+00:00: sequence shards {'collected': 49, 'submitted': 4, 'pending': 74}; final target-free preparation running. Known usage-priced API USD 16.3138580; accounted including pending/unknown reservations USD 16.6068006 against USD 50. These are running snapshots, not final campaign totals. Live sessions remain 52809 (sequence), 38021 (queued presentation), 23408 (final preparation). No final generation or quality scoring has started.
+
+
+## 2026-09-30: final inputs complete; full remaining-cost forecast
+
+- Previous continuation made concrete progress: M4 publication and two checked PR merges, proven zero-generation queue recovery, immutable validation-only freeze, and real target-free final preparation. This continuation confirmed sessions 52809/38021/23408 live before further work; no process was restarted based only on a state file.
+- Final preparation **completed** at `logs/20260930_211006_amazon_final_test_prepare` (`90f61f3`): all 3572 users, 14288 logical action inputs, **7460 physical calls**, **41007040 provider-counted input tokens**. Candidate, route, extra-baseline and call-bundle hashes were rechecked. No generation or test quality scoring occurred.
+- Final dispatch config `configs/amazon_final_test_batch.yaml`: estimate **USD 8.416256**, conservative reservation maximum **9.920192**, round cap **12**. The gate remains completion/analysis of both diagnostics; do not launch it while the other Batch scheduler is running. Preflight `logs/budget/final_preflight_20260930.json`.
+- Bound serving config `configs/amazon_serving_audit.yaml` preserves the registered 128 validation users, eight methods, concurrency 1, two CPU threads, automatic provider-prefix cache accounting, no application output caching, and unchanged timeout/retry limits. Its target-free plan is 1024 requests / 256 LLM generations, 1404971 input tokens; expected uncached **USD 0.576734**, maximum **0.6799532**, existing cap **2.5**. This is an estimate, not a latency result. Run after other CPU-intensive experiment work.
+- Using the accounted pre-sequence subtotal USD 13.3327596, plus entire sequence/presentation/final/serving phases (never adding paid portions twice), projected campaign total is **USD 37.5232016** at estimated output lengths, or **USD 41.8475216** at conservative maxima. This includes the old uncertain pilot reservation and is below the USD 45 planning stop / USD 50 authorization. Ledger guards still apply to every actual call; these estimates are not invoices.
+- Sequence and queued presentation handles remain 52809 and 38021. No further permissions or funds are needed at this checkpoint. No final conclusion is inferred from unscored inputs.
+
+- Updated the interim English LaTeX project excerpt to include completed weighted routing, and saved a standalone `reports/career_materials/resume_preview.tex` with an explicit development-stage notice. The native editor open was queued; its compiler returned `Unable to find standard directories for platform` before a source diagnostic. Source and diagnostic are preserved, no PDF or successful compilation claimed. This tool-environment limitation does not block actual recommendation experiments. Recheck when finalizing the source; do not install a TeX distribution as a workaround.
+
+
+## 2026-09-30: operational costs and offline accounting verified
+
+- `247f211` adds deduplicated token-preflight, local evidence-access and rank-repair accounting, plus upload/collection/recovery receipts and incremental scheduler polling. It rejects a ledger that changes mid-audit; the snapshot excludes its own mutable manifest. Partial coverage is reported explicitly while a collected matrix has not yet been evaluated. In-memory evidence bundles are not called external HTTP tools.
+- Real interim audit `logs/20260930_212917_amazon_interim_campaign_resources` validated the counters. `57e9ec8` then introduced a sanitized accounting archive; replay `logs/20260930_213527_amazon_accounting_replay_checkpoint` reproduced all fields exactly without raw data, credentials or network calls.
+- `f5c494b` independently reprices each observed generation using its frozen standard/Batch prices, including cached-input billing. Audit `logs/20260930_213606_amazon_interim_campaign_resources` verified **16102 observed calls with zero per-call discrepancy**. Historical known USD **18.5115102**, accounted **18.8006378** with 210 pending and one unknown settled request. The 108 proven pre-generation rejections are separate; no zero-token usage was invented.
+- Published [resource snapshot](../../reports/20260930_resource_checkpoint/README.md) and sanitized archive `artifacts/published/resources_checkpoint_20260930`; replay `logs/20260930_213718_resource_checkpoint_archive_replay` (`124a614`) has maximum numerical difference **zero**. Its config is `configs/resource_checkpoint_archive_replay.yaml`. This is explicitly interim, not a final resource total; final audit still requires no pending/running experiment.
+- Latest local verification: **136 tests and Ruff pass**. The published accounting replay is now also a Python 3.11/3.12 CI check. Prompt, model, utility grid, group thresholds, quality tolerance and final selection remain frozen and unchanged.
+- The standalone English excerpt source is saved, but the native compiler's platform-directory error still prevents verified compilation. The optional preview does not block research execution; no compiled PDF is claimed.

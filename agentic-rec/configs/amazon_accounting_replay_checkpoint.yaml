@@ -1,0 +1,11 @@
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+experiment_name: amazon_accounting_replay_checkpoint
+stage: accounting_replay
+archive_path: logs/20260930_213352_amazon_interim_campaign_resources/accounting_archive
+absolute_float_tolerance: 1.0e-12

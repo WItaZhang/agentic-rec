@@ -24,4 +24,5 @@ jobs:
       - run: uv sync --locked --extra yaml --extra experiments --extra api --python ${{ matrix.python-version }}
       - run: uv run --locked --extra yaml --extra experiments --extra api --python ${{ matrix.python-version }} ruff check .
       - run: uv run --locked --extra yaml --extra experiments --extra api --python ${{ matrix.python-version }} python -m pytest
+      - run: uv run --locked --extra yaml --extra experiments --extra api --python ${{ matrix.python-version }} python main.py --config configs/resource_checkpoint_archive_replay.yaml
       - run: uv run --locked --extra yaml --python ${{ matrix.python-version }} python -m agentic_rec compare configs/*.toml --users 5 --items 60

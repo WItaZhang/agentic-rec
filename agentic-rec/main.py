@@ -27,6 +27,11 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") == "accounting_replay":
+        from src.resource_archive import run_accounting_replay
+
+        run_accounting_replay(config, args.config, root)
+        return
     if config.get("stage") == "retriever_robustness":
         from src.retriever_robustness import run_retriever_robustness
 
