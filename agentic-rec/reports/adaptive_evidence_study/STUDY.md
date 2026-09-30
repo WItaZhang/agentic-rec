@@ -1,8 +1,8 @@
 # Evidence allocation for next-item recommendation
 
 **Working research report.** Conventional comparisons and the development pilot
-and expanded LLM validation are complete. Content/strong-base controls, routing
-selection and final-test results are still pending. This document must not be cited as a completed final study.
+and expanded LLM validation, equal-token content controls and development failure analysis are complete.
+Strong-base evidence controls, routing selection and final-test results are still pending. This document must not be cited as a completed final study.
 Current execution status is in [PROGRESS](../../docs/adaptive-evidence/PROGRESS.md).
 
 ## Research question and scope

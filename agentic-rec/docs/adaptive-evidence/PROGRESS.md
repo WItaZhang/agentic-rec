@@ -409,3 +409,12 @@ but has not yet run on completed expanded labels. Latest full local suite:
 - Actual zero-call run `logs/20260925_191516_amazon_validation_failure_analysis` on all 3318 population-validation requests. [Report and deterministic cases](../../reports/20260925_validation_failures/README.md): R4 loses 388 base hits and rescues 196; R1 loses 38 and rescues 49. About 44.6% of each counterfactual single-action API cost is on unrecalled targets. These labels are diagnostic only, never policy features.
 - Working study and interview drafts now include these observed failures. Grid v2, prompts, final comparison and group boundaries are unchanged. Final test remains unscored.
 - Same provider billing blocker has persisted across two goal turns. Expanded policy labels remain 641/2612; no new cost, no running session, no pending paid reservation. The exact resume config remains `configs/amazon_policy_batch_resume_after_billing.yaml`. Await restored provider capacity before dependent work.
+
+
+## 2026-09-30: billing restored; existing policy run resumed
+
+- User confirmed restored provider billing capacity. New Batch submissions are accepted; the previous hard billing blocker is resolved. The original USD 50 authorization and USD 45 planning stop remain unchanged. No credentials are published.
+- Current branch `codex/resumed-routing-study`, starting commit `8290a8f`. No uncommitted third-party changes or open PRs were found; PR #7 is already on the remote default branch.
+- Running scheduler `logs/20260930_202213_amazon_policy_batch_resume_after_billing`, runtime commit `8290a8f`, session 25501. Config `configs/amazon_policy_batch_resume_after_billing.yaml` preserves all 12 collected shards / 641 physical outputs and starts at offset 641. Do not submit a duplicate scheduler.
+- Before dispatch, remaining 1,971 requests were estimated at USD 2.2477996 with conservative maximum USD 2.6451532. Prior accounted cost USD 11.0849600; policy phase cap remains USD 6. Official dated-model pricing and Batch 50% discount were rechecked, unchanged, in `logs/budget/billing_resume_price_recheck_20260930.json`.
+- Next: collect the complete policy matrix, fit registered grid v2, analyze validation choices and verify offline refitting. Then finish the strong-sequence evidence comparison and freeze the practical selection and final-test protocol. The final test is still unscored.
