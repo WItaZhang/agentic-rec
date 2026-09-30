@@ -213,3 +213,24 @@ durable retry-intent link. Batch-creation ambiguity still stops. One precisely
 identified legacy implementation uses its verified source fingerprint to prove
 that a missing upload receipt precedes Batch creation; unknown legacy sources
 are refused. Original errors and intents are never deleted or overwritten.
+
+
+## Registered synchronous resource audit
+
+The pending paid audit now uses `configs/amazon_serving_audit_extended.yaml`,
+superseding the unexecuted eight-method `amazon_serving_audit.yaml`. It preserves
+that plan's 128 validation users and primary policies, then adds the three
+already frozen secondary-budget routes. It never evaluates quality or accesses
+final-test labels. Use `uv run --locked --extra yaml --extra experiments
+--extra api --extra local-llm python main.py --config
+configs/amazon_serving_audit_extended.yaml` only after the current Batch/CPU-heavy
+experiments are complete, with the original credential and ledger configuration.
+
+The [registered preflight](../../reports/adaptive_evidence_study/serving_audit_preflight.json)
+is an estimate, not a latency result. Every method is independently executed at
+concurrency one, with warm resident models and no application output reuse;
+provider prefix caching is recorded. Report overall request mean/P95 alongside
+the generation-branch observation count and conditional latency. A sparse
+calling policy can have a low overall P95 while its few model calls remain slow.
+The 128-user sample and its rare-branch quantiles are descriptive, not a
+population-level latency guarantee.

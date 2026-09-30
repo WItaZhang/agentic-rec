@@ -17,6 +17,19 @@ def sum_in_order(values):
     return total
 
 
+def service_latency_summary(records):
+    """Keep the full request denominator and disclose the rare generation branch."""
+    if not records:
+        raise ValueError("A latency summary requires observed requests")
+    all_values = [row['service_ms'] for row in records]
+    generated = [row['service_ms'] for row in records if row['generation_attempts']]
+    return {'mean_service_ms': float(np.mean(all_values)),
+            'p95_service_ms': float(np.percentile(all_values, 95)),
+            'generation_service_observations': len(generated),
+            'mean_generation_service_ms': float(np.mean(generated)) if generated else None,
+            'p95_generation_service_ms': float(np.percentile(generated, 95)) if generated else None}
+
+
 def multipositive_metrics(ranking, targets, k):
     if not targets or k < 1:
         raise ValueError("Nonempty targets and positive k required")

@@ -15,9 +15,11 @@ from .execution import execute_bounded
 from .feature import routing_features
 from .frozen_protocol import INFERENCE_KEYS, verify_final_config
 from .llm_experiment import choose_views
+from .metrics import service_latency_summary
 from .model_artifacts import load_frozen_retriever
 from .openai_adapter import OpenAIBackend
 from .paid_budget import PaidBudget, usage_cost
+from .policy_inference import serving_policy_bindings
 from .protocol import validate_ranking
 from .replay import make_candidates
 from .routing_model import UtilityRouter, random_actions, rule_actions
@@ -58,15 +60,21 @@ def run_serving_audit(config, config_path, root):
         catalog = set(recommender.catalog)
         directory = root / frozen["routing_run"]
         selected = json.loads((directory / "selection_frozen.json").read_text())
-        budget_point = str(frozen["analysis"]["primary_budget_usd_per_1000"])
-        learned = selected["chosen"][f"learned_{budget_point}"]
-        rule = selected["chosen"][f"rule_{budget_point}"]["policy"]["rule"]
-        specification = learned["policy"]
-        estimator = joblib.load(directory / f"estimator_{specification['estimator_id']}.joblib")
+        bindings = serving_policy_bindings(selected, frozen["analysis"]["primary_budget_usd_per_1000"],
+                                          settings.get("additional_budget_points", []))
         plans = tuple(selected["plans"])
-        router = UtilityRouter(estimator, plans, tuple(selected["feature_names"]),
-                               tuple(selected["training_mean_costs"]), specification["cost_weight"])
-        control = learned["random_control"]
+        estimators, routers = {}, {}
+        for method, binding in bindings.items():
+            specification = binding["specification"]
+            if specification["kind"] == "learned":
+                identity = specification["estimator_id"]
+                filename = f"estimator_{identity}.joblib"
+                if filename not in frozen["selection_artifact_hashes"]:
+                    raise ValueError("Serving estimator is absent from the frozen artifact list")
+                if identity not in estimators:
+                    estimators[identity] = joblib.load(directory / filename)
+                routers[method] = UtilityRouter(estimators[identity], plans, tuple(selected["feature_names"]),
+                    tuple(selected["training_mean_costs"]), specification["cost_weight"])
         tokenizer = tiktoken.get_encoding(original["evidence"]["tokenizer"])
 
         def truncate(text, maximum):
@@ -78,7 +86,7 @@ def run_serving_audit(config, config_path, root):
                           (json.loads(line) for line in (source / "planned_calls.jsonl").read_text().splitlines())}
         saved_candidates = json.loads((source / "candidates.json").read_text())
         methods = settings["methods"]
-        ordinary_methods = {"base", "recent", "full", "rule", "random", "learned"}
+        ordinary_methods = {"base", "recent", "full", *bindings}
         if set(additional_specs) & ordinary_methods or set(methods) - ordinary_methods - set(additional_specs):
             raise ValueError("Unsupported serving audit method")
 
@@ -87,10 +95,12 @@ def run_serving_audit(config, config_path, root):
                 return "R0"
             if method in ("base", "recent", "full"):
                 return {"base": "R0", "recent": "R1", "full": "R4"}[method]
-            if method == "random":
-                return random_actions([view.request_id], control["probabilities"], plans, control["seed"])[0]
+            specification = bindings[method]["specification"]
+            if specification["kind"] == "random":
+                return random_actions([view.request_id], specification["probabilities"], plans, specification["seed"])[0]
             features = [routing_features(view, snapshot, catalog, original["protocol"]["positive_rating"])]
-            return rule_actions(features, rule)[0] if method == "rule" else router.decide(features)[0]
+            return (rule_actions(features, specification["rule"])[0] if specification["kind"] == "rule"
+                    else routers[method].decide(features)[0])
 
         llm_config = {**original["llm"], "rate_limits": settings["rate_limits"]}
         budget_config = config["budget"]
@@ -175,8 +185,7 @@ def run_serving_audit(config, config_path, root):
             if len(rows) != len(views):
                 raise ValueError("Incomplete serving comparison")
             cost = [r["actual_known_usd"] if r["actual_known_usd"] is not None else r["reserved_usd"] for r in rows]
-            summary[method] = {"requests": len(rows), "mean_service_ms": float(np.mean([r["service_ms"] for r in rows])),
-                "p95_service_ms": float(np.percentile([r["service_ms"] for r in rows], 95)),
+            summary[method] = {"requests": len(rows), **service_latency_summary(rows),
                 "mean_api_usd": float(np.mean(cost)), "generation_attempts": sum(r["generation_attempts"] for r in rows),
                 "count_endpoint_calls": sum(r["count_endpoint_calls"] for r in rows),
                 "input_tokens": sum((r.get("usage") or {}).get("input_tokens", 0) for r in rows),
@@ -189,6 +198,8 @@ def run_serving_audit(config, config_path, root):
             "application_output_cache": "disabled, independent call for each method/request",
             "provider_prefix_cache": "automatic, actual cached tokens recorded",
             "additional_conventional_methods": list(additional_models),
+            "policy_bindings": bindings,
+            "latency_inference": "Descriptive observed sample; rare generation-branch quantiles may have very few observations. Full-request mean/P95 retain all zero-call requests.",
             "quality_scored": False, "latency_scope": "warm resident models; includes retrieval, routing, prompt construction, token preflight, queue, network and validation"})
         manifest.update(test_scored=False, quality_scored=False, stage_status="resource_audit_complete",
                         final_protocol_sha256=digest(root / settings["freeze_path"]))

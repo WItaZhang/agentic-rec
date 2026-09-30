@@ -9,6 +9,26 @@ from .routing_model import UtilityRouter, random_actions, rule_actions
 from .utils import digest
 
 
+def serving_policy_bindings(selected, primary_budget, additional_budgets=()):
+    """Resolve serving names to already selected policies, including matched random controls."""
+    primary = str(primary_budget)
+    budgets = [primary, *map(str, additional_budgets)]
+    if len(set(budgets)) != len(budgets):
+        raise ValueError("Serving budget points must be distinct")
+    bindings = {}
+    for budget in budgets:
+        for kind in ('rule', 'random', 'learned'):
+            identity = f"{'learned' if kind == 'random' else kind}_{budget}"
+            if identity not in selected['chosen']:
+                raise ValueError("Serving audit may only use already frozen budget policies")
+            row = selected['chosen'][identity]
+            name = kind if budget == primary else f'{kind}_{budget}'
+            bindings[name] = {'selected_policy': identity, 'budget_usd_per_1000': float(budget),
+                             'specification': ({'kind': 'random', **row['random_control']}
+                                               if kind == 'random' else dict(row['policy']))}
+    return bindings
+
+
 def decide_frozen_policies(root, selection_run, request_ids, features, expected_hashes, cpu_threads):
     from threadpoolctl import threadpool_limits
 
