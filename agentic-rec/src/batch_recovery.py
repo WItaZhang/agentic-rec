@@ -15,6 +15,12 @@ from .utils import digest, managed_run, verified_run_config, write_json
 LEGACY_UPLOAD_RECEIPT_SOURCE = "afc86395c9aceaca2137444b50dc7e30992ad2a25379d3d260f556199cf69bfa"
 
 
+class UploadRecoveryInterrupted(RuntimeError):
+    def __init__(self, run_dir):
+        super().__init__("Recovery interrupted; reservations and intent retained for reconciliation")
+        self.run_dir = run_dir
+
+
 def validate_interrupted_upload_recovery(source, previous, root):
     prior_config = verified_run_config(previous)
     state = json.loads((previous / "manifest.json").read_text())
@@ -119,7 +125,7 @@ def run_upload_recovery(config, config_path, root):
             except Exception as error:
                 write_json(run_dir / "recovery_error.json", {"type": type(error).__name__,
                     "http_status": getattr(error, "status_code", None), "stage": recovery_stage})
-                raise RuntimeError("Recovery interrupted; reservations and intent retained for reconciliation") from None
+                raise UploadRecoveryInterrupted(run_dir) from None
         write_json(run_dir / "submission.json", batch.model_dump())
         # Add a receipt; preserve the original failed manifest/config/error.
         with (source / "submission.json").open("x", encoding="utf-8") as stream:

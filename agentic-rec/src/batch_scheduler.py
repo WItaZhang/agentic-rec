@@ -42,6 +42,39 @@ def may_recover_upload(error, attempts, limit):
             and error.get("type") == "APIConnectionError" and error.get("http_status") is None)
 
 
+def recover_upload_bounded(config, run_dir, root, state, index, submitted, error):
+    from .batch_recovery import (
+        UploadRecoveryInterrupted,
+        run_upload_recovery,
+        validate_interrupted_upload_recovery,
+    )
+
+    settings, previous = config["scheduler"], None
+    while may_recover_upload(error, state.get("upload_recovery_attempts", 0), settings.get("upload_recovery_limit", 0)):
+        attempt = state.get("upload_recovery_attempts", 0) + 1
+        state["upload_recovery_attempts"] = attempt
+        persist_state(run_dir / "scheduler_state.json", state)
+        time.sleep(settings.get("upload_recovery_delay_seconds", 0))
+        recovery = {"experiment_name": f"{config['experiment_name']}_upload_recovery_{index:03d}_a{attempt:03d}",
+            "stage": "batch_upload_recovery", "seed": config["seed"], "data": config["data"],
+            "logging": config["logging"], "runtime_source_run": str(run_dir.relative_to(root)),
+            "recovery": {"submission_run": str(submitted.relative_to(root))}}
+        if previous is not None:
+            recovery["recovery"]["resume_upload_recovery_run"] = str(previous.relative_to(root))
+        recovery_path = run_dir / f"upload_recovery_{index:03d}_a{attempt:03d}.yaml"
+        recovery_path.write_text(yaml.safe_dump(recovery, sort_keys=False), encoding="utf-8")
+        try:
+            run_upload_recovery(recovery, recovery_path, root)
+            return
+        except UploadRecoveryInterrupted as interrupted:
+            # The durable failed run must prove that Batch creation was never
+            # reached. A create-stage ambiguity or changed intent still stops.
+            validate_interrupted_upload_recovery(submitted, interrupted.run_dir, root)
+            previous = interrupted.run_dir
+            error = json.loads((previous / "recovery_error.json").read_text())
+    raise RuntimeError("Infrastructure upload-recovery limit reached; retain intents and reservations")
+
+
 def run_batch_schedule(config, config_path, root):
     settings = config["scheduler"]
     if settings["max_batch_input_tokens"] > settings["max_inflight_input_tokens"] or not 1 <= settings["poll_seconds"] <= 60:
@@ -117,18 +150,7 @@ def run_batch_schedule(config, config_path, root):
                     attempts = state.get("upload_recovery_attempts", 0)
                     if not may_recover_upload(error, attempts, settings.get("upload_recovery_limit", 0)):
                         raise
-                    from .batch_recovery import run_upload_recovery
-
-                    state["upload_recovery_attempts"] = attempts + 1
-                    persist_state(state_path, state)
-                    time.sleep(settings.get("upload_recovery_delay_seconds", 0))
-                    recovery = {"experiment_name": f"{config['experiment_name']}_upload_recovery_{index:03d}",
-                        "stage": "batch_upload_recovery", "seed": config["seed"], "data": config["data"],
-                        "logging": config["logging"], "runtime_source_run": str(run_dir.relative_to(root)),
-                        "recovery": {"submission_run": str(submitted.relative_to(root))}}
-                    recovery_path = run_dir / f"upload_recovery_{index:03d}.yaml"
-                    recovery_path.write_text(yaml.safe_dump(recovery, sort_keys=False), encoding="utf-8")
-                    run_upload_recovery(recovery, recovery_path, root)
+                    recover_upload_bounded(config, run_dir, root, state, index, submitted, error)
                 submission = json.loads((submitted / "submission.json").read_text())
                 chunk.update(state="submitted", submit_run=str(submitted.relative_to(root)), batch_id=submission["id"])
                 persist_state(state_path, state)

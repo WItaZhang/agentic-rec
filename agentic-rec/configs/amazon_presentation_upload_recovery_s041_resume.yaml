@@ -1,0 +1,12 @@
+experiment_name: amazon_presentation_upload_recovery_s041_resume
+stage: batch_upload_recovery
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+recovery:
+  submission_run: logs/20260930_231611_amazon_presentation_batch_resume_s027_s041
+  resume_upload_recovery_run: logs/20260930_231623_amazon_presentation_batch_resume_s027_upload_recovery_041

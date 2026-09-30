@@ -45,3 +45,4 @@ resource_audit:
   - name: candidate_presentation_control
     experiment_prefixes:
     - amazon_presentation_control_batch
+    - amazon_presentation_batch_resume
