@@ -150,3 +150,21 @@ quality tolerance and main test comparisons must be frozen on validation.
 
 
 The completed equal-token category-alignment diagnostic is also published. From the inner project root, run `uv run --locked --extra yaml --extra experiments python main.py --config configs/content_control_archive_reanalysis.yaml`. This reproduces the 478-user stratified diagnostic, not the full-population estimate. No data download, credentials or paid calls are needed.
+
+
+## Recovering a failed Batch file upload
+
+A `file_upload` connection failure stops the scheduler with reservations intact.
+`batch_upload_recovery` checks the original immutable config, payload fingerprints,
+pending ledger ownership and provider metadata; it adopts an existing matching
+Batch or reuploads the same inputs under an exclusive durable recovery intent.
+The original failed manifest/error are preserved and the successful receipt is
+added. `batch_scheduler_checkpoint` reconciles only that submitting shard; all
+collected outputs and other accepted Batch IDs survive. Resume using that new
+checkpoint with the original scheduler settings and budget.
+
+These commands are recovery operations for their recorded runs, not fresh
+experiment recipes. Do not replay a completed recovery or blindly repeat a
+Batch-creation error. A failed recovery intent requires provider reconciliation;
+unknown charges remain reserved. Final-test recovery also verifies the frozen
+protocol. Concrete executed examples are recorded in [PROGRESS](PROGRESS.md).

@@ -5,6 +5,7 @@ import json
 import os
 
 from .batch_experiment import client_for
+from .frozen_protocol import verify_final_config
 from .paid_budget import PaidBudget
 from .utils import digest, managed_run, verified_run_config, write_json
 
@@ -40,6 +41,8 @@ def run_upload_recovery(config, config_path, root):
         source = root / config["recovery"]["submission_run"]
         submitted = verified_run_config(source)
         original = verified_run_config(root / submitted["batch"]["source_run"])
+        if original["evaluation"]["partition"] == "test":
+            verify_final_config(original, root)
         limits = submitted["budget"]
         ledger = PaidBudget(root / limits["ledger_path"], source.name, limits["total_paid_usd"],
                             limits["per_run_paid_usd"], limits["stop_at_usd"])
