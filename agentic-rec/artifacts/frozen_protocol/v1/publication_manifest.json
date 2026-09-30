@@ -1,0 +1,10 @@
+{
+  "source_run": "logs/20260930_210942_amazon_final_protocol_freeze",
+  "files": {
+    "config.yaml": "96cc32f0db5adc0c311989dd30e775928fc8944789dd9a34ba21823062fcafe7",
+    "freeze.json": "e18d278b55775c4b2610cdacf6880be6088aa428485da47821fe4220cb3c39b5",
+    "manifest.json": "e88ad12825d14092e6e77d618dd1c4e1065b0351fa1fe3cfef8e039c32783bdd",
+    "test_config.yaml": "915264cfc17fc93751f7d054f7fc31f3aa84366ae9f03b9f21f68d4eb2e768ce"
+  },
+  "note": "Exact immutable freeze. Executable config relocates only the freeze reference; all frozen inference and analysis fields are verified unchanged."
+}

@@ -1,0 +1,191 @@
+{
+  "analysis": {
+    "bootstrap_repetitions": 10000,
+    "confidence": 0.95,
+    "group_boundaries": [
+      [
+        "zero",
+        0,
+        1
+      ],
+      [
+        "one",
+        1,
+        2
+      ],
+      [
+        "at_least_two",
+        2,
+        1000000
+      ]
+    ],
+    "minimum_group_users_for_interval": 30,
+    "noninferiority_tolerance": 0.002,
+    "primary_budget_usd_per_1000": 0.25,
+    "primary_comparison": [
+      "learned",
+      "rule"
+    ],
+    "primary_metric": "ndcg",
+    "random_sensitivity_interpretation": "secondary_full_information_expectation_and_seed_variation",
+    "random_sensitivity_seeds": [
+      11,
+      97,
+      2027,
+      4099,
+      9001
+    ],
+    "secondary_comparisons": [
+      [
+        "learned",
+        "random"
+      ],
+      [
+        "learned",
+        "fixed_R4"
+      ],
+      [
+        "fixed_R1",
+        "fixed_R0"
+      ],
+      [
+        "fixed_R4",
+        "fixed_R0"
+      ]
+    ],
+    "secondary_inference": "exploratory_nominal_intervals"
+  },
+  "deployment_selection_path": "artifacts\\frozen_selection\\v1\\deployment_selection.json",
+  "deployment_selection_sha256": "5a705b5bf27d3f1478454e0eb9aa0193d065893848c75bb80917930251130d06",
+  "grid_sha256": "2c51e5df54d669ee310d7dd726f6d04d0077382ab816baa82c0ddfe452cc5ef0",
+  "policy_outcome_sha256": "a0f51880a31b8c423cfce96c6d414796bd9e398393bc9d66c16d1c8402d4294a",
+  "prompt_sha256": "df75c829c081b9c9a0918fc355104ec27d34229d81c4fd57c3e83c78bf87d223",
+  "routing_cpu_threads": 2,
+  "routing_run": "artifacts/frozen_router/v2",
+  "scope": "one frozen final test; no post-test parameter selection",
+  "selection_artifact_hashes": {
+    "config.yaml": "4d556d47d793234e2572b94eaa7d1bc23d51978d681f727a9393b7328326fabc",
+    "estimator_0.joblib": "0585881a037ffa5715e6639e834ba9536314744904433400a5928593be428747",
+    "estimator_1.joblib": "24edbaba6eb4c6dcbfa88bb728f7ca869205f290f73a4b400bea4b3cea11ff6b",
+    "estimator_2.joblib": "0dac006e8df6bcc9cc62b1090e6c40a62829135e1071502d4c605d7470b0d959",
+    "estimator_3.joblib": "3e42fca5be2f1bc80d6291dd41cbb203d68f30d70d28d8332918353446a4d0fa",
+    "fit_resources.json": "ab70d1a6097ea69ccb40751a509f1f4d60cf082e4fe5471a999b692f5b82a9f4",
+    "selection_frozen.json": "f06269b1a6e5adec760fd3758ec0b65058642f9bc9ddaca1990cefb8707dd4b7"
+  },
+  "test_config": {
+    "budget": {
+      "cloud_rental_allowed": false,
+      "ledger_path": "logs/budget/openai_ledger.jsonl",
+      "per_run_paid_usd": 12,
+      "stop_at_usd": 45,
+      "stop_on_api_error": true,
+      "stop_on_unknown_usage": true,
+      "total_paid_usd": 50
+    },
+    "data": {
+      "base_train_end": "2018-01-01T00:00:00Z",
+      "metadata_path": "data/raw/amazon/meta_Magazine_Subscriptions.jsonl.gz",
+      "metadata_sha256": "f46912359f8c29a7966e9db0dc474d91388b1a0b7232808611752da1f0bf3cf4",
+      "policy_train_end": "2020-01-01T00:00:00Z",
+      "processed_path": "data/processed",
+      "raw_path": "data/raw/amazon/Magazine_Subscriptions.jsonl.gz",
+      "sha256": "c77a5c092039158c3f19f77f44e49c3a94fa28591eb159f4348c3d8af53bdf53",
+      "staging_path": "data/staging",
+      "test_end": "2023-09-10T00:00:00Z",
+      "validation_end": "2021-01-01T00:00:00Z"
+    },
+    "evaluation": {
+      "additional_baselines": {
+        "causal_sequence": {
+          "artifact_fallback_path": "artifacts/frozen_base/causal_sequence",
+          "artifact_path": "logs/20260923_233625_amazon_magazine_sequence",
+          "artifact_search_root": "logs",
+          "candidate_count": 200,
+          "cpu_threads": 2,
+          "model_hash": "3c706f2f0e67e3cf57aa0196e61615bc2f5b201d695d3a6c83aa271b45758932",
+          "name": "causal_sequence"
+        },
+        "popularity": {
+          "artifact_fallback_path": "artifacts/frozen_base/itemknn",
+          "artifact_path": "logs/20260923_232911_amazon_magazine_replay",
+          "artifact_search_root": "logs",
+          "candidate_count": 200,
+          "model_hash": "9af3900b3654761dceeefc2d46be812d77488828402d4ff4a7a13fd568f9d746",
+          "name": "popularity"
+        }
+      },
+      "partition": "test",
+      "purpose": "frozen_final_comparison"
+    },
+    "evidence": {
+      "category_tokens": 48,
+      "k": 10,
+      "max_history_events": 20,
+      "plans": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ],
+      "prompt_path": "prompts/evidence_rerank_v1.txt",
+      "recent_events": 1,
+      "review_tokens": 128,
+      "title_tokens": 40,
+      "tokenizer": "o200k_base"
+    },
+    "experiment_name": "amazon_final_test_prepare",
+    "final_test_freeze": "logs\\20260930_210942_amazon_final_protocol_freeze\\freeze.json",
+    "llm": {
+      "base_url": "https://api.openai.com/v1",
+      "credential_file": "../env.txt",
+      "input_reservation_margin_tokens": 128,
+      "max_input_tokens": 16384,
+      "max_output_tokens": 256,
+      "max_retries": 0,
+      "model": "gpt-4.1-mini-2025-04-14",
+      "pricing": {
+        "cached_input_per_million_usd": 0.1,
+        "checked_date": "2026-09-23",
+        "input_per_million_usd": 0.4,
+        "model": "gpt-4.1-mini-2025-04-14",
+        "output_per_million_usd": 1.6,
+        "source": "https://developers.openai.com/api/docs/models/gpt-4.1-mini"
+      },
+      "provider": "openai",
+      "temperature": 0,
+      "timeout_seconds": 60
+    },
+    "logging": {
+      "path": "logs"
+    },
+    "preparation": {
+      "count_requests_per_minute": 180,
+      "count_token_pacing": 120000,
+      "share_identical_inputs_within_request": true
+    },
+    "protocol": {
+      "id": "amazon_next_positive_unseen_v1",
+      "positive_rating": 4
+    },
+    "retriever": {
+      "artifact_path": "logs/20260923_232911_amazon_magazine_replay",
+      "artifact_search_root": "logs",
+      "candidate_count": 200,
+      "model_hash": "8f35c8afe52cf6cc1669ba9e9cea3b7eda364043e00d16cb7456e939781da6b8",
+      "name": "itemknn"
+    },
+    "runtime": {
+      "cache": "disabled",
+      "concurrency": 4,
+      "progress_every": 32
+    },
+    "sampling": {
+      "max_users": 1000000,
+      "mode": "uniform_users"
+    },
+    "seed": 42,
+    "stage": "frozen_matrix_prepare"
+  },
+  "test_scored": false,
+  "validation_outcome_sha256": "9948e23748b5c33b262ec81502c12b0786a9da5b115e317bfadadb03f1c7d483"
+}
