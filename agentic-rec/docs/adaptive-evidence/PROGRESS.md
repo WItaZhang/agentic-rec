@@ -1,11 +1,11 @@
 # Research execution checkpoint
 
-Last updated: 2026-09-25 UTC. The full research goal remains active. The newest
+Last updated: 2026-09-30 UTC. The full research goal remains active. The newest
 checkpoint is at the bottom; historical spending/status entries are not current balances.
 
 ## Authorization and resources
 
-- Branch: `codex/development-failure-analysis`; repository default:
+- Branch: `codex/final-controls`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
 - Paid API authorization updated by user: **USD 50 total**, estimate each round.
   First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
@@ -41,9 +41,9 @@ checkpoint is at the bottom; historical spending/status entries are not current 
 | M1d sequence baseline | validated | `45be0c3`; `logs/20260923_233625_amazon_magazine_sequence`; [report](../../reports/20260923_m1d_sequence/README.md) | Sequence validation NDCG 0.067832; retrieval no better. Freeze ItemKNN top-200 for main evidence comparisons. |
 | M2 real LLM | pilot completed and analyzed | `7c26d47`, `d6b41bf`; [pilot report](../../reports/20260924_m2_development_pilot/README.md) | 1024 attempts, one retained 429 fallback. Recent evidence has no established aggregate gain; full evidence is directionally worse. Same-input output noise can inflate oracle headroom. |
 | M3 fixed evidence | complete primary validation; controls running | `72deac0`, `d8b22f6`; [complete validation](../../reports/20260925_m3_evidence_validation/README.md) | R1 overall gain unestablished; R4 −0.026559 NDCG with negative paired interval. History-state directions differ. |
-| M4 routing | implemented, not yet fitted | `d672712` precommits the selection grid; `59460f5` adds final-test gates | Rules, cost-calibrated random control, weighted Ridge/boosting policies; wait for complete matrices before fitting/selection. |
+| M4 routing | fitted and validation analyzed | `4ee41e1`, `adc13e6`; [routing report](../../reports/20260930_m4_routing_validation/README.md); `configs/amazon_routing_development_v2.yaml` | Primary selected validation actions all R0; secondary quality preservation unestablished. Four model hashes and every validation action reproduce offline. Practical selection: causal sequence model. |
 | M5 sequential evidence | conditional | No implementation claimed | Only pursue if observations after fetching evidence can improve a decision. |
-| M6 report and career materials | planned | Claim ledger tied to completed results | Strong baseline, statistics, ablations, limitations and honest LaTeX. |
+| M6 final test/report/materials | pending final freeze/test; development reports published | Claim ledger tied to completed results; `configs/amazon_final_protocol_plan_v1.yaml` | Finish strong-base and presentation controls, freeze unchanged validation choices, then final test, serving/resource audit and final materials. |
 
 Initial M2 checkpoint (superseded by the live checkpoints below): durable paid-call
 accounting, target-free R1–R4 evidence, real API smoke, then a variance-sized pilot.
@@ -458,3 +458,5 @@ but has not yet run on completed expanded labels. Latest full local suite:
 - Recovery checkpoint `logs/20260930_205929_amazon_sequence_queue_checkpoint` lowers only queued input allowance from 1.8M to 1.2M. Resume `logs/20260930_205938_amazon_sequence_validation_batch_resume_queue` (`effad47`), session **52809**, preserves every accepted/collected shard and requeues shard 23 once. Config `configs/amazon_sequence_validation_batch_resume_queue.yaml`. Do not launch a second Batch scheduler.
 - After collecting the previous accepted shards, known campaign cost was **USD 14.7910646**, conservative accounted **14.7945662** including the older unresolved pilot reservation. This is a historical snapshot; remaining sequence calls continue to add cost. Whole sequence estimate/cap remains USD 7.7100102 / 12; no scientific input or generation retry policy changed.
 - Presentation preparation `logs/20260930_202629_amazon_presentation_control_prepare`, session 87454, remains unbilled token counting. Paid presentation execution must wait for sequence completion and an exact full-phase preflight. Then analyze both controls, freeze the already selected sequence method plus registered routing comparisons, and run the untouched final test and serving audit.
+
+- PR [#9](https://github.com/WItaZhang/agentic-rec/pull/9) merged at `9698a04` after exact-head Python 3.11/3.12 CI, 127 local tests, Ruff and no unresolved reviews. Twelve public archive files were also checked against their actual committed Git blob hashes. Current work continues on `codex/final-controls`; this milestone does not complete the research objective.
