@@ -10,7 +10,12 @@ INFERENCE_KEYS = ("protocol", "data", "retriever", "evidence", "llm")
 
 
 def verify_final_config(config, root):
-    location = root / config["final_test_freeze"]
+    # Historical Windows receipts retain their original bytes/checksums. Resolve
+    # their relative separators portably without rewriting a frozen record.
+    def path(value):
+        return root / value.replace("\\", "/")
+
+    location = path(config["final_test_freeze"])
     freeze = json.loads(location.read_text())
     manifest = json.loads((location.parent / "manifest.json").read_text())
     if manifest["status"] != "completed" or manifest.get("test_scored") or digest(location) != manifest["freeze_sha256"]:
@@ -20,12 +25,12 @@ def verify_final_config(config, root):
             raise ValueError(f"Final inference configuration changed after freeze: {key}")
     if config["evaluation"]["partition"] != "test":
         raise ValueError("Final freeze is only valid for its test partition")
-    if digest(root / config["evidence"]["prompt_path"]) != freeze["prompt_sha256"]:
+    if digest(path(config["evidence"]["prompt_path"])) != freeze["prompt_sha256"]:
         raise ValueError("Final prompt changed after freeze")
     for filename, checksum in freeze["selection_artifact_hashes"].items():
-        if digest(root / freeze["routing_run"] / filename) != checksum:
+        if digest(path(freeze["routing_run"]) / filename) != checksum:
             raise ValueError("Development-selected routing artifact changed")
-    if "deployment_selection_path" in freeze and digest(root / freeze["deployment_selection_path"]) != freeze["deployment_selection_sha256"]:
+    if "deployment_selection_path" in freeze and digest(path(freeze["deployment_selection_path"])) != freeze["deployment_selection_sha256"]:
         raise ValueError("Practical method selection changed after freeze")
     return freeze
 
@@ -65,7 +70,7 @@ def run_freeze(config, config_path, root):
                            "additional_baselines": settings.get("additional_baselines", {})},
             "budget": settings["test_budget"], "logging": config["logging"],
             "preparation": original["preparation"],
-            "final_test_freeze": str((run_dir / "freeze.json").relative_to(root))}
+            "final_test_freeze": (run_dir / "freeze.json").relative_to(root).as_posix()}
         if test_config["sampling"]["mode"] != "uniform_users" or test_config["seed"] != original["seed"]:
             raise ValueError("Final population sampling must preserve the development seed and user unit")
         record = {"scope": "one frozen final test; no post-test parameter selection",
@@ -85,7 +90,7 @@ def run_freeze(config, config_path, root):
                     or selection_config["sources"]["routing_run"] != settings["routing_run"]
                     or digest(selection_path) != selection_status["decision_sha256"]):
                 raise ValueError("Practical method selection must use this completed development fit")
-            record.update(deployment_selection_path=str(selection_path.relative_to(root)),
+            record.update(deployment_selection_path=selection_path.relative_to(root).as_posix(),
                           deployment_selection_sha256=digest(selection_path))
         write_json(run_dir / "freeze.json", record)
         (run_dir / "test_config.yaml").write_text(yaml.safe_dump(test_config, sort_keys=False), encoding="utf-8")

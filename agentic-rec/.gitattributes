@@ -1,2 +1,3 @@
 # Preserve research artifact bytes and their recorded SHA-256 on every platform.
 artifacts/** -text
+prompts/** -text
