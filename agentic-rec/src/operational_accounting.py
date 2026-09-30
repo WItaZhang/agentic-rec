@@ -26,7 +26,7 @@ def summarize_operations(entries, records, rank_validated, repaired):
                 if row.get('generation_attempts', 0) or row.get('usage') is not None:
                     raise ValueError('A generation record cannot omit its reserved physical identity')
                 # Resumed journals can contain the exact original count-only error.
-                key = hashlib.sha256(json.dumps(row, sort_keys=True).encode()).hexdigest()
+                key = row.get('record_identity_sha256') or hashlib.sha256(json.dumps(row, sort_keys=True).encode()).hexdigest()
                 count_only[key] = counts
             continue
         if identity not in entries:
@@ -62,5 +62,22 @@ def summarize_operations(entries, records, rank_validated, repaired):
         'scope': 'Physical IDs deduplicate resumed, collected and counterfactual aliases. '
                  'Local evidence counters describe history/title/category accesses, not external HTTP tool calls '
                  'or all offline prompt constructions. Repair count includes fallback validation. '
-                 'Coverage counts disclose older calls without matching evidence/ranking records. '
+                 'Coverage counts disclose calls not yet evaluated or older calls without matching evidence/ranking records. '
                  'Exact copied count-only error rows are deduplicated; token-count-only requests have no generation reservation.'}
+
+
+def summarize_campaign_operations(entries, records, rank_validated, repaired, preparations, management):
+    operations = summarize_operations(entries, records, rank_validated, repaired)
+    operations.update(matrix_preparation_token_count_calls_known=sum(r['count_endpoint_calls'] or 0 for r in preparations.values()),
+        preparation_runs=preparations,
+        preparation_runs_without_complete_count=[name for name, row in preparations.items() if row['count_endpoint_calls'] is None],
+        management_by_run={name: row for name, row in management.items() if any(row.values())},
+        management_totals={key: sum(row.get(key, 0) for row in management.values())
+                           for key in {k for row in management.values() for k in row}},
+        management_scope='Recorded SDK operations/receipts, not total HTTP requests. Pagination, transport-level exchanges '
+                         'and manual provider diagnostics outside managed runs are not fully metered. '
+                         'Resume polling totals subtract inherited counters; recollection can repeat downloads but not generation charges.')
+    operations['token_count_operations_known'] = sum(operations[key] for key in (
+        'synchronous_token_count_calls_with_reserved_identity', 'count_only_error_operations',
+        'matrix_preparation_token_count_calls_known'))
+    return operations

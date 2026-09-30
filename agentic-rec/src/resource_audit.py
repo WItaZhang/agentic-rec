@@ -6,7 +6,7 @@ from collections import defaultdict
 
 import yaml
 
-from .operational_accounting import incremental_polls, summarize_operations
+from .operational_accounting import incremental_polls, summarize_campaign_operations
 from .paid_budget import PaidBudget
 from .utils import digest, managed_run, write_json
 
@@ -60,6 +60,21 @@ def reconcile_usage(entries, records):
         elif actual is not None:
             raise ValueError("Known physical charge lacks its provider usage record")
     return dict(totals)
+
+
+def categorize_usage(per_run, names, phase_rules):
+    categories = {}
+    for name, row in per_run.items():
+        matches = [rule["name"] for rule in phase_rules
+                   if names.get(name, "").startswith(tuple(rule["experiment_prefixes"]))]
+        if len(matches) != 1:
+            raise ValueError(f"Paid run needs exactly one declared phase classification: {name}")
+        phase = matches[0]
+        if phase not in categories:
+            categories[phase] = {key: 0 for key in row}
+        for key, value in row.items():
+            categories[phase][key] += value
+    return categories
 
 
 def run_resource_audit(config, config_path, root):
@@ -143,30 +158,8 @@ def run_resource_audit(config, config_path, root):
         if digest(root / limits['ledger_path']) != ledger_before:
             raise RuntimeError('Ledger changed during audit; discard this mixed snapshot and retry after settlement')
         per_run = reconcile_usage(entries, records)
-        operations = summarize_operations(entries, records, rank_validated, repaired)
-        operations.update(matrix_preparation_token_count_calls_known=sum(r['count_endpoint_calls'] or 0 for r in preparations.values()),
-            preparation_runs=preparations,
-            preparation_runs_without_complete_count=[name for name, row in preparations.items() if row['count_endpoint_calls'] is None],
-            management_by_run={name: row for name, row in management.items() if any(row.values())},
-            management_totals={key: sum(row.get(key, 0) for row in management.values())
-                               for key in {k for row in management.values() for k in row}},
-            management_scope='Recorded SDK operations/receipts, not total HTTP requests. Pagination, transport-level exchanges '
-                             'and manual provider diagnostics outside managed runs are not fully metered. '
-                             'Resume polling totals subtract inherited counters; recollection can repeat downloads but not generation charges.')
-        operations['token_count_operations_known'] = sum(operations[key] for key in (
-            'synchronous_token_count_calls_with_reserved_identity', 'count_only_error_operations',
-            'matrix_preparation_token_count_calls_known'))
-        categories = {}
-        for name, row in per_run.items():
-            matches = [rule["name"] for rule in settings["phase_rules"]
-                       if names.get(name, "").startswith(tuple(rule["experiment_prefixes"]))]
-            if len(matches) != 1:
-                raise ValueError(f"Paid run needs exactly one declared phase classification: {name}")
-            phase = matches[0]
-            if phase not in categories:
-                categories[phase] = {key: 0 for key in row}
-            for key, value in row.items():
-                categories[phase][key] += value
+        operations = summarize_campaign_operations(entries, records, rank_validated, repaired, preparations, management)
+        categories = categorize_usage(per_run, names, settings['phase_rules'])
         roots = {name: state for name, state in states.items() if name not in nested and name != run_dir.name}
         running = [name for name, state in roots.items() if state["status"] == "running"]
         if running and settings["require_no_pending"]:
@@ -188,6 +181,13 @@ def run_resource_audit(config, config_path, root):
             "unmetered": ["Host energy consumption", "Provider-internal compute", "Network bytes"],
             "source_record_hashes": sources}
         write_json(run_dir / "campaign_resources.json", report)
+        from .resource_archive import write_accounting_archive
+
+        write_accounting_archive(run_dir / 'accounting_archive', entries, records,
+            {'rank_validated': sorted(rank_validated), 'repaired': sorted(repaired), 'preparations': preparations,
+             'management': management, 'names': names, 'phase_rules': settings['phase_rules']}, report,
+            {'ledger_sha256': ledger_before, 'source_run': run_dir.relative_to(root).as_posix(),
+             'source_commit': manifest['git_commit'], 'interim': not settings['require_no_pending']})
         manifest.update(test_scored=False, paid_api_usd=0, llm_calls=0,
                         ledger_sha256=ledger_before, stage_status="resource_audit_complete")
         print(json.dumps(report["total"]), flush=True)
