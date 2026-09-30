@@ -155,6 +155,10 @@ def plot_policies(result, output):
     fig.savefig(output / "policy_quality_cost.png", dpi=180)
     fig.savefig(output / "policy_quality_cost.svg")
     plt.close(fig)
+    from .research_figures import action_allocation_figure, paired_group_figure
+
+    paired_group_figure(result, output, "policy_group_effects")
+    action_allocation_figure(result, output)
 
 
 def compare_additional_baselines(outcomes, policy_rows, settings):

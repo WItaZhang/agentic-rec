@@ -155,6 +155,9 @@ def draw_cost_quality(result, output):
     fig.savefig(output / "quality_cost.png", dpi=180)
     fig.savefig(output / "quality_cost.svg")
     plt.close(fig)
+    from .research_figures import paired_group_figure
+
+    paired_group_figure(result, output, "evidence_group_effects")
 
 
 def run_analysis(config, config_path, root):

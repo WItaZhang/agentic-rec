@@ -1,0 +1,12 @@
+{
+  "run": "logs\\20260930_203502_validation_archive_reanalysis",
+  "stage": "offline archive reanalysis",
+  "numerical_reproduction": {
+    "absolute_float_tolerance": 1e-14,
+    "matches": true,
+    "max_absolute_float_difference": 0.0,
+    "non_float_fields": "exact"
+  },
+  "paid_api_usd": 0,
+  "note": "Figure uses the existing frozen validation outcomes; no new predictions or comparison selection"
+}
