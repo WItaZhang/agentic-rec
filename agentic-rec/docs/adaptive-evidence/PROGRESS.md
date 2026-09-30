@@ -5,7 +5,7 @@ checkpoint is at the bottom; historical spending/status entries are not current 
 
 ## Authorization and resources
 
-- Branch: `codex/robustness-results`; repository default:
+- Branch: `codex/robustness-analysis`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
 - Paid API authorization updated by user: **USD 50 total**, estimate each round.
   First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
@@ -520,3 +520,5 @@ but has not yet run on completed expanded labels. Latest full local suite:
 - Presentation dispatch is now live at `logs/20260930_220737_amazon_presentation_control_batch_overlap_tail`, runtime source `faff7ac`, session **56214**, 123 shards. One file-upload-only recovery completed with the original 55 reservations and no generation retry. The earlier queued launcher 38021 is terminal and must not be restarted. Sequence scheduler 52809 is still waiting on its retained tail.
 - Added [delivery evidence audit](../../reports/adaptive_evidence_study/DELIVERY_AUDIT.md), distinguishing verified development evidence from pending final, serving and reporting work.
 - Final quality-cost plotting now includes both frozen conventional baselines at zero API cost with their own-candidate-pool labels and user-bootstrap marginal quality intervals. This display-only addition does not change method selection, pairwise comparisons or frozen inference. Offline final archive reanalysis regenerates the same complete plot. Full local **136 tests and Ruff pass**; final rendering still awaits actual final outcomes.
+
+- PR [#12](https://github.com/WItaZhang/agentic-rec/pull/12) merged as `4c1acf3` after exact-head Python 3.11/3.12 push/PR checks, 136 local tests/Ruff, and no unresolved reviews. Current branch `codex/robustness-analysis`. Live experimental handles remain 52809 and 56214; this verified running state is not an external-permission blocker or completion of the research goal.
