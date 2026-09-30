@@ -236,3 +236,17 @@ the generation-branch observation count and conditional latency. A sparse
 calling policy can have a low overall P95 while its few model calls remain slow.
 The 128-user sample and its rare-branch quantiles are descriptive, not a
 population-level latency guarantee.
+
+
+An exhausted infrastructure-upload allowance is distinct from a generation retry
+or paid-budget allowance. After verifying the old scheduler has stopped and
+reconciling any submitting shard through the existing recovery checkpoint, a
+new resume config may explicitly increase only `upload_recovery_limit` using
+`resume_upload_recovery_allowance: {previous_limit: ..., new_limit: ..., reason: ...}`.
+The declared values must match the predecessor and new scheduler configs. All
+other scheduler settings and the complete budget must remain identical. The
+saved cumulative automatic-attempt counter is loaded unchanged and a hashed
+`scheduling_amendment.json` records the transition. Do not silently reset it.
+A later ordinary resume omits this one-transition amendment field; its earlier
+record remains preserved. Never use this path to bypass generation ambiguity or
+the paid-budget stop.
