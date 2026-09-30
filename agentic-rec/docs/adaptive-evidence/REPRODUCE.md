@@ -221,10 +221,12 @@ The pending paid audit now uses `configs/amazon_serving_audit_extended.yaml`,
 superseding the unexecuted eight-method `amazon_serving_audit.yaml`. It preserves
 that plan's 128 validation users and primary policies, then adds the three
 already frozen secondary-budget routes. It never evaluates quality or accesses
-final-test labels. Use `uv run --locked --extra yaml --extra experiments
---extra api --extra local-llm python main.py --config
-configs/amazon_serving_audit_extended.yaml` only after the current Batch/CPU-heavy
-experiments are complete, with the original credential and ledger configuration.
+final-test labels. Run only after the current Batch/CPU-heavy experiments are
+complete, with the original credential and ledger configuration:
+
+```sh
+uv run --locked --extra yaml --extra experiments --extra api --extra local-llm python main.py --config configs/amazon_serving_audit_extended.yaml
+```
 
 The [registered preflight](../../reports/adaptive_evidence_study/serving_audit_preflight.json)
 is an estimate, not a latency result. Every method is independently executed at
