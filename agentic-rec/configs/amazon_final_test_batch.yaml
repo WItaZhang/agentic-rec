@@ -21,7 +21,7 @@ scheduler:
   max_inflight_input_tokens: 1200000
   poll_seconds: 30
   max_consecutive_poll_errors: 3
-  upload_recovery_limit: 20
+  upload_recovery_limit: 40
   upload_recovery_delay_seconds: 5
 budget:
   total_paid_usd: 50

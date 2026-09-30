@@ -42,6 +42,27 @@ def may_recover_upload(error, attempts, limit):
             and error.get("type") == "APIConnectionError" and error.get("http_status") is None)
 
 
+def validate_resume_settings(config, previous):
+    """Permit only an explicit increase of the cumulative infrastructure allowance."""
+    amendment = config.get('resume_upload_recovery_allowance')
+    if config['budget'] != previous['budget']:
+        raise ValueError('Resume must preserve the original budget')
+    if config['scheduler'] == previous['scheduler']:
+        if amendment is not None:
+            raise ValueError('Recovery allowance amendment does not change its declared limit')
+        return None
+    old = previous['scheduler'].get('upload_recovery_limit', 0)
+    new = config['scheduler'].get('upload_recovery_limit', 0)
+    expected = {**previous['scheduler'], 'upload_recovery_limit': new}
+    if (not isinstance(amendment, dict) or set(amendment) != {'previous_limit', 'new_limit', 'reason'}
+            or amendment['previous_limit'] != old or amendment['new_limit'] != new
+            or type(new) is not int or not 0 <= old < new
+            or not isinstance(amendment['reason'], str) or not amendment['reason'].strip()
+            or config['scheduler'] != expected):
+        raise ValueError('Resume may only explicitly increase the upload-recovery allowance; all other settings stay frozen')
+    return dict(amendment)
+
+
 def recover_upload_bounded(config, run_dir, root, state, index, submitted, error):
     from .batch_recovery import (
         UploadRecoveryInterrupted,
@@ -76,6 +97,8 @@ def recover_upload_bounded(config, run_dir, root, state, index, submitted, error
 
 
 def run_batch_schedule(config, config_path, root):
+    if config.get('resume_upload_recovery_allowance') is not None and not config.get('resume_from'):
+        raise ValueError('A recovery allowance amendment requires a recorded predecessor')
     settings = config["scheduler"]
     if settings["max_batch_input_tokens"] > settings["max_inflight_input_tokens"] or not 1 <= settings["poll_seconds"] <= 60:
         raise ValueError("Invalid queue or polling limits")
@@ -105,12 +128,17 @@ def run_batch_schedule(config, config_path, root):
                  "poll_calls": 0, "poll_errors": 0}
         if config.get("resume_from"):
             previous = root / config["resume_from"]
-            old_config = yaml.safe_load((previous / "config.yaml").read_text())
-            if any(config[k] != old_config[k] for k in ("scheduler", "budget")):
-                raise ValueError("Resume must preserve phase input, queue settings and budget")
+            old_config = verified_run_config(previous)
+            amendment = validate_resume_settings(config, old_config)
             state = json.loads((previous / "scheduler_state.json").read_text())
             if state["input_sha256"] != fingerprint or any(c["state"] == "submitting" for c in state["chunks"]):
                 raise ValueError("Input changed or submission is ambiguous; inspect recorded intent/provider metadata before resuming")
+            if amendment is not None:
+                write_json(run_dir / 'scheduling_amendment.json', {**amendment,
+                    'previous_config_sha256': digest(previous / 'config.yaml'),
+                    'previous_state_sha256': digest(previous / 'scheduler_state.json'),
+                    'cumulative_auto_recoveries_preserved': state.get('upload_recovery_attempts', 0),
+                    'generation_retries_changed': False, 'budget_changed': False})
         else:
             if ledger.snapshot()["campaign_accounted_usd"] + upper > budget_config["stop_at_usd"]:
                 raise ValueError("Full phase estimate exceeds remaining campaign allowance")

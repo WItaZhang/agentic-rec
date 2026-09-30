@@ -1,0 +1,31 @@
+{
+  "config_sha256": "ab6fb3598707af9f5356506bd575d3541752572bb276ef0c8b40d8b23d88b333",
+  "conservative_reserved_max_usd": 9.920192,
+  "dispatch_gate": "Both remaining development control analyses complete; frozen inference/selection must remain unchanged",
+  "expected_usd_at_36_output_tokens": 8.416256,
+  "logical_action_inputs": 14288,
+  "paid_generation_dispatched": false,
+  "per_round_cap_usd": 12,
+  "physical_calls": 7460,
+  "precounted_input_tokens": 41007040,
+  "prepared_run": "logs/20260930_211006_amazon_final_test_prepare",
+  "previous_config_sha256": "397fbd3260fe5645c4e20df8e08b64aef8fb0cf08f982551b940243f90ddcd32",
+  "prior_preflight_sha256": "f6815b08a308e60012cf9ab3f46b020b02f82721ad69558f59a4935afd94eab3",
+  "status": "planned_not_executed",
+  "transport_allowance_update": {
+    "generation_retry_count": 0,
+    "new_limit": 40,
+    "observed_automatic_upload_recoveries": 17,
+    "observed_run": "logs/20260930_231855_amazon_presentation_batch_resume_s041",
+    "observed_shards": {
+      "collected": 66,
+      "pending": 55,
+      "submitted": 1,
+      "submitting": 1
+    },
+    "observed_utc": "2026-09-30T23:43:09.202576+00:00",
+    "previous_limit": 20,
+    "reason": "Observed repeated pre-create file-upload connection failures in the current diagnostic phase; bound automatic infrastructure continuation without changing physical generations, inference, queue or any budget"
+  },
+  "users": 3572
+}

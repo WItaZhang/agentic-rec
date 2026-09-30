@@ -1,9 +1,15 @@
 import json
+from copy import deepcopy
 
 import pytest
 
 from src.batch_recovery import UploadRecoveryInterrupted
-from src.batch_scheduler import may_recover_upload, recover_upload_bounded
+from src.batch_scheduler import (
+    may_recover_upload,
+    recover_upload_bounded,
+    run_batch_schedule,
+    validate_resume_settings,
+)
 
 CONNECTION = {'stage': 'file_upload', 'type': 'APIConnectionError', 'http_status': None}
 
@@ -97,3 +103,48 @@ def test_ambiguous_or_unexpected_recovery_failure_stops_immediately(recovery_sch
     with pytest.raises((RuntimeError, ValueError), match='unexpected|unproven'):
         recover_upload_bounded(*recovery_schedule)
     assert len(dispatched) == 1 and state['upload_recovery_attempts'] == 2
+
+
+def test_explicit_allowance_increase_preserves_other_scheduler_settings_and_budget():
+    previous = {'scheduler': {'upload_recovery_limit': 20, 'max_inflight_input_tokens': 900000,
+                              'prepared_run': 'frozen_inputs', 'pricing': {'output': .8}},
+                'budget': {'total_paid_usd': 50}}
+    assert validate_resume_settings(deepcopy(previous), previous) is None
+    updated = deepcopy(previous)
+    updated['scheduler']['upload_recovery_limit'] = 40
+    amendment = {'previous_limit': 20, 'new_limit': 40, 'reason': 'Observed repeated proven upload failures'}
+    updated['resume_upload_recovery_allowance'] = amendment
+    assert validate_resume_settings(updated, previous) == amendment
+    assert previous['scheduler']['upload_recovery_limit'] == 20
+    for field, value in [('prepared_run', 'different_inputs'), ('max_inflight_input_tokens', 1200000),
+                         ('pricing', {'output': 0})]:
+        changed = deepcopy(updated)
+        changed['scheduler'][field] = value
+        with pytest.raises(ValueError, match='all other settings stay frozen'):
+            validate_resume_settings(changed, previous)
+    updated['budget']['total_paid_usd'] = 51
+    with pytest.raises(ValueError, match='original budget'):
+        validate_resume_settings(updated, previous)
+
+
+@pytest.mark.parametrize('change', ['no_declaration', 'stale_previous', 'blank_reason', 'lower_limit', 'no_change'])
+def test_allowance_cannot_be_silently_reset_or_ambiguously_amended(change):
+    previous = {'scheduler': {'upload_recovery_limit': 20}, 'budget': {}}
+    updated = {'scheduler': {'upload_recovery_limit': 40}, 'budget': {},
+               'resume_upload_recovery_allowance': {'previous_limit': 20, 'new_limit': 40, 'reason': 'transport'}}
+    if change == 'no_declaration':
+        updated.pop('resume_upload_recovery_allowance')
+    elif change == 'stale_previous':
+        updated['resume_upload_recovery_allowance']['previous_limit'] = 0
+    elif change == 'blank_reason':
+        updated['resume_upload_recovery_allowance']['reason'] = ''
+    else:
+        updated['scheduler']['upload_recovery_limit'] = 10 if change == 'lower_limit' else 20
+        updated['resume_upload_recovery_allowance']['new_limit'] = updated['scheduler']['upload_recovery_limit']
+    with pytest.raises(ValueError, match='allowance|amendment'):
+        validate_resume_settings(updated, previous)
+
+
+def test_allowance_amendment_requires_a_predecessor_before_any_external_work(tmp_path):
+    with pytest.raises(ValueError, match='recorded predecessor'):
+        run_batch_schedule({'resume_upload_recovery_allowance': {}}, tmp_path / 'unused.yaml', tmp_path)

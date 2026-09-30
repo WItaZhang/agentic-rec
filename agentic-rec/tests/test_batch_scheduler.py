@@ -18,7 +18,7 @@ def test_shards_preserve_every_request_under_both_limits():
         split_batches([{"preflight_input_tokens": 1001}], 2, 1000)
 
 
-def test_ambiguous_submit_cannot_be_reissued_on_resume(tmp_path, monkeypatch):
+def resume_fixture(tmp_path):
     (tmp_path / "uv.lock").write_text("fixture")
     (tmp_path / "main.py").write_text("")
     source = tmp_path / "logs" / "prepared"
@@ -41,10 +41,44 @@ def test_ambiguous_submit_cannot_be_reissued_on_resume(tmp_path, monkeypatch):
     previous = tmp_path / "logs" / "previous"
     previous.mkdir()
     (previous / "config.yaml").write_text(yaml.safe_dump(config))
+    (previous / "manifest.json").write_text(json.dumps({'status': 'failed',
+        'config_sha256': digest(previous / 'config.yaml')}))
     (previous / "scheduler_state.json").write_text(json.dumps({"input_sha256": fingerprint,
                                                               "chunks": [{"state": "submitting"}]}))
     config_path = tmp_path / "config.yaml"
     config_path.write_text(yaml.safe_dump(config))
+    return config, config_path, previous
+
+
+@pytest.mark.parametrize('changed_config', [False, True])
+def test_ambiguous_submit_or_changed_predecessor_cannot_be_reissued(tmp_path, monkeypatch, changed_config):
+    config, config_path, previous = resume_fixture(tmp_path)
+    if changed_config:
+        with (previous / 'config.yaml').open('a') as stream:
+            stream.write('\n# Changed after execution\n')
     monkeypatch.setattr("src.batch_scheduler.client_for", lambda *_: pytest.fail("Must not make an API request"))
-    with pytest.raises(ValueError, match="ambiguous"):
+    with pytest.raises(ValueError, match='configuration changed' if changed_config else 'ambiguous'):
         run_batch_schedule(config, config_path, tmp_path)
+
+
+def test_allowance_amendment_loads_the_original_counter_and_accepted_work(tmp_path, monkeypatch):
+    config, config_path, previous = resume_fixture(tmp_path)
+    config['scheduler']['upload_recovery_limit'] = 20
+    (previous / 'config.yaml').write_text(yaml.safe_dump(config))
+    (previous / 'manifest.json').write_text(json.dumps({'status': 'completed',
+        'config_sha256': digest(previous / 'config.yaml')}))
+    state = json.loads((previous / 'scheduler_state.json').read_text())
+    state.update(upload_recovery_attempts=20, poll_calls=123,
+                 chunks=[{'state': 'collected', 'collection_run': 'logs/retained', 'batch_id': 'accepted'}])
+    (previous / 'scheduler_state.json').write_text(json.dumps(state))
+    original_state_hash = digest(previous / 'scheduler_state.json')
+    config['scheduler']['upload_recovery_limit'] = 40
+    config['resume_upload_recovery_allowance'] = {'previous_limit': 20, 'new_limit': 40, 'reason': 'observed transport errors'}
+    config_path.write_text(yaml.safe_dump(config))
+    monkeypatch.setattr('src.batch_scheduler.client_for', lambda *_: object())
+    result = run_batch_schedule(config, config_path, tmp_path)
+    assert json.loads((result / 'scheduler_state.json').read_text()) == state
+    amendment = json.loads((result / 'scheduling_amendment.json').read_text())
+    assert amendment['cumulative_auto_recoveries_preserved'] == 20
+    assert amendment['previous_state_sha256'] == original_state_hash
+    assert amendment['budget_changed'] is False
