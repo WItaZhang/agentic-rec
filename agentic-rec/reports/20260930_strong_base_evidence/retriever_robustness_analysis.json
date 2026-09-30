@@ -1,0 +1,464 @@
+{
+  "history_groups": {
+    "at_least_two": {
+      "base_second_minus_first": {
+        "candidate_recall": {
+          "ci_high": 0.05825242718446602,
+          "ci_low": -0.0970873786407767,
+          "confidence": 0.95,
+          "difference": -0.019417475728155338,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 103
+        },
+        "hr": {
+          "ci_high": 0.06796116504854369,
+          "ci_low": -0.06796116504854369,
+          "confidence": 0.95,
+          "difference": 0.0,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 103
+        },
+        "ndcg": {
+          "ci_high": 0.050810649383348776,
+          "ci_low": -0.041417863009007176,
+          "confidence": 0.95,
+          "difference": 0.00441105037079833,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 103
+        }
+      },
+      "evidence_effect_interactions": {
+        "R1": {
+          "hr": {
+            "ci_high": 0.07766990291262135,
+            "ci_low": -0.0970873786407767,
+            "confidence": 0.95,
+            "difference": -0.009708737864077669,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "ndcg": {
+            "ci_high": 0.0597199022160923,
+            "ci_low": -0.07649559634649285,
+            "confidence": 0.95,
+            "difference": -0.009660975713733214,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          }
+        },
+        "R2": {
+          "hr": {
+            "ci_high": 0.06796116504854369,
+            "ci_low": -0.10679611650485436,
+            "confidence": 0.95,
+            "difference": -0.019417475728155338,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "ndcg": {
+            "ci_high": 0.06053820649748169,
+            "ci_low": -0.04610832581678629,
+            "confidence": 0.95,
+            "difference": 0.006570583324156604,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          }
+        },
+        "R3": {
+          "hr": {
+            "ci_high": 0.06796116504854369,
+            "ci_low": -0.08737864077669903,
+            "confidence": 0.95,
+            "difference": -0.009708737864077669,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "ndcg": {
+            "ci_high": 0.04379478196621049,
+            "ci_low": -0.053252996362411216,
+            "confidence": 0.95,
+            "difference": -0.005838405063197712,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          }
+        },
+        "R4": {
+          "hr": {
+            "ci_high": 0.06796116504854369,
+            "ci_low": -0.10679611650485436,
+            "confidence": 0.95,
+            "difference": -0.019417475728155338,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          },
+          "ndcg": {
+            "ci_high": 0.049828545737426656,
+            "ci_low": -0.04783445639142267,
+            "confidence": 0.95,
+            "difference": -0.00020824552728962415,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 103
+          }
+        }
+      },
+      "users": 103
+    },
+    "one": {
+      "base_second_minus_first": {
+        "candidate_recall": {
+          "ci_high": 0.0,
+          "ci_low": -0.0931174089068826,
+          "confidence": 0.95,
+          "difference": -0.044534412955465584,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 247
+        },
+        "hr": {
+          "ci_high": 0.06072874493927125,
+          "ci_low": -0.012145748987854251,
+          "confidence": 0.95,
+          "difference": 0.024291497975708502,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 247
+        },
+        "ndcg": {
+          "ci_high": 0.04715178387575922,
+          "ci_low": 0.008876286440742799,
+          "confidence": 0.95,
+          "difference": 0.0272724149062136,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 247
+        }
+      },
+      "evidence_effect_interactions": {
+        "R1": {
+          "hr": {
+            "ci_high": 0.016194331983805668,
+            "ci_low": -0.08906882591093117,
+            "confidence": 0.95,
+            "difference": -0.03643724696356275,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "ndcg": {
+            "ci_high": 0.0017003070617008598,
+            "ci_low": -0.058184090169765015,
+            "confidence": 0.95,
+            "difference": -0.02794062111803973,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          }
+        },
+        "R2": {
+          "hr": {
+            "ci_high": 0.016194331983805668,
+            "ci_low": -0.08906882591093117,
+            "confidence": 0.95,
+            "difference": -0.03643724696356275,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "ndcg": {
+            "ci_high": 0.0017003070617008598,
+            "ci_low": -0.058184090169765015,
+            "confidence": 0.95,
+            "difference": -0.02794062111803973,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          }
+        },
+        "R3": {
+          "hr": {
+            "ci_high": 0.032388663967611336,
+            "ci_low": -0.0728744939271255,
+            "confidence": 0.95,
+            "difference": -0.020242914979757085,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "ndcg": {
+            "ci_high": 0.0010366441800055942,
+            "ci_low": -0.06261547402317075,
+            "confidence": 0.95,
+            "difference": -0.0301332183578245,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          }
+        },
+        "R4": {
+          "hr": {
+            "ci_high": 0.032388663967611336,
+            "ci_low": -0.0728744939271255,
+            "confidence": 0.95,
+            "difference": -0.020242914979757085,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          },
+          "ndcg": {
+            "ci_high": 0.0010366441800055942,
+            "ci_low": -0.06261547402317075,
+            "confidence": 0.95,
+            "difference": -0.0301332183578245,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 247
+          }
+        }
+      },
+      "users": 247
+    },
+    "zero": {
+      "base_second_minus_first": {
+        "candidate_recall": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "confidence": 0.95,
+          "difference": 0.0,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 2968
+        },
+        "hr": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "confidence": 0.95,
+          "difference": 0.0,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 2968
+        },
+        "ndcg": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "confidence": 0.95,
+          "difference": 0.0,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 2968
+        }
+      },
+      "evidence_effect_interactions": {
+        "R1": {
+          "hr": {
+            "ci_high": -0.00033692722371967657,
+            "ci_low": -0.008086253369272238,
+            "confidence": 0.95,
+            "difference": -0.004043126684636119,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "ndcg": {
+            "ci_high": -0.00011032009640560041,
+            "ci_low": -0.002369020420131055,
+            "confidence": 0.95,
+            "difference": -0.0012148644176904202,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          }
+        },
+        "R2": {
+          "hr": {
+            "ci_high": -0.00033692722371967657,
+            "ci_low": -0.008086253369272238,
+            "confidence": 0.95,
+            "difference": -0.004043126684636119,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "ndcg": {
+            "ci_high": -0.00011032009640560041,
+            "ci_low": -0.002369020420131055,
+            "confidence": 0.95,
+            "difference": -0.0012148644176904202,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          }
+        },
+        "R3": {
+          "hr": {
+            "ci_high": 0.0020215633423180594,
+            "ci_low": -0.0006738544474393531,
+            "confidence": 0.95,
+            "difference": 0.0006738544474393531,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "ndcg": {
+            "ci_high": 0.0007933962651641343,
+            "ci_low": -0.00016184018588919204,
+            "confidence": 0.95,
+            "difference": 0.0002754478993625117,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          }
+        },
+        "R4": {
+          "hr": {
+            "ci_high": 0.0020215633423180594,
+            "ci_low": -0.0006738544474393531,
+            "confidence": 0.95,
+            "difference": 0.0006738544474393531,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          },
+          "ndcg": {
+            "ci_high": 0.0007933962651641343,
+            "ci_low": -0.00016184018588919204,
+            "confidence": 0.95,
+            "difference": 0.0002754478993625117,
+            "repetitions": 10000,
+            "unit": "user",
+            "users": 2968
+          }
+        }
+      },
+      "users": 2968
+    }
+  },
+  "identical_candidate_snapshots": 0,
+  "inference": "Exploratory paired sensitivity; nominal intervals. Each within-retriever contrast fixes candidates. Cross-retriever interactions include changes in candidate composition and base order; they do not isolate stronger embeddings or establish a routing improvement.",
+  "interaction_definition": "(action minus base under second retriever) minus (action minus base under first retriever)",
+  "overall": {
+    "base_second_minus_first": {
+      "candidate_recall": {
+        "ci_high": 0.0003013863773357444,
+        "ci_low": -0.0081374321880651,
+        "confidence": 0.95,
+        "difference": -0.0039180229053646775,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "hr": {
+        "ci_high": 0.0054249547920434,
+        "ci_low": -0.0015069318866787222,
+        "confidence": 0.95,
+        "difference": 0.0018083182640144665,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      },
+      "ndcg": {
+        "ci_high": 0.004288067063505153,
+        "ci_low": 0.0001853048155570641,
+        "confidence": 0.95,
+        "difference": 0.002167156320080466,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3318
+      }
+    },
+    "evidence_effect_interactions": {
+      "R1": {
+        "hr": {
+          "ci_high": -0.0006027727546714888,
+          "ci_low": -0.01235684147076552,
+          "confidence": 0.95,
+          "difference": -0.006630500301386378,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 3318
+        },
+        "ndcg": {
+          "ci_high": -0.00011924855674741487,
+          "ci_low": -0.006738589099609577,
+          "confidence": 0.95,
+          "difference": -0.0034665857463458414,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 3318
+        }
+      },
+      "R2": {
+        "hr": {
+          "ci_high": -0.0009041591320072332,
+          "ci_low": -0.01295961422543701,
+          "confidence": 0.95,
+          "difference": -0.006931886678722122,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 3318
+        },
+        "ndcg": {
+          "ci_high": 4.137105003254591e-05,
+          "ci_low": -0.005992274488263483,
+          "confidence": 0.95,
+          "difference": -0.002962712756320932,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 3318
+        }
+      },
+      "R3": {
+        "hr": {
+          "ci_high": 0.003616636528028933,
+          "ci_low": -0.006027727546714889,
+          "confidence": 0.95,
+          "difference": -0.0012055455093429777,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 3318
+        },
+        "ndcg": {
+          "ci_high": 0.0006626256667731618,
+          "ci_low": -0.005072814135819869,
+          "confidence": 0.95,
+          "difference": -0.002178038363648005,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 3318
+        }
+      },
+      "R4": {
+        "hr": {
+          "ci_high": 0.003315250150693189,
+          "ci_low": -0.006630500301386378,
+          "confidence": 0.95,
+          "difference": -0.0015069318866787222,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 3318
+        },
+        "ndcg": {
+          "ci_high": 0.0008717388450593956,
+          "ci_low": -0.004915650675808807,
+          "confidence": 0.95,
+          "difference": -0.002003262464853993,
+          "repetitions": 10000,
+          "unit": "user",
+          "users": 3318
+        }
+      }
+    },
+    "users": 3318
+  },
+  "snapshot_identity_scope": "The fingerprint includes item IDs/order, scores, model hash and prediction time; a different fingerprint does not prove different item membership."
+}

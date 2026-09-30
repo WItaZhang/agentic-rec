@@ -1,0 +1,16 @@
+{
+  "earlier_run": "logs/20260930_225052_amazon_retriever_robustness",
+  "reported_run": "logs/20260930_225257_amazon_retriever_robustness",
+  "verified_fields": [
+    "overall",
+    "history_groups",
+    "interaction_definition",
+    "inference"
+  ],
+  "matches_exactly": true,
+  "schema_change": "Candidate fingerprint count was renamed and its identity scope clarified; numerical comparisons did not change.",
+  "source_analysis_hashes": {
+    "logs/20260930_225052_amazon_retriever_robustness": "95a9c2aa9edb30ba94720884cfc8927ee76cf481a32efdb413809f3ec121dbc1",
+    "logs/20260930_225257_amazon_retriever_robustness": "071986c783dc9e284309ed875ccf7187df316329145cbe4a86dd6841fe1141e2"
+  }
+}
