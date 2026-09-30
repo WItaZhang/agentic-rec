@@ -42,3 +42,6 @@ resource_audit:
   - name: synchronous_serving_audit
     experiment_prefixes:
     - amazon_serving_audit
+  - name: candidate_presentation_control
+    experiment_prefixes:
+    - amazon_presentation_control_batch

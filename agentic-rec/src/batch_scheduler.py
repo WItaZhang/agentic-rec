@@ -37,10 +37,18 @@ def persist_state(path, state):
     temporary.replace(path)
 
 
+def may_recover_upload(error, attempts, limit):
+    return (attempts < limit and error.get("stage") == "file_upload"
+            and error.get("type") == "APIConnectionError" and error.get("http_status") is None)
+
+
 def run_batch_schedule(config, config_path, root):
     settings = config["scheduler"]
     if settings["max_batch_input_tokens"] > settings["max_inflight_input_tokens"] or not 1 <= settings["poll_seconds"] <= 60:
         raise ValueError("Invalid queue or polling limits")
+    if (settings.get("upload_recovery_limit", 0) < 0
+            or not 0 <= settings.get("upload_recovery_delay_seconds", 0) <= 60):
+        raise ValueError("Invalid infrastructure upload-recovery limits")
     with managed_run(config, config_path, root) as (run_dir, manifest):
         prepared = root / settings["prepared_run"]
         original = verified_run_config(prepared)
@@ -95,7 +103,32 @@ def run_batch_schedule(config, config_path, root):
                 child_path.write_text(yaml.safe_dump(child, sort_keys=False), encoding="utf-8")
                 chunk.update(state="submitting", intent_config=str(child_path.relative_to(root)))
                 persist_state(state_path, state)
-                submitted = run_batch_submit(child, child_path, root)
+                try:
+                    submitted = run_batch_submit(child, child_path, root)
+                except RuntimeError:
+                    failed = []
+                    for candidate in (root / config["logging"]["path"]).glob(f"*_{child['experiment_name']}"):
+                        if (candidate / "submission_error.json").exists() and verified_run_config(candidate) == child:
+                            failed.append(candidate)
+                    if len(failed) != 1:
+                        raise
+                    submitted = failed[0]
+                    error = json.loads((submitted / "submission_error.json").read_text())
+                    attempts = state.get("upload_recovery_attempts", 0)
+                    if not may_recover_upload(error, attempts, settings.get("upload_recovery_limit", 0)):
+                        raise
+                    from .batch_recovery import run_upload_recovery
+
+                    state["upload_recovery_attempts"] = attempts + 1
+                    persist_state(state_path, state)
+                    time.sleep(settings.get("upload_recovery_delay_seconds", 0))
+                    recovery = {"experiment_name": f"{config['experiment_name']}_upload_recovery_{index:03d}",
+                        "stage": "batch_upload_recovery", "seed": config["seed"], "data": config["data"],
+                        "logging": config["logging"], "runtime_source_run": str(run_dir.relative_to(root)),
+                        "recovery": {"submission_run": str(submitted.relative_to(root))}}
+                    recovery_path = run_dir / f"upload_recovery_{index:03d}.yaml"
+                    recovery_path.write_text(yaml.safe_dump(recovery, sort_keys=False), encoding="utf-8")
+                    run_upload_recovery(recovery, recovery_path, root)
                 submission = json.loads((submitted / "submission.json").read_text())
                 chunk.update(state="submitted", submit_run=str(submitted.relative_to(root)), batch_id=submission["id"])
                 persist_state(state_path, state)
@@ -135,6 +168,7 @@ def run_batch_schedule(config, config_path, root):
                 time.sleep(settings["poll_seconds"])
         write_json(run_dir / "collection_runs.json", [c["collection_run"] for c in state["chunks"]])
         write_json(run_dir / "resources.json", {"budget": ledger.snapshot(), "status_poll_calls": state["poll_calls"],
+            "upload_recovery_attempts": state.get("upload_recovery_attempts", 0),
             "submitted_physical_requests": len(rows), "shards": len(state["chunks"]),
             "note": "Per-shard token usage and charges are settled in the shared ledger; no generation repeated on resume"})
         manifest.update(test_scored=False, prepared_run=settings["prepared_run"], stage_status="all_shards_collected")
