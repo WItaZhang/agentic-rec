@@ -5,7 +5,7 @@ checkpoint is at the bottom; historical spending/status entries are not current 
 
 ## Authorization and resources
 
-- Branch: `codex/robustness-analysis`; repository default:
+- Branch: `codex/presentation-final-results`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
 - Paid API authorization updated by user: **USD 50 total**, estimate each round.
   First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
@@ -539,3 +539,6 @@ but has not yet run on completed expanded labels. Latest full local suite:
 
 - PR #13 initially exposed Python 3.12 built-in float-sum differences in four archived total-cost fields (~1e-13 USD); every quality/statistical field matched. Local isolated `data/staging/repro-python312` reproduced the issue in `logs/20260930_230048_sequence_validation_archive_reanalysis`. `c52c666` uses explicit original-order additions for reported monetary aggregates, preserving original values/types and the unchanged 1e-14 tolerance. Python 3.12 replay `logs/20260930_230423_sequence_validation_archive_reanalysis` reproduces all fields exactly. No inputs, labels, method selections or archived statistics were changed. Full local **144 tests and Ruff pass**.
 - A second recovery-upload failure occurred at presentation shard 27; the now-explicit error stage proved file upload/no HTTP status. Recovery `logs/20260930_230202_amazon_presentation_upload_recovery_s027_resume` reused 52 original reservations; checkpoint `logs/20260930_230352_amazon_presentation_checkpoint_s027` retained all other work. Active resume **`logs/20260930_230409_amazon_presentation_batch_resume_s027`**, source `ad1a6c3`, session **89031**, config `configs/amazon_presentation_batch_resume_s027.yaml`. Session 61851 is terminal. The recovered shard has completed with known usage and no generation retry.
+
+- PR [#13](https://github.com/WItaZhang/agentic-rec/pull/13) merged at `3f3d247` after exact-head Python 3.11/3.12 push/PR CI, including accounting, sequence-evidence and routing-policy archive replays plus cross-retriever analysis, and no unresolved reviews. Local Python 3.12 routing replay `logs/20260930_230507_routing_validation_archive_reanalysis` also reproduces every field exactly. Current branch `codex/presentation-final-results`; local 144 tests/Ruff passed.
+- Current live presentation run `logs/20260930_230409_amazon_presentation_batch_resume_s027`, session 89031, remains bounded to the original generation inputs, 900k inflight tokens and USD 9 phase cap. Continue from its saved state; no duplicate scheduler. All remaining final-test, serving, full resource and career-material gates are still open. Current account values are refreshed in `logs/CURRENT_CHECKPOINT.json`; the goal remains active.
