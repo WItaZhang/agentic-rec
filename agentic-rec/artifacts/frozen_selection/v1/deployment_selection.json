@@ -1,0 +1,116 @@
+{
+  "candidates": {
+    "causal_sequence": {
+      "api_usd_per_1000": 0,
+      "method": "causal_sequence",
+      "ndcg": 0.06872288451120555,
+      "requests": 3318
+    },
+    "itemknn": {
+      "api_usd_per_1000": 0,
+      "method": "itemknn",
+      "ndcg": 0.06655572819112508,
+      "requests": 3318
+    },
+    "popularity": {
+      "api_usd_per_1000": 0,
+      "method": "popularity",
+      "ndcg": 0.0631703517539876,
+      "requests": 3318
+    },
+    "selected_fixed": {
+      "api_usd_per_1000": 0.0,
+      "method": "fixed_R0",
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "kind": "fixed",
+        "plan": "R0"
+      },
+      "requests": 3318
+    },
+    "selected_learned": {
+      "api_usd_per_1000": 0.0,
+      "method": "learned_0_weight_0.3",
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "cost_weight": 0.3,
+        "estimator_id": 0,
+        "inference_total_ms": 7.615999999870837,
+        "kind": "learned"
+      },
+      "requests": 3318
+    },
+    "selected_rule": {
+      "api_usd_per_1000": 0.0,
+      "method": "base",
+      "ndcg": 0.06655572819112526,
+      "policy": {
+        "kind": "rule",
+        "rule": "base"
+      },
+      "requests": 3318
+    }
+  },
+  "eligible": [
+    "causal_sequence",
+    "itemknn",
+    "popularity",
+    "selected_fixed",
+    "selected_rule",
+    "selected_learned"
+  ],
+  "highest_validation_ndcg": 0.06872288451120555,
+  "selected": {
+    "api_usd_per_1000": 0,
+    "method": "causal_sequence",
+    "ndcg": 0.06872288451120555,
+    "requests": 3318
+  },
+  "selected_method": "causal_sequence",
+  "selection_plan_sha256": "02c95dbfa5ef26156a73b4c3b1c8cc2c96b28b049ca10a3284c36f4c8b409356",
+  "selection_scope": "validation_only; tolerance is not a noninferiority claim",
+  "settings": {
+    "budget_usd_per_1000": 0.25,
+    "candidates": [
+      "popularity",
+      "itemknn",
+      "causal_sequence",
+      "selected_rule",
+      "selected_learned",
+      "selected_fixed"
+    ],
+    "cost_scope": "observed_batch_usage_and_unknown_reservations",
+    "interpretation": "validation_selection_tolerance_is_not_a_noninferiority_claim",
+    "local_compute": "reported_separately_in_controlled_serving_audit",
+    "order": [
+      "lowest_observed_api_cost",
+      "simplest_method",
+      "highest_validation_quality"
+    ],
+    "partition": "validation",
+    "quality_metric": "user_macro_ndcg_at_10",
+    "simplicity_order": [
+      "popularity",
+      "itemknn",
+      "causal_sequence",
+      "selected_fixed",
+      "selected_rule",
+      "selected_learned"
+    ],
+    "test_role": "one_frozen_evaluation_without_method_or_parameter_reselection",
+    "tolerance_to_highest_eligible_quality": 0.002
+  },
+  "source_hashes": {
+    "baseline_run": {
+      "metrics.json": "a1f997deedfb6aed1800ec24eb51caafa0b90ecd60a01de1320cc278501b4297",
+      "outcomes.json": "3f76d9cdfc76028fa8eecc7a646b6164d6fc41426d095798b404b6859269b121"
+    },
+    "routing_run": {
+      "selection_frozen.json": "f06269b1a6e5adec760fd3758ec0b65058642f9bc9ddaca1990cefb8707dd4b7"
+    }
+  },
+  "test_role": "Report the frozen method's result; do not reselect from test quality",
+  "within_quality_tolerance": [
+    "causal_sequence"
+  ]
+}

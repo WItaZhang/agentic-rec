@@ -1,5 +1,6 @@
 import copy
 import json
+from pathlib import Path
 
 import pytest
 
@@ -75,3 +76,13 @@ def test_frozen_policy_decisions_need_no_outcomes_or_targets(tmp_path):
     assert result['actions']['rule_0.25'] == ['R0', 'R4']
     assert result['actions']['fixed_R1'] == ['R1', 'R1']
     assert result['label_access'] is False
+
+
+def test_published_protocol_verifies_without_private_logs_or_credentials():
+    import yaml
+
+    root = Path(__file__).resolve().parents[1]
+    config = yaml.safe_load((root / 'configs/amazon_final_test_prepare.yaml').read_text(encoding='utf-8'))
+    frozen = verify_final_config(config, root)
+    assert frozen['routing_run'] == 'artifacts/frozen_router/v2'
+    assert frozen['test_scored'] is False

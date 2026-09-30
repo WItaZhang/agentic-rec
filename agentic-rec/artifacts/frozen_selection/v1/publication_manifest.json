@@ -1,0 +1,9 @@
+{
+  "source_run": "logs/20260930_204723_amazon_deployment_selection",
+  "files": {
+    "config.yaml": "6c4ce06e3159b3db1a17b90a0063b6c73497d99aa69942f66d304dd31e44308d",
+    "deployment_selection.json": "5a705b5bf27d3f1478454e0eb9aa0193d065893848c75bb80917930251130d06",
+    "manifest.json": "5b02815c7b1a59269166e4f5fb8745d2f95feac2e2ceae0284b2e6b9d1a3a24c"
+  },
+  "purpose": "Exact validation-only adoption decision for portable final protocol"
+}

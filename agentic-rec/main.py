@@ -27,6 +27,11 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") == "retriever_robustness":
+        from src.retriever_robustness import run_retriever_robustness
+
+        run_retriever_robustness(config, args.config, root)
+        return
     if config.get("stage") == "batch_queue_recovery":
         from src.batch_recovery import run_queue_recovery
 
