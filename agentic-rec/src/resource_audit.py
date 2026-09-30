@@ -6,7 +6,7 @@ from collections import defaultdict
 
 import yaml
 
-from .operational_accounting import incremental_polls, summarize_campaign_operations
+from .operational_accounting import incremental_polls, summarize_campaign_operations, verify_recorded_prices
 from .paid_budget import PaidBudget
 from .utils import digest, managed_run, write_json
 
@@ -89,7 +89,7 @@ def run_resource_audit(config, config_path, root):
             raise ValueError("A final resource audit cannot omit pending paid attempts")
         directories = sorted((root / config["logging"]["path"]).glob("*/manifest.json"))
         records, sources, nested, states, names = [], {}, set(), {}, {}
-        rank_validated, repaired, preparations, management = set(), set(), {}, {}
+        rank_validated, repaired, preparations, management, prices = set(), set(), {}, {}, {}
         for path in directories:
             directory = path.parent
             if directory == run_dir:
@@ -118,6 +118,13 @@ def run_resource_audit(config, config_path, root):
                         if chunk.get(field) and is_scheduler_child(cfg, chunk[field]):
                             nested.add(chunk[field].replace("\\", "/").split("/")[-1])
             phase = cfg.get('stage')
+            if cfg.get('llm', {}).get('pricing'):
+                prices[directory.name] = cfg['llm']['pricing']
+            elif phase == 'batch_submit':
+                prices[directory.name] = cfg['batch']['pricing']
+            elif phase == 'serving_resource_audit':
+                frozen = json.loads((root / cfg['audit']['freeze_path'].replace('\\', '/')).read_text())
+                prices[directory.name] = frozen['test_config']['llm']['pricing']
             operation = management.setdefault(directory.name, {})
             operation.update(successful_upload_receipts=int((directory / 'upload.json').exists()),
                 recorded_submission_failures=int((directory / 'submission_error.json').exists()),
@@ -171,6 +178,7 @@ def run_resource_audit(config, config_path, root):
             "total": {key: sum(row[key] for row in per_run.values()) for key in next(iter(per_run.values()), {})},
             "ledger_snapshot": budget_snapshot,
             "operation_accounting": operations,
+            "usage_pricing_verification": verify_recorded_prices(entries, records, prices),
             "experiment_compute": {"inclusive_cpu_seconds_known": sum(row.get("cpu_seconds", 0) for row in roots.values()),
                 "sum_run_wall_seconds_known": sum(row.get("wall_seconds", 0) for row in roots.values()),
                 "runs_with_cpu_timing": sum("cpu_seconds" in row for row in roots.values()),
@@ -185,7 +193,8 @@ def run_resource_audit(config, config_path, root):
 
         write_accounting_archive(run_dir / 'accounting_archive', entries, records,
             {'rank_validated': sorted(rank_validated), 'repaired': sorted(repaired), 'preparations': preparations,
-             'management': management, 'names': names, 'phase_rules': settings['phase_rules']}, report,
+             'management': management, 'names': names, 'phase_rules': settings['phase_rules'],
+             'prices': {entry['run_id']: prices[entry['run_id']] for entry in entries.values()}}, report,
             {'ledger_sha256': ledger_before, 'source_run': run_dir.relative_to(root).as_posix(),
              'source_commit': manifest['git_commit'], 'interim': not settings['require_no_pending']})
         manifest.update(test_scored=False, paid_api_usd=0, llm_calls=0,

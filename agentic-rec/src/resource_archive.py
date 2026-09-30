@@ -5,7 +5,7 @@ import hashlib
 import json
 import math
 
-from .operational_accounting import summarize_campaign_operations
+from .operational_accounting import summarize_campaign_operations, verify_recorded_prices
 from .resource_audit import categorize_usage, reconcile_usage
 from .utils import digest, managed_run, write_json
 
@@ -36,7 +36,7 @@ def write_accounting_archive(destination, entries, records, settings, report, pr
     for name, value in values.items():
         (destination / f'{name}.json.gz').write_bytes(gzip.compress(json.dumps(value).encode(), mtime=0))
     write_json(destination / 'expected_accounting.json', {key: report[key] for key in
-        ('by_paid_run', 'by_phase', 'total', 'operation_accounting')})
+        ('by_paid_run', 'by_phase', 'total', 'operation_accounting', 'usage_pricing_verification') if key in report})
     write_json(destination / 'archive_manifest.json', {**provenance, 'status': 'completed',
         'files': {p.name: digest(p) for p in destination.iterdir()},
         'scope': 'Recompute usage, USD and operation summaries; CPU timings are separately observed, not rerun here.',
@@ -82,6 +82,8 @@ def run_accounting_replay(config, config_path, root):
                   'total': {key: sum(row[key] for row in usage.values()) for key in next(iter(usage.values()), {})},
                   'operation_accounting': summarize_campaign_operations(entries, records, settings['rank_validated'],
                       settings['repaired'], settings['preparations'], settings['management'])}
+        if 'prices' in settings:
+            result['usage_pricing_verification'] = verify_recorded_prices(entries, records, settings['prices'])
         expected = json.loads((path / 'expected_accounting.json').read_text())
         verification = compare_accounting(result, expected, config['absolute_float_tolerance'])
         write_json(run_dir / 'verification.json', verification)

@@ -1,6 +1,7 @@
 import pytest
 
-from src.operational_accounting import incremental_polls, summarize_operations
+from src.operational_accounting import incremental_polls, summarize_operations, verify_recorded_prices
+from src.paid_budget import usage_cost
 
 
 def test_resumed_polling_counts_only_new_invocations():
@@ -41,3 +42,19 @@ def test_legacy_usage_without_explicit_counter_is_observed_but_not_fabricated_to
     with pytest.raises(ValueError, match='conflicting'):
         summarize_operations({'a': {}}, [{'call_id': 'a', 'evidence': {'tool_calls': 2}},
                                          {'call_id': 'a', 'evidence': {'tool_calls': 3}}], set(), set())
+
+
+def test_price_recomputation_keeps_batch_discount_cache_and_unknown_charges_separate():
+    prices = {'sync': {'input_per_million_usd': .4, 'cached_input_per_million_usd': .1, 'output_per_million_usd': 1.6},
+              'batch': {'input_per_million_usd': .2, 'cached_input_per_million_usd': .05, 'output_per_million_usd': .8}}
+    usage = {'input_tokens': 1000, 'output_tokens': 100, 'input_tokens_details': {'cached_tokens': 400}}
+    entries = {run: {'run_id': run, 'actual_usd': usage_cost(usage, price)} for run, price in prices.items()}
+    entries['unknown'] = {'run_id': 'sync', 'actual_usd': None}
+    records = [{'call_id': run, 'usage': usage} for run in prices] + [{'call_id': 'unknown', 'usage': None}]
+    result = verify_recorded_prices(entries, records + records, prices)
+    assert result['physical_calls_repriced'] == 2
+    assert result['recomputed_known_usd'] == pytest.approx(.00066)
+    assert result['maximum_per_call_difference_usd'] == 0
+    entries['batch']['actual_usd'] *= 2
+    with pytest.raises(ValueError, match='frozen pricing'):
+        verify_recorded_prices(entries, records, prices)

@@ -3,6 +3,8 @@
 import hashlib
 import json
 
+from .paid_budget import usage_cost
+
 
 def incremental_polls(state, predecessor=None):
     previous = (predecessor or {}).get('poll_calls', 0)
@@ -10,6 +12,29 @@ def incremental_polls(state, predecessor=None):
     if not isinstance(current, int) or not isinstance(previous, int) or not 0 <= previous <= current:
         raise ValueError('Scheduler polling counter regressed across resume')
     return current - previous
+
+
+def verify_recorded_prices(entries, records, prices):
+    usages = {}
+    for row in records:
+        if row.get('call_id') and row.get('usage') is not None:
+            identity = row['call_id']
+            if identity in usages and usages[identity] != row['usage']:
+                raise ValueError('Conflicting usage in price verification')
+            usages[identity] = row['usage']
+    differences, measured = [], []
+    for identity, usage in usages.items():
+        entry = entries[identity]
+        actual = entry.get('actual_usd')
+        estimate = usage_cost(usage, prices[entry['run_id']])
+        if actual is None or estimate != actual:
+            raise ValueError('Recorded charge differs from observed usage and its frozen pricing')
+        differences.append(abs(estimate - actual))
+        measured.append(estimate)
+    return {'physical_calls_repriced': len(usages), 'recomputed_known_usd': sum(measured),
+            'maximum_per_call_difference_usd': max(differences, default=0),
+            'scope': 'Provider token usage times the recorded dated-model standard/Batch price table, not invoice reconciliation. '
+                     'Unknown usage and explicit pre-generation zero-charge rejections remain separate.'}
 
 
 def summarize_operations(entries, records, rank_validated, repaired):
