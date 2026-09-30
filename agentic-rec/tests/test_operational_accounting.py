@@ -1,6 +1,10 @@
 import pytest
 
-from src.operational_accounting import incremental_polls, summarize_operations, verify_recorded_prices
+from src.operational_accounting import (
+    incremental_polls,
+    summarize_operations,
+    verify_recorded_prices,
+)
 from src.paid_budget import usage_cost
 
 

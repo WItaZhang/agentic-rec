@@ -6,7 +6,11 @@ from collections import defaultdict
 
 import yaml
 
-from .operational_accounting import incremental_polls, summarize_campaign_operations, verify_recorded_prices
+from .operational_accounting import (
+    incremental_polls,
+    summarize_campaign_operations,
+    verify_recorded_prices,
+)
 from .paid_budget import PaidBudget
 from .utils import digest, managed_run, write_json
 
