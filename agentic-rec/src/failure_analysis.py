@@ -6,6 +6,7 @@ import json
 from .data import load_amazon_metadata, load_amazon_reviews
 from .evidence_analysis import validate_table
 from .frozen_protocol import verify_final_config
+from .metrics import sum_in_order
 from .protocol import replay_requests
 from .utils import digest, managed_run, verified_run_config, write_json
 
@@ -123,7 +124,7 @@ def run_failure_analysis(config, config_path, root):
                         for e in views[q].history[-settings["history_items_per_case"]:]]}
             analyses[policy] = {"requests": len(actions),
                 "class_counts": {tag: sum(tag in tags for tags in tagged.values()) for tag in selected},
-                "api_usd_on_retrieval_misses": sum(
+                "api_usd_on_retrieval_misses": sum_in_order(
                     (attempts[q, action]["actual_known_usd"] if attempts[q, action]["actual_known_usd"] is not None
                      else attempts[q, action]["reserved_usd"])
                     for q, action in actions.items() if action != "R0" and not table[q][action]["candidate_recall"]),

@@ -6,7 +6,7 @@ from collections import defaultdict
 
 import numpy as np
 
-from .metrics import aggregate_requests, paired_bootstrap
+from .metrics import aggregate_requests, paired_bootstrap, sum_in_order
 from .utils import digest, managed_run, write_json
 
 
@@ -80,8 +80,9 @@ def analyze_matrix(outcomes, calls, config):
         dollars = [r.get("actual_known_usd") if r.get("actual_known_usd") is not None
                    else r["reserved_usd"] for r in attempts]
         service = [r["service_latency_ms"] for r in selected]
-        methods[plan] = {**aggregate_requests(selected), "total_accounted_usd": sum(dollars),
-            "mean_accounted_usd": sum(dollars) / len(selected),
+        total_dollars = sum_in_order(dollars)
+        methods[plan] = {**aggregate_requests(selected), "total_accounted_usd": total_dollars,
+            "mean_accounted_usd": total_dollars / len(selected),
             "unknown_usage_attempts": sum(r.get("usage") is None and r["generation_attempts"] > 0 for r in attempts),
             "calls": sum(r["generation_attempts"] for r in attempts),
             "counterfactual_single_action_calls": sum(r.get("counterfactual_generation_attempts", r["generation_attempts"]) for r in attempts),
@@ -141,16 +142,15 @@ def draw_cost_quality(result, output):
     import matplotlib.pyplot as plt
 
     fig, ax = plt.subplots(figsize=(7.6, 4.8))
-    for index, (plan, row) in enumerate(result["methods"].items()):
+    for plan, row in result["methods"].items():
         mean, interval = row["user_macro"]["ndcg"], row["ndcg_interval"]
         ax.errorbar(row["mean_accounted_usd"] * 1000, mean,
                     yerr=[[max(0, mean - interval["ci_low"])], [max(0, interval["ci_high"] - mean)]],
-                    fmt="o", capsize=3)
-        ax.annotate(plan, (row["mean_accounted_usd"] * 1000, row["user_macro"]["ndcg"]),
-                    xytext=(6, 8 if index % 2 else -14), textcoords="offset points")
+                    fmt="o", capsize=3, label=plan)
     ax.set(xlabel="Incremental API USD / 1,000 requests (measured usage + unknown reservations)",
            ylabel="User-macro NDCG@10", title="Development evidence comparison — not final test")
     ax.grid(alpha=0.25)
+    ax.legend()
     fig.tight_layout()
     fig.savefig(output / "quality_cost.png", dpi=180)
     fig.savefig(output / "quality_cost.svg")

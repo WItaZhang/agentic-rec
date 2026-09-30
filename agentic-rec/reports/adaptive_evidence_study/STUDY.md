@@ -3,7 +3,7 @@
 **Working research report.** Conventional comparisons and the development pilot
 and expanded LLM validation, equal-token content controls and development failure analysis are complete.
 Routing fitting and validation-only method selection are also complete.
-Strong-base evidence controls, row-order sensitivity and final-test results are still pending. This document must not be cited as a completed final study.
+Strong-base evidence controls are complete. Row-order sensitivity and final-test results are still pending. This document must not be cited as a completed final study.
 Current execution status is in [PROGRESS](../../docs/adaptive-evidence/PROGRESS.md).
 The [delivery evidence audit](DELIVERY_AUDIT.md) maps the requested end state to
 completed evidence and remaining experiments.
@@ -249,3 +249,21 @@ At the registered primary budget USD 0.25/1,000, all selected policies retain It
 Budget-envelope selection applies a 0.002 tolerance relative to the best feasible candidate, then minimizes cost. This explains both the all-base primary result and why secondary selected policies can spend much less than their allowed envelope. These are conclusions about this registered finite deterministic policy class and tolerance, not all possible adaptive or stochastic allocators. Most requests have no history and identical conventional inputs, further restricting deterministic differentiation. No parameters were changed to force a nonzero primary result.
 
 The registered practical all-method comparison selects **the causal sequence recommender**, using NDCG 0.068723 and zero API expense on validation. This choice is separate from the within-ItemKNN primary scientific comparison and will not be reselected using test results. A stronger base-model comparison is not evidence-routing improvement. Controlled serving latency and the final frozen test are still required.
+
+## Completed strong-base evidence diagnostic
+
+The [3,318-user sequence evidence study](../20260930_strong_base_evidence/README.md)
+retains all 1,493 retrieval misses and 418 cold targets. Recent evidence minus its
+own base is -0.002855 NDCG, nominal paired interval [-0.006230, +0.000434]; full
+evidence minus base is -0.028562 [-0.034887, -0.022317]. Extra history alone has
+an unresolved overall effect, while category-augmented actions remain harmful.
+The complete 6,842 physical generations cost USD 7.7100102. Public outcome
+reanalysis reproduces all statistics exactly without raw data or API access.
+
+The paired difference between each retriever's R1 effect is -0.003467
+[-0.006739, -0.000119] for sequence minus ItemKNN. This exploratory sensitivity
+includes changed candidate composition/order and different model-output
+realizations; it is not an isolated embedding effect or a routing improvement.
+Empty-history R1 has a small positive difference, which cannot come from personal
+history. The negative full-evidence result persists after strengthening the base.
+These controls do not change the already frozen final choices.

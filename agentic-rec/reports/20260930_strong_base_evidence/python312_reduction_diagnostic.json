@@ -1,0 +1,60 @@
+{
+  "diagnostic_run": "logs/20260930_230048_sequence_validation_archive_reanalysis",
+  "mismatched_output_sha256": "df2b693838b3a4a9919ea87109a6d013b64a2d09b16ab40b26092e48ece85935",
+  "immutable_expected_sha256": "0655110516b7f63a3ab02af029f48eaf8fce6bbb4bd6044130f3553c6a8502c0",
+  "differences": [
+    {
+      "field": ".methods.R1.mean_accounted_usd",
+      "python312": 0.0007135089210367691,
+      "archived_python311": 0.0007135089210368005,
+      "difference": -3.144186300207963e-17
+    },
+    {
+      "field": ".methods.R1.total_accounted_usd",
+      "python312": 2.3674226,
+      "archived_python311": 2.367422600000104,
+      "difference": -1.0436096431476471e-13
+    },
+    {
+      "field": ".methods.R2.mean_accounted_usd",
+      "python312": 0.000714150452079566,
+      "archived_python311": 0.0007141504520795968,
+      "difference": -3.0791341698588326e-17
+    },
+    {
+      "field": ".methods.R2.total_accounted_usd",
+      "python312": 2.3695512,
+      "archived_python311": 2.369551200000102,
+      "difference": -1.021405182655144e-13
+    },
+    {
+      "field": ".methods.R3.mean_accounted_usd",
+      "python312": 0.0015383381555153708,
+      "archived_python311": 0.001538338155515402,
+      "difference": -3.122502256758253e-17
+    },
+    {
+      "field": ".methods.R3.total_accounted_usd",
+      "python312": 5.1042060000000005,
+      "archived_python311": 5.1042060000001035,
+      "difference": -1.0302869668521453e-13
+    },
+    {
+      "field": ".methods.R4.mean_accounted_usd",
+      "python312": 0.001539269439421338,
+      "archived_python311": 0.001539269439421368,
+      "difference": -2.992397996059992e-17
+    },
+    {
+      "field": ".methods.R4.total_accounted_usd",
+      "python312": 5.107296,
+      "archived_python311": 5.107296000000099,
+      "difference": -9.947598300641403e-14
+    }
+  ],
+  "all_other_fields_identical": true,
+  "quality_changed": false,
+  "verification_tolerance_changed": false,
+  "fix_commit": "c52c666",
+  "successful_replay": "logs/20260930_230423_sequence_validation_archive_reanalysis"
+}

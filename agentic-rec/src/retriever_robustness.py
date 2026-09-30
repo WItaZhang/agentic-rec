@@ -59,7 +59,9 @@ def compare_retrievers(first, second, settings):
         selected = [q for q in ids if lower <= first[q]['R0']['history_count'] < upper]
         groups[name] = comparison(selected) if selected else {'users': 0}
     return {'overall': comparison(ids), 'history_groups': groups,
-            'identical_candidate_pools': sum(first[q]['R0']['candidate_hash'] == second[q]['R0']['candidate_hash'] for q in ids),
+            'identical_candidate_snapshots': sum(first[q]['R0']['candidate_hash'] == second[q]['R0']['candidate_hash'] for q in ids),
+            'snapshot_identity_scope': 'The fingerprint includes item IDs/order, scores, model hash and prediction time; '
+                                       'a different fingerprint does not prove different item membership.',
             'interaction_definition': '(action minus base under second retriever) minus (action minus base under first retriever)',
             'inference': 'Exploratory paired sensitivity; nominal intervals. Each within-retriever contrast fixes candidates. '
                          'Cross-retriever interactions include changes in candidate composition and base order; '

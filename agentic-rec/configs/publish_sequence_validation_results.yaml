@@ -1,0 +1,14 @@
+experiment_name: publish_sequence_validation_results
+stage: publish_results
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+publication:
+  kind: evidence
+  matrix_run: logs/20260930_224532_amazon_sequence_validation_evaluate
+  analysis_run: logs/20260930_224650_amazon_sequence_evidence_analysis
+  output_path: artifacts/published/sequence_validation_v1
