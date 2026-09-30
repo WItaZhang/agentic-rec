@@ -8,7 +8,7 @@
 
 目前已完成的 3,318 用户验证显示：近期历史单次重排相对 ItemKNN 的 NDCG 差只有 +0.00061，区间跨零；充分证据反而下降 0.02656。分组结果也有差异：空历史请求的轻量重排略有收益，多事件历史组则明显受损。我又做了输入 token 完全相同的类别打乱对照，发现正确类别对应在有历史组优于打乱对应，空历史组却相反。这说明内容对应关系和请求状态有影响，但不能说增加信息普遍有效。
 
-因此我的方法选择以证据为准：继续比较规则、成本匹配的随机分配和学习路由；如果复杂方法没有可靠收益，就采用验证集支持的简单方法。目前路由实现和冻结协议已完成，完整训练数据与最终测试仍在等待 API 账户额度恢复。我不会把这个状态描述成已经验证了自适应收益。
+我已用较早时间段的 1,045 用户真实标签训练四个路由模型，并与规则和成本匹配的随机分配比较。主要预算点的验证选择全部保留基础排序；次要预算点虽减少调用，但没有证明相对规则质量无损。按预先记录的方法选择规则，目前选中不调用 LLM 的序列推荐器。强基础模型对照和最终测试仍待完成，所以我不会声称已验证自适应收益。
 
 ## English explanation
 
@@ -16,14 +16,14 @@
 
 “On 3,318 validation users, a recent-history reranker did not establish an aggregate improvement. Supplying full evidence reduced NDCG@10 by 0.02656. The direction varied by history group. I then held actual input-token counts fixed while shuffling candidate-category associations. Correct alignment helped relative to corrupted alignment for users with history, but the direction reversed for empty histories. Full evidence still trailed the conventional baseline.
 
-“My contribution is the controlled evaluation and the decision framework, rather than an assumed LLM gain. The next comparison is a frozen rule, a cost-matched random allocator, and a learned utility router. Those expanded routing and final-test results are not complete yet, so I would not claim a validated adaptive improvement.”
+“My contribution is the controlled evaluation and the decision framework, rather than an assumed LLM gain. I fitted four weighted utility routers from real labels for 1,045 earlier-period users. The primary validation budget selected the baseline for every request; a secondary learner used fewer calls but did not establish preserved quality against the rule. The registered adoption rule selected the conventional sequence model. Final-test confirmation is pending, so I do not claim a validated adaptive improvement.”
 
 ## Problem and hypotheses
 
 - **Question:** What additional evidence does a request need, and can a policy allocate evidence and model calls better than a fixed workflow at comparable measured cost?
 - **H1:** Evidence can improve some requests. Current evidence: heterogeneous development effects; no aggregate recent-evidence gain established.
-- **H2:** Observable request features predict useful actions. Current status: feature extraction and learning pipeline tested, expanded real policy labels incomplete. Group heterogeneity alone does not prove learnability.
-- **H3:** Decisions improve quality–cost tradeoffs. Current status: rule/random/learned comparison pending; no cost-saving claim yet.
+- **H2:** Observable request features predict useful actions. Current evidence: complete weighted real-label fitting and validation; the primary selected policy keeps all requests on the base model. Group heterogeneity alone does not prove learnability.
+- **H3:** Decisions improve quality–cost tradeoffs. Current evidence: primary validation actions are identical; secondary cost savings do not establish preserved quality versus the rule or superiority versus the frozen-seed random allocation.
 - **H4:** Decisions after seeing tool results justify multiple steps. No observed evidence currently establishes this; no multistep ability is claimed.
 
 ## Method and fair controls
@@ -32,7 +32,7 @@ The task predicts the next positive, previously unseen reviewed item (rating at 
 
 The executable action space is R0 (no LLM), R1 (latest history event plus candidate titles), R2 (up to 20 recent events plus titles), R3 (R1 plus categories), and R4 (R2 plus categories). R4 is deterministic local evidence assembly followed by **one** LLM rerank. It is not multistep planning. R2 uses the last 20 events; it is not semantic memory retrieval.
 
-The planned learned router estimates each action's NDCG difference from R0 using ten target-free history and base-score features. Ridge and histogram boosting are fitted on earlier policy labels, with inclusion weights for the history-enriched training sample. A dollar penalty trades expected gain against cost. Validation selects from the registered grid; final test cannot change it. Random allocation matches observed validation spending in expectation, so realized test costs must still be reported. The practical method is selected separately across conventional and routed candidates using the registered validation tolerance and simplicity rule.
+The fitted learned router estimates each action's NDCG difference from R0 using ten target-free history and base-score features. Ridge and histogram boosting are fitted on earlier policy labels, with inclusion weights for the history-enriched training sample. A dollar penalty trades expected gain against cost. Validation selects from the registered grid; final test cannot change it. Random allocation matches observed validation spending in expectation, so realized test costs must still be reported. The practical method is selected separately across conventional and routed candidates using the registered validation tolerance and simplicity rule.
 
 ## Questions to expect
 
@@ -56,10 +56,10 @@ The planned learned router estimates each action's NDCG difference from R0 using
 
 **Why not deploy the most complicated method?** Complexity needs demonstrated benefit against conventional models, simple rules and budget-matched random controls. Negative results can justify a simpler deployment method. The final choice must be frozen on validation before reporting test behavior.
 
-**What can somebody reproduce now?** Exact offline statistics, plots and paired intervals from the published derived archives, with checksum verification and no credentials. Frozen base models and configs also support real-data replay. New LLM outputs are not promised to be bit-for-bit identical. Complete router refitting and final-test artifacts will only be claimed after their actual execution.
+**What can somebody reproduce now?** Exact offline statistics, plots and paired intervals from the published derived archives, with checksum verification and no credentials. Frozen base models and configs also support real-data replay. New LLM outputs are not promised to be bit-for-bit identical. Complete router refitting now reproduces all four model hashes and all 25 policies' validation actions without raw data or API access. Final-test artifacts remain pending.
 
 ## Limitations to state without prompting
 
 One Amazon category, sparse histories, review events rather than online impressions, frozen catalog, static-metadata assumption, one dated LLM snapshot, noisy outputs, and nominal development intervals after exploration. The enriched content-control average is not a population estimate. No production uplift, latency improvement, general multi-step value or final adaptive gain has been established.
 
-Before converting this into a final interview story, add the completed policy comparison, strong-base evidence result, frozen test, representative failures, measured service latency, reconciled campaign cost, and the actual chosen method. Preserve null and negative results.
+Before converting this into a final interview story, add the strong-base/presentation controls, frozen test, representative final failures, measured service latency and reconciled campaign cost. The validation-only choice is the causal sequence recommender; it must not be reselected after test. Preserve null and negative results.
