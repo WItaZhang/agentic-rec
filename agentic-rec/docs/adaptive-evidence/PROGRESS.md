@@ -5,7 +5,7 @@ checkpoint is at the bottom; historical spending/status entries are not current 
 
 ## Authorization and resources
 
-- Branch: `codex/final-controls`; repository default:
+- Branch: `codex/control-results`; repository default:
   `claude/agentic-recommendation-survey-9afqks`.
 - Paid API authorization updated by user: **USD 50 total**, estimate each round.
   First smoke round cap USD 1; campaign planning stop USD 45. No cloud rental.
@@ -472,3 +472,6 @@ but has not yet run on completed expanded labels. Latest full local suite:
 - Current source tests: 129 pytest tests and Ruff pass. No sequential acquisition/stopping implementation or positive routing effect is inferred from these changes.
 
 - Immutable final freeze completed at `logs/20260930_210942_amazon_final_protocol_freeze` (`dfc5836`), published byte-for-byte under `artifacts/frozen_protocol/v1`. Its executable config relocates only the freeze reference and passed the full frozen-field verification. Final target-free preparation is **`logs/20260930_211006_amazon_final_test_prepare`**, source `90f61f3`, session **23408**: census of **3572 users**, one predetermined request per user from 4012 eligible events. No test generations or quality scores exist yet. Source config `configs/amazon_final_test_prepare.yaml`.
+
+- PR [#10](https://github.com/WItaZhang/agentic-rec/pull/10) merged at `2202db5` after exact-head Python 3.11/3.12 CI and no unresolved review threads. `e3bd18c` verifies the actual public freeze on Linux without private logs/credentials and resolves historical Windows path separators without changing frozen bytes. Prompts now preserve their hash-bearing bytes on checkout. Current branch `codex/control-results`.
+- Checkpoint at 2026-09-30T21:15:48.878053+00:00: sequence shards {'collected': 49, 'submitted': 4, 'pending': 74}; final target-free preparation running. Known usage-priced API USD 16.3138580; accounted including pending/unknown reservations USD 16.6068006 against USD 50. These are running snapshots, not final campaign totals. Live sessions remain 52809 (sequence), 38021 (queued presentation), 23408 (final preparation). No final generation or quality scoring has started.
