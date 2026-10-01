@@ -1,7 +1,28 @@
 {
   "correction": "Apply existing original-order reduction to the independent repricing total; preserve original values and financial archive tolerance 1e-12. No physical fee or budget is changed.",
   "final_campaign_total": false,
+  "patched_source_commit": "db3d306",
   "private_probe_vector": "data/staging/real_fee_reduction_probe_20261001.json",
+  "published_archive_replays": {
+    "3.11.15": {
+      "run": "logs/20261001_000707_resource_checkpoint_archive_replay",
+      "verification": {
+        "absolute_float_tolerance": 1e-12,
+        "matches": true,
+        "max_absolute_float_difference": 0.0,
+        "non_float_fields": "exact"
+      }
+    },
+    "3.12.4": {
+      "run": "logs/20261001_000736_resource_checkpoint_archive_replay",
+      "verification": {
+        "absolute_float_tolerance": 1e-12,
+        "matches": true,
+        "max_absolute_float_difference": 3.552713678800501e-15,
+        "non_float_fields": "exact"
+      }
+    }
+  },
   "python311": {
     "builtin_sum": 26.464171200004824,
     "observed_utc": "2026-10-01T00:04:53.289019+00:00",
