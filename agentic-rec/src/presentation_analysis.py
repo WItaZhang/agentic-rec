@@ -3,7 +3,23 @@
 import json
 
 from .evidence_analysis import analyze_matrix, draw_cost_quality, validate_table
+from .model_artifacts import load_frozen_retriever
 from .utils import digest, managed_run, verified_run_config, write_json
+
+
+def validate_retriever_settings(ordered, shuffled, root):
+    """A fallback locator may differ; inference settings and actual weights may not."""
+    left, right = dict(ordered), dict(shuffled)
+    fallback_paths = {'ordered': left.pop('artifact_fallback_path', None),
+                      'shuffled': right.pop('artifact_fallback_path', None)}
+    if left != right:
+        raise ValueError('Presentation comparison changed inference setting: retriever')
+    # Each loader verifies the resolved weights against the unchanged model hash.
+    # Per-request candidate hashes, rankings and targets are checked separately.
+    for settings in (ordered, shuffled):
+        load_frozen_retriever(root, settings)
+    return {'model_hash': left['model_hash'], 'weights_verified': True,
+            'inference_settings_match': True, 'fallback_paths': fallback_paths}
 
 
 def join_presentations(ordered_rows, ordered_calls, shuffled_rows, shuffled_calls, plans):
@@ -43,9 +59,11 @@ def run_presentation_analysis(config, config_path, root):
                 raise ValueError('Presentation analysis is validation-only')
             matrices[key] = json.loads((path / 'outcomes.json').read_text())
             calls[key] = [json.loads(line) for line in (path / 'calls.jsonl').read_text().splitlines()]
-        for key in ('protocol', 'data', 'retriever', 'llm', 'sampling', 'seed', 'runtime'):
+        for key in ('protocol', 'data', 'llm', 'sampling', 'seed', 'runtime'):
             if originals['ordered'][key] != originals['shuffled'][key]:
                 raise ValueError(f'Presentation comparison changed inference setting: {key}')
+        retriever_check = validate_retriever_settings(
+            originals['ordered']['retriever'], originals['shuffled']['retriever'], root)
         left, right = [dict(originals[key]['evidence']) for key in ('ordered', 'shuffled')]
         if left.pop('candidate_presentation', 'base_score') != 'base_score' or right.pop('candidate_presentation') != 'shuffled_rows':
             raise ValueError('Expected original base order versus shuffled rows')
@@ -62,6 +80,7 @@ def run_presentation_analysis(config, config_path, root):
         write_json(run_dir / 'analysis.json', result)
         draw_cost_quality(result, run_dir)
         manifest.update(test_scored=False, paid_api_usd=0, stage_status='presentation_analyzed',
+            retriever_equivalence=retriever_check,
             presentation_scope=('Shared target-independent row permutation; alias IDs retain base-rank information. '
                 'Order annotation also changes. Dates/output realizations remain possible confounders; exploratory sensitivity.'),
             source_hashes={key: {name: digest(path/name) for name in ('outcomes.json', 'calls.jsonl')}

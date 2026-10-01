@@ -1,8 +1,30 @@
+import json
 from copy import deepcopy
 
 import pytest
 
-from src.presentation_analysis import join_presentations
+from src.model import PopularityModel
+from src.presentation_analysis import join_presentations, validate_retriever_settings
+from src.replay import model_fingerprint
+
+
+def test_presentation_accepts_only_locator_difference_with_verified_weights(tmp_path):
+    directory = tmp_path / 'base'
+    directory.mkdir()
+    (directory / 'model.json').write_text(json.dumps({'catalog': ['a', 'b'], 'popularity': [2, 1]}))
+    config = {'name': 'popularity', 'artifact_path': 'base', 'candidate_count': 2,
+              'model_hash': model_fingerprint(PopularityModel(('a', 'b')))}
+    relocated = {**config, 'artifact_fallback_path': 'portable_backup'}
+    check = validate_retriever_settings(config, relocated, tmp_path)
+    assert check['weights_verified'] and check['model_hash'] == config['model_hash']
+    assert check['fallback_paths'] == {'ordered': None, 'shuffled': 'portable_backup'}
+    for field, value in [('candidate_count', 1), ('model_hash', 'changed'), ('unexpected_setting', True)]:
+        with pytest.raises(ValueError, match='inference setting: retriever'):
+            validate_retriever_settings(config, {**relocated, field: value}, tmp_path)
+    # Matching declarations cannot hide corrupted actual weights.
+    (directory / 'model.json').write_text(json.dumps({'catalog': ['a', 'b'], 'popularity': [1, 2]}))
+    with pytest.raises(ValueError, match='fingerprint mismatch'):
+        validate_retriever_settings(config, relocated, tmp_path)
 
 
 def test_presentation_join_keeps_failures_and_rejects_candidate_or_population_changes():
