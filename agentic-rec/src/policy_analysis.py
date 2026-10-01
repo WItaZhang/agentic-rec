@@ -172,6 +172,7 @@ def plot_policies(result, output, additional_baselines=None):
            title=("Validation-selected policies (exploratory)" if "validation" in result["inference"].lower()
                   else "Frozen final-test policies: quality and counterfactual API cost"))
     ax.grid(alpha=.25)
+    ax.margins(y=.1)
     ax.legend()
     fig.tight_layout()
     fig.savefig(output / "policy_quality_cost.png", dpi=180)
