@@ -1,0 +1,343 @@
+{
+  "additional_conventional_methods": [
+    "causal_sequence",
+    "popularity"
+  ],
+  "application_output_cache": "disabled, independent call for each method/request",
+  "budget": {
+    "campaign_accounted_usd": 37.374958400000544,
+    "campaign_actual_known_usd": 37.371456800000544,
+    "campaign_attempts": 32926,
+    "pending_reservations": 0,
+    "planning_stop_usd": 45,
+    "round_accounted_usd": 0.4284908000000011,
+    "round_cap_usd": 2.5,
+    "total_authorized_usd": 50,
+    "unknown_or_pending_calls": 1,
+    "unknown_settled_calls": 1
+  },
+  "latency_inference": "Descriptive observed sample; rare generation-branch quantiles may have very few observations. Full-request mean/P95 retain all zero-call requests.",
+  "latency_scope": "warm resident models; includes retrieval, routing, prompt construction, token preflight, queue, network and validation",
+  "methods": {
+    "base": {
+      "cached_tokens": 0,
+      "count_endpoint_calls": 0,
+      "generation_attempts": 0,
+      "generation_service_observations": 0,
+      "input_tokens": 0,
+      "mean_api_usd": 0.0,
+      "mean_evidence_ms": 0.0,
+      "mean_feature_and_policy_ms": 0.004196875011075463,
+      "mean_generation_latency_ms": 0.0,
+      "mean_generation_service_ms": null,
+      "mean_rate_queue_ms": 0.0,
+      "mean_retrieval_ms": 5.698574218797603,
+      "mean_service_ms": 5.709313281130335,
+      "output_tokens": 0,
+      "p95_generation_service_ms": null,
+      "p95_service_ms": 8.204775000740483,
+      "repairs": 0,
+      "requests": 128
+    },
+    "causal_sequence": {
+      "cached_tokens": 0,
+      "count_endpoint_calls": 0,
+      "generation_attempts": 0,
+      "generation_service_observations": 0,
+      "input_tokens": 0,
+      "mean_api_usd": 0.0,
+      "mean_evidence_ms": 0.0,
+      "mean_feature_and_policy_ms": 0.0026085938031883416,
+      "mean_generation_latency_ms": 0.0,
+      "mean_generation_service_ms": null,
+      "mean_rate_queue_ms": 0.0,
+      "mean_retrieval_ms": 5.012915625059122,
+      "mean_service_ms": 5.022524218617264,
+      "output_tokens": 0,
+      "p95_generation_service_ms": null,
+      "p95_service_ms": 8.369234999008766,
+      "repairs": 0,
+      "requests": 128
+    },
+    "full": {
+      "cached_tokens": 504448,
+      "count_endpoint_calls": 128,
+      "generation_attempts": 128,
+      "generation_service_observations": 128,
+      "input_tokens": 967043,
+      "mean_api_usd": 0.001897309375,
+      "mean_evidence_ms": 9.178503125326642,
+      "mean_feature_and_policy_ms": 0.004397656141463813,
+      "mean_generation_latency_ms": 1139.145019531128,
+      "mean_generation_service_ms": 3229.285974999925,
+      "mean_rate_queue_ms": 482.2148437510805,
+      "mean_retrieval_ms": 5.450076562368622,
+      "mean_service_ms": 3229.285974999925,
+      "output_tokens": 4608,
+      "p95_generation_service_ms": 4403.190100000392,
+      "p95_service_ms": 4403.190100000392,
+      "repairs": 0,
+      "requests": 128
+    },
+    "learned": {
+      "cached_tokens": 0,
+      "count_endpoint_calls": 0,
+      "generation_attempts": 0,
+      "generation_service_observations": 0,
+      "input_tokens": 0,
+      "mean_api_usd": 0.0,
+      "mean_evidence_ms": 0.0,
+      "mean_feature_and_policy_ms": 1.2448687500068445,
+      "mean_generation_latency_ms": 0.0,
+      "mean_generation_service_ms": null,
+      "mean_rate_queue_ms": 0.0,
+      "mean_retrieval_ms": 5.471259374900228,
+      "mean_service_ms": 6.722318750036038,
+      "output_tokens": 0,
+      "p95_generation_service_ms": null,
+      "p95_service_ms": 10.350175000166924,
+      "repairs": 0,
+      "requests": 128
+    },
+    "learned_1.5": {
+      "cached_tokens": 3200,
+      "count_endpoint_calls": 4,
+      "generation_attempts": 4,
+      "generation_service_observations": 4,
+      "input_tokens": 18270,
+      "mean_api_usd": 5.139375e-05,
+      "mean_evidence_ms": 0.11505625002428133,
+      "mean_feature_and_policy_ms": 9.651032812399762,
+      "mean_generation_latency_ms": 30.32680078123917,
+      "mean_generation_service_ms": 2759.0654249997897,
+      "mean_rate_queue_ms": 13.671875000028422,
+      "mean_retrieval_ms": 5.2834609372780506,
+      "mean_service_ms": 100.7648492184785,
+      "output_tokens": 144,
+      "p95_generation_service_ms": 3732.1052800003595,
+      "p95_service_ms": 21.617934998721466,
+      "repairs": 0,
+      "requests": 128
+    },
+    "popularity": {
+      "cached_tokens": 0,
+      "count_endpoint_calls": 0,
+      "generation_attempts": 0,
+      "generation_service_observations": 0,
+      "input_tokens": 0,
+      "mean_api_usd": 0.0,
+      "mean_evidence_ms": 0.0,
+      "mean_feature_and_policy_ms": 0.0021492186021987436,
+      "mean_generation_latency_ms": 0.0,
+      "mean_generation_service_ms": null,
+      "mean_rate_queue_ms": 0.0,
+      "mean_retrieval_ms": 1.071342968970157,
+      "mean_service_ms": 1.079672656345565,
+      "output_tokens": 0,
+      "p95_generation_service_ms": null,
+      "p95_service_ms": 1.5819050016943943,
+      "repairs": 0,
+      "requests": 128
+    },
+    "random": {
+      "cached_tokens": 0,
+      "count_endpoint_calls": 0,
+      "generation_attempts": 0,
+      "generation_service_observations": 0,
+      "input_tokens": 0,
+      "mean_api_usd": 0.0,
+      "mean_evidence_ms": 0.0,
+      "mean_feature_and_policy_ms": 0.10622499988244272,
+      "mean_generation_latency_ms": 0.0,
+      "mean_generation_service_ms": null,
+      "mean_rate_queue_ms": 0.0,
+      "mean_retrieval_ms": 5.542616406359002,
+      "mean_service_ms": 5.655154687332242,
+      "output_tokens": 0,
+      "p95_generation_service_ms": null,
+      "p95_service_ms": 8.23404000057053,
+      "repairs": 0,
+      "requests": 128
+    },
+    "random_1.5": {
+      "cached_tokens": 26624,
+      "count_endpoint_calls": 7,
+      "generation_attempts": 7,
+      "generation_service_observations": 7,
+      "input_tokens": 28042,
+      "mean_api_usd": 2.8381250000000002e-05,
+      "mean_evidence_ms": 0.13626484377482484,
+      "mean_feature_and_policy_ms": 0.10590468752980087,
+      "mean_generation_latency_ms": 50.77603906249806,
+      "mean_generation_service_ms": 2173.7824999992363,
+      "mean_rate_queue_ms": 1.421875000005457,
+      "mean_retrieval_ms": 5.736995312673798,
+      "mean_service_ms": 124.50601953136697,
+      "output_tokens": 252,
+      "p95_generation_service_ms": 2458.5398599982,
+      "p95_service_ms": 1002.7689100001096,
+      "repairs": 0,
+      "requests": 128
+    },
+    "recent": {
+      "cached_tokens": 294400,
+      "count_endpoint_calls": 128,
+      "generation_attempts": 128,
+      "generation_service_observations": 128,
+      "input_tokens": 437928,
+      "mean_api_usd": 0.0007361249999999998,
+      "mean_evidence_ms": 3.2936640625678137,
+      "mean_feature_and_policy_ms": 0.004403124876262154,
+      "mean_generation_latency_ms": 1069.2720921874468,
+      "mean_generation_service_ms": 3112.005629687502,
+      "mean_rate_queue_ms": 330.25390625061846,
+      "mean_retrieval_ms": 5.792632812614329,
+      "mean_service_ms": 3112.005629687502,
+      "output_tokens": 4608,
+      "p95_generation_service_ms": 4315.4273399974045,
+      "p95_service_ms": 4315.4273399974045,
+      "repairs": 0,
+      "requests": 128
+    },
+    "rule": {
+      "cached_tokens": 0,
+      "count_endpoint_calls": 0,
+      "generation_attempts": 0,
+      "generation_service_observations": 0,
+      "input_tokens": 0,
+      "mean_api_usd": 0.0,
+      "mean_evidence_ms": 0.0,
+      "mean_feature_and_policy_ms": 0.15361250004275462,
+      "mean_generation_latency_ms": 0.0,
+      "mean_generation_service_ms": null,
+      "mean_rate_queue_ms": 0.0,
+      "mean_retrieval_ms": 5.439152343598153,
+      "mean_service_ms": 5.598335156264511,
+      "output_tokens": 0,
+      "p95_generation_service_ms": null,
+      "p95_service_ms": 8.074549999582814,
+      "repairs": 0,
+      "requests": 128
+    },
+    "rule_1.5": {
+      "cached_tokens": 275200,
+      "count_endpoint_calls": 115,
+      "generation_attempts": 115,
+      "generation_service_observations": 115,
+      "input_tokens": 392840,
+      "mean_api_usd": 0.0006343749999999997,
+      "mean_evidence_ms": 3.0217640625096465,
+      "mean_feature_and_policy_ms": 0.1659718751056971,
+      "mean_generation_latency_ms": 938.1104914064906,
+      "mean_generation_service_ms": 3099.597239130431,
+      "mean_rate_queue_ms": 388.1640625008629,
+      "mean_retrieval_ms": 5.693742968645665,
+      "mean_service_ms": 2785.3267335937344,
+      "output_tokens": 4140,
+      "p95_generation_service_ms": 4135.0619799988635,
+      "p95_service_ms": 4104.9819799987745,
+      "repairs": 0,
+      "requests": 128
+    }
+  },
+  "policy_bindings": {
+    "learned": {
+      "budget_usd_per_1000": 0.25,
+      "selected_policy": "learned_0.25",
+      "specification": {
+        "cost_weight": 0.3,
+        "estimator_id": 0,
+        "inference_total_ms": 7.615999999870837,
+        "kind": "learned"
+      }
+    },
+    "learned_1.5": {
+      "budget_usd_per_1000": 1.5,
+      "selected_policy": "learned_1.5",
+      "specification": {
+        "cost_weight": 0.01,
+        "estimator_id": 2,
+        "inference_total_ms": 24.25970000012967,
+        "kind": "learned"
+      }
+    },
+    "random": {
+      "budget_usd_per_1000": 0.25,
+      "selected_policy": "learned_0.25",
+      "specification": {
+        "definition": "frozen marginal allocation; actual test cost can differ",
+        "expected_validation_usd": 0.0,
+        "kind": "random",
+        "observed_validation": {
+          "action_counts": {
+            "R0": 3318,
+            "R1": 0,
+            "R2": 0,
+            "R3": 0,
+            "R4": 0
+          },
+          "mean_accounted_usd": 0.0,
+          "ndcg": 0.06655572819112526,
+          "requests": 3318
+        },
+        "probabilities": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seed": 1729,
+        "target_validation_usd": 0.0
+      }
+    },
+    "random_1.5": {
+      "budget_usd_per_1000": 1.5,
+      "selected_policy": "learned_1.5",
+      "specification": {
+        "definition": "frozen marginal allocation; actual test cost can differ",
+        "expected_validation_usd": 4.418077154912599e-05,
+        "kind": "random",
+        "observed_validation": {
+          "action_counts": {
+            "R0": 3122,
+            "R1": 91,
+            "R2": 80,
+            "R3": 3,
+            "R4": 22
+          },
+          "mean_accounted_usd": 4.8376853526220613e-05,
+          "ndcg": 0.06667626543428366,
+          "requests": 3318
+        },
+        "probabilities": [
+          0.9466000620958188,
+          0.02762065753664544,
+          0.01841377169109696,
+          0.001841377169109696,
+          0.005524131507329088
+        ],
+        "seed": 1729,
+        "target_validation_usd": 4.418077154912598e-05
+      }
+    },
+    "rule": {
+      "budget_usd_per_1000": 0.25,
+      "selected_policy": "rule_0.25",
+      "specification": {
+        "kind": "rule",
+        "rule": "base"
+      }
+    },
+    "rule_1.5": {
+      "budget_usd_per_1000": 1.5,
+      "selected_policy": "rule_1.5",
+      "specification": {
+        "kind": "rule",
+        "rule": "recent_if_no_history"
+      }
+    }
+  },
+  "provider_prefix_cache": "automatic, actual cached tokens recorded",
+  "quality_scored": false
+}
