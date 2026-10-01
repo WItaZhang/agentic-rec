@@ -150,13 +150,18 @@ def plot_policies(result, output, additional_baselines=None):
         errors = [[max(0, r["mean_ndcg"] - r["ndcg_interval"]["ci_low"]) for r in rows],
                   [max(0, r["ndcg_interval"]["ci_high"] - r["mean_ndcg"]) for r in rows]]
         ax.errorbar(x, y, yerr=errors, color=color, marker=marker, capsize=3, label=kind, alpha=.85)
+    label_offsets = {"R0": 8}
+    for pair in (("R1", "R2"), ("R3", "R4")):
+        ordered = sorted(pair, key=lambda label: result["methods"][f"fixed_{label}"]["mean_ndcg"])
+        label_offsets.update({ordered[0]: -15, ordered[1]: 8})
     for name, row in result["methods"].items():
         if not name.startswith("fixed_R"):
             continue
         x, y = row["mean_accounted_usd"] * 1000, row["mean_ndcg"]
         ax.scatter(x, y, marker="x", color="black")
         label = name.removeprefix("fixed_")
-        ax.annotate(label, (x, y), xytext=(8, -15 if label in ("R1", "R4") else 8), textcoords="offset points")
+        ax.annotate(label, (x, y), xytext=(8, label_offsets[label]), textcoords="offset points",
+                    arrowprops={"arrowstyle": "-", "color": "0.4", "lw": .6})
     for index, (name, row) in enumerate((additional_baselines or {}).items()):
         mean, interval = row["mean_ndcg"], row["ndcg_interval"]
         ax.errorbar(0, mean,

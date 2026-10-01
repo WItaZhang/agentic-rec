@@ -1,0 +1,56 @@
+{
+  "causal_sequence": {
+    "api_usd": 0,
+    "cold_targets": 685,
+    "mean_candidate_recall": 0.4526875699888018,
+    "mean_hr": 0.10582306830907055,
+    "mean_ndcg": 0.04739349551085963,
+    "ndcg_interval": {
+      "ci_high": 0.0522516099671532,
+      "ci_low": 0.042597093778770724,
+      "confidence": 0.95,
+      "difference": 0.04739349551085963,
+      "repetitions": 10000,
+      "unit": "user",
+      "users": 3572
+    },
+    "ndcg_minus_main_base": {
+      "ci_high": 0.003411485809774108,
+      "ci_low": -0.00014332260078702233,
+      "confidence": 0.95,
+      "difference": 0.001626341634437849,
+      "repetitions": 10000,
+      "unit": "user",
+      "users": 3572
+    },
+    "requests": 3572,
+    "scope": "Prespecified conventional baseline on its own candidate pool; this cross-pool difference is not an evidence-routing gain"
+  },
+  "popularity": {
+    "api_usd": 0,
+    "cold_targets": 685,
+    "mean_candidate_recall": 0.4532474804031355,
+    "mean_hr": 0.10078387458006718,
+    "mean_ndcg": 0.04254267079220729,
+    "ndcg_interval": {
+      "ci_high": 0.04695641321580224,
+      "ci_low": 0.0382487530790582,
+      "confidence": 0.95,
+      "difference": 0.04254267079220729,
+      "repetitions": 10000,
+      "unit": "user",
+      "users": 3572
+    },
+    "ndcg_minus_main_base": {
+      "ci_high": -0.0008237657934907352,
+      "ci_low": -0.005676860153982489,
+      "confidence": 0.95,
+      "difference": -0.003224483084214488,
+      "repetitions": 10000,
+      "unit": "user",
+      "users": 3572
+    },
+    "requests": 3572,
+    "scope": "Prespecified conventional baseline on its own candidate pool; this cross-pool difference is not an evidence-routing gain"
+  }
+}
