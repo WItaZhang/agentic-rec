@@ -17,6 +17,10 @@ policy-label collection and [weighted routing validation](reports/20260930_m4_ro
 The primary validation budget selects all-base actions; the registered practical selection favors the causal sequence recommender. Final-test confirmation and serving costs are pending.
 The [completed strong-base evidence control](reports/20260930_strong_base_evidence/README.md)
 also finds a substantial full-evidence loss; its public statistics reproduce offline.
+The [completed presentation control](reports/20261001_presentation_control/README.md)
+finds lower quality under shuffled candidate rows, with actual input equivalence
+verified and interpretation limited to presentation sensitivity. The frozen
+3,572-user final test is generating; no final quality result is claimed.
 
 Between 2023 and 2026, several dozen papers put an LLM *agent* at the centre of a recommender: as the recommender itself (RecMind, InteRecAgent, MACRec, BiLLP), as a simulated user (RecAgent, Agent4Rec, SimUSER, RecoWorld), as an item (AgentCF), or as an assistant on the user's side (RAH, iAgent). Read side by side, they share nine components and differ mainly in which ones they attach and how they are optimised.
 
