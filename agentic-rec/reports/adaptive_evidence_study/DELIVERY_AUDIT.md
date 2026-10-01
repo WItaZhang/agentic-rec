@@ -1,6 +1,6 @@
 # Delivery evidence audit
 
-Checkpoint: 2026-09-30. **The research objective is not complete.** This audit
+Checkpoint: 2026-10-01 UTC. **The research objective is not complete.** This audit
 links acceptance requirements to observed evidence and identifies work still
 required. A running job, implemented interface or planned configuration is not
 evidence of a completed experiment. See [the execution record](../../docs/adaptive-evidence/PROGRESS.md)
@@ -23,11 +23,11 @@ for exact commits and immutable run directories.
 | Typical failures and applicability limits | [Development failure audit](../20260925_validation_failures/README.md): hit losses/rescues, cold/retrieval failures, deterministic cases; snapshot/pretraining caveats in [study](STUDY.md) | Development complete. Final attribution and examples must be added from actual final outputs. |
 | Actual tokens, attempts, repairs, offline label/controller costs | [Interim resource report](../20260930_resource_checkpoint/README.md), sanitized accounting archive and exact offline repricing | Checkpoint verified, not final totals. Final audit must have no pending/running experiments and disclose the uncertain pilot charge and measurement coverage. |
 | Comparable mean/P95 serving latency and per-request cost | `configs/amazon_serving_audit_extended.yaml`: 128 validation users, eleven methods including frozen secondary routes, concurrency one, fixed CPU/rate/timeout/retry/cache conditions | Configured and preflighted, **not executed**. Batch turnaround must not be substituted for service latency. |
-| Runnable, modular, config-driven code and locked environment | Separated `src/` modules, `configs/`, read-only raw data, timestamped `logs/`, committed `uv.lock`; 148 local tests/Ruff and Python 3.11/3.12 archive-replay CI passed on PR #14 | Verified for the current implementation. New changes require appropriate checks before merge. |
-| Public reproducible metrics, plots and source/run provenance | Public development outcome/route/accounting archives; [reproduction instructions](../../docs/adaptive-evidence/REPRODUCE.md) | Development artifacts verified. Robustness/final/serving/resource results and final reproduction entry points remain to publish. |
+| Runnable, modular, config-driven code and locked environment | Separated `src/` modules, `configs/`, read-only raw data, timestamped `logs/`, committed `uv.lock`; 164 local tests/Ruff and Python 3.11/3.12 archive-replay CI passed on PR #17 | Verified for the current implementation. New changes require appropriate checks before merge. |
+| Public reproducible metrics, plots and source/run provenance | Public development outcome/route/accounting archives; [reproduction instructions](../../docs/adaptive-evidence/REPRODUCE.md) | Development artifacts verified. Strong-base robustness is published and verified. Presentation/final/serving/final-resource results and final reproduction entry points remain to publish. |
 | Complete report and quality–cost comparison | [Working study](STUDY.md) and linked milestone reports | Incomplete until final results, serving costs and full campaign accounting are incorporated. |
 | English résumé LaTeX and interview materials match evidence | [Development career draft](../career_materials/README.md), standalone source and saved compiler diagnostic | Rewrite using final results. Native compiler currently fails before source diagnostics; no compiled PDF is claimed or required for the requested LaTeX source. |
-| GitHub, design status and handoff are synchronized | PRs #1–#14 merged; current work is on `codex/presentation-analysis`; `logs/CURRENT_CHECKPOINT.json` tracks live handles and budget | Current checkpoint is recoverable. Remaining result changes must be reviewed, checked and merged before completion. |
+| GitHub, design status and handoff are synchronized | PRs #1–#17 merged; current work is on `codex/presentation-final-gate`; `logs/CURRENT_CHECKPOINT.json` tracks live handles and budget | Current checkpoint is recoverable. Remaining result changes must be reviewed, checked and merged before completion. |
 
 The registered primary-budget policies choose R0 for all final requests. This is
 visible from frozen decisions without reading target labels; it is not a final
