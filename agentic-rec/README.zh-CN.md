@@ -4,18 +4,18 @@
 
 [English](README.md) · **[中文学习路线（从零开始）](docs/zh/00-学习路线.md)** · [英文综述](docs/survey.md) · [论文 × 组件矩阵](docs/component-matrix.md) · [设计说明](docs/design.md)
 
-**进行中的研究：[自适应证据检索的 Agentic Recommendation](docs/adaptive-evidence/README.md)**。
-MovieLens 基线已复现，Amazon 时间回放、ItemKNN 与因果序列模型已有真实结果；
-同步和批量 LLM 调用已通过协议验证，[3,318 用户证据对照](reports/20260925_m3_evidence_validation/README.md)、
-[学习路由验证](reports/20260930_m4_routing_validation/README.md)、
-[强基础模型对照](reports/20260930_strong_base_evidence/README.md) 与
-[候选行顺序对照](reports/20261001_presentation_control/README.md) 均已完成，并提供离线复现产物。
-现有验证结果没有确立自适应策略的优势：充分证据方案反而下降，主要预算点选择保留基础排序。
-按验证集规则选中的实用方法是因果序列推荐器；冻结的 3,572 用户最终测试正在生成，最终质量、服务延迟与总资源报告待完成。
-[进度记录](docs/adaptive-evidence/PROGRESS.md) 区分已实现、已验证与待完成能力，
-[复现说明](docs/adaptive-evidence/REPRODUCE.md) 给出数据、配置、费用与恢复入口。
-最终 Amazon 测试和学习路由的收益尚未报告。下面的 TOML 框架示例使用合成数据；
-真实研究结果来自独立的 `src/`、YAML 配置和原始运行记录。
+**真实数据研究：[自适应证据检索的 Agentic Recommendation](docs/adaptive-evidence/README.md)**。
+研究比较常规推荐、真实 LLM 证据方案、固定流程以及规则／随机／学习分配。
+[3,572 用户冻结测试](reports/20261001_final_test/README.md) 已完成：充分证据使 NDCG@10 比 ItemKNN 下降约 0.01526；
+主预算档各策略全部保留基础排序，次要预算档的学习策略有探索性信号。
+最终保持验证阶段选定的因果序列推荐器，不用测试结果重新选择。
+[证据验证](reports/20260925_m3_evidence_validation/README.md)、[等 token 内容对照](reports/20260925_m3_content_control/README.md)、
+[学习路由](reports/20260930_m4_routing_validation/README.md)、[强基础模型](reports/20260930_strong_base_evidence/README.md) 和
+[候选呈现对照](reports/20261001_presentation_control/README.md) 均有真实运行记录及离线复现产物。
+[完整研究报告](reports/adaptive_evidence_study/STUDY.md) 保留无收益结果与适用边界；
+[交付审计](reports/adaptive_evidence_study/DELIVERY_AUDIT.md)、[进度](docs/adaptive-evidence/PROGRESS.md)、
+[复现说明](docs/adaptive-evidence/REPRODUCE.md) 和 [英文 LaTeX／面试材料](reports/career_materials/README.md) 提供证据入口。
+下面的 TOML 框架示例使用合成数据；真实研究来自独立的 `src/`、YAML 配置和原始日志，不以 mock 指标替代。
 
 2023 到 2026 年间，几十篇工作把 LLM *agent* 放到推荐系统的中心：作为推荐器本身（RecMind、InteRecAgent、MACRec、BiLLP），作为模拟用户（RecAgent、Agent4Rec、SimUSER、RecoWorld），作为物品（AgentCF），或作为站在用户一侧的助理（RAH、iAgent）。把它们并排读，会发现共享九个组件，差异主要在于挂载了哪些组件、以及如何优化。
 

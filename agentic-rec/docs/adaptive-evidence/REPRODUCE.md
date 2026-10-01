@@ -262,4 +262,32 @@ uv run --locked --extra yaml --extra experiments --extra api python main.py --co
 
 The analysis replay includes preserved original snapshot hashes and verifies the archive's file hashes. Revalidating the full source-input equivalence additionally requires the retained private batch-input files; their texts are not published. No numerical tolerance was used to admit candidate or evidence changes.
 
-The original presentation session 26029 completed. The final scheduler is now `logs/20261001_004350_amazon_final_test_batch`, session 91054, config `configs/amazon_final_test_batch.yaml`, 139 shards. It passed the [frozen dispatch gate](../../reports/adaptive_evidence_study/final_dispatch_gate.json): complete diagnostics, unchanged frozen inputs/settings, zero pending reservations beforehand, expected USD 8.416256 / conservative USD 9.920192 / round cap 12. Do not start a duplicate scheduler; revalidate its exact handle and current checkpoint first. Evaluate only after every frozen physical input has a collected outcome. No test-quality result exists at this checkpoint.
+The original presentation session 26029 completed. Final generation also completed all 139 shards at `logs/20261001_020546_amazon_final_test_batch_resume_io` (session 62966, now terminal), following a verified Windows poll-state persistence recovery from the original terminal session 91054. Both original records are retained. It passed the [frozen dispatch gate](../../reports/adaptive_evidence_study/final_dispatch_gate.json) before generation: complete diagnostics, unchanged frozen inputs/settings, zero pending reservations, expected USD 8.416256 / conservative USD 9.920192 / round cap 12. Actual final generation cost is USD 8.416256. Do not restart either scheduler.
+
+## Completed frozen final test
+
+The [complete final report](../../reports/20261001_final_test/README.md) links the
+3,572-user matrix, registered paired/failure analyses, exact public replay and
+figures. From the inner project directory, these commands need neither raw data
+nor API access:
+
+```sh
+uv run --locked --extra yaml --extra experiments python main.py --config configs/final_test_archive_reanalysis.yaml
+uv run --locked --extra yaml --extra experiments python main.py --config configs/amazon_final_cost_alignment.yaml
+```
+
+The first verifies archive checksums and reproduces every frozen statistic,
+including separate conventional pools, within the unchanged 1e-14 tolerance
+(observed maximum difference zero). The second is an explicitly **post-evaluation
+exploratory diagnostic** using the pinned final archive: costs/actions alone
+calibrate a random distribution before this stage decodes quality. It matches
+full-population expected spending, not every sampled allocation's realized
+spending. It must not replace the original comparisons or reselect deployment.
+
+Reevaluating original private collected outputs instead uses
+`amazon_final_test_evaluate.yaml`, then `amazon_final_policy_analysis.yaml` and
+`amazon_final_failure_analysis.yaml`; their source-run bindings are explicit.
+They require the original raw inputs and private retained Batch files. New
+generation costs money and is not required for archive reproduction. In this
+campaign the method, prompts and final inputs were frozen before scoring; do
+not tune them on the existing test to manufacture a positive result.

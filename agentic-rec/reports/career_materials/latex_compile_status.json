@@ -4,6 +4,7 @@
   "compiler": "Codex built-in LaTeX compiler",
   "tool_kind": "compile-failed",
   "diagnostic": "Unable to find standard directories for platform",
-  "interpretation": "Compiler environment failed before reporting a LaTeX source error. Source is preserved; no PDF generation or layout verification is claimed.",
-  "date": "2026-09-30"
+  "interpretation": "Final source preserved. Compiler environment failed before source diagnostics; no PDF or layout verification claimed. Editor open request queued by app.",
+  "date_utc": "2026-10-01T03:07:54.954131+00:00",
+  "source_normalized_lf_sha256": "f7a39c1e82dd7c1f51ae6e96abae776586fea2a780c943cd6b6285fe60126d68"
 }

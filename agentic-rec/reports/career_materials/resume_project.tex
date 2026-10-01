@@ -1,9 +1,9 @@
-% Verified development-stage claims as of 2026-09-30; not a final-test result.
+% Verified frozen-test claims as of 2026-10-01; no production or multistep claim.
 % Paste into the projects section of an English recommendation/ML resume.
 \noindent\textbf{Adaptive Evidence for Recommendation}
 \hfill\href{https://github.com/WItaZhang/agentic-rec}{GitHub}
 \begin{itemize}
-  \item Built a reproducible temporal recommendation pipeline on 70,922 deduplicated Amazon reviews, comparing popularity, ItemKNN, and a causal Transformer against GPT-4.1 mini reranking with immutable top-200 candidates and leakage checks.
-  \item Trained cost-aware utility routers on real action outcomes for 1,045 earlier-period users, using inverse-inclusion weights and validation-selected Ridge/boosting models; compared fixed workflows, rules, and budget-matched random allocation and reproduced all four fitted checkpoints and 25 policies' validation decisions offline.
-  \item Evaluated four evidence configurations on 3,318 validation users with paired bootstrap intervals and provider token accounting; full evidence reduced NDCG@10 by 0.02656 versus ItemKNN. A 478-user, exactly token-matched category-alignment control exposed different effects across history groups; the primary routing budget selected all-base validation actions.
+  \item Built a reproducible temporal recommendation pipeline on 70,922 deduplicated Amazon review events, comparing popularity, ItemKNN, and a causal Transformer with GPT-4.1 mini reranking under immutable top-200 candidates and leakage checks.
+  \item Trained four cost-aware utility routers on real action outcomes for 1,045 earlier-period users with inverse-inclusion weights; froze model and policy selection on 3,318 validation users and evaluated fixed, rule, random, and learned policies on 3,572 held-out users.
+  \item Audited evidence value with paired bootstrap intervals, provider token accounting, equal-token content controls, and stronger-base ablations. Full evidence lowered test NDCG@10 by 0.01526 versus ItemKNN; retained the validation-selected sequence model and published reproducible outcomes, costs, and failure analyses.
 \end{itemize}

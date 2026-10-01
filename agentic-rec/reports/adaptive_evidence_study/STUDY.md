@@ -1,9 +1,12 @@
 # Evidence allocation for next-item recommendation
 
-**Working research report.** Conventional comparisons and the development pilot
-and expanded LLM validation, equal-token content controls and development failure analysis are complete.
-Routing fitting and validation-only method selection are also complete.
-Strong-base evidence controls are complete. Row-order sensitivity and final-test results are still pending. This document must not be cited as a completed final study.
+**Research report, 2026-10-01 UTC.** The frozen 3,572-user final test, conventional
+and evidence baselines, routing, component controls, strong-base robustness,
+presentation sensitivity, paired statistics and failure audit are complete.
+The validation-selected practical method remains the causal sequence recommender.
+Primary routing policies all retain the base ranking; a secondary learned-policy
+signal is exploratory. Synchronous serving measurement and final campaign
+accounting are being completed before final delivery.
 Current execution status is in [PROGRESS](../../docs/adaptive-evidence/PROGRESS.md).
 The [delivery evidence audit](DELIVERY_AUDIT.md) maps the requested end state to
 completed evidence and remaining experiments.
@@ -195,7 +198,7 @@ and disabled application output reuse. Automatic provider prefix-cache usage
 is recorded. Its warm-model latency includes retrieval, feature/controller
 work, prompt construction, token counting, rate queue, network and repair.
 
-## Completed evidence and outstanding results
+## Development evidence
 
 The [same-sample conventional comparison](../20260924_m3_validation_baselines/README.md)
 finds validation NDCG@10 of 0.063170 (Popularity), 0.066556 (ItemKNN) and 0.068723
@@ -225,10 +228,13 @@ population. Full evidence still trails ItemKNN on this cohort. Correct alignment
 versus corrupted alignment is a narrower contrast than useful information versus
 neutral padding; it does not establish a general benefit of adding categories.
 
-Final results, final quality–cost figures, final failure cases and reconciled campaign resources must be added only after their actual runs complete. No confirmed adaptive gain or sequential stopping result is asserted by this working report.
+The [frozen final report](../20261001_final_test/README.md) now supplies actual
+test results, quality–cost figures and failure cases. No primary adaptive gain
+or sequential stopping result is asserted. Final serving and campaign resources
+are separate from the observed Batch outcome costs.
 
 
-The earlier provider billing interruption was resolved on September 30. Policy-label collection resumed with USD 11.0849600 previously accounted against the original USD 50 authorization. The [historical resource checkpoint](../20260925_resource_checkpoint/README.md) preserves exact tokens, costs, partial labels and the recovery evidence; current running costs are recorded in the shared ledger. The [interim career materials](../career_materials/README.md) include only supported development claims. Router fitting is now complete; final testing remains incomplete.
+The earlier provider billing interruption was resolved on September 30. Policy-label collection resumed with USD 11.0849600 previously accounted against the original USD 50 authorization. The [historical resource checkpoint](../20260925_resource_checkpoint/README.md) preserves exact tokens, costs, partial labels and recovery evidence; it is not the final campaign bill. The shared ledger retains the old unknown pilot reservation. [Career materials](../career_materials/README.md) distinguish primary results, exploratory findings and unimplemented extensions.
 
 The zero-call [validation failure audit](../20260925_validation_failures/README.md)
 finds that full evidence loses 388 base hits and rescues 196, whereas recent
@@ -248,7 +254,7 @@ At the registered primary budget USD 0.25/1,000, all selected policies retain It
 
 Budget-envelope selection applies a 0.002 tolerance relative to the best feasible candidate, then minimizes cost. This explains both the all-base primary result and why secondary selected policies can spend much less than their allowed envelope. These are conclusions about this registered finite deterministic policy class and tolerance, not all possible adaptive or stochastic allocators. Most requests have no history and identical conventional inputs, further restricting deterministic differentiation. No parameters were changed to force a nonzero primary result.
 
-The registered practical all-method comparison selects **the causal sequence recommender**, using NDCG 0.068723 and zero API expense on validation. This choice is separate from the within-ItemKNN primary scientific comparison and will not be reselected using test results. A stronger base-model comparison is not evidence-routing improvement. Controlled serving latency and the final frozen test are still required.
+The registered practical all-method comparison selects **the causal sequence recommender**, using NDCG 0.068723 and zero API expense on validation. This choice is separate from the within-ItemKNN primary scientific comparison and was preserved after test scoring. A stronger base-model comparison is not evidence-routing improvement. The final sequence NDCG is 0.047393; its difference from KNN, +0.001626 [−0.000143, +0.003411], is unresolved. The validation choice is not presented as a proven test winner.
 
 ## Completed strong-base evidence diagnostic
 
@@ -298,4 +304,71 @@ The [same-user row-presentation control](../20261001_presentation_control/README
 
 Both changes are negative in the no-history majority; the small at-least-two-event group has wide presentation-effect intervals crossing zero. Alias IDs still retain the base-rank prior, and every shuffled input has eight extra tokens from the observed presentation change. This is not exact-token matching or complete removal of the prior; generation dates/output noise remain possible confounders. The separate equal-token alignment control addresses a different question.
 
-This new diagnostic costs USD 7.4874418 for 6,636 physical generations; its complete public archive reproduces all statistics exactly without API access. Four unused numeric-score roundoff differences in historical snapshot hashes are disclosed and independently checked against exact candidate identities and transmitted evidence. Both complete diagnostics now satisfy the frozen final dispatch gate. Final generation started at `logs/20261001_004350_amazon_final_test_batch` with all validation-selected choices unchanged; its results, serving audit and final accounting are still pending.
+This diagnostic costs USD 7.4874418 for 6,636 physical generations; its complete public archive reproduces all statistics exactly without API access. Four unused numeric-score roundoff differences in historical snapshot hashes are disclosed and independently checked against exact candidate identities and transmitted evidence. Both complete diagnostics satisfied the frozen final dispatch gate before any final generation, with all validation-selected choices unchanged.
+
+## Frozen final test and method choice
+
+The [complete final report](../20261001_final_test/README.md) contains the full
+tables, groups, failure examples, public archive and run/commit map. All 3,572
+users remain in the denominators; 1,949 targets are outside KNN's top 200,
+including 685 cold items. The population has 3,148 users without history,
+266 with one event and 158 with at least two. These constraints strongly limit
+what reranking can achieve.
+
+| Method | Test NDCG@10 | HR@10 | Observed Batch USD/1,000 |
+|---|---:|---:|---:|
+| Popularity (own candidates) | 0.042543 | 0.100784 | 0 |
+| Causal sequence (own candidates; validation-selected) | 0.047393 | 0.105823 | 0 |
+| ItemKNN / primary learned, rule, random and fixed | 0.045767 | 0.103024 | 0 |
+| R1 recent evidence | 0.045513 | 0.100784 | 0.713239 |
+| R2 longer history | 0.045849 | 0.101624 | 0.714397 |
+| R3 recent + categories | 0.029380 | 0.069429 | 1.539596 |
+| R4 full configured evidence / fixed workflow | 0.030512 | 0.071109 | 1.541184 |
+| Secondary learned 1.5 | 0.048531 | 0.104143 | 0.061353 |
+| Secondary random 1.5 | 0.045879 | 0.103024 | 0.050385 |
+| Secondary rule 1.5 | 0.046261 | 0.104703 | 0.627485 |
+
+![Frozen test quality versus counterfactual Batch API cost](../20261001_final_test/policy_quality_cost.png)
+
+The scientific primary policies are identical all-R0 actions. A zero-width
+difference interval here is degenerate; it does not establish learned allocation
+or general quality preservation. R1−R0 is −0.000254 [−0.003215, +0.002915]; the
+one-sided lower bound also fails the prespecified 0.002 margin. R4−R0 is
+−0.015255 [−0.020532, −0.009929]. Extra configured evidence is costly and harmful
+in this setting; the negative result survives stronger-base validation controls.
+
+The frozen secondary learner calls the LLM on 243/3,572 requests (6.80%).
+Learned−rule NDCG is +0.002270 [+0.000166, +0.004563], with 90.22% less Batch
+spend, but HR differs by −0.000560 [−0.003919, +0.003080]. Learned−random NDCG
+is +0.002651 [+0.000508, +0.004993], but the learner spends **21.77% more** than
+that frozen random sample. These are nominal exploratory budget-grid results,
+not the primary finding or a cross-metric production guarantee.
+
+An explicitly post-evaluation sensitivity fixes that cost mismatch in
+expectation. The original cost-only calibration formula preserves the learner's
+conditional non-R0 mixture and rescales its call probability; it receives no
+labels, quality or features. Expected random and learned actual cost both equal
+USD 0.0613531355/1,000. Learned−expected random NDCG is +0.002997
+[+0.001036, +0.005105], while HR +0.001693 [−0.001321, +0.004721] is unresolved.
+Its intervals condition on this observed cost calibration and saved model draws;
+they do not validate a deployable test-calibrated rule. No new API calls or
+reselection occurred. This supports further independent investigation of
+selective evidence, without replacing the frozen primary comparison.
+
+## What the experiments actually establish
+
+| Question | Evidence-supported answer |
+|---|---|
+| Which evidence helps which requests? | Small recent-evidence gains recur in the no-history majority, so they are not personal-history gains. The ≥2-history R1 final effect is −0.043716 [−0.080291, −0.008058]; one-history effects remain uncertain. Category-augmented actions harm the population. |
+| Content or merely more tokens? | The exactly token-matched alignment diagnostic shows content correspondence matters within its stratified cohort. It compares correct with corrupted alignment, not neutral padding. It does not justify a general category benefit. |
+| Better allocation than rules/random? | No primary-policy advantage. A frozen secondary NDCG signal survives an exploratory equal-expected-cost diagnosis, with uncertain HR and no test-based reselection. |
+| Are multiple steps better than one full call? | Unmeasured. Development evidence did not establish a useful post-tool decision, so the conditional extension was not implemented. This is not proof that multistep methods fail. |
+| What adds expense without helping? | Full configured evidence roughly doubles per-request input cost versus recent evidence and substantially lowers quality. Many calls address targets outside the candidate pool; this can only be recognized retrospectively. |
+| Does the conclusion survive a stronger base? | Full evidence also harms causal-sequence candidates on validation. Cross-retriever effects include changed candidate sets/order and model-output draws. |
+| Typical failures? | Retrieval misses/cold items, sparse histories, lost base hits after semantic reordering, output repairs and sensitivity to row presentation. Hash-selected examples illustrate behavior, not hidden model reasoning. |
+
+The final practical choice remains the **causal sequence baseline**, selected on
+validation for quality and zero generation expense. “Zero API” does not mean
+zero local compute. A later study could preregister the secondary signal on a
+new population/model draw. Reusing this test to tune, force nonzero primary
+actions or select the best observed policy would invalidate its role.

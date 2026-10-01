@@ -6,7 +6,6 @@ import random
 import time
 
 import joblib
-import numpy as np
 import yaml
 
 from .data import load_amazon_metadata, load_amazon_reviews
@@ -15,7 +14,6 @@ from .execution import execute_bounded
 from .feature import routing_features
 from .frozen_protocol import INFERENCE_KEYS, verify_final_config
 from .llm_experiment import choose_views
-from .metrics import service_latency_summary
 from .model_artifacts import load_frozen_retriever
 from .openai_adapter import OpenAIBackend
 from .paid_budget import PaidBudget, usage_cost
@@ -23,6 +21,7 @@ from .policy_inference import serving_policy_bindings
 from .protocol import validate_ranking
 from .replay import make_candidates
 from .routing_model import UtilityRouter, random_actions, rule_actions
+from .serving_analysis import summarize_serving
 from .utils import digest, managed_run, write_json
 
 
@@ -179,21 +178,7 @@ def run_serving_audit(config, config_path, root):
                 stream.flush()
                 if record["status"] != "completed" or (record["generation_attempts"] and record.get("usage") is None):
                     raise RuntimeError("Serving audit stopped on a failed attempt; partial records retained, no quality claim")
-        summary = {}
-        for method in methods:
-            rows = [r for r in records if r["method"] == method]
-            if len(rows) != len(views):
-                raise ValueError("Incomplete serving comparison")
-            cost = [r["actual_known_usd"] if r["actual_known_usd"] is not None else r["reserved_usd"] for r in rows]
-            summary[method] = {"requests": len(rows), **service_latency_summary(rows),
-                "mean_api_usd": float(np.mean(cost)), "generation_attempts": sum(r["generation_attempts"] for r in rows),
-                "count_endpoint_calls": sum(r["count_endpoint_calls"] for r in rows),
-                "input_tokens": sum((r.get("usage") or {}).get("input_tokens", 0) for r in rows),
-                "output_tokens": sum((r.get("usage") or {}).get("output_tokens", 0) for r in rows),
-                "cached_tokens": sum(((r.get("usage") or {}).get("input_tokens_details") or {}).get("cached_tokens", 0) for r in rows),
-                "repairs": sum(bool(r["repair_errors"]) for r in rows),
-                **{f"mean_{key}": float(np.mean([r.get(key, 0) for r in rows]))
-                   for key in ("retrieval_ms", "feature_and_policy_ms", "evidence_ms", "rate_queue_ms", "generation_latency_ms")}}
+        summary = summarize_serving(records, methods, len(views))
         write_json(run_dir / "resources.json", {"methods": summary, "budget": budget.snapshot(),
             "application_output_cache": "disabled, independent call for each method/request",
             "provider_prefix_cache": "automatic, actual cached tokens recorded",

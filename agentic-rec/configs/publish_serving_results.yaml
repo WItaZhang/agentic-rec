@@ -1,0 +1,12 @@
+experiment_name: publish_serving_results
+stage: publish_serving
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+source_run: logs/20261001_024610_amazon_serving_audit_extended
+archive_path: artifacts/published/serving_v1
+absolute_float_tolerance: 1.0e-14

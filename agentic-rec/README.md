@@ -4,23 +4,21 @@
 
 [中文说明](README.zh-CN.md) · [中文学习路线](docs/zh/00-学习路线.md) · [Survey](docs/survey.md) · [Paper × component matrix](docs/component-matrix.md) · [Design notes](docs/design.md)
 
-**Active research:** [Adaptive Evidence Acquisition for Agentic Recommendation](docs/adaptive-evidence/README.md).
-The [execution record](docs/adaptive-evidence/PROGRESS.md) distinguishes implemented,
-validated and planned capabilities. MovieLens reproduction, Amazon temporal replay,
-ItemKNN and a causal sequence baseline are complete. Real OpenAI synchronous and
-batch calls have passed protocol checks; evidence and routing research is ongoing.
-Final Amazon test quality and learned-routing gains are not yet reported.
-Complete [3,318-user evidence validation](reports/20260925_m3_evidence_validation/README.md)
-and [equal-token content controls](reports/20260925_m3_content_control/README.md) are published with offline reanalysis.
-The [earlier billing interruption](reports/20260925_resource_checkpoint/README.md) was resolved on September 30;
-policy-label collection and [weighted routing validation](reports/20260930_m4_routing_validation/README.md) are complete within the original USD 50 authorization.
-The primary validation budget selects all-base actions; the registered practical selection favors the causal sequence recommender. Final-test confirmation and serving costs are pending.
-The [completed strong-base evidence control](reports/20260930_strong_base_evidence/README.md)
-also finds a substantial full-evidence loss; its public statistics reproduce offline.
-The [completed presentation control](reports/20261001_presentation_control/README.md)
-finds lower quality under shuffled candidate rows, with actual input equivalence
-verified and interpretation limited to presentation sensitivity. The frozen
-3,572-user final test is generating; no final quality result is claimed.
+**Real-data research:** [Adaptive Evidence Acquisition for Agentic Recommendation](docs/adaptive-evidence/README.md).
+The [consolidated study](reports/adaptive_evidence_study/STUDY.md) compares conventional recommenders,
+real GPT-4.1 mini evidence configurations, fixed workflows and rule/random/learned allocation under global time boundaries.
+The [3,572-user frozen final test](reports/20261001_final_test/README.md) is complete: full evidence lowers NDCG@10 by 0.015255 versus ItemKNN;
+primary selected routes all retain the base ranking. Secondary learned-routing signals are exploratory,
+and the validation-selected causal sequence method is preserved without test-based reselection.
+Completed [population validation](reports/20260925_m3_evidence_validation/README.md),
+[equal-token content controls](reports/20260925_m3_content_control/README.md),
+[weighted routing](reports/20260930_m4_routing_validation/README.md),
+[strong-base evidence](reports/20260930_strong_base_evidence/README.md) and
+[presentation sensitivity](reports/20261001_presentation_control/README.md) retain negative and uncertain results.
+Public archives reproduce statistics and plots without API calls. See the
+[reproduction guide](docs/adaptive-evidence/REPRODUCE.md), [delivery evidence audit](reports/adaptive_evidence_study/DELIVERY_AUDIT.md),
+[progress record](docs/adaptive-evidence/PROGRESS.md) and [LaTeX/interview materials](reports/career_materials/README.md).
+Real research runs use the original USD 50 authorization with measured usage; the reference framework below remains a separate synthetic illustration.
 
 Between 2023 and 2026, several dozen papers put an LLM *agent* at the centre of a recommender: as the recommender itself (RecMind, InteRecAgent, MACRec, BiLLP), as a simulated user (RecAgent, Agent4Rec, SimUSER, RecoWorld), as an item (AgentCF), or as an assistant on the user's side (RAH, iAgent). Read side by side, they share nine components and differ mainly in which ones they attach and how they are optimised.
 
