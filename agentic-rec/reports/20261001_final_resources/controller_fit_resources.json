@@ -1,0 +1,59 @@
+{
+  "feature_computation_ms": {
+    "policy_train": 41.57350000969018,
+    "validation": 100.98610000795816
+  },
+  "fits": [
+    {
+      "cpu_seconds": 3.640625,
+      "id": 0,
+      "parameters": {
+        "alpha": 1.0,
+        "kind": "ridge"
+      },
+      "sha256": "0585881a037ffa5715e6639e834ba9536314744904433400a5928593be428747",
+      "wall_seconds": 12.095444699999916
+    },
+    {
+      "cpu_seconds": 0.015625,
+      "id": 1,
+      "parameters": {
+        "alpha": 10.0,
+        "kind": "ridge"
+      },
+      "sha256": "24edbaba6eb4c6dcbfa88bb728f7ca869205f290f73a4b400bea4b3cea11ff6b",
+      "wall_seconds": 0.014994999999998981
+    },
+    {
+      "cpu_seconds": 2.203125,
+      "id": 2,
+      "parameters": {
+        "kind": "histogram_boosting",
+        "l2_regularization": 10.0,
+        "learning_rate": 0.05,
+        "max_iter": 80,
+        "max_leaf_nodes": 7,
+        "min_samples_leaf": 30
+      },
+      "sha256": "0dac006e8df6bcc9cc62b1090e6c40a62829135e1071502d4c605d7470b0d959",
+      "wall_seconds": 2.5721310999997513
+    },
+    {
+      "cpu_seconds": 2.078125,
+      "id": 3,
+      "parameters": {
+        "kind": "histogram_boosting",
+        "l2_regularization": 10.0,
+        "learning_rate": 0.05,
+        "max_iter": 80,
+        "max_leaf_nodes": 15,
+        "min_samples_leaf": 50
+      },
+      "sha256": "3e42fca5be2f1bc80d6291dd41cbb203d68f30d70d28d8332918353446a4d0fa",
+      "wall_seconds": 1.3856924000001527
+    }
+  ],
+  "paid_api_usd": 0,
+  "policy_label_cost_already_accounted_usd": 2.9788184000000117,
+  "sampling_correction": "inverse user-state inclusion weights, normalized to mean one"
+}

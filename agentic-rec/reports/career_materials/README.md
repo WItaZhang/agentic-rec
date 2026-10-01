@@ -1,9 +1,9 @@
 # Evidence-backed career materials
 
-The LaTeX and interview text use the **completed frozen-test** results, with primary, secondary and post-evaluation evidence distinguished. They do not claim production deployment or multistep reasoning. Serving and final campaign resource claims are linked separately from the quality results; their current completion state is in the [delivery audit](../adaptive_evidence_study/DELIVERY_AUDIT.md).
+The LaTeX and interview text use the **completed frozen-test** results, with primary, secondary and post-evaluation evidence distinguished. They do not claim production deployment or multistep reasoning. [Serving and final campaign resources](../20261001_final_resources/README.md) are complete and separate from quality: total accounted USD 37.3749584; selected sequence service mean 5.023 / P95 8.369 ms under the documented conditions. The [delivery audit](../adaptive_evidence_study/DELIVERY_AUDIT.md) links every claim and limitation.
 
 - [English LaTeX project description](resume_project.tex): pasteable fragment; enclosing résumé needs `hyperref`.
-- [Standalone preview source](resume_preview.tex): embeds the same fragment for the built-in editor. Compilation/layout remains unverified until the final source is checked; the previous native compiler failed before source diagnostics. No PDF is claimed. [Compiler record](latex_compile_status.json).
+- [Standalone preview source](resume_preview.tex): embeds the same fragment for the built-in editor. The final source was checked with the native compiler on October 1; platform-directory initialization failed before source diagnostics. Compilation/layout remains unverified. No PDF is claimed. [Compiler record](latex_compile_status.json).
 - [Chinese and English interview explanation](INTERVIEW.md): problem, hypotheses, design, comparisons, findings, failures and limits.
 - [Consolidated study](../adaptive_evidence_study/STUDY.md) and [frozen final results](../20261001_final_test/README.md).
 

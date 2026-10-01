@@ -217,19 +217,23 @@ are refused. Original errors and intents are never deleted or overwritten.
 
 ## Registered synchronous resource audit
 
-The pending paid audit now uses `configs/amazon_serving_audit_extended.yaml`,
+The completed paid audit used `configs/amazon_serving_audit_extended.yaml`,
 superseding the unexecuted eight-method `amazon_serving_audit.yaml`. It preserves
 that plan's 128 validation users and primary policies, then adds the three
 already frozen secondary-budget routes. It never evaluates quality or accesses
-final-test labels. Run only after the current Batch/CPU-heavy experiments are
-complete, with the original credential and ledger configuration:
+final-test labels. Its actual run `logs/20261001_024610_amazon_serving_audit_extended`
+completed 1,408 requests and 382 calls with zero failures/repairs at USD 0.4284908.
+The command below performs a **new paid measurement**, not archive replay. Use
+only with authorized credentials, a fresh budget estimate and no other heavy
+project computation:
 
 ```sh
 uv run --locked --extra yaml --extra experiments --extra api --extra local-llm python main.py --config configs/amazon_serving_audit_extended.yaml
 ```
 
 The [registered preflight](../../reports/adaptive_evidence_study/serving_audit_preflight.json)
-is an estimate, not a latency result. Every method is independently executed at
+is preserved as an estimate; [actual measurements](../../reports/20261001_final_resources/README.md)
+are now available. Every method was independently executed at
 concurrency one, with warm resident models and no application output reuse;
 provider prefix caching is recorded. Report overall request mean/P95 alongside
 the generation-branch observation count and conditional latency. A sparse
@@ -291,3 +295,25 @@ They require the original raw inputs and private retained Batch files. New
 generation costs money and is not required for archive reproduction. In this
 campaign the method, prompts and final inputs were frozen before scoring; do
 not tune them on the existing test to manufacture a positive result.
+
+
+## Final service and resource archives
+
+```sh
+uv run --locked --extra yaml --extra experiments --extra api python main.py --config configs/serving_archive_replay.yaml
+uv run --locked --extra yaml --extra experiments --extra api python main.py --config configs/final_resource_archive_replay.yaml
+```
+
+No credentials, dataset download or paid calls are needed. Serving replay
+recomputes saved per-request latency/cost observations; it does not simulate a
+new timing experiment. Financial replay checks usage, physical-call deduplication,
+phase attribution, failures/repairs, counting and management operations. Python
+3.11/3.12 pass the declared roundoff tolerances; see the [final resource report](../../reports/20261001_final_resources/README.md).
+
+The final snapshot has no pending reservations or running experiment roots.
+Known USD 37.3714568 plus the old unknown pilot reserve USD 0.0035016 equals
+USD 37.3749584 accounted, within the original USD 50 authorization. CPU coverage
+limits and unmetered host/provider resources remain explicit. Replaying after
+this snapshot does not retroactively change its historical compute totals.
+Paid regenerations require a new estimate; archive replay does not justify
+restarting terminal generation or serving sessions.

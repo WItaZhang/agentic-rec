@@ -165,7 +165,7 @@ M6 的强基线和计量检查可以提前做。M5 不必完成才能形成一�
 | M2–M3 | validated | `72deac0`、`d8b22f6` 及来源链 | 3,318 用户证据矩阵；478 用户等 token 对照 | [证据报告](../../reports/20260925_m3_evidence_validation/README.md) | 近期整体收益不确定，充分证据有害；保留无收益结果 |
 | M4 | implemented / primary inconclusive | `4ee41e1`、`adc13e6`、`ca00f13` | 1,045 策略用户，3,318 验证，3,572 测试 | [最终报告](../../reports/20261001_final_test/README.md) | 主策略均 R0；次要 NDCG 信号探索性，不用测试重新选择 |
 | M5 | conditional scope decision | 冻结前记录见进度 | 未实现逐步取证与停止 | [决定与边界](../../reports/adaptive_evidence_study/STUDY.md#sequential-scope-decision-before-final-scoring) | 未确立读取中间工具结果后的决策价值；不声称多步无效 |
-| M6 | in progress | `0be00ee`、`70b0194`、`a4a39be` | 正式统计／失败审计／归档已完成；同步服务测量运行中 | [总报告](../../reports/adaptive_evidence_study/STUDY.md) | 补齐服务与总成本、成果材料、GitHub 最终同步 |
+| M6 | validated artifacts | `0be00ee`、`70b0194`、`a4a39be`、`f2d1d20`、`cd5b96c`、`d724ece` | 正式测试、失败审计、同步服务、无待结算总成本、跨版本归档复现 | [总报告](../../reports/adaptive_evidence_study/STUDY.md)、[资源](../../reports/20261001_final_resources/README.md) | 保留验证选定的序列模型；检查／合并状态见进度与最终 PR；LaTeX 编译环境限制已披露 |
 
 ## 后续一次工作可以直接使用的任务描述
 

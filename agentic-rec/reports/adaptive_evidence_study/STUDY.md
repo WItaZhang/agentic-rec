@@ -6,7 +6,8 @@ presentation sensitivity, paired statistics and failure audit are complete.
 The validation-selected practical method remains the causal sequence recommender.
 Primary routing policies all retain the base ranking; a secondary learned-policy
 signal is exploratory. Synchronous serving measurement and final campaign
-accounting are being completed before final delivery.
+accounting are complete. The selected scope is request-level evidence selection;
+unimplemented sequential capabilities are not included in the results.
 Current execution status is in [PROGRESS](../../docs/adaptive-evidence/PROGRESS.md).
 The [delivery evidence audit](DELIVERY_AUDIT.md) maps the requested end state to
 completed evidence and remaining experiments.
@@ -230,8 +231,8 @@ neutral padding; it does not establish a general benefit of adding categories.
 
 The [frozen final report](../20261001_final_test/README.md) now supplies actual
 test results, quality–cost figures and failure cases. No primary adaptive gain
-or sequential stopping result is asserted. Final serving and campaign resources
-are separate from the observed Batch outcome costs.
+or sequential stopping result is asserted. [Final serving and campaign resources](../20261001_final_resources/README.md)
+are reported separately from the observed Batch outcome costs.
 
 
 The earlier provider billing interruption was resolved on September 30. Policy-label collection resumed with USD 11.0849600 previously accounted against the original USD 50 authorization. The [historical resource checkpoint](../20260925_resource_checkpoint/README.md) preserves exact tokens, costs, partial labels and recovery evidence; it is not the final campaign bill. The shared ledger retains the old unknown pilot reservation. [Career materials](../career_materials/README.md) distinguish primary results, exploratory findings and unimplemented extensions.
@@ -293,9 +294,10 @@ policy, adaptive stopping rule, reflection, model-generated summary or
 multistep-versus-full-evidence comparison was executed. That question remains
 unmeasured. A later extension would need a concrete, prediction-time observable
 intermediate result and a separate comparison against the same one-call
-evidence and cost controls. The remaining presentation diagnostic, frozen final
-test and synchronous resource audit are still required to finish the selected
-scope; this decision does not end the project.
+evidence and cost controls. This decision was recorded before the presentation
+diagnostic, final scoring and synchronous resource audit. Those subsequent
+requirements have now completed; the scope was not expanded or reselected from
+the secondary test signal.
 
 
 ## Completed presentation diagnostic
@@ -372,3 +374,55 @@ validation for quality and zero generation expense. “Zero API” does not mean
 zero local compute. A later study could preregister the secondary signal on a
 new population/model draw. Reusing this test to tune, force nonzero primary
 actions or select the best observed policy would invalidate its role.
+
+## Actual service cost, compute and financial completion
+
+The [final resource report](../20261001_final_resources/README.md) contains full
+phase charges, exact tokens, operations, repairs, CPU coverage and service
+records. The campaign costs **USD 37.3714568 in known usage**, plus an old
+**USD 0.0035016** unknown pilot reserve: **USD 37.3749584 accounted**, with no
+pending reservations or running experiment roots and USD 12.6250416 remaining
+from the USD 50 authorization. This is usage-based pricing, not an invoice.
+
+There are 32,817 observed-usage generations, one unknown-usage generation and
+108 confirmed pre-generation rejections. Known totals are 182,255,677 input
+tokens (including 5,310,720 cached) and 1,181,412 output tokens. Accounting
+retains 208 repaired/fallback physical outputs, 14,257 token-count operations,
+82,462 local evidence accesses and separate management/recovery operations.
+Offline policy labels cost USD 2.9788184; four fitting blocks took 7.9375 CPU
+seconds, apart from other development work. Planning/reflection/summary/API
+embedding calls were not executed. Local sequence embeddings still consume
+training compute.
+
+The registered resource-only audit executed 1,408 requests across 128 validation
+users and eleven methods: 382 independent generations, zero failures/repairs,
+USD 0.4284908 expense. Conditions were concurrency one, two CPU threads, fixed
+pacing/timeout/retries and no application response reuse; provider caching was
+measured. Selected causal-sequence service averaged **5.023 ms**, P95 **8.369 ms**.
+Recent/full evidence averaged **3,112/3,229 ms**, P95 **4,315/4,403 ms**, at
+observed standard-price costs **USD 0.736125/1.897309 per 1,000**. These include
+durable research-budget bookkeeping and pacing, not only provider generation;
+the implementation is not a production performance benchmark.
+
+Secondary learned service averaged **100.765 ms**, overall P95 **21.618 ms**.
+Only four requests generated: that branch averaged **2,759 ms**, P95 **3,732 ms**.
+Its rare-branch quantile is descriptive, not a tail guarantee. Random generated
+seven times with different realized caching/cost; this service audit is not
+another matched-cost quality comparison. Its small validation sample must not
+be combined with final-test Batch quality into a synthetic frontier.
+
+At the audit cutoff, 116 timed root runs total **6,836.09375 CPU seconds**;
+1,079 nested runs are excluded from double counting. Four early records lack
+CPU timing and are disclosed, not imputed as zero. Coding-agent/tool work,
+installation, later verification, energy, network bytes and provider-internal
+compute are outside coverage. Summed run-wall time is not elapsed campaign time.
+No cloud capacity was rented.
+
+Both public serving and accounting archives reproduce without data downloads
+or API access on Python 3.11 and 3.12. Service summaries are exact; maximum
+financial difference is zero on 3.11 and 2.13e-14 USD on 3.12, below the unchanged
+1e-12 roundoff tolerance. The [reproduction guide](../../docs/adaptive-evidence/REPRODUCE.md)
+provides commands. [English LaTeX and bilingual interview materials](../career_materials/README.md)
+use measured final results. Native LaTeX compilation remains unavailable because
+the app compiler cannot initialize its platform directories; the source is
+delivered without a PDF or layout-verification claim.
