@@ -41,7 +41,7 @@ def numeric_reproduction(actual, expected, tolerance):
 def public_outcomes(rows):
     # Preserve lexical user order so fixed-seed paired bootstrap draws are identical.
     mapping = {user: f"user_{index:08d}" for index, user in enumerate(sorted({r["user_id"] for r in rows}))}
-    allowed = {"request_id", "plan", "ranking", "repair_errors", "status", "candidate_hash", "service_latency_ms",
+    allowed = {"request_id", "plan", "ranking", "repair_errors", "status", "candidate_hash", "source_candidate_hash", "service_latency_ms",
                "history_count", "cold_item", "ndcg", "hr", "candidate_recall"}
     return [{**{key: row[key] for key in allowed if key in row}, "user_id": mapping[row["user_id"]]} for row in rows]
 
@@ -89,6 +89,8 @@ def run_publish_results(config, config_path, root):
         (destination / "source_manifest.json").write_bytes((source / "manifest.json").read_bytes())
         if (source / "resources.json").exists():
             (destination / "resources.json").write_bytes((source / "resources.json").read_bytes())
+        if (source / "input_equivalence.json").exists():
+            (destination / "input_equivalence.json").write_bytes((source / "input_equivalence.json").read_bytes())
         write_json(destination / "archive_manifest.json", {"status": "completed", "kind": kind,
             "test_scored": status.get("test_scored", False), "source_run": config["publication"]["matrix_run"],
             "analysis_run": config["publication"]["analysis_run"],

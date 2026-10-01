@@ -4,6 +4,7 @@ import json
 
 from .evidence_analysis import analyze_matrix, draw_cost_quality, validate_table
 from .model_artifacts import load_frozen_retriever
+from .presentation_data import pair_candidate_snapshots, verify_transmitted_inputs
 from .utils import digest, managed_run, verified_run_config, write_json
 
 
@@ -49,12 +50,17 @@ def join_presentations(ordered_rows, ordered_calls, shuffled_rows, shuffled_call
 def run_presentation_analysis(config, config_path, root):
     with managed_run(config, config_path, root) as (run_dir, manifest):
         paths = {key: root / config['sources'][key] for key in ('ordered', 'shuffled')}
-        originals, matrices, calls = {}, {}, {}
+        originals, matrices, calls, candidates = {}, {}, {}, {}
         for key, path in paths.items():
             state = json.loads((path / 'manifest.json').read_text())
             if state['status'] != 'completed' or state.get('test_scored') or state.get('stage_status') != 'evaluated':
                 raise ValueError('Presentation analysis requires complete development matrices')
-            originals[key] = verified_run_config(root / state['prepared_run'])
+            prepared = root / state['prepared_run']
+            originals[key] = verified_run_config(prepared)
+            preparation = json.loads((prepared / 'manifest.json').read_text())
+            if digest(prepared / 'candidates.json') != preparation['candidates_sha256']:
+                raise ValueError('Prepared presentation candidates changed')
+            candidates[key] = json.loads((prepared / 'candidates.json').read_text())
             if originals[key]['evaluation']['partition'] != 'validation':
                 raise ValueError('Presentation analysis is validation-only')
             matrices[key] = json.loads((path / 'outcomes.json').read_text())
@@ -72,6 +78,9 @@ def run_presentation_analysis(config, config_path, root):
         right.pop('plans')
         if left != right:
             raise ValueError('Evidence content changed across presentation conditions')
+        payload_check = verify_transmitted_inputs(root, paths, calls, config['sources']['plans'])
+        matrices, candidate_check = pair_candidate_snapshots(candidates['ordered'], candidates['shuffled'], matrices)
+        write_json(run_dir / 'input_equivalence.json', {'candidates': candidate_check, 'payloads': payload_check})
         rows, attempts = join_presentations(matrices['ordered'], calls['ordered'], matrices['shuffled'],
                                             calls['shuffled'], config['sources']['plans'])
         result = analyze_matrix(rows, attempts, config['analysis'])
@@ -81,6 +90,7 @@ def run_presentation_analysis(config, config_path, root):
         draw_cost_quality(result, run_dir)
         manifest.update(test_scored=False, paid_api_usd=0, stage_status='presentation_analyzed',
             retriever_equivalence=retriever_check,
+            input_equivalence_sha256=digest(run_dir / 'input_equivalence.json'),
             presentation_scope=('Shared target-independent row permutation; alias IDs retain base-rank information. '
                 'Order annotation also changes. Dates/output realizations remain possible confounders; exploratory sensitivity.'),
             source_hashes={key: {name: digest(path/name) for name in ('outcomes.json', 'calls.jsonl')}
