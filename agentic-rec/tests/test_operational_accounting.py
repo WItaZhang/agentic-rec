@@ -62,3 +62,15 @@ def test_price_recomputation_keeps_batch_discount_cache_and_unknown_charges_sepa
     entries['batch']['actual_usd'] *= 2
     with pytest.raises(ValueError, match='frozen pricing'):
         verify_recorded_prices(entries, records, prices)
+
+
+def test_repricing_preserves_the_recorded_currency_reduction_across_python_versions():
+    prices = {'run': {'input_per_million_usd': 1, 'cached_input_per_million_usd': 0,
+                      'output_per_million_usd': 0}}
+    records = [{'call_id': str(count), 'usage': {'input_tokens': count, 'output_tokens': 0}}
+               for count in (100000, 200000, 300000)]
+    entries = {r['call_id']: {'run_id': 'run', 'actual_usd': usage_cost(r['usage'], prices['run'])}
+               for r in records}
+    result = verify_recorded_prices(entries, records, prices)
+    assert result['recomputed_known_usd'] == .6000000000000001
+    assert result['physical_calls_repriced'] == 3 and result['maximum_per_call_difference_usd'] == 0

@@ -3,6 +3,7 @@
 import hashlib
 import json
 
+from .metrics import sum_in_order
 from .paid_budget import usage_cost
 
 
@@ -31,7 +32,7 @@ def verify_recorded_prices(entries, records, prices):
             raise ValueError('Recorded charge differs from observed usage and its frozen pricing')
         differences.append(abs(estimate - actual))
         measured.append(estimate)
-    return {'physical_calls_repriced': len(usages), 'recomputed_known_usd': sum(measured),
+    return {'physical_calls_repriced': len(usages), 'recomputed_known_usd': sum_in_order(measured),
             'maximum_per_call_difference_usd': max(differences, default=0),
             'scope': 'Provider token usage times the recorded dated-model standard/Batch price table, not invoice reconciliation. '
                      'Unknown usage and explicit pre-generation zero-charge rejections remain separate.'}

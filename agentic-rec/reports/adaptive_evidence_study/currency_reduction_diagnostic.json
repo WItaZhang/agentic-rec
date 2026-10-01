@@ -1,0 +1,45 @@
+{
+  "correction": "Apply existing original-order reduction to the independent repricing total; preserve original values and financial archive tolerance 1e-12. No physical fee or budget is changed.",
+  "final_campaign_total": false,
+  "patched_source_commit": "db3d306",
+  "private_probe_vector": "data/staging/real_fee_reduction_probe_20261001.json",
+  "published_archive_replays": {
+    "3.11.15": {
+      "run": "logs/20261001_000707_resource_checkpoint_archive_replay",
+      "verification": {
+        "absolute_float_tolerance": 1e-12,
+        "matches": true,
+        "max_absolute_float_difference": 0.0,
+        "non_float_fields": "exact"
+      }
+    },
+    "3.12.4": {
+      "run": "logs/20261001_000736_resource_checkpoint_archive_replay",
+      "verification": {
+        "absolute_float_tolerance": 1e-12,
+        "matches": true,
+        "max_absolute_float_difference": 3.552713678800501e-15,
+        "non_float_fields": "exact"
+      }
+    }
+  },
+  "python311": {
+    "builtin_sum": 26.464171200004824,
+    "observed_utc": "2026-10-01T00:04:53.289019+00:00",
+    "python": "3.11.15",
+    "scope": "Diagnostic subset from completed/failed run records and the initial ledger snapshot; not final campaign accounting",
+    "values": 23138,
+    "vector_sha256": "eda74bd751f21fa8c43d01513c61dce68cbce907a468e3918e93dcb577998d0c"
+  },
+  "python312": {
+    "builtin_sum": 26.4641712,
+    "difference_from_recorded_python311": -4.82458517581108e-12,
+    "exceeds_financial_archive_tolerance": true,
+    "ordered_sum_exact_match": true,
+    "original_order_sum": 26.464171200004824,
+    "python": "3.12.4",
+    "scope": "Diagnostic subset from completed/failed run records and the initial ledger snapshot; not final campaign accounting",
+    "values": 23138,
+    "vector_sha256": "eda74bd751f21fa8c43d01513c61dce68cbce907a468e3918e93dcb577998d0c"
+  }
+}
