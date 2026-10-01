@@ -250,3 +250,16 @@ saved cumulative automatic-attempt counter is loaded unchanged and a hashed
 A later ordinary resume omits this one-transition amendment field; its earlier
 record remains preserved. Never use this path to bypass generation ambiguity or
 the paid-budget stop.
+
+
+## Completed presentation control and frozen final dispatch
+
+The [presentation report](../../reports/20261001_presentation_control/README.md) records all 123 collected shards, actual-input equivalence and the predefined paired comparisons. Reproduce its public derived statistics and figures without data downloads, credentials or API calls:
+
+```sh
+uv run --locked --extra yaml --extra experiments --extra api python main.py --config configs/presentation_archive_reanalysis.yaml
+```
+
+The analysis replay includes preserved original snapshot hashes and verifies the archive's file hashes. Revalidating the full source-input equivalence additionally requires the retained private batch-input files; their texts are not published. No numerical tolerance was used to admit candidate or evidence changes.
+
+The original presentation session 26029 completed. The final scheduler is now `logs/20261001_004350_amazon_final_test_batch`, session 91054, config `configs/amazon_final_test_batch.yaml`, 139 shards. It passed the [frozen dispatch gate](../../reports/adaptive_evidence_study/final_dispatch_gate.json): complete diagnostics, unchanged frozen inputs/settings, zero pending reservations beforehand, expected USD 8.416256 / conservative USD 9.920192 / round cap 12. Do not start a duplicate scheduler; revalidate its exact handle and current checkpoint first. Evaluate only after every frozen physical input has a collected outcome. No test-quality result exists at this checkpoint.

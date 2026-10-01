@@ -1,0 +1,59 @@
+seed: 42
+sources:
+  ordered: logs/20260925_071030_amazon_validation_matrix_evaluate
+  plans:
+  - R1
+  - R4
+  shuffled: logs/20261001_003549_amazon_presentation_matrix_evaluate
+analysis:
+  plans:
+  - R0
+  - ordered_R1
+  - ordered_R4
+  - shuffled_R1
+  - shuffled_R4
+  comparisons:
+  - - shuffled_R1
+    - ordered_R1
+  - - shuffled_R4
+    - ordered_R4
+  - - shuffled_R1
+    - R0
+  - - shuffled_R4
+    - R0
+  - - shuffled_R4
+    - shuffled_R1
+  history_groups:
+  - - zero
+    - 0
+    - 1
+  - - one
+    - 1
+    - 2
+  - - at_least_two
+    - 2
+    - 1000000
+  group_boundary_source: base_train_history_profile
+  bootstrap_repetitions: 10000
+  confidence: 0.95
+  minimum_group_users_for_interval: 30
+  seed: 42
+  minimum_detectable_difference: 0.01
+  normal_z_alpha: 1.96
+  normal_z_power: 0.84
+  interpretation: development_exploratory
+registration:
+  shuffled_preparation: logs/20260930_202629_amazon_presentation_control_prepare
+  binding_required: sources.shuffled must reference the complete evaluated 3318-user
+    shuffled matrix
+  scope: Exploratory paired presentation sensitivity; row-order annotation also changes
+    and aliases retain base-rank information. Generation dates and output realizations
+    can confound interpretation. No final method, prompt or policy selection.
+experiment_name: amazon_presentation_analysis
+stage: presentation_analysis
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs

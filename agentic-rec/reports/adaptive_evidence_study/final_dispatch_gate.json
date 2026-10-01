@@ -1,0 +1,40 @@
+{
+  "recorded_utc": "2026-10-01T00:43:26.341500+00:00",
+  "status": "gate_passed_before_dispatch",
+  "config_path": "configs/amazon_final_test_batch.yaml",
+  "config_sha256": "ab6fb3598707af9f5356506bd575d3541752572bb276ef0c8b40d8b23d88b333",
+  "prior_preflight_sha256": "15b9c0a4cd17f8a81cae60e5acd560870a685c1fc3af3150224c03e717d6ca0d",
+  "development_analysis_proofs": {
+    "logs/20260930_224650_amazon_sequence_evidence_analysis": {
+      "manifest_sha256": "a5fc2327d6f94af8bdd74f472e5c55d8af800b362e7bb413f67d4cbda3f7adcf",
+      "analysis_sha256": "0655110516b7f63a3ab02af029f48eaf8fce6bbb4bd6044130f3553c6a8502c0"
+    },
+    "logs/20261001_004113_amazon_presentation_analysis": {
+      "manifest_sha256": "1d0fa2277cba6f70dfebbb0dd100c5367cc723dd1c7f51895be3b67efe09e594",
+      "analysis_sha256": "987e9c1aaa5b4f91726b5fcb4af4659e0c816f78457cccc186dc340dd4e0fbcc"
+    }
+  },
+  "input_equivalence_sha256": "0c13b7ef7b86f42bac366389ca136f63a91e37553ccfeedf151906f35199cf06",
+  "prepared_run": "logs/20260930_211006_amazon_final_test_prepare",
+  "physical_calls": 7460,
+  "expected_usd_at_36_output_tokens": 8.416256,
+  "conservative_reserved_max_usd": 9.920191999999696,
+  "per_round_cap_usd": 12,
+  "campaign_authorized_usd": 50,
+  "planning_stop_usd": 45,
+  "accounting_before": {
+    "campaign_accounted_usd": 28.53021160000644,
+    "round_accounted_usd": 0,
+    "campaign_actual_known_usd": 28.526710000006435,
+    "unknown_or_pending_calls": 1,
+    "pending_reservations": 0,
+    "unknown_settled_calls": 1,
+    "campaign_attempts": 25084,
+    "total_authorized_usd": 50,
+    "round_cap_usd": 12,
+    "planning_stop_usd": 45
+  },
+  "frozen_choices_unchanged": true,
+  "test_scored": false,
+  "scope": "Presentation diagnostic does not change frozen prompts, models, routes, groups, comparisons or practical selection"
+}

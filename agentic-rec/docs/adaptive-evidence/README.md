@@ -11,7 +11,7 @@
 完整验证集已完成：[3,318 用户证据结果](../../reports/20260925_m3_evidence_validation/README.md)。
 近期方案的整体收益尚未确立，充分证据方案明显下降；历史分组呈现不同方向。
 [等 token 内容对照](../../reports/20260925_m3_content_control/README.md) 也已完成；类别对应的作用随历史分组而异。
-此前的 [API 账户账单额度阻塞](../../reports/20260925_resource_checkpoint/README.md) 已于 9 月 30 日解除，扩展策略标签和学习路由已完成；[路由验证结果](../../reports/20260930_m4_routing_validation/README.md) 显示主预算点退化为基础排序，[强序列证据对照](../../reports/20260930_strong_base_evidence/README.md) 已完成，充分证据的下降依然存在；候选行顺序对照和最终测试待续。
+此前的 [API 账户账单额度阻塞](../../reports/20260925_resource_checkpoint/README.md) 已于 9 月 30 日解除，扩展策略标签和学习路由已完成；[路由验证结果](../../reports/20260930_m4_routing_validation/README.md) 显示主预算点退化为基础排序，[强序列证据对照](../../reports/20260930_strong_base_evidence/README.md) 已完成，充分证据的下降依然存在；[候选行顺序对照](../../reports/20261001_presentation_control/README.md) 也已完成：打乱呈现使近期／充分证据方案进一步下降；冻结的最终测试已开始生成，尚未评分。
 原 50 美元预算保持不变，最新运行与成本见进度记录。已有 [英文简历与面试材料草稿](../../reports/career_materials/README.md) 仅表述已验证的开发结果。
 以下正文保留原设计；LLM 和路由能力只有进度记录中的实际实验支持后才算完成。
 

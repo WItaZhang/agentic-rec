@@ -290,3 +290,12 @@ intermediate result and a separate comparison against the same one-call
 evidence and cost controls. The remaining presentation diagnostic, frozen final
 test and synchronous resource audit are still required to finish the selected
 scope; this decision does not end the project.
+
+
+## Completed presentation diagnostic
+
+The [same-user row-presentation control](../20261001_presentation_control/README.md) verifies all 6,636 logical input pairs against actual submitted payloads. Candidate identities/order, evidence and model options are fixed; displayed row order and its annotation change. Shuffled minus ordered R1 is -0.010127 NDCG [-0.013134, -0.007267]; R4 is -0.021811 [-0.026460, -0.017283]. The shuffled actions score 0.057041 and 0.018186, respectively, below the unchanged ItemKNN base 0.066556. Nominal exploratory intervals do not identify a unique causal mechanism.
+
+Both changes are negative in the no-history majority; the small at-least-two-event group has wide presentation-effect intervals crossing zero. Alias IDs still retain the base-rank prior, and every shuffled input has eight extra tokens from the observed presentation change. This is not exact-token matching or complete removal of the prior; generation dates/output noise remain possible confounders. The separate equal-token alignment control addresses a different question.
+
+This new diagnostic costs USD 7.4874418 for 6,636 physical generations; its complete public archive reproduces all statistics exactly without API access. Four unused numeric-score roundoff differences in historical snapshot hashes are disclosed and independently checked against exact candidate identities and transmitted evidence. Both complete diagnostics now satisfy the frozen final dispatch gate. Final generation started at `logs/20261001_004350_amazon_final_test_batch` with all validation-selected choices unchanged; its results, serving audit and final accounting are still pending.
