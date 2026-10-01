@@ -18,7 +18,7 @@ Completed [population validation](reports/20260925_m3_evidence_validation/README
 Public archives reproduce statistics and plots without API calls. See the
 [reproduction guide](docs/adaptive-evidence/REPRODUCE.md), [delivery evidence audit](reports/adaptive_evidence_study/DELIVERY_AUDIT.md),
 [progress record](docs/adaptive-evidence/PROGRESS.md) and [LaTeX/interview materials](reports/career_materials/README.md).
-Real research runs use the original USD 50 authorization with measured usage; the reference framework below remains a separate synthetic illustration.
+The [final resource audit](reports/20261001_final_resources/README.md) accounts for USD 37.3749584, including the preserved unknown pilot reserve, and reports actual fixed-condition service latency. [Delivery PR #21](https://github.com/WItaZhang/agentic-rec/pull/21) records final repository verification. The reference framework below remains a separate synthetic illustration.
 
 Between 2023 and 2026, several dozen papers put an LLM *agent* at the centre of a recommender: as the recommender itself (RecMind, InteRecAgent, MACRec, BiLLP), as a simulated user (RecAgent, Agent4Rec, SimUSER, RecoWorld), as an item (AgentCF), or as an assistant on the user's side (RAH, iAgent). Read side by side, they share nine components and differ mainly in which ones they attach and how they are optimised.
 

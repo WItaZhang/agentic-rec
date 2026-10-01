@@ -1,6 +1,6 @@
 # Delivery evidence audit
 
-Checkpoint: 2026-10-01 UTC. The frozen scientific evaluation, synchronous serving, final resource accounting and career source materials are complete. Direct evidence and the final repository verification gate are below. Exact source/run provenance is in [PROGRESS](../../docs/adaptive-evidence/PROGRESS.md), with the live handle in the local checkpoint.
+Checkpoint: 2026-10-01 UTC. The frozen scientific evaluation, synchronous serving, final resource accounting and career source materials are complete. Direct evidence and the repository verification receipt are below; [delivery PR #21](https://github.com/WItaZhang/agentic-rec/pull/21) records the current head checks, reviews and merge state. Exact source/run provenance is in [PROGRESS](../../docs/adaptive-evidence/PROGRESS.md), with the live handle in the local checkpoint.
 
 | Requirement | Observed evidence | Status / remaining gate |
 |---|---|---|
@@ -23,8 +23,8 @@ Checkpoint: 2026-10-01 UTC. The frozen scientific evaluation, synchronous servin
 | Public final outcomes/plots and zero-call replay | [final_test_v1](../../artifacts/published/final_test_v1/), registered analysis replay maximum difference 0, figures inspected | Verified; [serving_v1](../../artifacts/published/serving_v1/) and [resources_final_v1](../../artifacts/published/resources_final_v1/) also published/replayed |
 | Complete report and quality–cost figure | [Study](STUDY.md), [final report](../20261001_final_test/README.md), linked controls | Scientific, service and final resource sections complete; original negative/uncertain results and measurement limits retained |
 | Résumé and interview match observed evidence | [Career materials](../career_materials/README.md), English LaTeX and bilingual interview | Final source and bilingual interview complete; native compile attempted on October 1 and fails platform initialization before source diagnostics. No PDF/layout verification claimed |
-| GitHub/design/hand-off synchronization | PRs 1–20 merged, branch `codex/final-evaluation` | Final delivery changes require exact-head CI and review before merge; repository verification receipt is recorded in the delivery PR and local checkpoint |
+| GitHub/design/hand-off synchronization | PRs 1–20 preserve preceding work; [delivery PR #21](https://github.com/WItaZhang/agentic-rec/pull/21) carries the final artifacts | Exact-head Python 3.11/3.12 checks, review threads and merge state are recorded by GitHub on that PR; the local checkpoint records the final receipt |
 
 No method was chosen for a positive test result. The validation-selected sequence model's test advantage over KNN is itself uncertain. The secondary learner signal remains scientifically interesting but cannot replace the primary comparison or retrospectively change the adoption rule.
 
-All experimental and artifact requirements have direct evidence above. Final repository checks must pass before the overall goal is marked complete. The original full-route authorization covers these steps; no additional permission is currently required within the USD 50 total and USD 45 planning stop.
+All experimental and artifact requirements have direct evidence above. Overall completion requires successful exact-head checks and merge of the linked delivery PR; GitHub supplies that verification state rather than an anticipated merge hash in this document. The original full-route authorization covers these steps; no additional permission is currently required within the USD 50 total and USD 45 planning stop.

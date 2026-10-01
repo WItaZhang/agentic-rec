@@ -15,6 +15,7 @@
 [完整研究报告](reports/adaptive_evidence_study/STUDY.md) 保留无收益结果与适用边界；
 [交付审计](reports/adaptive_evidence_study/DELIVERY_AUDIT.md)、[进度](docs/adaptive-evidence/PROGRESS.md)、
 [复现说明](docs/adaptive-evidence/REPRODUCE.md) 和 [英文 LaTeX／面试材料](reports/career_materials/README.md) 提供证据入口。
+[最终资源审计](reports/20261001_final_resources/README.md) 核算 37.3749584 美元，并报告固定条件下的实际服务延迟；最终仓库检查与合并记录在 [PR #21](https://github.com/WItaZhang/agentic-rec/pull/21)。
 下面的 TOML 框架示例使用合成数据；真实研究来自独立的 `src/`、YAML 配置和原始日志，不以 mock 指标替代。
 
 2023 到 2026 年间，几十篇工作把 LLM *agent* 放到推荐系统的中心：作为推荐器本身（RecMind、InteRecAgent、MACRec、BiLLP），作为模拟用户（RecAgent、Agent4Rec、SimUSER、RecoWorld），作为物品（AgentCF），或作为站在用户一侧的助理（RAH、iAgent）。把它们并排读，会发现共享九个组件，差异主要在于挂载了哪些组件、以及如何优化。
