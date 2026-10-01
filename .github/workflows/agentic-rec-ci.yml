@@ -29,5 +29,8 @@ jobs:
       - run: uv run --locked --extra yaml --extra experiments --python ${{ matrix.python-version }} python main.py --config configs/presentation_archive_reanalysis.yaml
       - run: uv run --locked --extra yaml --extra experiments --python ${{ matrix.python-version }} python main.py --config configs/routing_validation_archive_reanalysis.yaml
       - run: uv run --locked --extra yaml --extra experiments --python ${{ matrix.python-version }} python main.py --config configs/final_test_archive_reanalysis.yaml
+      - run: uv run --locked --extra yaml --extra experiments --python ${{ matrix.python-version }} python main.py --config configs/amazon_final_cost_alignment.yaml
+      - run: uv run --locked --extra yaml --extra experiments --python ${{ matrix.python-version }} python main.py --config configs/serving_archive_replay.yaml
+      - run: uv run --locked --extra yaml --extra experiments --extra api --python ${{ matrix.python-version }} python main.py --config configs/final_resource_archive_replay.yaml
       - run: uv run --locked --extra yaml --extra experiments --python ${{ matrix.python-version }} python main.py --config configs/amazon_retriever_robustness.yaml
       - run: uv run --locked --extra yaml --python ${{ matrix.python-version }} python -m agentic_rec compare configs/*.toml --users 5 --items 60
