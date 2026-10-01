@@ -1,0 +1,30 @@
+seed: 42
+failure_analysis:
+  policies:
+  - fixed_R1
+  - fixed_R4
+  - rule_0.25
+  - learned_0.25
+  - rule_1.5
+  - random_1.5
+  - learned_1.5
+  cases_per_class: 3
+  history_items_per_case: 3
+  matrix_run: logs/20261001_023000_amazon_final_test_evaluate
+diagnostic_scope:
+  primary_unchanged: true
+  secondary_scope: Exploratory post-evaluation cases for already frozen active policies;
+    no model or method selection
+  reason: Primary-budget routes select R0 for every prepared final request; retain
+    them and additionally explain actual LLM allocations at the registered secondary
+    budget
+  selection: Same fixed hash seed and case count for every overlapping observable
+    error class
+experiment_name: amazon_final_failure_analysis
+stage: final_failure_analysis
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
