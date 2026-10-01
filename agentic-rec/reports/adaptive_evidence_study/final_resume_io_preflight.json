@@ -1,0 +1,30 @@
+{
+  "accepted_shards": 4,
+  "campaign_budget_snapshot": {
+    "campaign_accounted_usd": 35.757778400001854,
+    "campaign_actual_known_usd": 35.466512200002086,
+    "campaign_attempts": 31450,
+    "pending_reservations": 220,
+    "planning_stop_usd": 45,
+    "round_accounted_usd": 0,
+    "round_cap_usd": 12,
+    "total_authorized_usd": 50,
+    "unknown_or_pending_calls": 221,
+    "unknown_settled_calls": 1
+  },
+  "campaign_upper_after_final_usd": 37.21137000000186,
+  "campaign_upper_including_remaining_serving_usd": 38.12504480000186,
+  "collected_shards": 114,
+  "generation_retries": 0,
+  "inference_or_budget_changed": false,
+  "note": "Existing reservations are included once; only previously unsubmitted calls can create new reservations. All submitted and collected chunks retained.",
+  "prepared_input_sha256": "c361a1fca7483cbc4a996a60cb76b5fdf8892941f4f076ec0b54feebc627dbec",
+  "recorded_utc": "2026-10-01T02:05:02.591460+00:00",
+  "remaining_serving_upper_usd": 0.9136748000000053,
+  "resume_config_sha256": "7667afa934540638a0b68c41d3e8400a9bf404181e42be6aa72611dfcd23bc12",
+  "source_pending_state_sha256": "5e189de107cb7e91978479dead42d9a12b63f59debb00c17c7602ba554007f27",
+  "source_state_sha256": "178636847af67a6f8a2148b72f50d6de873fd6d6024cac55c4398460b82b84af",
+  "unsubmitted_physical_requests": 1094,
+  "unsubmitted_shards": 21,
+  "unsubmitted_upper_usd": 1.4535916000000033
+}
