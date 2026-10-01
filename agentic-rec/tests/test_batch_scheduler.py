@@ -1,11 +1,17 @@
 import json
+from pathlib import Path
 
 import pytest
 import yaml
 
 pytest.importorskip("filelock")
 
-from src.batch_scheduler import run_batch_schedule, split_batches
+from src.batch_scheduler import (
+    persist_state,
+    recover_pending_poll_state,
+    run_batch_schedule,
+    split_batches,
+)
 from src.utils import digest
 
 
@@ -82,3 +88,106 @@ def test_allowance_amendment_loads_the_original_counter_and_accepted_work(tmp_pa
     assert amendment['cumulative_auto_recoveries_preserved'] == 20
     assert amendment['previous_state_sha256'] == original_state_hash
     assert amendment['budget_changed'] is False
+
+
+def test_transient_windows_state_lock_keeps_original_until_atomic_replace(tmp_path, monkeypatch):
+    path = tmp_path / 'state.json'
+    path.write_text('{"old": true}')
+    replace = Path.replace
+    attempts, sleeps = [], []
+
+    def briefly_locked(temporary, target):
+        assert path.read_text() == '{"old": true}'
+        attempts.append(temporary.read_bytes())
+        if len(attempts) < 3:
+            error = PermissionError('sharing violation')
+            error.winerror = 32
+            raise error
+        return replace(temporary, target)
+
+    monkeypatch.setattr(Path, 'replace', briefly_locked)
+    monkeypatch.setattr('src.batch_scheduler.time.sleep', sleeps.append)
+    persist_state(path, {'new': True}, {'attempts': 4, 'delay_seconds': 0.1})
+    assert json.loads(path.read_text()) == {'new': True}
+    assert len(set(attempts)) == 1
+    assert sleeps == [0.1, 0.1]
+    assert not path.with_suffix('.tmp').exists()
+
+
+@pytest.mark.parametrize('winerror, expected_attempts', [(5, 3), (33, 3), (None, 1)])
+def test_state_lock_exhaustion_preserves_both_versions(tmp_path, monkeypatch, winerror, expected_attempts):
+    path = tmp_path / 'state.json'
+    path.write_text('{"old": true}')
+    attempts = []
+
+    def locked(temporary, target):
+        attempts.append(temporary)
+        error = PermissionError('denied')
+        if winerror is not None:
+            error.winerror = winerror
+        raise error
+
+    monkeypatch.setattr(Path, 'replace', locked)
+    monkeypatch.setattr('src.batch_scheduler.time.sleep', lambda _: None)
+    with pytest.raises(PermissionError):
+        persist_state(path, {'new': True}, {'attempts': 3, 'delay_seconds': 0.1})
+    assert len(attempts) == expected_attempts
+    assert json.loads(path.read_text()) == {'old': True}
+    assert json.loads(path.with_suffix('.tmp').read_text()) == {'new': True}
+
+
+@pytest.mark.parametrize('retry', [
+    {'attempts': 0, 'delay_seconds': 0.1}, {'attempts': 101, 'delay_seconds': 0.1},
+    {'attempts': 3, 'delay_seconds': float('nan')}, {'attempts': 3, 'delay_seconds': -1},
+])
+def test_invalid_state_retry_bounds_fail_before_writing(tmp_path, retry):
+    path = tmp_path / 'state.json'
+    path.write_text('{"old": true}')
+    with pytest.raises(ValueError, match='retry'):
+        persist_state(path, {'new': True}, retry)
+    assert json.loads(path.read_text()) == {'old': True}
+    assert not path.with_suffix('.tmp').exists()
+
+
+def poll_recovery_fixture(tmp_path):
+    config, config_path, previous = resume_fixture(tmp_path)
+    state = json.loads((previous / 'scheduler_state.json').read_text())
+    state.update(poll_calls=10, chunks=[{'state': 'collected', 'collection_run': 'logs/retained',
+                                        'batch_id': 'accepted'}])
+    (previous / 'scheduler_state.json').write_text(json.dumps(state))
+    pending = {**state, 'poll_calls': 11}
+    (previous / 'scheduler_state.tmp').write_text(json.dumps(pending))
+    evidence = {'committed_state_sha256': digest(previous / 'scheduler_state.json'),
+                'pending_state_sha256': digest(previous / 'scheduler_state.tmp')}
+    return config, config_path, previous, state, pending, evidence
+
+
+def test_resume_recovers_only_the_hashed_uncommitted_poll_without_resubmitting(tmp_path, monkeypatch):
+    config, config_path, previous, state, pending, evidence = poll_recovery_fixture(tmp_path)
+    config['resume_pending_poll_state'] = evidence
+    config['state_write_retry'] = {'attempts': 3, 'delay_seconds': 0.1}
+    config_path.write_text(yaml.safe_dump(config))
+    monkeypatch.setattr('src.batch_scheduler.client_for', lambda *_: object())
+    monkeypatch.setattr('src.batch_scheduler.run_batch_submit', lambda *_: pytest.fail('Must not resubmit'))
+    result = run_batch_schedule(config, config_path, tmp_path)
+    assert json.loads((result / 'scheduler_state.json').read_text()) == pending
+    assert json.loads((previous / 'scheduler_state.json').read_text()) == state
+    assert digest(previous / 'scheduler_state.tmp') == evidence['pending_state_sha256']
+    assert json.loads((result / 'state_recovery.json').read_text())['recovered_poll_invocations'] == 1
+
+
+@pytest.mark.parametrize('change', ['shard', 'two_polls', 'checksum', 'live_predecessor'])
+def test_pending_poll_recovery_rejects_unproven_changes(tmp_path, change):
+    _, _, previous, state, pending, evidence = poll_recovery_fixture(tmp_path)
+    if change == 'shard':
+        pending['chunks'] = [{'state': 'pending'}]
+    elif change == 'two_polls':
+        pending['poll_calls'] = 12
+    elif change == 'checksum':
+        evidence['committed_state_sha256'] = 'changed'
+    else:
+        (previous / 'manifest.json').write_text(json.dumps({'status': 'running'}))
+    (previous / 'scheduler_state.tmp').write_text(json.dumps(pending))
+    evidence['pending_state_sha256'] = digest(previous / 'scheduler_state.tmp')
+    with pytest.raises(ValueError):
+        recover_pending_poll_state(previous, state, evidence)

@@ -101,7 +101,8 @@ def run_resource_audit(config, config_path, root):
             state = json.loads(path.read_text())
             states[directory.name] = state
             cfg = yaml.safe_load((directory / "config.yaml").read_text(encoding="utf-8"))
-            for evidence_file in ('manifest.json', 'config.yaml', 'scheduler_state.json', 'upload.json',
+            for evidence_file in ('manifest.json', 'config.yaml', 'scheduler_state.json', 'scheduler_state.tmp',
+                                  'state_recovery.json', 'upload.json',
                                   'submission_error.json', 'batch_status.json', 'provider_reconciliation.json'):
                 file = directory / evidence_file
                 if file.exists():

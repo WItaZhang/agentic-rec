@@ -1,6 +1,7 @@
 """Bounded batch scheduling with durable submit intents and recoverable provider IDs."""
 
 import json
+import math
 import os
 import time
 
@@ -28,13 +29,43 @@ def split_batches(rows, max_requests, max_input_tokens):
     return chunks
 
 
-def persist_state(path, state):
+def persist_state(path, state, retry=None):
+    attempts, delay = 1, 0
+    if retry is not None:
+        attempts, delay = retry['attempts'], retry['delay_seconds']
+        if (type(attempts) is not int or not 1 <= attempts <= 100
+                or not isinstance(delay, (int, float)) or not math.isfinite(delay) or not 0 <= delay <= 1):
+            raise ValueError('Invalid bounded state-write retry settings')
     temporary = path.with_suffix(".tmp")
     with temporary.open("w", encoding="utf-8") as stream:
         json.dump(state, stream, indent=2)
         stream.flush()
         os.fsync(stream.fileno())
-    temporary.replace(path)
+    for attempt in range(attempts):
+        try:
+            temporary.replace(path)
+            return
+        except PermissionError as error:
+            # Windows readers/AV may briefly deny deletion of the destination.
+            # Keep the original and fsynced temporary intact until replacement
+            # succeeds; never fall back to truncating the committed state.
+            if getattr(error, 'winerror', None) not in (5, 32, 33) or attempt + 1 == attempts:
+                raise
+            time.sleep(delay)
+
+
+def recover_pending_poll_state(previous, state, evidence):
+    """Adopt only a hashed, poll-only write left by an explicitly failed run."""
+    pending = previous / 'scheduler_state.tmp'
+    if (json.loads((previous / 'manifest.json').read_text())['status'] != 'failed'
+            or digest(previous / 'scheduler_state.json') != evidence['committed_state_sha256']
+            or digest(pending) != evidence['pending_state_sha256']):
+        raise ValueError('Pending state recovery requires an unchanged failed predecessor')
+    candidate = json.loads(pending.read_text())
+    expected = {**state, 'poll_calls': state['poll_calls'] + 1}
+    if candidate != expected:
+        raise ValueError('Pending state recovery permits only one additional recorded poll')
+    return candidate
 
 
 def may_recover_upload(error, attempts, limit):
@@ -74,7 +105,7 @@ def recover_upload_bounded(config, run_dir, root, state, index, submitted, error
     while may_recover_upload(error, state.get("upload_recovery_attempts", 0), settings.get("upload_recovery_limit", 0)):
         attempt = state.get("upload_recovery_attempts", 0) + 1
         state["upload_recovery_attempts"] = attempt
-        persist_state(run_dir / "scheduler_state.json", state)
+        persist_state(run_dir / "scheduler_state.json", state, config.get('state_write_retry'))
         time.sleep(settings.get("upload_recovery_delay_seconds", 0))
         recovery = {"experiment_name": f"{config['experiment_name']}_upload_recovery_{index:03d}_a{attempt:03d}",
             "stage": "batch_upload_recovery", "seed": config["seed"], "data": config["data"],
@@ -97,6 +128,8 @@ def recover_upload_bounded(config, run_dir, root, state, index, submitted, error
 
 
 def run_batch_schedule(config, config_path, root):
+    if config.get('resume_pending_poll_state') is not None and not config.get('resume_from'):
+        raise ValueError('Pending poll-state recovery requires a recorded predecessor')
     if config.get('resume_upload_recovery_allowance') is not None and not config.get('resume_from'):
         raise ValueError('A recovery allowance amendment requires a recorded predecessor')
     settings = config["scheduler"]
@@ -131,6 +164,12 @@ def run_batch_schedule(config, config_path, root):
             old_config = verified_run_config(previous)
             amendment = validate_resume_settings(config, old_config)
             state = json.loads((previous / "scheduler_state.json").read_text())
+            if config.get('resume_pending_poll_state') is not None:
+                evidence = config['resume_pending_poll_state']
+                state = recover_pending_poll_state(previous, state, evidence)
+                write_json(run_dir / 'state_recovery.json', {**evidence,
+                    'previous_run': config['resume_from'], 'recovered_poll_invocations': 1,
+                    'shards_changed': False, 'original_files_preserved': True})
             if state["input_sha256"] != fingerprint or any(c["state"] == "submitting" for c in state["chunks"]):
                 raise ValueError("Input changed or submission is ambiguous; inspect recorded intent/provider metadata before resuming")
             if amendment is not None:
@@ -145,7 +184,11 @@ def run_batch_schedule(config, config_path, root):
         write_json(run_dir / "preflight_budget.json", {"whole_phase_upper_usd": upper,
             "physical_requests": len(rows), "shards": len(state["chunks"]), "accounting_before": ledger.snapshot()})
         state_path = run_dir / "scheduler_state.json"
-        persist_state(state_path, state)
+
+        def save_state():
+            persist_state(state_path, state, config.get('state_write_retry'))
+
+        save_state()
         print(f"Batch phase: {len(rows)} physical inputs, upper USD {upper:.6f}, {len(state['chunks'])} shards", flush=True)
         client = client_for(original["llm"], root)
         while any(chunk["state"] != "collected" for chunk in state["chunks"]):
@@ -163,7 +206,7 @@ def run_batch_schedule(config, config_path, root):
                 child_path = run_dir / f"submit_{index:03d}.yaml"
                 child_path.write_text(yaml.safe_dump(child, sort_keys=False), encoding="utf-8")
                 chunk.update(state="submitting", intent_config=str(child_path.relative_to(root)))
-                persist_state(state_path, state)
+                save_state()
                 try:
                     submitted = run_batch_submit(child, child_path, root)
                 except RuntimeError:
@@ -181,7 +224,7 @@ def run_batch_schedule(config, config_path, root):
                     recover_upload_bounded(config, run_dir, root, state, index, submitted, error)
                 submission = json.loads((submitted / "submission.json").read_text())
                 chunk.update(state="submitted", submit_run=str(submitted.relative_to(root)), batch_id=submission["id"])
-                persist_state(state_path, state)
+                save_state()
                 inflight += chunk["input_tokens"]
             for index, chunk in enumerate(state["chunks"]):
                 if chunk["state"] != "submitted":
@@ -194,13 +237,13 @@ def run_batch_schedule(config, config_path, root):
                     state["poll_errors"] += 1
                     chunk["poll_errors"] = chunk.get("poll_errors", 0) + 1
                     state["last_poll_error"] = type(error).__name__
-                    persist_state(state_path, state)
+                    save_state()
                     if chunk["poll_errors"] >= settings["max_consecutive_poll_errors"]:
                         raise RuntimeError("Polling unavailable; provider IDs and reservations retained for resume") from None
                     continue
                 chunk["provider_status"] = batch.status
                 chunk["provider_counts"] = batch.request_counts.model_dump()
-                persist_state(state_path, state)
+                save_state()
                 if batch.status not in ("completed", "failed", "expired", "cancelled"):
                     continue
                 child = {"experiment_name": f"{config['experiment_name']}_c{index:03d}", "stage": "batch_collect",
@@ -210,7 +253,7 @@ def run_batch_schedule(config, config_path, root):
                 child_path.write_text(yaml.safe_dump(child, sort_keys=False), encoding="utf-8")
                 collected = run_batch_collect(child, child_path, root)
                 chunk.update(state="collected", collection_run=str(collected.relative_to(root)))
-                persist_state(state_path, state)
+                save_state()
                 if batch.status != "completed":
                     raise RuntimeError("Non-completed batch retained; inspect failures before dispatching remaining shards")
                 print(f"Collected shard {index + 1}/{len(state['chunks'])}", flush=True)
