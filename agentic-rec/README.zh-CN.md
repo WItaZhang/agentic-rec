@@ -6,7 +6,12 @@
 
 **进行中的研究：[自适应证据检索的 Agentic Recommendation](docs/adaptive-evidence/README.md)**。
 MovieLens 基线已复现，Amazon 时间回放、ItemKNN 与因果序列模型已有真实结果；
-同步和批量 LLM 调用已通过协议验证，正式证据对照仍在运行。
+同步和批量 LLM 调用已通过协议验证，[3,318 用户证据对照](reports/20260925_m3_evidence_validation/README.md)、
+[学习路由验证](reports/20260930_m4_routing_validation/README.md)、
+[强基础模型对照](reports/20260930_strong_base_evidence/README.md) 与
+[候选行顺序对照](reports/20261001_presentation_control/README.md) 均已完成，并提供离线复现产物。
+现有验证结果没有确立自适应策略的优势：充分证据方案反而下降，主要预算点选择保留基础排序。
+按验证集规则选中的实用方法是因果序列推荐器；冻结的 3,572 用户最终测试正在生成，最终质量、服务延迟与总资源报告待完成。
 [进度记录](docs/adaptive-evidence/PROGRESS.md) 区分已实现、已验证与待完成能力，
 [复现说明](docs/adaptive-evidence/REPRODUCE.md) 给出数据、配置、费用与恢复入口。
 最终 Amazon 测试和学习路由的收益尚未报告。下面的 TOML 框架示例使用合成数据；
