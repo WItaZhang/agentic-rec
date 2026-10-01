@@ -1,0 +1,15 @@
+{
+  "files": {
+    "calls.jsonl.gz": "3aa4f4d1cb54a2db64c00f3612e0a5d670a4c6fa065012ac18dc994659a8ed3a",
+    "config.yaml": "7a20fbd303d6ef3594bea64f863d291770f10dd677c9df338475d11a95c46b40",
+    "resources.json": "c0df19abdeed53cd31bbff01a9c98371f2acaf02c9281163a3812bb03406eea8",
+    "source_manifest.json": "aa35ba93921ae3ac8513e7d4993f1aa3196333fb609827756eb3662222d1131d"
+  },
+  "kind": "serving",
+  "privacy": "No review/user IDs, prompts, rankings, response text, keys or provider call/response IDs",
+  "scope": "Recompute observed warm-model latency/cost summaries; no new timing experiment or quality evaluation",
+  "source_calls_sha256": "70665adca3c9f8f775ca79eb9dafdb44b3a6ffe8f1953f25a8701636918910cb",
+  "source_resources_sha256": "c0df19abdeed53cd31bbff01a9c98371f2acaf02c9281163a3812bb03406eea8",
+  "source_run": "logs/20261001_024610_amazon_serving_audit_extended",
+  "status": "completed"
+}

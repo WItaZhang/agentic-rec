@@ -1,0 +1,15 @@
+{
+  "files": {
+    "expected_accounting.json": "ea330c4efc202b09dbf164eec59110c364e0ba29df1fa05c4c7eabcb88d59782",
+    "ledger_entries.json.gz": "dcb6bb83a2b0de05835ffdf6f4e086d1ac5aa84f701b452de6f1390a5023cef1",
+    "operation_records.json.gz": "5e069f3a4329ea69eda34734d4277e862631fa630fd0605102e7485814292afa",
+    "settings.json.gz": "c497240070ceb94f0efa8443312b5bf00338d53e4b728af3f70760f2339e3f4d"
+  },
+  "interim": false,
+  "ledger_sha256": "d035f6188533f2f7ead2dd36a4f67aa37291f0b88dfc264f24e55800b23ffd20",
+  "privacy": "No prompts, response text, review/user IDs, keys, provider response IDs or provider batch IDs. Physical reservation IDs remain to verify deduplication. Preparation/management counters retain source-run names.",
+  "scope": "Recompute usage, USD and operation summaries; CPU timings are separately observed, not rerun here.",
+  "source_commit": "cd5b96c802741561c5584c7f08798b750ed663d0",
+  "source_run": "logs/20261001_030844_amazon_campaign_resources",
+  "status": "completed"
+}

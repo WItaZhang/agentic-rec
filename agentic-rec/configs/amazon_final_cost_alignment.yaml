@@ -1,0 +1,20 @@
+experiment_name: amazon_final_cost_alignment
+stage: cost_alignment_sensitivity
+seed: 42
+data:
+  raw_path: data/raw/amazon/Magazine_Subscriptions.jsonl.gz
+  processed_path: data/processed
+  staging_path: data/staging
+logging:
+  path: logs
+archive_path: artifacts/published/final_test_v1
+archive_sha256: ca43d667fdbbd186cd90cd6dd36058915333b09a25c738453cd3655307611941
+plans: [R0, R1, R2, R3, R4]
+policy: learned_1.5
+absolute_cost_tolerance: 1.0e-14
+registration:
+  timing: After final scoring; exploratory sensitivity only
+  reason: Frozen random probabilities matched validation spending but final realized learner spending was 21.77 percent higher than the frozen random sample
+  constraints: No change to frozen main comparisons, deployment choice, router, evidence, user groups or prompts
+  procedure: Reuse the development cost-only random allocation formula, preserving conditional non-R0 mixture; exact expected cost must match or fail
+  intervals: Reuse archived bootstrap parameters; conditional on observed costs and outputs, without a confirmatory interpretation

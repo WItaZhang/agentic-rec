@@ -27,6 +27,16 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parent
     config = load_config(args.config)
+    if config.get("stage") in ("publish_serving", "serving_archive_replay"):
+        from src.serving_analysis import run_serving_archive
+
+        run_serving_archive(config, args.config, root)
+        return
+    if config.get("stage") == "cost_alignment_sensitivity":
+        from src.cost_alignment import run_cost_alignment
+
+        run_cost_alignment(config, args.config, root)
+        return
     if config.get("stage") == "accounting_replay":
         from src.resource_archive import run_accounting_replay
 

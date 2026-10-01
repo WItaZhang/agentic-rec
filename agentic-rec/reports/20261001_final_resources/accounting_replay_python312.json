@@ -1,0 +1,6 @@
+{
+  "absolute_float_tolerance": 1e-12,
+  "matches": true,
+  "max_absolute_float_difference": 2.1316282072803006e-14,
+  "non_float_fields": "exact"
+}

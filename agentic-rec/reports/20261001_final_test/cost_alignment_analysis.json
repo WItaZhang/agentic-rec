@@ -1,0 +1,116 @@
+{
+  "allocation_seed_sensitivity": [
+    {
+      "action_counts": {
+        "R0": 3307,
+        "R1": 96,
+        "R2": 111,
+        "R3": 24,
+        "R4": 34
+      },
+      "mean_accounted_usd": 6.639316909294513e-05,
+      "mean_hr": 0.10330347144456888,
+      "mean_ndcg": 0.04601089465700122,
+      "seed": 1729
+    },
+    {
+      "action_counts": {
+        "R0": 3289,
+        "R1": 98,
+        "R2": 125,
+        "R3": 28,
+        "R4": 32
+      },
+      "mean_accounted_usd": 7.040179171332587e-05,
+      "mean_hr": 0.10246360582306831,
+      "mean_ndcg": 0.04525854837785882,
+      "seed": 11
+    },
+    {
+      "action_counts": {
+        "R0": 3306,
+        "R1": 106,
+        "R2": 110,
+        "R3": 22,
+        "R4": 28
+      },
+      "mean_accounted_usd": 6.472368421052633e-05,
+      "mean_hr": 0.10246360582306831,
+      "mean_ndcg": 0.045205001774337,
+      "seed": 97
+    },
+    {
+      "action_counts": {
+        "R0": 3306,
+        "R1": 106,
+        "R2": 108,
+        "R3": 17,
+        "R4": 35
+      },
+      "mean_accounted_usd": 6.51387458006719e-05,
+      "mean_hr": 0.10274356103023516,
+      "mean_ndcg": 0.04545745128671231,
+      "seed": 2027
+    },
+    {
+      "action_counts": {
+        "R0": 3314,
+        "R1": 109,
+        "R2": 98,
+        "R3": 27,
+        "R4": 24
+      },
+      "mean_accounted_usd": 6.332928331466965e-05,
+      "mean_hr": 0.10330347144456888,
+      "mean_ndcg": 0.04619019800917378,
+      "seed": 4099
+    },
+    {
+      "action_counts": {
+        "R0": 3334,
+        "R1": 100,
+        "R2": 92,
+        "R3": 23,
+        "R4": 23
+      },
+      "mean_accounted_usd": 5.822206047032475e-05,
+      "mean_hr": 0.10106382978723404,
+      "mean_ndcg": 0.045270295088138034,
+      "seed": 9001
+    }
+  ],
+  "cost_match_scope": "Exact full-population expectation; sampled allocations can have different realized costs",
+  "deployment_reselected": false,
+  "interval_scope": "Nominal paired user bootstrap conditional on the cost calibration and saved model outputs; not confirmatory or uncertainty over a newly fitted future calibration",
+  "paid_api_usd": 0,
+  "quality": {
+    "hr": {
+      "learner_mean": 0.10414333706606943,
+      "learner_minus_expected_random": {
+        "ci_high": 0.004720566170052426,
+        "ci_low": -0.0013212518610624063,
+        "confidence": 0.95,
+        "difference": 0.0016933758739976863,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3572
+      },
+      "random_expected_mean": 0.10244996119207175
+    },
+    "ndcg": {
+      "learner_mean": 0.0485308421952511,
+      "learner_minus_expected_random": {
+        "ci_high": 0.0051053113349033875,
+        "ci_low": 0.0010363152153364857,
+        "confidence": 0.95,
+        "difference": 0.00299717859169549,
+        "repetitions": 10000,
+        "unit": "user",
+        "users": 3572
+      },
+      "random_expected_mean": 0.04553366360355561
+    }
+  },
+  "scope": "post_evaluation_exploratory_cost_diagnostic",
+  "users": 3572
+}

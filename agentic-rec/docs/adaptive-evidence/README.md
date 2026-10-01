@@ -2,7 +2,7 @@
 
 **英文工作名：Adaptive Evidence Acquisition for Agentic Recommendation**
 
-**设计日期：2026-09-23 · 状态：实施与开发实验进行中，最终结论尚未冻结**
+**设计日期：2026-09-23 · 状态更新：2026-10-01，请求级证据选择范围的实现、实验与资源审计已完成**
 
 执行状态更新：请看 [持续进度与恢复记录](PROGRESS.md)。M0 已复现，M1a
 已有真实 MovieLens 对照及无收益结果，Amazon 画像、时间回放和序列基线已运行。
@@ -11,8 +11,9 @@
 完整验证集已完成：[3,318 用户证据结果](../../reports/20260925_m3_evidence_validation/README.md)。
 近期方案的整体收益尚未确立，充分证据方案明显下降；历史分组呈现不同方向。
 [等 token 内容对照](../../reports/20260925_m3_content_control/README.md) 也已完成；类别对应的作用随历史分组而异。
-此前的 [API 账户账单额度阻塞](../../reports/20260925_resource_checkpoint/README.md) 已于 9 月 30 日解除，扩展策略标签和学习路由已完成；[路由验证结果](../../reports/20260930_m4_routing_validation/README.md) 显示主预算点退化为基础排序，[强序列证据对照](../../reports/20260930_strong_base_evidence/README.md) 已完成，充分证据的下降依然存在；[候选行顺序对照](../../reports/20261001_presentation_control/README.md) 也已完成：打乱呈现使近期／充分证据方案进一步下降；冻结的最终测试已开始生成，尚未评分。
-原 50 美元预算保持不变，最新运行与成本见进度记录。已有 [英文简历与面试材料草稿](../../reports/career_materials/README.md) 仅表述已验证的开发结果。
+此前的 [API 账户账单额度阻塞](../../reports/20260925_resource_checkpoint/README.md) 已于 9 月 30 日解除，扩展策略标签和学习路由已完成；[路由验证结果](../../reports/20260930_m4_routing_validation/README.md) 显示主预算点退化为基础排序，[强序列证据对照](../../reports/20260930_strong_base_evidence/README.md) 已完成，充分证据的下降依然存在；[候选行顺序对照](../../reports/20261001_presentation_control/README.md) 也已完成：打乱呈现使近期／充分证据方案进一步下降。
+[3,572 用户冻结测试](../../reports/20261001_final_test/README.md) 已完成并精确复现：主预算点各策略均保留基础排序；次要预算点存在探索性 NDCG 信号，等期望费用事后诊断仍为正，但命中率差异不确定。验证阶段选定的序列推荐器保持不变，不用测试重新选择。
+原 50 美元预算保持不变，[最终资源报告](../../reports/20261001_final_resources/README.md) 核算总费用约 37.375 美元，包含早期未知用量的保守预留；同步服务的 1,408 个请求全部完成。[英文简历与面试材料](../../reports/career_materials/README.md) 已按实际结果更新。LaTeX 源码可用，原生编译器环境故障导致 PDF 未验证；未实现的逐步取证／停止不计入成果。
 以下正文保留原设计；LLM 和路由能力只有进度记录中的实际实验支持后才算完成。
 
 实际运行入口与资源控制见 [复现说明](REPRODUCE.md)。原有 PR #1 的提交已经

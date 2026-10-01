@@ -61,7 +61,8 @@ def load_config(path):
                               "publish_results", "archive_analysis", "final_failure_analysis", "campaign_resource_audit",
                               "validation_policy_analysis", "deployment_selection", "development_failure_analysis",
                               "batch_upload_recovery", "batch_scheduler_checkpoint", "presentation_analysis", "batch_queue_recovery",
-                              "retriever_robustness", "accounting_replay"):
+                              "retriever_robustness", "accounting_replay", "cost_alignment_sensitivity",
+                              "publish_serving", "serving_archive_replay"):
         return config
     if config.get("stage"):
         raise ValueError("Unknown experiment stage")

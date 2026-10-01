@@ -1,0 +1,22 @@
+{
+  "analysis_run": "logs/20261001_023040_amazon_final_policy_analysis",
+  "calls_scope": "Actual provider usage, including repeated/shared/failed attempts; not newly executed calls",
+  "files": {
+    "additional_baseline_analysis.json": "b3e90f08220c739226ce2d8e20a3eccc19bfea1605104cb1e16e6d85753a233a",
+    "additional_baseline_outcomes.json.gz": "c2a64c08c3650d4e6735e7bf32fb2305bf2593cfa4c8c6f5c5a3c0ddad4b3e5f",
+    "analysis_settings.json": "6c0d9199f47d9286ba855741e83420445f38f89c1a0468052c94c475fa822556",
+    "calls.jsonl.gz": "adc0a4d74d38197154580b388c70648a42c6b978522402bc2037308e7df16e5d",
+    "expected_analysis.json": "50001e06f0e0ccaf778663126dd9e1ee72bb195353278c5d01e61fd7b569607d",
+    "outcomes.json.gz": "bf93b9be72cb78366d3ecf45f9ba429a5fcc3469672b4805d72ebf1be16db694",
+    "resources.json": "2c644072162ad09c2a41a51b0537857cff97c70e9e380d1309cbbf9c3743db87",
+    "routing_decisions.json": "05160ca4d0004805cb1bfcfa0d8daf5732f9d8db6806f59c488e0cee69074e6e",
+    "source_manifest.json": "85064321b79ed45653fbe2153be908d0907541ae82c9a3050ccc8c5738a41532"
+  },
+  "kind": "policy",
+  "privacy": "Per-artifact user ordinals preserve ordering; request IDs link same requests. No review text, prompts, keys or response IDs.",
+  "source_calls_sha256": "9b085a201589e31d7e6a105cb1e91ef1e3af8afac303c124fe38e9e65c8f81b3",
+  "source_outcomes_sha256": "0db399794c7af2745f1fc3b6d56f52e230ad14d6d4ea2808884b4c3c26802b0e",
+  "source_run": "logs/20261001_023000_amazon_final_test_evaluate",
+  "status": "completed",
+  "test_scored": true
+}

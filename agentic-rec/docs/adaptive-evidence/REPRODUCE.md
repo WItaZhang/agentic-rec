@@ -217,19 +217,23 @@ are refused. Original errors and intents are never deleted or overwritten.
 
 ## Registered synchronous resource audit
 
-The pending paid audit now uses `configs/amazon_serving_audit_extended.yaml`,
+The completed paid audit used `configs/amazon_serving_audit_extended.yaml`,
 superseding the unexecuted eight-method `amazon_serving_audit.yaml`. It preserves
 that plan's 128 validation users and primary policies, then adds the three
 already frozen secondary-budget routes. It never evaluates quality or accesses
-final-test labels. Run only after the current Batch/CPU-heavy experiments are
-complete, with the original credential and ledger configuration:
+final-test labels. Its actual run `logs/20261001_024610_amazon_serving_audit_extended`
+completed 1,408 requests and 382 calls with zero failures/repairs at USD 0.4284908.
+The command below performs a **new paid measurement**, not archive replay. Use
+only with authorized credentials, a fresh budget estimate and no other heavy
+project computation:
 
 ```sh
 uv run --locked --extra yaml --extra experiments --extra api --extra local-llm python main.py --config configs/amazon_serving_audit_extended.yaml
 ```
 
 The [registered preflight](../../reports/adaptive_evidence_study/serving_audit_preflight.json)
-is an estimate, not a latency result. Every method is independently executed at
+is preserved as an estimate; [actual measurements](../../reports/20261001_final_resources/README.md)
+are now available. Every method was independently executed at
 concurrency one, with warm resident models and no application output reuse;
 provider prefix caching is recorded. Report overall request mean/P95 alongside
 the generation-branch observation count and conditional latency. A sparse
@@ -262,4 +266,54 @@ uv run --locked --extra yaml --extra experiments --extra api python main.py --co
 
 The analysis replay includes preserved original snapshot hashes and verifies the archive's file hashes. Revalidating the full source-input equivalence additionally requires the retained private batch-input files; their texts are not published. No numerical tolerance was used to admit candidate or evidence changes.
 
-The original presentation session 26029 completed. The final scheduler is now `logs/20261001_004350_amazon_final_test_batch`, session 91054, config `configs/amazon_final_test_batch.yaml`, 139 shards. It passed the [frozen dispatch gate](../../reports/adaptive_evidence_study/final_dispatch_gate.json): complete diagnostics, unchanged frozen inputs/settings, zero pending reservations beforehand, expected USD 8.416256 / conservative USD 9.920192 / round cap 12. Do not start a duplicate scheduler; revalidate its exact handle and current checkpoint first. Evaluate only after every frozen physical input has a collected outcome. No test-quality result exists at this checkpoint.
+The original presentation session 26029 completed. Final generation also completed all 139 shards at `logs/20261001_020546_amazon_final_test_batch_resume_io` (session 62966, now terminal), following a verified Windows poll-state persistence recovery from the original terminal session 91054. Both original records are retained. It passed the [frozen dispatch gate](../../reports/adaptive_evidence_study/final_dispatch_gate.json) before generation: complete diagnostics, unchanged frozen inputs/settings, zero pending reservations, expected USD 8.416256 / conservative USD 9.920192 / round cap 12. Actual final generation cost is USD 8.416256. Do not restart either scheduler.
+
+## Completed frozen final test
+
+The [complete final report](../../reports/20261001_final_test/README.md) links the
+3,572-user matrix, registered paired/failure analyses, exact public replay and
+figures. From the inner project directory, these commands need neither raw data
+nor API access:
+
+```sh
+uv run --locked --extra yaml --extra experiments python main.py --config configs/final_test_archive_reanalysis.yaml
+uv run --locked --extra yaml --extra experiments python main.py --config configs/amazon_final_cost_alignment.yaml
+```
+
+The first verifies archive checksums and reproduces every frozen statistic,
+including separate conventional pools, within the unchanged 1e-14 tolerance
+(observed maximum difference zero). The second is an explicitly **post-evaluation
+exploratory diagnostic** using the pinned final archive: costs/actions alone
+calibrate a random distribution before this stage decodes quality. It matches
+full-population expected spending, not every sampled allocation's realized
+spending. It must not replace the original comparisons or reselect deployment.
+
+Reevaluating original private collected outputs instead uses
+`amazon_final_test_evaluate.yaml`, then `amazon_final_policy_analysis.yaml` and
+`amazon_final_failure_analysis.yaml`; their source-run bindings are explicit.
+They require the original raw inputs and private retained Batch files. New
+generation costs money and is not required for archive reproduction. In this
+campaign the method, prompts and final inputs were frozen before scoring; do
+not tune them on the existing test to manufacture a positive result.
+
+
+## Final service and resource archives
+
+```sh
+uv run --locked --extra yaml --extra experiments --extra api python main.py --config configs/serving_archive_replay.yaml
+uv run --locked --extra yaml --extra experiments --extra api python main.py --config configs/final_resource_archive_replay.yaml
+```
+
+No credentials, dataset download or paid calls are needed. Serving replay
+recomputes saved per-request latency/cost observations; it does not simulate a
+new timing experiment. Financial replay checks usage, physical-call deduplication,
+phase attribution, failures/repairs, counting and management operations. Python
+3.11/3.12 pass the declared roundoff tolerances; see the [final resource report](../../reports/20261001_final_resources/README.md).
+
+The final snapshot has no pending reservations or running experiment roots.
+Known USD 37.3714568 plus the old unknown pilot reserve USD 0.0035016 equals
+USD 37.3749584 accounted, within the original USD 50 authorization. CPU coverage
+limits and unmetered host/provider resources remain explicit. Replaying after
+this snapshot does not retroactively change its historical compute totals.
+Paid regenerations require a new estimate; archive replay does not justify
+restarting terminal generation or serving sessions.

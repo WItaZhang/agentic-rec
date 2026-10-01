@@ -1,0 +1,18 @@
+{
+  "budget": {
+    "campaign_accounted_usd": 36.94646760000037,
+    "campaign_actual_known_usd": 36.94296600000037,
+    "campaign_attempts": 32544,
+    "pending_reservations": 0,
+    "planning_stop_usd": 45,
+    "round_accounted_usd": 0,
+    "round_cap_usd": 2.5,
+    "total_authorized_usd": 50,
+    "unknown_or_pending_calls": 1,
+    "unknown_settled_calls": 1
+  },
+  "planned_generation_attempts": 382,
+  "requests": 1408,
+  "upper_usd": 0.9136748000000028,
+  "users": 128
+}
